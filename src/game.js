@@ -1,4 +1,4 @@
-import PantallaInicial from "../PantallaInicial"
+import PantallaInicial from "PantallaInicial.js"
 
 var config = {
     type: Phaser.AUTO,
