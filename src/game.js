@@ -9,7 +9,7 @@ var config = {
 	},
     pixelArt:true,
     scene : [PantallaInicial]
-
+    
 }
 
 new Phaser.Game(config) //constructor de phaser en si
