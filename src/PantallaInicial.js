@@ -10,7 +10,9 @@ export default class PantallaInicial extends Phaser.Scene{
     }
     
     preload(){
-
+        this.textCreated = false;
+        this.text;
+        this.i = 0;
         console.log();
     }
 
@@ -28,25 +30,47 @@ export default class PantallaInicial extends Phaser.Scene{
 	        return error;
     	});
 	}
-    
+
     create(){
+
+        this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "../assets/fonts/RUBBBB__.TTF");
        
     }
 
     continueCreate() {
-			
+
         this.GenerateText(this.cameras.main.centerX, 250, '40 CRISIS', 'PantallaInicial');
+
 	}
 
     GenerateText(x, y, message, sceneKey){
-		let text = this.add.text(x, y, message, 
+
+		this.text = this.add.text(x, y, message, 
             { fontFamily: 'TitleFont', fontSize: 90, color: 'white' })
-        text.setOrigin(0.5,0.5);		
+        this.text.setOrigin(0.5,0.5);	
+
+        this.textCreated = true;
+        
     }
     
     update(t, dt){
-        console.log("update", t, dt);
+        //console.log("update", t, dt);
+        if(this.textCreated){
+            const top = this.hsv[this.i].color;
+            const bottom = this.hsv[359 - this.i].color;
+    
+            this.text.setTint(top, top, bottom, bottom);
+    
+            this.i++;
+    
+            if (this.i === 360)
+            {
+                this.i = 0;
+            }
+        }
+        
+        
     }
 
 
