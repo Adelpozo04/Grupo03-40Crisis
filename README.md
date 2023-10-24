@@ -74,10 +74,11 @@ El escenario es una mapa cerrado con diferentes obstáculos destruibles por el e
 *En todos los niveles hay puntos para recoger power ups marcados con amarillo* 
 
 - Mapa 1 (ciudad)
-![Mapa 1 (Ciudad)](Mapa1ciudad.png)
-  - Pasan coches por las carreteras que hacen un gran daño tanto al jugador como a los enemigos.
-  - Hay basura que paraliza por x tiempo al jugador y los enemigos si entran en contacto con ella.
-  - Boca de riego que saca agua y reduce movilidad en ella
+  
+![Mapa 1 (Ciudad)](Mapa1ciudad.png)  
+      - Pasan coches por las carreteras que hacen un gran daño tanto al jugador como a los enemigos.  
+      - Hay basura que paraliza por x tiempo al jugador y los enemigos si entran en contacto con ella.  
+      - Boca de riego que saca agua y reduce movilidad en ella  
 - Mapa 2 (playa)
 ![Mapa 2 (Playa)](Mapa2playa.png)
   - Olas que arrastran enemigos/jugador.
