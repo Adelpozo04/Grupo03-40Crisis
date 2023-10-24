@@ -71,9 +71,80 @@ El escenario es una mapa cerrado con diferentes obstáculos destruibles por el e
 
 ### 3. Diseño de nivel 
 #### 3.1  Imagen del nivel
-*En todos los niveles hay puntos para recoger power ups marcados con amarillo*  
-![Mapa de ciudad] 
+*En todos los niveles hay puntos para recoger power ups marcados con amarillo* 
 
+- Mapa 1 (ciudad)
+![Mapa 1 (Ciudad)](Mapa1ciudad.png)
+  - Pasan coches por las carreteras que hacen un gran daño tanto al jugador como a los enemigos.
+  - Hay basura que paraliza por x tiempo al jugador y los enemigos si entran en contacto con ella.
+  - Boca de riego que saca agua y reduce movilidad en ella
+- Mapa 2 (playa)
+![Mapa 2 (Playa)](Mapa2playa.png)
+  - Olas que arrastran enemigos/jugador.
+  - Cada x tiempo el mapa se inunda y el jugador se ralentiza.
+  - Una gaviota que va cagando por el mapa y si te da no puedes atacar por x tiempo.
+![Mapa 3 (Volcan)](Mapa3Volcan.png)
+  - Aparecen zonas de lava que reducen espacio jugable pues al entrar te hacen daño.
+  - Caída de rocas del cielo que hacen gran daño en área.
+  - Nube de humo que aparece en una parte del mapa y tapa la visión en ella totalmente pero no reduce el espacio jugable.
+ 
+ #### 3.2 Descripción de partida típica 
+ El jugador debe sobrevivir mientras varios enemigos intentan atacarte. La partida está dividida en rondas infinitas entre las cuales aumentan las características de los enemigos y favorece la aparición de unos u otros. La partida termina cuando el jugador muere y se almacena su puntuación si es la más alta.
+
+### 4. HUD 
+#### 4.1 Mockup del HUD
+![Menú principal](MenuPrincipal.png)
+Menú inicial del juego. En él podemos encontrar el título del juego, un botón de start y un pequeño texto semitransparente con la desarrolladora abajo a la derecha. El fondo será uno de los mapas del juego siendo recorrido, sin enemigos ni potenciadores, dándole un toque apacible antes de la partida.  
+![Menú de selección de mapas](SeleccionMapas.png)
+Menú de selección de mapas. En este menú el jugador será capaz de desplazarse entre los diferentes mapas de forma cíclica. Cada mapa muestra su nombre, la puntuación máxima obtenida en él, una imagen/icono que muestra la colocación de obstáculos y objetos y el pase de batalla de dicho mapa. Independiente del mapa en el que estés nos encontramos por un lado arriba a la derecha el botón para acceder al bestiario y abajo del pase de batalla otro selector ciclo, siendo en este caso el de los sombreros.
+![Bestiario](Bestiario.png)
+Menú del bestiario. Este menú está compuesto por un gran libro en cuyas páginas se muestra la información de cada enemigo/potenciador/arma. Cada elemento tendrá un título con su nombre, una imagen, unas estadísticas (a excepción de los potenciadores) y una descripción. Cada vez que el jugador mate/consiga/use uno de dichos elementos lo desbloqueara en el bestiario. Si no se ha desbloqueado la página aparecerá en blanco. Entre elementos habrá páginas con una gran texto que indique el grupo en el que se amontonan, por ejemplo antes de mostrar a los zombies, esqueletos… se muestra una página con el título de enemigos.  
+![Menú de pausa](MenuPausa.png)
+Menú de pausa. Es el menú que sale al pausar el juego durante una partida. Su fondo es semitransparente permitiendo al jugador ver su situación antes de despausar. Tiene dos botones, uno para continuar y otro para rendirse. En caso de rendirse se le pone como score los puntos que llevase hasta ese momento.  
+![Interfaz de partida](InterfazPartida.png)
+Interfaz durante la partida. Durante la partida el jugador podrá ver varios elementos que le muestran su estado. 
+Arriba a la izquierda se encuentra su barra de vida y justo abajo su marcador de puntos. 
+Arriba a la derecha está el contador de personalidad que le muestra su desarrollo con cada personalidad, armas desbloqueadas… las personalidades se rellenan en sentido de las agujas del reloj y aparece más iluminada la personalidad que estés usando en dicho momento. Al subir dos armas al rango máximo, entre ellas se mostrará el arma especial que combina ambas personalidades. Esto solo aparece con las dos personalidades continuas que maximicen antes, el resto si bien se podrán maximizar para desbloquear las otras armas no darán dichas combinaciones.
+Abajo a la derecha se encuentran las diferentes armas de la personalidad actual. Se ve el icono de las que tienes desbloqueadas, se ilumina la que tienes equipada actualmente y esta con sombra la que aún no has desbloqueado.
+Por último, arriba del todo se encuentra el marcador de potenciador. Este consiste en una flecha que apunta en donde se encuentra el potenciador que ha spawneado. Solo aparece cuando hay uno en el mapa y si este es robado desaparece la marca.
+#### 4.2 Explicación de los elementos del HUD y su funcionamiento
+Durante la partida el jugador podrá ver varios elementos en la pantalla que le darán información:
+ - **Barra de vida**: aparece arriba a la izquierda y te muestra la cantidad de vida restante de tu jugador.
+ - **Puntuación**: Te indica la cantidad de puntos conseguidos en la partida.
+ - **Ruleta de personalidades**: es una rueda dividida en 4 zonas cada una relacionada a una personalidad. Cada parte a su vez se divide en tres partes que muestran la progresión del jugador en esa personalidad. Estas se rellenan en el sentido del reloj y se ilumina la personalidad que estás usando actualmente. Por último en el centro se muestra el arma que usas actualmente.
+ - **Armas de clase**: abajo a la derecha aparecen 3 slots con las armas que tiene esa clase. Si las tienes desbloqueadas aparecen a color y si no se muestra solo la silueta. Arriba aparece una pestaña con tu número de munición.
+ - **Globo de potenciador**: Cuando un potenciador aparece en el mapa se genera un círculo en la pantalla en la zona donde está el potenciador.
+
+### 5. Visual
+![Referencia Visual 1](RefVisual1)  
+![Referencia Visual 2](RefVisual2)  
+![Referencia Visual 3](RefVisual3)  
+![Referencia Visual 4](RefVisual4)  
+![Referencia Visual 5](RefVisual5)  
+![Referencia Visual 6](RefVisual6)  
+![Referencia Visual 7](RefVisual7)  
+
+### 6. Menú y flujo de juego
+![Flujo de Juego](FlujoJuego)
+### 7. Contenido 
+#### 7.1 Historia
+La historia gira en torno a un hombre con personalidad múltiple el cual tras una crisis de los 40 pierde la razón y empieza a alterar la realidad. Este comienza a ver a la personas como horribles criaturas las cuales debe destruir porque viva USA. Al final del juego tendrás que elegir entre acabar tu vida por el bien de la humanidad o seguir matando gente siendo feliz.
+#### 7.2 Objetos 
+Potenciadores que puedes encontrar por el mapa(los enemigos pueden conseguir los potenciadores exceptuando bosses)
+Los potenciadores aparecen en 5 localizaciones que hay en el mapa cada cierto tiempo. Solo puede haber un potenciador activo en el mapa:
+ - Botiquín: Al recogerlo recuperas 20 de vida.
+ - Velocidad: Aumentas tu velocidad a 10 durante 3 segundos.
+ - Modo Vivu : te quedas dormido 5 segundos.
+ - Invencibilidad: eres invencible durante 5 segundos.
+### 8. Referencias
+[BoxHead](https://www.google.com/search?q=boxhead&source=lmns&bih=786&biw=1536&hl=es&sa=X&ved=2ahUKEwjUg-GDvq-BAxVfmScCHR-sDvIQ0pQJKAB6BAgBEAI)  
+[Vampire Survivors](https://www.google.com/search?q=vampire+survivors&sca_esv=565933642&bih=786&biw=1536&hl=es&sxsrf=AM9HkKlfMrDJ13lNJEW_xNfIZPxE9-B7Hg%3A1694879468471&ei=7M4FZZG4G7afkdUP_tuL-A4&gs_ssp=eJzj4tVP1zc0LEgpsizKS0ozYPQSLEvMLcgsSlUoLi0qyyzLLyoGAMJYDAk&oq=vampire+s&gs_lp=Egxnd3Mtd2l6LXNlcnAiCXZhbXBpcmUgcyoCCAAyCxAuGIMBGLEDGIAEMgsQABiABBixAxiDATIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMhoQLhiDARixAxiABBiXBRjcBBjeBBjgBNgBAUj4FlAAWJkLcAB4AZABAJgB8QGgAYEIqgEFNi4yLjG4AQHIAQD4AQHCAgcQIxiKBRgnwgILEAAYigUYsQMYgwHCAhEQLhiABBixAxiDARjHARivAcICCBAAGIAEGLEDwgIREC4YgAQYsQMYgwEYxwEY0QPCAgsQLhiABBixAxiDAcICCBAuGIAEGLEDwgIFEC4YgATCAgsQLhiKBRixAxiDAcICGhAuGIAEGLEDGIMBGJcFGNwEGN4EGOAE2AEB4gMEGAAgQYgGAboGBggBEAEYFA&sclient=gws-wiz-serp)  
+[Infamous](https://www.google.com/search?q=infamous&sca_esv=565933642&bih=786&biw=1536&hl=es&sxsrf=AM9HkKlfMrDJ13lNJEW_xNfIZPxE9-B7Hg%3A1694879468471&ei=7M4FZZG4G7afkdUP_tuL-A4&ved=0ahUKEwiR3p2Fvq-BAxW2T6QEHf7tAu8Q4dUDCBA&uact=5&oq=infamous&gs_lp=Egxnd3Mtd2l6LXNlcnAiCGluZmFtb3VzMggQLhixAxiABDIIEC4YsQMYgAQyCxAuGIAEGLEDGIMBMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIXEC4YsQMYgAQYlwUY3AQY3gQY4ATYAQFIrDJQuSBYjC1wA3gBkAEAmAF4oAGLBqoBAzUuM7gBA8gBAPgBAcICChAAGEcY1gQYsAPCAgoQABiKBRiwAxhDwgIKEC4YigUYsAMYQ8ICBxAjGIoFGCfCAgQQIxgnwgIHEC4YigUYQ8ICBxAAGIoFGEPCAgsQABiABBixAxiDAcICERAuGIAEGLEDGIMBGMcBGNEDwgIMECMYigUYExiABBgnwgINEAAYigUYsQMYgwEYQ8ICCxAAGIoFGLEDGIMBwgIEEAAYA8ICCxAuGIoFGLEDGIMBwgIIEC4YgAQYsQPCAgsQLhiABBjHARivAcICCBAAGIAEGLEDwgIUEC4YgAQYlwUY3AQY3gQY4ATYAQHiAwQYACBBiAYBkAYKugYGCAEQARgU&sclient=gws-wiz-serp)  
+[Survivor.io](https://www.google.com/search?q=survivors+.+io&oq=surviv+&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MgcIARAuGIAEMgYIAhBFGDsyBwgDEAAYgAQyBwgEEAAYgAQyBggFEEUYPDIGCAYQRRg8MgYIBxBFGDzSAQg0Mjg4ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8)  
+
+ 
+
+ 
 
 
 
