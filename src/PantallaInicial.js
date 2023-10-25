@@ -13,6 +13,9 @@ export default class PantallaInicial extends Phaser.Scene{
         this.textCreated = false;
         this.text;
         this.i = 0;
+
+        this.j = 0;
+        this.scaleEffect = false;
         console.log();
     }
 
@@ -35,7 +38,9 @@ export default class PantallaInicial extends Phaser.Scene{
 
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "../assets/fonts/RUBBBB__.TTF");
-       
+
+
+        
     }
 
     continueCreate() {
@@ -49,30 +54,40 @@ export default class PantallaInicial extends Phaser.Scene{
 		this.text = this.add.text(x, y, message, 
             { fontFamily: 'TitleFont', fontSize: 90, color: 'white' })
         this.text.setOrigin(0.5,0.5);	
-
+        this.text.setScale(1,1);
         this.textCreated = true;
-        
+        this.text.angle = -5;
+        // efecto texto
+        var efectoScale = this.tweens.add({
+            targets: this.text,
+            scale: 1.5,
+            duration: 1500,
+            ease: 'Sine.easeInOut',
+            yoyo: true, // Hace que la animación se repita en sentido inverso
+            repeat: -1 // Repite infinitamente
+        });
+        var efectoRotation = this.tweens.add({
+            targets: this.text,
+            angle: 5,
+            duration: 3000,
+            ease: 'Sine.easeInOut',
+            yoyo: true, 
+            repeat: -1
+        });
     }
     
     update(t, dt){
-        //console.log("update", t, dt);
+        
         if(this.textCreated){
+            //efecto multicolor
             const top = this.hsv[this.i].color;
             const bottom = this.hsv[359 - this.i].color;
-    
             this.text.setTint(top, top, bottom, bottom);
-    
             this.i++;
-    
             if (this.i === 360)
             {
                 this.i = 0;
             }
         }
-        
-        
     }
-
-
-
 }
