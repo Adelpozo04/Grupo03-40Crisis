@@ -69,6 +69,13 @@ El escenario es una mapa cerrado con diferentes obstáculos destruibles por el e
 1. Fantasma: Persigue al jugador saltándose cualquier tipo de trampa, muro… (obstáculo). Daño  3/Velocidad 3/ Vida 10.
 2. Payaso: Persigue al jugador y al acercarse a él explota. Al morir explota igualmente y la explosión daña a jugador y enemigos. Daño 7/ Velocidad 8/ Vida 5.
 
+#### 2.6 Controles
+- El jugador se moverá con las teclas de WASD.
+- Cambiará de clase con la tecla Q (sentido antihorario) y la tecla E (sentido horario).
+- Cambiará de arma con la rueda del ratón.
+- Apunta moviendo el cursor y  dispara con el click izquierdo del ratón.
+
+
 ### 3. Diseño de nivel 
 #### 3.1  Imagen del nivel
 *En todos los niveles hay puntos para recoger power ups marcados con amarillo* 
@@ -152,8 +159,20 @@ Los potenciadores aparecen en 5 localizaciones que hay en el mapa cada cierto ti
 [Vampire Survivors](https://www.google.com/search?q=vampire+survivors&sca_esv=565933642&bih=786&biw=1536&hl=es&sxsrf=AM9HkKlfMrDJ13lNJEW_xNfIZPxE9-B7Hg%3A1694879468471&ei=7M4FZZG4G7afkdUP_tuL-A4&gs_ssp=eJzj4tVP1zc0LEgpsizKS0ozYPQSLEvMLcgsSlUoLi0qyyzLLyoGAMJYDAk&oq=vampire+s&gs_lp=Egxnd3Mtd2l6LXNlcnAiCXZhbXBpcmUgcyoCCAAyCxAuGIMBGLEDGIAEMgsQABiABBixAxiDATIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMhoQLhiDARixAxiABBiXBRjcBBjeBBjgBNgBAUj4FlAAWJkLcAB4AZABAJgB8QGgAYEIqgEFNi4yLjG4AQHIAQD4AQHCAgcQIxiKBRgnwgILEAAYigUYsQMYgwHCAhEQLhiABBixAxiDARjHARivAcICCBAAGIAEGLEDwgIREC4YgAQYsQMYgwEYxwEY0QPCAgsQLhiABBixAxiDAcICCBAuGIAEGLEDwgIFEC4YgATCAgsQLhiKBRixAxiDAcICGhAuGIAEGLEDGIMBGJcFGNwEGN4EGOAE2AEB4gMEGAAgQYgGAboGBggBEAEYFA&sclient=gws-wiz-serp)  
 [Infamous](https://www.google.com/search?q=infamous&sca_esv=565933642&bih=786&biw=1536&hl=es&sxsrf=AM9HkKlfMrDJ13lNJEW_xNfIZPxE9-B7Hg%3A1694879468471&ei=7M4FZZG4G7afkdUP_tuL-A4&ved=0ahUKEwiR3p2Fvq-BAxW2T6QEHf7tAu8Q4dUDCBA&uact=5&oq=infamous&gs_lp=Egxnd3Mtd2l6LXNlcnAiCGluZmFtb3VzMggQLhixAxiABDIIEC4YsQMYgAQyCxAuGIAEGLEDGIMBMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIXEC4YsQMYgAQYlwUY3AQY3gQY4ATYAQFIrDJQuSBYjC1wA3gBkAEAmAF4oAGLBqoBAzUuM7gBA8gBAPgBAcICChAAGEcY1gQYsAPCAgoQABiKBRiwAxhDwgIKEC4YigUYsAMYQ8ICBxAjGIoFGCfCAgQQIxgnwgIHEC4YigUYQ8ICBxAAGIoFGEPCAgsQABiABBixAxiDAcICERAuGIAEGLEDGIMBGMcBGNEDwgIMECMYigUYExiABBgnwgINEAAYigUYsQMYgwEYQ8ICCxAAGIoFGLEDGIMBwgIEEAAYA8ICCxAuGIoFGLEDGIMBwgIIEC4YgAQYsQPCAgsQLhiABBjHARivAcICCBAAGIAEGLEDwgIUEC4YgAQYlwUY3AQY3gQY4ATYAQHiAwQYACBBiAYBkAYKugYGCAEQARgU&sclient=gws-wiz-serp)  
 [Survivor.io](https://www.google.com/search?q=survivors+.+io&oq=surviv+&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MgcIARAuGIAEMgYIAhBFGDsyBwgDEAAYgAQyBwgEEAAYgAQyBggFEEUYPDIGCAYQRRg8MgYIBxBFGDzSAQg0Mjg4ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8)  
+[Infectonator](https://www.google.com/search?q=infectonator&source=lmns&bih=786&biw=1536&hl=es&sa=X&ved=2ahUKEwi32LCx5tqBAxXkoUwKHR2rAJEQ0pQJKAB6BAgBEAI)  
 
+ ## Assets  
+
+ Los sprites tanto del personaje principal como de los enemigos los hemos creado desde cero con Aseprite y no poseen copyright (**cualquier parecido con alguna obra con copyright es pura coincidencia**). En cuanto a los demás assets como armas o power-ups, algunas las haremos nosotros mismos y otras las sacaremos de alguna página web, dependiendo de si encontramos material disponible o no.
  
+ En cuanto a la creación de los mapas en el mapa de ciudad todo lo sacaremos de internet (tiles y decoración) y los otros dos mapas (playa y volcán) haremos una combinación ya que tanto el suelo y (mar y lava) lo haremos nosotros; el resto lo sacaremos de internet.  
+ Tema sonidos los sacaremos de alguna página que proporcione sonidos.
+
+   ### Referencias (imagen y sonido)
+
+    (https://itch.io/)
+    (https://freesound.org/)
+    (https://opengameart.org/)
 
  
 
