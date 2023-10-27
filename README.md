@@ -79,35 +79,45 @@ El escenario es una mapa cerrado con diferentes obstáculos destruibles por el e
       - Pasan coches por las carreteras que hacen un gran daño tanto al jugador como a los enemigos.  
       - Hay basura que paraliza por x tiempo al jugador y los enemigos si entran en contacto con ella.  
       - Boca de riego que saca agua y reduce movilidad en ella  
+      
 - Mapa 2 (playa)
-![Mapa 2 (Playa)](Mapa2playa.png)
-  - Olas que arrastran enemigos/jugador.
-  - Cada x tiempo el mapa se inunda y el jugador se ralentiza.
-  - Una gaviota que va cagando por el mapa y si te da no puedes atacar por x tiempo.
-![Mapa 3 (Volcan)](Mapa3Volcan.png)
-  - Aparecen zonas de lava que reducen espacio jugable pues al entrar te hacen daño.
-  - Caída de rocas del cielo que hacen gran daño en área.
-  - Nube de humo que aparece en una parte del mapa y tapa la visión en ella totalmente pero no reduce el espacio jugable.
+
+![Mapa 2 (Playa)](Mapa2playa.png)  
+    - Olas que arrastran enemigos/jugador.  
+    - Cada x tiempo el mapa se inunda y el jugador se ralentiza.  
+    - Una gaviota que va cagando por el mapa y si te da no puedes atacar por x tiempo.    
+
+- Mapa 3 (volcán)
+  
+![Mapa 3 (Volcan)](Mapa3Volcan.png)    
+    - Aparecen zonas de lava que reducen espacio jugable pues al entrar te hacen daño.  
+    - Caída de rocas del cielo que hacen gran daño en área.  
+    - Nube de humo que aparece en una parte del mapa y tapa la visión en ella totalmente pero no reduce el espacio jugable.  
  
  #### 3.2 Descripción de partida típica 
  El jugador debe sobrevivir mientras varios enemigos intentan atacarte. La partida está dividida en rondas infinitas entre las cuales aumentan las características de los enemigos y favorece la aparición de unos u otros. La partida termina cuando el jugador muere y se almacena su puntuación si es la más alta.
 
 ### 4. HUD 
 #### 4.1 Mockup del HUD
-![Menú principal](MenuPrincipal.png)
-Menú inicial del juego. En él podemos encontrar el título del juego, un botón de start y un pequeño texto semitransparente con la desarrolladora abajo a la derecha. El fondo será uno de los mapas del juego siendo recorrido, sin enemigos ni potenciadores, dándole un toque apacible antes de la partida.  
-![Menú de selección de mapas](SeleccionMapas.png)
-Menú de selección de mapas. En este menú el jugador será capaz de desplazarse entre los diferentes mapas de forma cíclica. Cada mapa muestra su nombre, la puntuación máxima obtenida en él, una imagen/icono que muestra la colocación de obstáculos y objetos y el pase de batalla de dicho mapa. Independiente del mapa en el que estés nos encontramos por un lado arriba a la derecha el botón para acceder al bestiario y abajo del pase de batalla otro selector ciclo, siendo en este caso el de los sombreros.
-![Bestiario](Bestiario.png)
-Menú del bestiario. Este menú está compuesto por un gran libro en cuyas páginas se muestra la información de cada enemigo/potenciador/arma. Cada elemento tendrá un título con su nombre, una imagen, unas estadísticas (a excepción de los potenciadores) y una descripción. Cada vez que el jugador mate/consiga/use uno de dichos elementos lo desbloqueara en el bestiario. Si no se ha desbloqueado la página aparecerá en blanco. Entre elementos habrá páginas con una gran texto que indique el grupo en el que se amontonan, por ejemplo antes de mostrar a los zombies, esqueletos… se muestra una página con el título de enemigos.  
-![Menú de pausa](MenuPausa.png)
-Menú de pausa. Es el menú que sale al pausar el juego durante una partida. Su fondo es semitransparente permitiendo al jugador ver su situación antes de despausar. Tiene dos botones, uno para continuar y otro para rendirse. En caso de rendirse se le pone como score los puntos que llevase hasta ese momento.  
-![Interfaz de partida](InterfazPartida.png)
-Interfaz durante la partida. Durante la partida el jugador podrá ver varios elementos que le muestran su estado. 
+![Menú principal](MenuPrincipal.png)  
+Menú inicial del juego. En él podemos encontrar el título del juego, un botón de start y un pequeño texto semitransparente con la desarrolladora abajo a la derecha. El fondo será uno de los mapas del juego siendo recorrido, sin enemigos ni potenciadores, dándole un toque apacible antes de la partida.    
+
+![Menú de selección de mapas](SeleccionMapas.png)  
+Menú de selección de mapas. En este menú el jugador será capaz de desplazarse entre los diferentes mapas de forma cíclica. Cada mapa muestra su nombre, la puntuación máxima obtenida en él, una imagen/icono que muestra la colocación de obstáculos y objetos y el pase de batalla de dicho mapa. Independiente del mapa en el que estés nos encontramos por un lado arriba a la derecha el botón para acceder al bestiario y abajo del pase de batalla otro selector ciclo, siendo en este caso el de los sombreros.  
+
+![Bestiario](Bestiario.png)  
+Menú del bestiario. Este menú está compuesto por un gran libro en cuyas páginas se muestra la información de cada enemigo/potenciador/arma. Cada elemento tendrá un título con su nombre, una imagen, unas estadísticas (a excepción de los potenciadores) y una descripción. Cada vez que el jugador mate/consiga/use uno de dichos elementos lo desbloqueara en el bestiario. Si no se ha desbloqueado la página aparecerá en blanco. Entre elementos habrá páginas con una gran texto que indique el grupo en el que se amontonan, por ejemplo antes de mostrar a los zombies, esqueletos… se muestra una página con el título de enemigos.    
+
+![Menú de pausa](MenuPausa.png)  
+Menú de pausa. Es el menú que sale al pausar el juego durante una partida. Su fondo es semitransparente permitiendo al jugador ver su situación antes de despausar. Tiene dos botones, uno para continuar y otro para rendirse. En caso de rendirse se le pone como score los puntos que llevase hasta ese momento.    
+
+![Interfaz de partida](InterfazPartida.png)  
+Interfaz durante la partida. Durante la partida el jugador podrá ver varios elementos que le muestran su estado.
 Arriba a la izquierda se encuentra su barra de vida y justo abajo su marcador de puntos. 
-Arriba a la derecha está el contador de personalidad que le muestra su desarrollo con cada personalidad, armas desbloqueadas… las personalidades se rellenan en sentido de las agujas del reloj y aparece más iluminada la personalidad que estés usando en dicho momento. Al subir dos armas al rango máximo, entre ellas se mostrará el arma especial que combina ambas personalidades. Esto solo aparece con las dos personalidades continuas que maximicen antes, el resto si bien se podrán maximizar para desbloquear las otras armas no darán dichas combinaciones.
+Arriba a la derecha está el contador de personalidad que le muestra su desarrollo con cada personalidad, armas desbloqueadas… las personalidades se rellenan en sentido de las agujas del reloj y aparece más iluminada la personalidad que estés usando en dicho momento. Al subir dos armas al rango máximo, entre ellas se mostrará el arma especial que combina ambas personalidades. Esto solo aparece con las dos personalidades continuas que maximicen antes, el resto si bien se podrán maximizar para desbloquear las otras armas no darán dichas combinaciones.  
 Abajo a la derecha se encuentran las diferentes armas de la personalidad actual. Se ve el icono de las que tienes desbloqueadas, se ilumina la que tienes equipada actualmente y esta con sombra la que aún no has desbloqueado.
-Por último, arriba del todo se encuentra el marcador de potenciador. Este consiste en una flecha que apunta en donde se encuentra el potenciador que ha spawneado. Solo aparece cuando hay uno en el mapa y si este es robado desaparece la marca.
+Por último, arriba del todo se encuentra el marcador de potenciador. Este consiste en una flecha que apunta en donde se encuentra el potenciador que ha spawneado. Solo aparece cuando hay uno en el mapa y si este es robado desaparece la marca.  
+
 #### 4.2 Explicación de los elementos del HUD y su funcionamiento
 Durante la partida el jugador podrá ver varios elementos en la pantalla que le darán información:
  - **Barra de vida**: aparece arriba a la izquierda y te muestra la cantidad de vida restante de tu jugador.
@@ -117,13 +127,13 @@ Durante la partida el jugador podrá ver varios elementos en la pantalla que le 
  - **Globo de potenciador**: Cuando un potenciador aparece en el mapa se genera un círculo en la pantalla en la zona donde está el potenciador.
 
 ### 5. Visual
-![Referencia Visual 1](RefVisual1.png)  
-![Referencia Visual 2](RefVisual2.pmg)  
-![Referencia Visual 3](RefVisual3.png)  
-![Referencia Visual 4](RefVisual4.png)  
-![Referencia Visual 5](RefVisual5.png)  
-![Referencia Visual 6](RefVisual6.png)  
-![Referencia Visual 7](RefVisual7.png)  
+![Referencia Visual 1](RefVisual1.png)    
+![Referencia Visual 2](RefVisual2.png)    
+![Referencia Visual 3](RefVisual3.png)    
+![Referencia Visual 4](RefVisual4.png)    
+![Referencia Visual 5](RefVisual5.png)    
+![Referencia Visual 6](RefVisual6.png)    
+![Referencia Visual 7](RefVisual7.png)    
 
 ### 6. Menú y flujo de juego
 ![Flujo de Juego](FlujoJuego.png)
