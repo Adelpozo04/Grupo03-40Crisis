@@ -10,12 +10,7 @@ export default class PantallaInicial extends Phaser.Scene{
     }
     
     preload(){
-        this.textCreated = false;
-        this.text;
-        this.i = 0;
-
-        this.j = 0;
-        this.scaleEffect = false;
+        
         console.log();
     }
 
@@ -38,55 +33,67 @@ export default class PantallaInicial extends Phaser.Scene{
 
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "../assets/fonts/RUBBBB__.TTF");
-
-
+        
+        this.textCreated = false;
+        this.scaleEffect = false;
+        this.letterColor = 0;
         
     }
 
     continueCreate() {
 
-        this.GenerateText(this.cameras.main.centerX, 250, '40 CRISIS', 'PantallaInicial');
-
+        this.titleLabel = this.generateText(this.cameras.main.centerX, 250, '40 CRISIS', 90);
+        this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'PLAY', 50);
 	}
 
-    GenerateText(x, y, message, sceneKey){
-
-		this.text = this.add.text(x, y, message, 
-            { fontFamily: 'TitleFont', fontSize: 90, color: 'white' })
-        this.text.setOrigin(0.5,0.5);	
-        this.text.setScale(1,1);
+    /**
+     * genra y añade
+     * @param {number} x 
+     * @param {number} y 
+     * @param {String} message 
+     * @param {number} size 
+     * @return {G--}
+     */
+    generateText(x, y, message, size){
+		let ogText = this.add.text(x, y, message, 
+            { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
+        ogText.setOrigin(0.5,0.5);	
+        ogText.setScale(1,1);
         this.textCreated = true;
-        this.text.angle = -5;
+        ogText.angle = -5;
         // efecto texto
-        var efectoScale = this.tweens.add({
-            targets: this.text,
+        
+        this.tweens.add({
+            targets: ogText,
             scale: 1.5,
             duration: 1500,
             ease: 'Sine.easeInOut',
             yoyo: true, // Hace que la animación se repita en sentido inverso
             repeat: -1 // Repite infinitamente
         });
-        var efectoRotation = this.tweens.add({
-            targets: this.text,
+        this.tweens.add({
+            targets: ogText,
             angle: 5,
             duration: 3000,
             ease: 'Sine.easeInOut',
             yoyo: true, 
             repeat: -1
         });
+        return ogText
     }
     
     update(t, dt){
         
         if(this.textCreated){
             //efecto multicolor
-            const top = this.hsv[this.i].color;
-            const bottom = this.hsv[359 - this.i].color;
-            this.text.setTint(top, top, bottom, bottom);
-            this.i++;
-            if (this.i === 360)
+            const top = this.hsv[this.letterColor].color;
+            const bottom = this.hsv[359 - this.letterColor].color;
+            this.playLabel.setTint(top, top, bottom, bottom);
+            this.titleLabel.setTint(top, top, bottom, bottom);
+            this.letterColor++;
+            if (this.letterColor === 360)
             {
-                this.i = 0;
+                this.letterColor = 0;
             }
         }
     }

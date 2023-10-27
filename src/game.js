@@ -2,8 +2,8 @@ import PantallaInicial from "./PantallaInicial.js"
 
 var config = {
     type: Phaser.AUTO,
-    width: 1100,
-    height: 700,
+    width: 1500,
+    height: 800,
     scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
