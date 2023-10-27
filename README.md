@@ -117,16 +117,16 @@ Durante la partida el jugador podrá ver varios elementos en la pantalla que le 
  - **Globo de potenciador**: Cuando un potenciador aparece en el mapa se genera un círculo en la pantalla en la zona donde está el potenciador.
 
 ### 5. Visual
-![Referencia Visual 1](RefVisual1)  
-![Referencia Visual 2](RefVisual2)  
-![Referencia Visual 3](RefVisual3)  
-![Referencia Visual 4](RefVisual4)  
-![Referencia Visual 5](RefVisual5)  
-![Referencia Visual 6](RefVisual6)  
-![Referencia Visual 7](RefVisual7)  
+![Referencia Visual 1](RefVisual1.png)  
+![Referencia Visual 2](RefVisual2.pmg)  
+![Referencia Visual 3](RefVisual3.png)  
+![Referencia Visual 4](RefVisual4.png)  
+![Referencia Visual 5](RefVisual5.png)  
+![Referencia Visual 6](RefVisual6.png)  
+![Referencia Visual 7](RefVisual7.png)  
 
 ### 6. Menú y flujo de juego
-![Flujo de Juego](FlujoJuego)
+![Flujo de Juego](FlujoJuego.png)
 ### 7. Contenido 
 #### 7.1 Historia
 La historia gira en torno a un hombre con personalidad múltiple el cual tras una crisis de los 40 pierde la razón y empieza a alterar la realidad. Este comienza a ver a la personas como horribles criaturas las cuales debe destruir porque viva USA. Al final del juego tendrás que elegir entre acabar tu vida por el bien de la humanidad o seguir matando gente siendo feliz.
