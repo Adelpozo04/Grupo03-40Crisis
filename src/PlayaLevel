@@ -1,0 +1,31 @@
+import Jugador from './jugador';
+
+
+export default class PlayaLevel extends Phaser.Scene{
+
+    constructor(){
+        super({key: 'PlayaLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
+    }
+    
+    init(data){
+        console.log(data);
+    }
+    
+    preload(){
+        
+       
+    }
+
+
+    create(){
+
+        
+        
+    }
+
+    
+    update(t, dt){
+        
+
+    }
+}

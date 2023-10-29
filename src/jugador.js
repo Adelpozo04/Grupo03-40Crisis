@@ -47,30 +47,51 @@ export default class jugador extends Phaser.GameObjects.Container {
 
         this.player.preUpdate(dt, t);
        
-
-        if(this.aKey.isDown && (this.dirX == 0 || this.dirX == -1)){
-            this.dirX = -1;
-            
+        if(this.dirX == 0 || this.dirX == -1){
+            if(this.aKey.isDown){
+                this.dirX = -1;
+                this.setFlip(true, false);
+            }
+            else if(this.aKey.isUp){
+                this.dirX = 0;
+            }
         }
-
-        if(this.dKey.isDown && (this.dirX == 0 || this.dirX == 1)){
-            this.dirX = 1;
-            
+        
+        if(this.dirX == 0 || this.dirX == 1){
+            if(this.dKey.isDown){
+                this.dirX = 1;
+                this.setFlip(false, false);
+            }
+            else if(this.dKey.isUp){
+                this.dirX = 0;
+            }
         }
-
-        if(this.wKey.isDown && (this.dirY == 0 || this.dirY == 1)){
-            this.dirX = 1;
-            
+        
+        if(this.dirY == 0 || this.dirY == 1){
+            if(this.wKey.isDown){
+                this.dirY = 1;
+                
+            }
+            else if(this.wKey.isUp){
+                this.dirY = 0;
+            }
         }
-
-        if(this.sKey.isDown && (this.dirY == 0 || this.dirY == -1)){
-            this.dirY = -1;
-            
+        
+        if(this.dirY == 0 || this.dirY == -1){
+            if(this.sKey.isDown){
+                this.dirY = -1;
+                
+            }
+            else if(this.sKey.isUp){
+                this.dirY = 0;
+            }
         }
+        
 
         if(this.dirX != 0 && this.dirY != 0){
-            this.player.play('walk' + key);
-            
+            this.player.play('walk' + key, true);
+            this.x += (dt/20)*2*this.dirX;
+            this.y += (dt/20)*2*this.dirY;
         }
 
     }
