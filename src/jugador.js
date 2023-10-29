@@ -29,7 +29,7 @@ export default class jugador extends Phaser.GameObjects.Container {
         this.scene.add.existing(this);
 
         this.scene.anims.create({
-            key: 'walk'+key,
+            key: 'walk'+ key,
             frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
             frameRate: 5,
             repeat: -1
@@ -48,9 +48,11 @@ export default class jugador extends Phaser.GameObjects.Container {
         this.player.preUpdate(dt, t);
        
         if(this.dirX == 0 || this.dirX == -1){
+
             if(this.aKey.isDown){
                 this.dirX = -1;
-                this.setFlip(true, false);
+                //this.setFlip(true, false);
+                console.log("ve izq " + this.dirX);
             }
             else if(this.aKey.isUp){
                 this.dirX = 0;
@@ -60,16 +62,16 @@ export default class jugador extends Phaser.GameObjects.Container {
         if(this.dirX == 0 || this.dirX == 1){
             if(this.dKey.isDown){
                 this.dirX = 1;
-                this.setFlip(false, false);
+                //this.setFlip(false, false);
             }
             else if(this.dKey.isUp){
                 this.dirX = 0;
             }
         }
         
-        if(this.dirY == 0 || this.dirY == 1){
+        if(this.dirY == 0 || this.dirY == -1){
             if(this.wKey.isDown){
-                this.dirY = 1;
+                this.dirY = -1;
                 
             }
             else if(this.wKey.isUp){
@@ -77,9 +79,9 @@ export default class jugador extends Phaser.GameObjects.Container {
             }
         }
         
-        if(this.dirY == 0 || this.dirY == -1){
+        if(this.dirY == 0 || this.dirY == 1){
             if(this.sKey.isDown){
-                this.dirY = -1;
+                this.dirY = 1;
                 
             }
             else if(this.sKey.isUp){
@@ -88,10 +90,11 @@ export default class jugador extends Phaser.GameObjects.Container {
         }
         
 
-        if(this.dirX != 0 && this.dirY != 0){
-            this.player.play('walk' + key, true);
-            this.x += (dt/20)*2*this.dirX;
-            this.y += (dt/20)*2*this.dirY;
+        if(this.dirX != 0 || this.dirY != 0){
+            this.player.play('walk' + this.key, true);
+            this.x += (dt/20)* 0.005 *this.dirX;
+            this.y += (dt/20)* 0.005 *this.dirY;
+            console.log("camina");
         }
 
     }
