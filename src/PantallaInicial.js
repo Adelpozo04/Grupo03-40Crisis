@@ -37,6 +37,8 @@ export default class PantallaInicial extends Phaser.Scene{
         this.textCreated = false;
         this.scaleEffect = false;
         this.letterColor = 0;
+
+        this.nextKey = this.input.keyboard.addKey('E');
         
     }
 
@@ -95,6 +97,10 @@ export default class PantallaInicial extends Phaser.Scene{
             {
                 this.letterColor = 0;
             }
+        }
+
+        if(this.nextKey.IsDown){
+            this.scene.start("PlayaLevel");
         }
     }
 }
