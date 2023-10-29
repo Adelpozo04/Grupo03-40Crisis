@@ -1,3 +1,4 @@
+
 # Videojuego Navegador "40 Crisis"
 
 
@@ -190,8 +191,3 @@ Los potenciadores aparecen en 5 localizaciones que hay en el mapa cada cierto ti
 
 
  
-
-
-
-
-
