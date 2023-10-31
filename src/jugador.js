@@ -19,12 +19,12 @@ export default class jugador extends Phaser.GameObjects.Container {
 
         this.dirX = 0;
         this.dirY = 0;
+        this.speed = 1;
+
 
         this.player = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
 
         this.add(this.player);
-
-
 
         this.scene.add.existing(this);
 
@@ -34,6 +34,13 @@ export default class jugador extends Phaser.GameObjects.Container {
             frameRate: 5,
             repeat: -1
         });
+
+        this.scene.anims.create({
+            key: 'iddle' + key,
+            frames: scene.anims.generateFrameNumbers(key, {start: 0, end:0}),
+            frameRate: 5,
+            repeat: -1
+        })
 
         this.key = key
 
@@ -51,8 +58,7 @@ export default class jugador extends Phaser.GameObjects.Container {
 
             if(this.aKey.isDown){
                 this.dirX = -1;
-                //this.setFlip(true, false);
-                console.log("ve izq " + this.dirX);
+                this.player.setFlip(true, false);
             }
             else if(this.aKey.isUp){
                 this.dirX = 0;
@@ -62,7 +68,7 @@ export default class jugador extends Phaser.GameObjects.Container {
         if(this.dirX == 0 || this.dirX == 1){
             if(this.dKey.isDown){
                 this.dirX = 1;
-                //this.setFlip(false, false);
+                this.player.setFlip(false, false);
             }
             else if(this.dKey.isUp){
                 this.dirX = 0;
@@ -92,9 +98,12 @@ export default class jugador extends Phaser.GameObjects.Container {
 
         if(this.dirX != 0 || this.dirY != 0){
             this.player.play('walk' + this.key, true);
-            this.x += (dt/20)* 0.005 *this.dirX;
-            this.y += (dt/20)* 0.005 *this.dirY;
-            console.log("camina");
+            this.x += this.speed * this.dirX;
+            this.y += this.speed * this.dirY;
+            console.log(this.x + "/" + dt);
+        }
+        else{
+            this.player.play('iddle' + this.key, true);
         }
 
     }

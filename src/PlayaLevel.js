@@ -12,7 +12,7 @@ export default class PlayaLevel extends Phaser.Scene{
     }
     
     preload(){
-        this.load.image('PlayaImage', './assets/Sprites/Tilesets/Playa/MapaPlaya.png');
+        this.load.image('PlayaImage', './assets/Sprites/Tilesets/Playa/MapaPlayas.png');
         this.load.spritesheet('mike', './assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
        
     }
