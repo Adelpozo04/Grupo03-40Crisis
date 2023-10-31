@@ -37,6 +37,10 @@ export default class PantallaInicial extends Phaser.Scene{
         this.textCreated = false;
         this.scaleEffect = false;
         this.letterColor = 0;
+
+        this.nextKey = this.input.keyboard.addKey('O');
+
+        console.log(this.nextKey);
         
     }
 
@@ -96,5 +100,7 @@ export default class PantallaInicial extends Phaser.Scene{
                 this.letterColor = 0;
             }
         }
+
+        this.nextKey.on('down', (event) => { this.scene.start("PlayaLevel"); });
     }
 }

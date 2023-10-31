@@ -1,4 +1,4 @@
-import Jugador from './jugador';
+import Jugador from './jugador.js';
 
 
 export default class PlayaLevel extends Phaser.Scene{
@@ -12,13 +12,16 @@ export default class PlayaLevel extends Phaser.Scene{
     }
     
     preload(){
-        
+        this.load.image('PlayaImage', './assets/Sprites/Tilesets/Playa/MapaPlayas.png');
+        this.load.spritesheet('mike', './assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
        
     }
 
 
     create(){
+        this.add.image(0, 0, 'PlayaImage').setScale(1, 1).setOrigin(0, 0)
 
+        new Jugador(this, 150, 150, 'mike');
         
         
     }

@@ -19,21 +19,28 @@ export default class jugador extends Phaser.GameObjects.Container {
 
         this.dirX = 0;
         this.dirY = 0;
+        this.speed = 1;
+
 
         this.player = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
 
         this.add(this.player);
 
-
-
         this.scene.add.existing(this);
 
         this.scene.anims.create({
-            key: 'walk'+key,
+            key: 'walk'+ key,
             frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
             frameRate: 5,
             repeat: -1
         });
+
+        this.scene.anims.create({
+            key: 'iddle' + key,
+            frames: scene.anims.generateFrameNumbers(key, {start: 0, end:0}),
+            frameRate: 5,
+            repeat: -1
+        })
 
         this.key = key
 
@@ -48,9 +55,10 @@ export default class jugador extends Phaser.GameObjects.Container {
         this.player.preUpdate(dt, t);
        
         if(this.dirX == 0 || this.dirX == -1){
+
             if(this.aKey.isDown){
                 this.dirX = -1;
-                this.setFlip(true, false);
+                this.player.setFlip(true, false);
             }
             else if(this.aKey.isUp){
                 this.dirX = 0;
@@ -60,16 +68,16 @@ export default class jugador extends Phaser.GameObjects.Container {
         if(this.dirX == 0 || this.dirX == 1){
             if(this.dKey.isDown){
                 this.dirX = 1;
-                this.setFlip(false, false);
+                this.player.setFlip(false, false);
             }
             else if(this.dKey.isUp){
                 this.dirX = 0;
             }
         }
         
-        if(this.dirY == 0 || this.dirY == 1){
+        if(this.dirY == 0 || this.dirY == -1){
             if(this.wKey.isDown){
-                this.dirY = 1;
+                this.dirY = -1;
                 
             }
             else if(this.wKey.isUp){
@@ -77,9 +85,9 @@ export default class jugador extends Phaser.GameObjects.Container {
             }
         }
         
-        if(this.dirY == 0 || this.dirY == -1){
+        if(this.dirY == 0 || this.dirY == 1){
             if(this.sKey.isDown){
-                this.dirY = -1;
+                this.dirY = 1;
                 
             }
             else if(this.sKey.isUp){
@@ -88,10 +96,14 @@ export default class jugador extends Phaser.GameObjects.Container {
         }
         
 
-        if(this.dirX != 0 && this.dirY != 0){
-            this.player.play('walk' + key, true);
-            this.x += (dt/20)*2*this.dirX;
-            this.y += (dt/20)*2*this.dirY;
+        if(this.dirX != 0 || this.dirY != 0){
+            this.player.play('walk' + this.key, true);
+            this.x += this.speed * this.dirX;
+            this.y += this.speed * this.dirY;
+            console.log(this.x + "/" + dt);
+        }
+        else{
+            this.player.play('iddle' + this.key, true);
         }
 
     }
