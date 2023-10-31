@@ -10,7 +10,7 @@ export default class PantallaInicial extends Phaser.Scene{
     }
     
     preload(){
-        
+        this.load.image('PlayaFondo', './assets/Sprites/UI/PantallaInicial/FondoPlaya.png');
         console.log();
     }
 
@@ -31,6 +31,7 @@ export default class PantallaInicial extends Phaser.Scene{
 
     create(){
 
+        this.add.image(0, 0, 'PlayaFondo').setScale(1, 1).setOrigin(0, 0)
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "../assets/fonts/RUBBBB__.TTF");
         

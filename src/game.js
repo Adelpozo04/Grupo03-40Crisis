@@ -4,7 +4,7 @@ import PlayaLevel from "./PlayaLevel.js"
 var config = {
     type: Phaser.AUTO,
     width: 1500,
-    height: 700,
+    height: 800,
     scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
