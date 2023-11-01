@@ -76,6 +76,10 @@ El escenario es una mapa cerrado con diferentes obstáculos destruibles por el e
 - Cambiará de arma con la rueda del ratón.
 - Apunta moviendo el cursor y  dispara con el click izquierdo del ratón.
 
+#### 2.7 Sombreros
+
+Los sombreros son elementos simplemente cosméticos que no tienen ningún efecto dentro de la jugabilidad y que el jugador podrá desbloquear en el de batalla que tiene cada mapa el cual podrás ir avanzando conforme consigues una puntuación más alta en cada mapa. Podrás equiparte el sombrero en el mismo menú de selección de niveles. 
+
 
 ### 3. Diseño de nivel 
 #### 3.1  Imagen del nivel
@@ -135,13 +139,26 @@ Durante la partida el jugador podrá ver varios elementos en la pantalla que le 
  - **Globo de potenciador**: Cuando un potenciador aparece en el mapa se genera un círculo en la pantalla en la zona donde está el potenciador.
 
 ### 5. Visual
+
+En el apartado visual nuestro juego se basará en pixel art, utilizando o creando nosotros mismos los sprites de personajes, armas, enemigos y escenarios.   
+
+
+- Personaje y enemigos
+
 ![Referencia Visual 1](RefVisual1.png)    
-![Referencia Visual 2](RefVisual2.png)    
+![Referencia Visual 2](RefVisual2.png)  
+
+- Escenario
+  
 ![Referencia Visual 3](RefVisual3.png)    
 ![Referencia Visual 4](RefVisual4.png)    
-![Referencia Visual 5](RefVisual5.png)    
+![Referencia Visual 5](RefVisual5.png)
+![Referencia Visual 7](RefVisual7.png)  
+
+- Fuente de las letras
+  
 ![Referencia Visual 6](RefVisual6.png)    
-![Referencia Visual 7](RefVisual7.png)    
+
 
 ### 6. Menú y flujo de juego
 ![Flujo de Juego](FlujoJuego.png)
