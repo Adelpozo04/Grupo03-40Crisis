@@ -1,5 +1,5 @@
 import Jugador from './jugador.js';
-
+import Zombie from './zombie.js';
 
 export default class PlayaLevel extends Phaser.Scene{
 
@@ -14,21 +14,22 @@ export default class PlayaLevel extends Phaser.Scene{
     preload(){
         this.load.image('PlayaImage', './assets/Sprites/Tilesets/Playa/MapaPlayas.png');
         this.load.spritesheet('mike', './assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
-       
+        this.load.spritesheet('zombie', './assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
     }
 
 
     create(){
         this.add.image(0, 0, 'PlayaImage').setScale(1, 1).setOrigin(0, 0)
 
-        new Jugador(this, 150, 150, 'mike');
+        this.mike = new Jugador(this, 150, 150, 'mike');
+        this.zombie = new Zombie(this, 500, 500, 'zombie');
         
         
     }
 
     
     update(t, dt){
-        
+        this.zombie.updateMikeValues(this.mike.x, this.mike.y);
 
     }
 }
