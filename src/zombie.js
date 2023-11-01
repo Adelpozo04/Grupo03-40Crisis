@@ -11,7 +11,7 @@ constructor(scene, x, y, key){
 
     this.dirX = 0;
     this.dirY = 0;
-    this.speed = 1;
+    this.speed = 0.3;
 
     this.mikeX = 0;
     this.mikeY = 0;
@@ -48,9 +48,15 @@ preUpdate(t, dt){
     this.zombie.preUpdate(t,dt);
 
     if (this.x < this.mikeX)
+    {
+        this.zombie.setFlip(false, false);
         this.dirX = 1;
+    }
     else if (this.x > this.mikeX)
+    {
+        this.zombie.setFlip(true, false);
         this.dirX = -1;
+    }
     if (this.y < this.mikeY)
         this.dirY = 1;
     else if (this.y > this.mikeY)
