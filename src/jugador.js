@@ -1,4 +1,4 @@
-
+import Sombrero from "./sombrero.js";
 
 export default class jugador extends Phaser.GameObjects.Container {
 
@@ -7,14 +7,14 @@ export default class jugador extends Phaser.GameObjects.Container {
      * @param {number} x - posicion x
      * @param {number} y - posicion en y
      * @param {string} key - identificador del sprite del jugador
-     * HAT
-     * XHAT
-     * YHAT
+     * @param {Sombrero} hat
+     * @param {number} hatX
+     * @param {number} hatY
      * ARMA
      * PERSONALIDAD
      */
 
-    constructor(scene, x, y, key){
+    constructor(scene, x, y, key, hat, hatX, hatY){
         super(scene, x, y);
 
         this.dirX = 0;
@@ -27,6 +27,17 @@ export default class jugador extends Phaser.GameObjects.Container {
         this.add(this.player);
 
         this.scene.add.existing(this);
+
+        if(hat){
+            this.myHat = hat;
+            this.add(this.myHat);
+            this.myHat.x = hatX;
+            this.myHat.y = hatY;
+
+        }
+        else{
+            this.myHat = null;
+        }
 
         this.scene.anims.create({
             key: 'walk'+ key,
@@ -48,6 +59,8 @@ export default class jugador extends Phaser.GameObjects.Container {
         this.dKey = this.scene.input.keyboard.addKey('D');
         this.wKey = this.scene.input.keyboard.addKey('W');
         this.sKey = this.scene.input.keyboard.addKey('S');
+
+        this.lookDer = true;
     }
 
     preUpdate(dt, t){
@@ -57,8 +70,18 @@ export default class jugador extends Phaser.GameObjects.Container {
         if(this.dirX == 0 || this.dirX == -1){
 
             if(this.aKey.isDown){
-                this.dirX = -1;
-                this.player.setFlip(true, false);
+                if(this.dirX == 0){
+                    this.dirX = -1;
+
+                    if(this.lookDer){
+                        this.player.setFlip(true, false);
+                        this.myHat.x = this.myHat.x * -1;
+                        this.myHat.setFlip(true, false); 
+                        this.lookDer = !this.lookDer;
+                    }
+                    
+                }
+                
             }
             else if(this.aKey.isUp){
                 this.dirX = 0;
@@ -67,8 +90,16 @@ export default class jugador extends Phaser.GameObjects.Container {
         
         if(this.dirX == 0 || this.dirX == 1){
             if(this.dKey.isDown){
-                this.dirX = 1;
-                this.player.setFlip(false, false);
+                if(this.dirX == 0){
+                    this.dirX = 1;
+                    if(!this.lookDer){
+                        this.player.setFlip(false, false);
+                        this.myHat.x = this.myHat.x * -1;
+                        this.myHat.setFlip(false, false);
+                        this.lookDer = !this.lookDer;
+                    }
+                    
+                }   
             }
             else if(this.dKey.isUp){
                 this.dirX = 0;
@@ -77,17 +108,24 @@ export default class jugador extends Phaser.GameObjects.Container {
         
         if(this.dirY == 0 || this.dirY == -1){
             if(this.wKey.isDown){
-                this.dirY = -1;
+                if(this.dirY == 0){
+                    this.dirY = -1;
+                }
+                
                 
             }
             else if(this.wKey.isUp){
+                
                 this.dirY = 0;
             }
         }
         
         if(this.dirY == 0 || this.dirY == 1){
             if(this.sKey.isDown){
-                this.dirY = 1;
+                if(this.dirY == 0){
+                    this.dirY = 1;
+                }
+                
                 
             }
             else if(this.sKey.isUp){
