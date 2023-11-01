@@ -31,23 +31,23 @@ body{
 	max-width: 1200px;
 	margin: auto;
 }
-.container1 .btn-menu, .logo{
+.container1 .btn-menu, .logo, .nombre{
 	float: left;
 	line-height: 70px;
+  margin-left: 10px;
 }
 .container1 .btn-menu label{
 	-webkit-text-stroke: 0.5px black;
 	color: #fff;
 	font-size: 28px;
 	cursor: pointer;
-        line-height: 70px;
+  line-height: 70px;
 }
-.logo h6{
+.nombre h6{
     -webkit-text-stroke: 0.5px black;
 	color: #fff;
 	font-weight: 400;
 	font-size: 25px;
-	margin-left: 10px;
 }
 .container1 .menu{
 	float: right;
