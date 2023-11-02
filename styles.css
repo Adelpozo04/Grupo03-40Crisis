@@ -14,7 +14,6 @@ body{
 	position: absolute;
 	width: 100%;
 	height: 100vh;
-	background: rgba(0,0,0,0.4);
 	z-index: -1;
 	top: 0;left: 0;
 }
@@ -69,6 +68,15 @@ body{
   color: #fff;
   text-decoration: none;
   -webkit-text-stroke: 0.3px black;
+}
+
+div#image-fondo-cabecera{
+  width: 80%;
+  top: 400px;
+  left: 160px;
+  text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
 }
 /*Fin de Estilos para el encabezado*/
 
@@ -160,13 +168,14 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     margin: auto;
+    position: static;
 }
 
 .container .card {
-    width: 330px;
+    width: 350px;
     height: 430px;
     border-radius: 8px;
-    box-shadow: 0 2px 2px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     margin: 20px;
     text-align: center;
@@ -179,8 +188,10 @@ body {
 }
 
 .container .card img {
-    width: 330px;
-    height: 220px;
+    width: 350px;
+    height: 350px;
+    background-color: #ffffff;
+    margin: auto;
 }
 
 .container .card h3 {
