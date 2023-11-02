@@ -14,6 +14,10 @@
  ***40 Crisis*** se trata de un videojuego con oleadas infinitas de vista cenital donde se controla a un personaje quetendrá un arsenal de armas iniciales (ataque cuerpo a cuerpo, pistola, trinchera) con el que defenderse de los enemigos. Al aumentar el número de rondas aumenta el número de enemigos diferentes y desbloquearás nuevas armas, dependiendo de la clase que decidas ultilizar para eliminar a tus enemigos.
 
 ## Enlace a la pagina web
+[Enlace a la página web](https://adelpozo04.github.io/Grupo03-40Crisis/)
+
+## Capturas del juego
+
 
 ## GDD (game design document)
 
