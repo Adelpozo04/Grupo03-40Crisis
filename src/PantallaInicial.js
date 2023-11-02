@@ -10,7 +10,7 @@ export default class PantallaInicial extends Phaser.Scene{
     }
     
     preload(){
-        
+        this.load.image('PlayaFondo', './assets/Sprites/UI/PantallaInicial/FondoPlaya.png');
         console.log();
     }
 
@@ -31,12 +31,17 @@ export default class PantallaInicial extends Phaser.Scene{
 
     create(){
 
+        this.add.image(0, 0, 'PlayaFondo').setScale(1, 1).setOrigin(0, 0)
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "../assets/fonts/RUBBBB__.TTF");
         
         this.textCreated = false;
         this.scaleEffect = false;
         this.letterColor = 0;
+
+        this.nextKey = this.input.keyboard.addKey('O');
+
+        console.log(this.nextKey);
         
     }
 
@@ -44,6 +49,8 @@ export default class PantallaInicial extends Phaser.Scene{
 
         this.titleLabel = this.generateText(this.cameras.main.centerX, 250, '40 CRISIS', 90);
         this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'PLAY', 50);
+        this.playLabel.setInteractive();
+        this.playLabel.on('pointerdown', (event) => { this.scene.start("PlayaLevel"); })
 	}
 
     /**
