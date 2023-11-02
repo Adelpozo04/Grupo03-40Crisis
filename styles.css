@@ -195,7 +195,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     margin: auto;
-    position: static;
+    position: relative;
 }
 
 .container .card {
@@ -242,9 +242,11 @@ body {
 
 /* Sobre nosotros */
 div#sobre-nosotros {
-  width: 100%;
-  height: 600px;
-  background-color: rgb(255, 255, 255);
+  width: 80%;
+  height: 400px;
+  top: 400px;
+  left: 160px;
+  text-align: justify;
 }
 
 div#titulo {
@@ -264,7 +266,6 @@ div#sobre-nosotros-text {
 /* Footer */
 footer {
   position: absolute bottom;
-  bottom: 0px;
   width: 100%;
   height: 300px;
   background: #111;
