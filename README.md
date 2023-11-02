@@ -14,6 +14,12 @@
  ***40 Crisis*** se trata de un videojuego con oleadas infinitas de vista cenital donde se controla a un personaje quetendrá un arsenal de armas iniciales (ataque cuerpo a cuerpo, pistola, trinchera) con el que defenderse de los enemigos. Al aumentar el número de rondas aumenta el número de enemigos diferentes y desbloquearás nuevas armas, dependiendo de la clase que decidas ultilizar para eliminar a tus enemigos.
 
 ## Enlace a la pagina web
+[Enlace a la página web](https://adelpozo04.github.io/Grupo03-40Crisis/)
+
+## Capturas del juego
+![pantalla inicial](pantallainicial.jpg)  
+![mapaplaya](playajuego.jpg)  
+
 
 ## GDD (game design document)
 
@@ -118,7 +124,9 @@ Menú inicial del juego. En él podemos encontrar el título del juego, un botó
 Menú de selección de mapas. En este menú el jugador será capaz de desplazarse entre los diferentes mapas de forma cíclica. Cada mapa muestra su nombre, la puntuación máxima obtenida en él, una imagen/icono que muestra la colocación de obstáculos y objetos y el pase de batalla de dicho mapa. Independiente del mapa en el que estés nos encontramos por un lado arriba a la derecha el botón para acceder al bestiario y abajo del pase de batalla otro selector ciclo, siendo en este caso el de los sombreros.  
 
 ![Bestiario](/ReadMe%20Files/Bestiario.png)  
-Menú del bestiario. Este menú está compuesto por un gran libro en cuyas páginas se muestra la información de cada enemigo/potenciador/arma. Cada elemento tendrá un título con su nombre, una imagen, unas estadísticas (a excepción de los potenciadores) y una descripción. Cada vez que el jugador mate/consiga/use uno de dichos elementos lo desbloqueara en el bestiario. Si no se ha desbloqueado la página aparecerá en blanco. Entre elementos habrá páginas con una gran texto que indique el grupo en el que se amontonan, por ejemplo antes de mostrar a los zombies, esqueletos… se muestra una página con el título de enemigos.    
+Menú del bestiario. Este menú está compuesto por un gran libro en cuyas páginas se muestra la información de cada enemigo/potenciador/arma. Cada elemento tendrá un título con su nombre, una imagen, unas estadísticas (a excepción de los potenciadores) y una descripción. Cada vez que el jugador mate/consiga/use uno de dichos elementos lo desbloqueara en el bestiario.
+
+Si no se ha desbloqueado la página aparecerá en blanco. Entre elementos habrá páginas con una gran texto que indique el grupo en el que se amontonan, por ejemplo antes de mostrar a los zombies, esqueletos… se muestra una página con el título de enemigos.    
 
 ![Menú de pausa](/ReadMe%20Files/MenuPausa.png)  
 Menú de pausa. Es el menú que sale al pausar el juego durante una partida. Su fondo es semitransparente permitiendo al jugador ver su situación antes de despausar. Tiene dos botones, uno para continuar y otro para rendirse. En caso de rendirse se le pone como score los puntos que llevase hasta ese momento.    
@@ -126,7 +134,9 @@ Menú de pausa. Es el menú que sale al pausar el juego durante una partida. Su 
 ![Interfaz de partida](/ReadMe%20Files/InterfazPartida.png)  
 Interfaz durante la partida. Durante la partida el jugador podrá ver varios elementos que le muestran su estado.
 Arriba a la izquierda se encuentra su barra de vida y justo abajo su marcador de puntos. 
+
 Arriba a la derecha está el contador de personalidad que le muestra su desarrollo con cada personalidad, armas desbloqueadas… las personalidades se rellenan en sentido de las agujas del reloj y aparece más iluminada la personalidad que estés usando en dicho momento. Al subir dos armas al rango máximo, entre ellas se mostrará el arma especial que combina ambas personalidades. Esto solo aparece con las dos personalidades continuas que maximicen antes, el resto si bien se podrán maximizar para desbloquear las otras armas no darán dichas combinaciones.  
+
 Abajo a la derecha se encuentran las diferentes armas de la personalidad actual. Se ve el icono de las que tienes desbloqueadas, se ilumina la que tienes equipada actualmente y esta con sombra la que aún no has desbloqueado.
 Por último, arriba del todo se encuentra el marcador de potenciador. Este consiste en una flecha que apunta en donde se encuentra el potenciador que ha spawneado. Solo aparece cuando hay uno en el mapa y si este es robado desaparece la marca.  
 
@@ -160,7 +170,7 @@ En el apartado visual nuestro juego se basará en pixel art, utilizando o creand
 ![Referencia Visual 6](/ReadMe%20Files/RefVisual6.png)    
 
 ### 6. Menú y flujo de juego
-![Flujo de Juego](FlujoJuego.png)
+![Flujo de Juego](/ReadMe%20Files/FlujoJuego.png)
 ### 7. Contenido 
 #### 7.1 Historia
 La historia gira en torno a un hombre con personalidad múltiple el cual tras una crisis de los 40 pierde la razón y empieza a alterar la realidad. Este comienza a ver a la personas como horribles criaturas las cuales debe destruir porque viva USA. Al final del juego tendrás que elegir entre acabar tu vida por el bien de la humanidad o seguir matando gente siendo feliz.
