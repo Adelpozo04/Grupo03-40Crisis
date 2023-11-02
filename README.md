@@ -170,7 +170,7 @@ En el apartado visual nuestro juego se basará en pixel art, utilizando o creand
 ![Referencia Visual 6](/ReadMe%20Files/RefVisual6.png)    
 
 ### 6. Menú y flujo de juego
-![Flujo de Juego](FlujoJuego.png)
+![Flujo de Juego](/ReadMe%20Files/FlujoJuego.png)
 ### 7. Contenido 
 #### 7.1 Historia
 La historia gira en torno a un hombre con personalidad múltiple el cual tras una crisis de los 40 pierde la razón y empieza a alterar la realidad. Este comienza a ver a la personas como horribles criaturas las cuales debe destruir porque viva USA. Al final del juego tendrás que elegir entre acabar tu vida por el bien de la humanidad o seguir matando gente siendo feliz.
