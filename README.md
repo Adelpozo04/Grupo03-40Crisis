@@ -17,8 +17,8 @@
 [Enlace a la página web](https://adelpozo04.github.io/Grupo03-40Crisis/)
 
 ## Capturas del juego
-![pantalla inicial](pantallainicial.jpg)  
-![mapaplaya](playajuego.jpg)  
+![pantalla inicial](/ReadMe%20Files/pantallainicial.jpg)  
+![mapaplaya](/ReadMe%20Files/playajuego.jpg)  
 
 
 ## GDD (game design document)
