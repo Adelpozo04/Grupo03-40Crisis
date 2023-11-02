@@ -41,7 +41,6 @@ export default class PantallaInicial extends Phaser.Scene{
 
         this.nextKey = this.input.keyboard.addKey('O');
 
-        console.log(this.nextKey);
         
     }
 
