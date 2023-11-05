@@ -27,7 +27,6 @@ export default class jugador extends Phaser.GameObjects.Container {
         this.add(this.player);
 
         this.scene.add.existing(this);
-
         if(hat){
             this.myHat = hat;
             this.add(this.myHat);
@@ -64,7 +63,6 @@ export default class jugador extends Phaser.GameObjects.Container {
     }
 
     preUpdate(dt, t){
-
         this.player.preUpdate(dt, t);
        
         if(this.dirX == 0 || this.dirX == -1){
@@ -138,7 +136,6 @@ export default class jugador extends Phaser.GameObjects.Container {
             this.player.play('walk' + this.key, true);
             this.x += this.speed * this.dirX;
             this.y += this.speed * this.dirY;
-            console.log(this.x + "/" + dt);
         }
         else{
             this.player.play('iddle' + this.key, true);
@@ -146,9 +143,8 @@ export default class jugador extends Phaser.GameObjects.Container {
 
     }
 
-    
-
-
-
-
+    // Método getter que devuelve la posición del player
+    getPosition() {
+        return { x: this.x, y: this.y };
+    }
 }

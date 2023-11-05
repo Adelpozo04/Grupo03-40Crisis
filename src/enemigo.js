@@ -3,71 +3,50 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
      * @param {number} y - posicion y
-     * @param {string} key - sprite
+     * @param {player} player - referencia al player
+     * @param {number} speed - velocidad
+     * @param {number} attackDistance - distancia mínima de ataque
      */
-    constructor(scene, x, y, key){
+    constructor(scene, x, y, player, speed, attackDistance){
         super(scene, x, y);
-    
-        this.dirX = 0;
-        this.dirY = 0;
-        this.speed = 0.3;
-    
-        this.mikeX = 0;
-        this.mikeY = 0;
-    
-        this.enemigo = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
-        
-        this.add(this.enemigo);
-        this.setScale(0.25);
-        this.scene.add.existing(this);
-    
-        this.scene.anims.create({
-            key: 'walk'+ key,
-            frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
-            frameRate: 5,
-            repeat: -1
-        });
-    
-        this.scene.anims.create({
-            key: 'idle' + key,
-            frames: scene.anims.generateFrameNumbers(key, {start: 0, end:0}),
-            frameRate: 5,
-            repeat: -1
-        })
-    
-        this.key = key;
+        scene.add.existing(this);
+        this.player = player;
+        this.speed = speed;
+        this.direction = new Phaser.Math.Vector2();
+        this.attackDistance = attackDistance;
     }
     
-    updateMikeValues(x, y)
+    getPlayer(){
+        return this.player;
+    }
+    getDirection() {
+        return { x: this.direction.x, y: this.direction.y };
+    }
+    basicMovement()
     {
-        this.mikeX = x;
-        this.mikeY = y;
-    }
-    preUpdate(t, dt){
-        this.enemigo.preUpdate(t,dt);
-        
-        let direction = new Phaser.Math.Vector2(
-            mikeX - x,
-            mikeY - y
-        );
-        direction.normalize();
+        let playerPosition = this.player.getPosition();
 
-        if (this.x < this.mikeX)
+        //console.log("player.x = " + playerPosition.x + " player.y = " + playerPosition.y);
+        //console.log("zombie.x = " + this.x + " zombie.y = " + this.y);
+        this.direction = new Phaser.Math.Vector2(
+            playerPosition.x - this.x,
+            playerPosition.y - this.y
+        );
+        this.direction.normalize();
+        
+        // calcular la distancia entre enemigo y player, si está debajo del mínimo de distancia
+        // de ataque, dejar de acercarse y atacar
+        if (Math.abs(this.x - playerPosition.x) < this.attackDistance &&
+            Math.abs(this.y - playerPosition.y) < this.attackDistance)
         {
-            this.enemigo.setFlip(false, false);
+            //attack
         }
-        else if (this.x > this.mikeX)
+        else
         {
-            this.enemigo.setFlip(true, false);
+            this.x += this.speed * this.direction.x;
+            this.y += this.speed * this.direction.y;
         }
         
-    
-        this.x += this.speed * direction.x * deltatime;
-        this.y += this.speed * direction.y * deltatime;
-        if (this.dirX == 0 && this.dirY == 0)
-            this.zombie.play('idle' + this.key, true);
-        else
-            this.zombie.play('walk' + this.key, true);
     }
 }
     
