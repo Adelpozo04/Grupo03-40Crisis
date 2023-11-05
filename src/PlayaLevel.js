@@ -25,14 +25,13 @@ export default class PlayaLevel extends Phaser.Scene{
         this.add.image(0, 0, 'PlayaImage').setScale(1, 1).setOrigin(0, 0)
 
         this.mike = new Jugador(this, 150, 150, 'mike', new Sombrero(this, 1), -4, -10);
-        this.zombie = new Zombie(this, 500, 500, 'zombie');
+        this.zombie = new Zombie(this, 500, 500, 0.5, 25, 'zombie', this.mike);
         
         
     }
 
     
     update(t, dt){
-        this.zombie.updateMikeValues(this.mike.x, this.mike.y);
-
+        this.zombie.update();
     }
 }
