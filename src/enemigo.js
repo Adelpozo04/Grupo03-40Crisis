@@ -14,8 +14,14 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.speed = speed;
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
+
+        this.isAttacking;
     }
     
+
+    isAttacking(){
+        return this.isAttacking;
+    }
     getPlayer(){
         return this.player;
     }
@@ -39,10 +45,12 @@ export default class enemigo extends Phaser.GameObjects.Container {
         if (Math.abs(this.x - playerPosition.x) < this.attackDistance &&
             Math.abs(this.y - playerPosition.y) < this.attackDistance)
         {
+            this.isAttacking = true;
             //attack
         }
         else
         {
+            this.isAttacking = false;
             this.x += this.speed * this.direction.x;
             this.y += this.speed * this.direction.y;
         }

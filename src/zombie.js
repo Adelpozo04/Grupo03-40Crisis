@@ -12,6 +12,7 @@ export default class zombie extends Enemigo {
     constructor(scene, x, y, speed, attackDistance, key, player)
     {
         super(scene, x, y, player, speed, attackDistance);
+        this.key = key;
         scene.add.existing(this);
         this.zombie = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
         this.add(this.zombie);
@@ -38,10 +39,10 @@ export default class zombie extends Enemigo {
         // y direction.x / y son las variables de direccion
         super.basicMovement();
 
-        /*if (super.getDirection().x == 0 && super.getDirection().y == 0)
+        if (super.isAttacking())
             this.zombie.play('idle' + this.key, true);
         else
-            this.zombie.play('walk' + this.key, true);*/
+            this.zombie.play('walk' + this.key, true);
 
         if (this.x < super.getPlayer().x)
         {
