@@ -1,6 +1,6 @@
 
 
-export default class Sombrero extends Phaser.GameObjects.Sprite{
+export default class sombrero extends Phaser.GameObjects.Sprite{
 
 /**
  * @param {Scene} scene
