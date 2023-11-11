@@ -15,11 +15,11 @@ export default class PlayaLevel extends Phaser.Scene{
     }
     
     preload(){
-        this.load.image('PlayaImage', './MapaPlayas.png');
-        this.load.spritesheet('mike', './Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
-        this.load.spritesheet('zombie', './Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
+        this.load.image('PlayaImage', './Assets/Sprites/Tilesets/Playa/MapaPlayas.png');
+        this.load.spritesheet('mike', './Assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_walk_spriteSheet.png', {frameWidth: 32, frameHeight: 32})
-        this.load.spritesheet('hat', './Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
     }
 
 
