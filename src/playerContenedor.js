@@ -15,8 +15,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     constructor(scene, x, y, key, hat, hatX, hatY, life, speed){
         super(scene, x, y);
 
-        
-
         this.dirX = 0;
         this.dirY = 0;
 

@@ -6,13 +6,16 @@ export default class jugador extends Entidad{
 /**
  * @param {number} personalityExp - array con la experiencia de todas las personalidades
  * @param {number} currentPersonality - personalidad que se usa actualmente
- * 
+ * @param {scene} scene
+ * @param {string} key
+ * @param {number} life
+ * @param {number} speed
+ * @param {number} x
+ * @param {number} y
  */
 
 
 constructor(scene, key, posX, posY, life, speed){
-
-    console.log(speed);
 
     super(scene, key, posX, posY, life, speed);
 
@@ -28,9 +31,7 @@ constructor(scene, key, posX, posY, life, speed){
 
     this.currentPersonality = Personalities.EXPLORADOR;   
 
-    this.player = new Phaser.GameObjects.Sprite(scene, posX, posY, key, 0);
-
-    this.scene.add.existing(this.player);
+    this.player = new Entidad(scene, key, posX, posY, life, speed);
 
     this.scene.anims.create({
         key: 'walk'+ key,
@@ -55,23 +56,14 @@ Movement(dirX, dirY, t, dt){
 
     this.player.preUpdate(t, dt);
 
-    this.posX = super.GetPosX();
-    this.posY = super.GetPosY();
-
-    
-
     if(this.dirX != 0 || this.dirY != 0){
         this.play('walk' + this.key, true);
-        this.posX += super.GetSpeed() * this.dirX;
-        this.posY += super.GetSpeed() * this.dirY;
+        this.x += super.GetPosX() * dirX;
+        this.y += super.GetPosY() * dirY;
     }
     else{
         this.play('iddle' + this.key, true);
     }
-
-    console.log(super.GetSpeed() + "/" + super.GetSpeed);
-
-    super.SetPosition(this.posX, this.posY);
 
 }
 

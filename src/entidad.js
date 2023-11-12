@@ -6,25 +6,28 @@ export default class Entidad extends Phaser.GameObjects.Sprite{
      * @param {string} key
      * @param {number} life
      * @param {number} speed
-     * @param {number} posX
-     * @param {number} posY
+     * @param {number} x
+     * @param {number} y
      */
 
     constructor(scene, key, posX, posY, life, speed){
 
         super(scene, posX, posY);
 
-  
+        scene.add.existing(this);
+        this.entidad = new Phaser.GameObjects.Sprite(scene, posX, posY, key, 0)
+        this.scene.add.existing(this.entidad);
+
+        this.x = posX;
+        this.y = posY;
         this.life = life;
         this.speed = speed;
         this.key = key;
 
-        
-
     }
 
     Movement(){
-
+        
     }
 
     Die(){
@@ -42,17 +45,12 @@ export default class Entidad extends Phaser.GameObjects.Sprite{
     }
 
     GetPosX(){
-        return this.posX;
+        return this.x;
     }
 
     GetPosY(){
-        return this.posY;
+        return this.y;
     }
 
-    SetPosition(x, y){
-
-        this.posX += x;
-        this.posY += y;
-    }
 
 }
