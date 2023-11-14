@@ -31,7 +31,11 @@ constructor(scene, key, posX, posY, life, speed){
 
     this.currentPersonality = Personalities.EXPLORADOR;   
 
-    this.player = new Entidad(scene, key, posX, posY, life, speed);
+    scene.add.existing(this);
+
+    this.player = new Phaser.GameObjects.Sprite(scene, posX, posY, key, 0);
+
+    //this.add(this.player);
 
     this.scene.anims.create({
         key: 'walk'+ key,
@@ -56,10 +60,12 @@ Movement(dirX, dirY, t, dt){
 
     this.player.preUpdate(t, dt);
 
-    if(this.dirX != 0 || this.dirY != 0){
+    if(dirX != 0 || dirY != 0){
         this.play('walk' + this.key, true);
-        this.x += super.GetPosX() * dirX;
-        this.y += super.GetPosY() * dirY;
+
+        this.x += super.GetSpeed() * dirX;
+        this.y += super.GetSpeed() * dirY;
+
     }
     else{
         this.play('iddle' + this.key, true);
@@ -69,7 +75,7 @@ Movement(dirX, dirY, t, dt){
 
 // Método getter que devuelve la posición del player
 getPosition() {
-    return { x: this.x, y: this.y };
+    return { x: super.GetPosX(), y: super.GetPosY() };
 }
 
 }

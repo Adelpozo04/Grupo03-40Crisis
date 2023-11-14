@@ -4,8 +4,8 @@ import jugador from "./jugador.js";
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
     /**
-     * @param {jugador} player
      * @param {sombrero} hat
+     * @param {jugador} player
      * @param {number} hatX
      * @param {number} hatY
      * ARMA
@@ -19,9 +19,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dirY = 0;
 
         scene.physics.add.existing(this);
-        this.scene.add.existing(this);
-
-        this.player = new jugador(scene, key, x, y, life, speed);
+        this.scene.add.existing(this);  
 
         if(hat){
             this.myHat = hat;
@@ -33,6 +31,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         else{
             this.myHat = null;
         }
+
+        this.player = new jugador(scene, key, x, y, life, speed);
 
         this.key = key
 
@@ -111,7 +111,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
 
         this.player.Movement(this.dirX, this.dirY, t, dt);
-           
+        this.myHat.Movement(this.dirX, this.dirY, t, dt);
 
     }
 

@@ -15,8 +15,6 @@ export default class Entidad extends Phaser.GameObjects.Sprite{
         super(scene, posX, posY);
 
         scene.add.existing(this);
-        this.entidad = new Phaser.GameObjects.Sprite(scene, posX, posY, key, 0)
-        this.scene.add.existing(this.entidad);
 
         this.x = posX;
         this.y = posY;
@@ -51,6 +49,7 @@ export default class Entidad extends Phaser.GameObjects.Sprite{
     GetPosY(){
         return this.y;
     }
+
 
 
 }
