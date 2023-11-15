@@ -33,10 +33,6 @@ constructor(scene, key, posX, posY, life, speed){
 
     scene.add.existing(this);
 
-    this.player = new Phaser.GameObjects.Sprite(scene, posX, posY, key, 0);
-
-    //this.add(this.player);
-
     this.scene.anims.create({
         key: 'walk'+ key,
         frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
@@ -58,7 +54,7 @@ constructor(scene, key, posX, posY, life, speed){
 
 Movement(dirX, dirY, t, dt){       
 
-    this.player.preUpdate(t, dt);
+    this.preUpdate(t, dt);
 
     if(dirX != 0 || dirY != 0){
         this.play('walk' + this.key, true);

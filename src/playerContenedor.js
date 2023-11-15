@@ -6,13 +6,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     /**
      * @param {sombrero} hat
      * @param {jugador} player
-     * @param {number} hatX
-     * @param {number} hatY
+     * @param {number} hatId
      * ARMA
      * PERSONALIDAD
      */
 
-    constructor(scene, x, y, key, hat, hatX, hatY, life, speed){
+    constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
 
         this.dirX = 0;
@@ -21,11 +20,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         scene.physics.add.existing(this);
         this.scene.add.existing(this);  
 
-        if(hat){
-            this.myHat = hat;
+        if(hatId != -1){
+            this.myHat = new sombrero(scene, hatId, hatX, hatY, speed);
             this.add(this.myHat);
-            this.myHat.x = hatX;
-            this.myHat.y = hatY;
+            this.myHat.setDepth(1);
 
         }
         else{
@@ -33,6 +31,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
 
         this.player = new jugador(scene, key, x, y, life, speed);
+
+        this.player.Depth = 0;
 
         this.key = key
 
@@ -54,7 +54,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
                     if(this.lookDer){
                         this.player.setFlip(true, false);
-                        this.myHat.x = this.myHat.x * -1;
+                        this.myHat.posX = this.myHat.posX * -1;
                         this.myHat.setFlip(true, false); 
                         this.lookDer = !this.lookDer;
                     }
@@ -73,7 +73,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.dirX = 1;
                     if(!this.lookDer){
                         this.player.setFlip(false, false);
-                        this.myHat.x = this.myHat.x * -1;
+                        this.myHat.posX = this.myHat.posX * -1;
                         this.myHat.setFlip(false, false);
                         this.lookDer = !this.lookDer;
                     }
