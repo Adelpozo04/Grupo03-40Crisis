@@ -5,6 +5,13 @@ var config = {
     type: Phaser.AUTO,
     width: 1500,
     height: 800,
+    physics: {
+        default: 'arcade',
+        arcade:{
+            debug: true,
+            gravity: {y: 0}
+        }
+    },
     scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
