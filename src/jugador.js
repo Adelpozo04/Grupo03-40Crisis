@@ -59,13 +59,15 @@ Movement(dirX, dirY, t, dt){
     if(dirX != 0 || dirY != 0){
         this.play('walk' + this.key, true);
 
-        this.x += super.GetSpeed() * dirX;
-        this.y += super.GetSpeed() * dirY;
-
+        this.x += Math.round(super.GetSpeed() * dirX);
+        this.y += Math.round(super.GetSpeed() * dirY);
+        console.log(this.x + " / " + this.y);
     }
     else{
         this.play('iddle' + this.key, true);
     }
+
+    
 
 }
 

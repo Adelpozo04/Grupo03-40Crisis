@@ -10,7 +10,7 @@ export default class sombrero extends Phaser.GameObjects.Sprite{
  * @param {number} speed
  */
 
-constructor(scene, hatId, posX, posY, speed){
+constructor(scene, hatId, posX, posY){
     super(scene, 0, 0, 'hat', hatId);
 
     this.scene.add.existing(this);
@@ -23,24 +23,7 @@ constructor(scene, hatId, posX, posY, speed){
 
     this.posY = posY;
 
-    this.speed = speed;
 }
-
-Movement(dirX, dirY, t, dt){       
-
-    if(dirX != 0 || dirY != 0){
-
-        this.x += this.speed * dirX;
-        this.y += this.speed * dirY;
-
-    }
-
-
-}
-
-
-
-
 
 
 }
