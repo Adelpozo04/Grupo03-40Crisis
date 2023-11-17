@@ -43,9 +43,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     
         this.currentPersonality = Personalities.EXPLORADOR;
 
-        scene.physics.add.existing(this);
-        this.scene.add.existing(this);  
-
         this.scene.add.sprite();
 
         this.player = scene.add.sprite(0, 0, key);
@@ -68,6 +65,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.lookDer = true;
 
+        scene.physics.add.existing(this);
+        this.scene.add.existing(this);  
+
         this.scene.anims.create({
             key: 'walk'+ key,
             frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
@@ -81,6 +81,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             frameRate: 5,
             repeat: -1
         });
+    }
+
+    create(){
+
+        this.body.setVelocity(speed, speed);
+        this.setCollideWorldBounds(true);
+
     }
 
     preUpdate(t, dt){
@@ -156,11 +163,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         if(this.dirX != 0 || this.dirY != 0){
             this.player.play('walk' + this.key, true);
 
-            this.x += Math.round(this.speed * this.dirX);
-            this.y += Math.round(this.speed * this.dirY);
+            this.body.setVelocity(this.speed * this.dirX, this.speed * this.dirY);
+
             console.log(this.x + " / " + this.y);
         }
         else{
+            this.body.setVelocity(0, 0);
             this.player.play('iddle' + this.key, true);
         }
 
