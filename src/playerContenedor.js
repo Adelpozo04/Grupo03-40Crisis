@@ -2,17 +2,20 @@
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
     /**
-     * @param {sombrero} hat
-     * @param {jugador} player
+     * @param {sprite} hat -sprite del sombrero que se pone en el contenedor
+     * @param {sprite} player - sprite del jugador que se coloca en el contenedor
      * @param {number} hatId
      * @param {number} personalityExp - array con la experiencia de todas las personalidades
      * @param {number} currentPersonality - personalidad que se usa actualmente
      * @param {scene} scene
      * @param {string} key
      * @param {number} life
+     * @param {number} maxLife - Vida máxima del jugador
      * @param {number} speed
      * @param {number} x
      * @param {number} y
+     * @param {boolean} sleep
+     * @param {boolean} invencible
      * ARMA
      * PERSONALIDAD
      */
@@ -26,7 +29,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.key = key;
 
         this.life = life;
+        this.maxLife = life;
+
         this.speed = speed;
+
+        this.sleep = false;
+
+        this.invencible = false;
 
         this.dirX = 0;
         this.dirY = 0;
@@ -167,8 +176,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             }
         }
 
-        
-
         if(this.dirX != 0 || this.dirY != 0){
             this.player.play('walk' + this.key, true);
 
@@ -183,12 +190,41 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     }
 
-    GetPlayer(){
+    damagePlayer(damage){
+        this.life = this.life - damage;
+    }
+
+    applyEffect(keyPotenciador){
+
+        if(keyPotenciador == 'botiquin'){
+
+            this.life = this.life + 0.5 * this.maxLife;
+        }
+        else if(keyPotenciador == 'zapato'){
+            this.speed = this.speed * 1.5;
+        }
+        else if(keyPotenciador == 'vivu'){
+            this.sleep = true;
+        }
+        else if(keyPotenciador == 'invencible'){
+            this.invencible = true;
+        }
+    }
+
+    
+
+    getPlayer(){
         return this.player;
     }
     
     getPosition() {
         return { x: this.x, y: this.y };
+    }
+
+    getPersonalityExp(personalityID){
+
+        return this.personalityExp[personalityID];
+
     }
     
 }
