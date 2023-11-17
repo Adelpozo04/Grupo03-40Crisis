@@ -1,5 +1,3 @@
-import sombrero from "./sombrero.js";
-import jugador from "./jugador.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -48,16 +46,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         scene.physics.add.existing(this);
         this.scene.add.existing(this);  
 
-        this.scene.add.sprite()
-
-        //this.player = scene.add.sprite();
-        //this.add(this.player)
+        this.scene.add.sprite();
 
         this.player = scene.add.sprite(0, 0, key);
         this.add(this.player);
-
-        //this.player = new jugador(scene, key, 0, 0, life, speed);
-        //this.add(this.player);
 
         if(hatId != -1){
             this.myHat = scene.add.sprite(-4, -10, 'hat', hatId);
@@ -177,6 +169,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     GetPlayer(){
         return this.player;
     }
-
+    
+    getPosition() {
+        return { x: this.x, y: this.y };
+    }
     
 }
