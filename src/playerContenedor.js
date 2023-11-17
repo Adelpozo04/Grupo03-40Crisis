@@ -45,11 +45,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.scene.add.sprite();
 
-        this.player = scene.add.sprite(0, 0, key);
+
+        //Creacion sprites
+        this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
 
         if(hatId != -1){
-            this.myHat = scene.add.sprite(-4, -10, 'hat', hatId);
+            this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
             this.myHat.setScale(0.25);
             this.add(this.myHat);
             
@@ -65,9 +67,16 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.lookDer = true;
 
+        //Tema fisicas
         scene.physics.add.existing(this);
         this.scene.add.existing(this);  
 
+        console.log(this.player.width + " / " + this.player.heigth);
+
+        this.body.setSize(this.player.width/2, this.player.width);
+
+
+        //Animaciones
         this.scene.anims.create({
             key: 'walk'+ key,
             frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
@@ -102,7 +111,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
                     if(this.lookDer){
                         this.player.setFlip(true, false);
-                        this.myHat.x = this.myHat.x * -1;
+                        this.myHat.x = this.myHat.x + this.player.x / 2;
                         this.myHat.setFlip(true, false); 
                         this.lookDer = !this.lookDer;
                     }
@@ -121,7 +130,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.dirX = 1;
                     if(!this.lookDer){
                         this.player.setFlip(false, false);
-                        this.myHat.x = this.myHat.x * -1;
+                        this.myHat.x = this.myHat.x - this.player.x / 2;
                         this.myHat.setFlip(false, false);
                         this.lookDer = !this.lookDer;
                     }
@@ -165,7 +174,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
             this.body.setVelocity(this.speed * this.dirX, this.speed * this.dirY);
 
-            console.log(this.x + " / " + this.y);
+            //console.log(this.x + " / " + this.y);
         }
         else{
             this.body.setVelocity(0, 0);
