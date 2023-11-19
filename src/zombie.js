@@ -31,7 +31,8 @@ export default class zombie extends Enemigo {
             frames: scene.anims.generateFrameNumbers(key, {start: 0, end:0}),
             frameRate: 5,
             repeat: -1
-        })
+        });
+
     }
 
     update(){

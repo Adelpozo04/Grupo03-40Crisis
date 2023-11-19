@@ -31,14 +31,25 @@ export default class Esqueleto extends Enemigo {
             frames: scene.anims.generateFrameNumbers(key, {start: 0, end:0}),
             frameRate: 5,
             repeat: -1
-        })
+        });
 
-        this.scene.anims.create({
+        this.attackAnim = this.scene.anims.create({
             key: 'attack' + key,
             frames: scene.anims.generateFrameNumbers(key, {start: 4, end: 10}),
             frameRate: 8,
             repeat: 0
-        })
+        });
+        this.attackFlag = true;
+    }
+
+    tryAttack()
+    {
+        if (super.isAttacking() && !this.attackFlag)
+        {
+            super.attack();
+            this.attackFlag = false;
+            attackFlag
+        }
     }
 
     update(){
@@ -47,7 +58,16 @@ export default class Esqueleto extends Enemigo {
         super.basicMovement();
 
         if (super.isAttacking())
+        {
+            console.log("hola");
             this.skeleton.play('attack' + this.key, true);
+            if (this.attackFlag){
+                this.skeleton.on('animationcomplete', function() {
+                    this.tryAttack();
+                    this.skeleton.off('animationcomplete');
+                }, this);
+            }
+        }
         else
             this.skeleton.play('walk' + this.key, true);
 

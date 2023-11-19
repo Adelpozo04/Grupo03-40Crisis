@@ -15,7 +15,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
 
-        this.isAttacking;
+        this.isAttacking = false;
+        this.canDamage = true;
     }
     
 
@@ -28,6 +29,13 @@ export default class enemigo extends Phaser.GameObjects.Container {
     getDirection() {
         return { x: this.direction.x, y: this.direction.y };
     }
+
+
+    attack()
+    {
+        console.log("attack");
+    }
+
     basicMovement()
     {
         let playerPosition = this.player.getCenterPoint();
@@ -54,7 +62,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
             this.x += this.speed * this.direction.x;
             this.y += this.speed * this.direction.y;
         }
-        
     }
 }
     
