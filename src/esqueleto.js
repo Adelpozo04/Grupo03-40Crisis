@@ -10,8 +10,8 @@ export default class Esqueleto extends Enemigo {
     constructor(scene, x, y, key, player)
     {
         super(scene, x, y, player, 0.5, 30);
-        this.speed = 0.5;
-        this.attackDistance = 30;
+        this.speed = 0.5; // velocidad enemigo
+        this.attackDistance = 30; // distancia ataque (30 = melee)
         
         this.key = key;
         scene.add.existing(this);
@@ -45,6 +45,7 @@ export default class Esqueleto extends Enemigo {
 
     attack() { super.attack() }
 
+    // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
         this.skeleton.play('attack' + this.key, true);
@@ -60,6 +61,7 @@ export default class Esqueleto extends Enemigo {
         // y direction.x / y son las variables de direccion
         super.basicMovement();
 
+        // si podemos atacar y seguimos en rango, intentamos atacar
         if (this.attackFlag && super.isAttacking())
         {
             this.inattackRange = true;
@@ -70,6 +72,8 @@ export default class Esqueleto extends Enemigo {
             this.skeleton.play('walk' + this.key, true);
         }
 
+
+        //flip del sprite en función de la pos del player
         if (this.x < super.getPlayer().x)
         {
             this.skeleton.setFlip(false, false);
