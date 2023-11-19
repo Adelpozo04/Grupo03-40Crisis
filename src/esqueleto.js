@@ -33,23 +33,26 @@ export default class Esqueleto extends Enemigo {
             repeat: -1
         });
 
-        this.attackAnim = this.scene.anims.create({
+        this.scene.anims.create({
             key: 'attack' + key,
             frames: scene.anims.generateFrameNumbers(key, {start: 4, end: 10}),
             frameRate: 8,
             repeat: 0
         });
+    
         this.attackFlag = true;
     }
 
+    attack() { super.attack() }
+
     tryAttack()
     {
-        if (super.isAttacking() && !this.attackFlag)
-        {
-            super.attack();
-            this.attackFlag = false;
-            attackFlag
-        }
+        this.skeleton.play('attack' + this.key, true);
+        this.skeleton.on('animationcomplete', function(){
+            this.attack();
+            this.attackFlag = true;
+            this.skeleton.off('animationcomplete');
+        }, this)
     }
 
     update(){
@@ -57,19 +60,15 @@ export default class Esqueleto extends Enemigo {
         // y direction.x / y son las variables de direccion
         super.basicMovement();
 
-        if (super.isAttacking())
+        if (this.attackFlag && super.isAttacking())
         {
-            console.log("hola");
-            this.skeleton.play('attack' + this.key, true);
-            if (this.attackFlag){
-                this.skeleton.on('animationcomplete', function() {
-                    this.tryAttack();
-                    this.skeleton.off('animationcomplete');
-                }, this);
-            }
-        }
-        else
+            this.inattackRange = true;
+            this.attackFlag = false;
+            this.tryAttack();
+        } else if (!super.isAttacking())
+        {
             this.skeleton.play('walk' + this.key, true);
+        }
 
         if (this.x < super.getPlayer().x)
         {
