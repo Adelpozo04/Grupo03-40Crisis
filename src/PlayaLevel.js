@@ -17,7 +17,7 @@ export default class PlayaLevel extends Phaser.Scene{
         this.load.image('PlayaImage', './Assets/Sprites/Tilesets/Playa/MapaPlayas.png');
         this.load.spritesheet('mike', './Assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
-        this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_walk_spriteSheet.png', {frameWidth: 32, frameHeight: 32})
+        this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
     }
 
@@ -27,7 +27,7 @@ export default class PlayaLevel extends Phaser.Scene{
 
         this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
         this.zombie = new Zombie(this, 500, 500, 0.5, 25, 'zombie', this.mike);
-        this.skeleton = new Esqueleto(this, 300, 300, 0.5, 100, 'skeleton', this.mike);
+        this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
         
     }
 

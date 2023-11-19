@@ -30,7 +30,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
     }
     basicMovement()
     {
-        let playerPosition = this.player.getPosition();
+        let playerPosition = this.player.getCenterPoint();
 
         //console.log("player.x = " + playerPosition.x + " player.y = " + playerPosition.y);
         //console.log("zombie.x = " + this.x + " zombie.y = " + this.y);

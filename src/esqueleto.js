@@ -4,20 +4,20 @@ export default class Esqueleto extends Enemigo {
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
      * @param {number} y - posicion y
-     * @param {number} speed - velocidad
-     * @param {number} attackDistance - minima distancia de ataque
      * @param {key} key - sprite
      * @param {player} player - referencia al player
      */ 
-    constructor(scene, x, y, speed, attackDistance, key, player)
+    constructor(scene, x, y, key, player)
     {
-        super(scene, x, y, player, speed, attackDistance);
+        super(scene, x, y, player, 0.5, 30);
+        this.speed = 0.5;
+        this.attackDistance = 30;
+        
         this.key = key;
         scene.add.existing(this);
         this.skeleton = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
         this.add(this.skeleton);
         this.setScale(2); //cuidao que esto igual da problemas
-        
     
         this.scene.anims.create({
             key: 'walk' + key,
@@ -32,6 +32,13 @@ export default class Esqueleto extends Enemigo {
             frameRate: 5,
             repeat: -1
         })
+
+        this.scene.anims.create({
+            key: 'attack' + key,
+            frames: scene.anims.generateFrameNumbers(key, {start: 4, end: 10}),
+            frameRate: 8,
+            repeat: 0
+        })
     }
 
     update(){
@@ -40,7 +47,7 @@ export default class Esqueleto extends Enemigo {
         super.basicMovement();
 
         if (super.isAttacking())
-            this.skeleton.play('idle' + this.key, true);
+            this.skeleton.play('attack' + this.key, true);
         else
             this.skeleton.play('walk' + this.key, true);
 
