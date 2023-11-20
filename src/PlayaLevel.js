@@ -1,12 +1,13 @@
 import playerContenedor from './playerContenedor.js';
 import Zombie from './zombie.js';
 import Esqueleto from './esqueleto.js';
+import Potenciador from './potenciadores.js';
 
 export default class PlayaLevel extends Phaser.Scene{
 
     constructor(){
         super({key: 'PlayaLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
-        
+        this.potenciadorRecogido = true; // Inicialmente se permite generar el primer potenciador
     }
     
     init(data){
@@ -29,6 +30,18 @@ export default class PlayaLevel extends Phaser.Scene{
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
         this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
         
+
+        this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                const potenciador = new Potenciador(this);
+                if (this.potenciadorRecogido) {
+                    potenciador.spawnPotenciador(this);
+                }
+            },
+            callbackScope: this,
+            loop: true
+        });
     }
 
     
@@ -36,4 +49,7 @@ export default class PlayaLevel extends Phaser.Scene{
         this.zombie.update();
         this.skeleton.update();
     }
+
+
+
 }
