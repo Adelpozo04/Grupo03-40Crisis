@@ -294,8 +294,17 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":37,
          "firstgid":1,
-         "source":"..\/..\/..\/..\/..\/Escritorio\/Uni\/2\u00baUni\/PLI\/40 Crisis\/Sprites\/tiles\/CiudadTiles.tsx"
+         "image":"..\/Sprites\/Tilesets\/Ciudad\/tilemapCiudad.png",
+         "imageheight":896,
+         "imagewidth":1184,
+         "margin":0,
+         "name":"tilemapCiudad",
+         "spacing":0,
+         "tilecount":1036,
+         "tileheight":32,
+         "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",
