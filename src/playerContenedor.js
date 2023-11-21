@@ -200,20 +200,38 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     applyEffect(keyPotenciador){
-
-        if(keyPotenciador == 'botiquin'){
-
-            this.life = this.life + 0.5 * this.maxLife;
+        switch (keyPotenciador) {
+            case 'botiquin':
+                this.life += maxLife / 2;
+                if (this.life > this.maxLife) {
+                    this.life = this.maxLife;
+                }
+                break;
+            case 'velocidad':
+                aux = this.speed;
+                this.speed = 10;
+                scene.time.delayedCall(3000, () => {
+                    this.speed = aux // Reducir la velocidad de nuevo después de 3 segundos
+                });
+                break;
+            case 'vivu':
+                aux = this.speed;
+                this.speed = 0;
+                scene.time.delayedCall(5000, () => {
+                    this.speed = aux;
+                });
+                break;
+            case 'invencible':
+                aux = this.life;
+                this.life = 999999999999999;
+                scene.time.delayedCall(5000, () => {
+                    this.life = aux;
+                });
+                break;
+            default:
+                break;
         }
-        else if(keyPotenciador == 'zapato'){
-            this.speed = this.speed * 1.5;
-        }
-        else if(keyPotenciador == 'vivu'){
-            this.sleep = true;
-        }
-        else if(keyPotenciador == 'invencible'){
-            this.invencible = true;
-        }
+        scene.potenciadorRecogido = true; // Marcar que el potenciador ha sido recogido
     }
 
     

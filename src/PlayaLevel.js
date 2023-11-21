@@ -34,7 +34,8 @@ export default class PlayaLevel extends Phaser.Scene{
         this.time.addEvent({
             delay: 1000,
             callback: () => {
-                const potenciador = new Potenciador(this);
+                aux = Phaser.Math.RND.between(0, 3);
+                const potenciador = new Potenciador(this, 0, 0, aux, /*referencia al player?*/);
                 if (this.potenciadorRecogido) {
                     potenciador.spawnPotenciador(this);
                 }
