@@ -1,3 +1,4 @@
+import Arma from "./arma";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -16,7 +17,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
      * @param {number} y
      * @param {boolean} sleep
      * @param {boolean} invencible
-     * ARMA
+     * @param {Arma} arma
      * PERSONALIDAD
      */
 
@@ -188,6 +189,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.player.play('iddle' + this.key, true);
         }
 
+    }
+
+    ataca(){
+        arma.ataca();
     }
 
     damagePlayer(damage){
