@@ -19,7 +19,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.tilemapTiledJSON('ciudadTilemap', './Assets/JSON/MapaCiudad.json');
         console.log("leyo bien el JSON");
 
-        this.load.image('patronesCiudadTilemap', './Assets/Sprites/Tilesets/Ciudad/tilemapCiudad.png');
+        this.load.image('patronesCiudadTilemap', './Assets/Sprites/Tilesets/Ciudad/tilemapCiudadExtruded.png');
 
         console.log("leyo bien el patron");
 
@@ -32,8 +32,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     create(){
 
-        this.cameras.main.centerOn(800, 1500);
-
+       
         this.map = this.make.tilemap({ 
 			key: 'ciudadTilemap', 
 			tileWidth: 32, 
@@ -42,7 +41,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         console.log("hizo bien el map");
 
-        const myTile = this.map.addTilesetImage('ciudadTilemap', 'patronesCiudadTilemap');
+        const myTile = this.map.addTilesetImage('tilemapCiudad', 'patronesCiudadTilemap', 32, 32, 1, 2);
 
         console.log("hizo bien el tile");
 
@@ -51,11 +50,15 @@ export default class CiudadLevel extends Phaser.Scene{
         this.groundUpLayer = this.map.createLayer('SueloEncima', myTile);
 
         this.collisionLayer = this.map.createLayer('Colisiones', myTile);
-		this.collisionLayer.setCollisionByExclusion(-1);
+		this.collisionLayer.setCollisionByExclusion([-1], true);
 
         this.mike = new playerContenedor(this, 300, 300, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
         this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
+
+        this.physics.add.collider(this.mike, this.collisionLayer);
+
+        this.cameras.main.startFollow(this.mike);
         
         this.groundUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
 
@@ -74,7 +77,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     
     update(t, dt){
-        this.zombie.update();
+        //this.zombie.update();
         this.skeleton.update();
     }
 
