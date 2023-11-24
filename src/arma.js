@@ -1,6 +1,6 @@
 export default class arma extends Phaser.GameObjects.Container {
-    /** 
-    @param {scene} scene - escena a colocar
+    /**
+    * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
     * @param {number} y - posicion y
     * @param {key} key - key
