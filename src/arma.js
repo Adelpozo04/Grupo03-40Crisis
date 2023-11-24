@@ -1,17 +1,20 @@
 export default class arma extends Phaser.GameObjects.Container {
-    /** 
-    @param {scene} scene - escena a colocar
+    /**
+    * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
     * @param {number} y - posicion y
+    * @param {key} key - key
     * @param {player} player - referencia a player
     */
-    constructor(scene, x, y, player)
+    constructor(scene, x, y, key, player)
     {
         super(scene, x, y);
         scene.add.existing(this);
         this.player = player;
         
-        this.arma = this.add.container(0,0);
+        this.arma = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+        this.add(this.arma)
+        this.setScale(32)
     }
 
     followCursor() {
@@ -19,22 +22,15 @@ export default class arma extends Phaser.GameObjects.Container {
         let playerPos = this.player.getCenterPoint();
         let angle = Phaser.Math.Angle.Between(playerPos.x, playerPos.y, this.arma.x, this.arma.y);
         // Calcular las nuevas coordenadas
-        let newX = player.x + radio * Math.cos(angle);
-        let newY = player.y + radio * Math.sin(angle);
+        let newX = this.player.x + radio * Math.cos(angle);
+        let newY = this.player.y + radio * Math.sin(angle);
         // Actualizar la posicion del contenedor
-        rotatingContainer.x = newX;
-        rotatingContainer.y = newY;
+        this.arma.x = newX;
+        this.arma.y = newY;
     }
-    preload()
-    {
 
-    }
-    create()
-    {
-
-    }
     update()
     {
-        followCursor();
+        this.followCursor();
     }
 }
