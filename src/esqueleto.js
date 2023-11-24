@@ -64,12 +64,13 @@ export default class Esqueleto extends Enemigo {
         // si podemos atacar y seguimos en rango, intentamos atacar
         if (this.attackFlag && super.isAttacking())
         {
-            this.inattackRange = true;
             this.attackFlag = false;
             this.tryAttack();
         } else if (!super.isAttacking())
         {
             this.skeleton.play('walk' + this.key, true);
+            this.attackFlag = true;
+            this.skeleton.off('animationcomplete');
         }
 
 

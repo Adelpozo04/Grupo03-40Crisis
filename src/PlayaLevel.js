@@ -1,7 +1,6 @@
 import playerContenedor from './playerContenedor.js';
 import Zombie from './zombie.js';
 import Esqueleto from './esqueleto.js';
-import Potenciador from './Potenciador.js';
 
 export default class PlayaLevel extends Phaser.Scene{
 
@@ -21,6 +20,8 @@ export default class PlayaLevel extends Phaser.Scene{
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin2.jpg', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('pistol', 'pistola.png', {frameWidth: 25, frameHeight: 18})
+
     }
 
 
@@ -30,7 +31,8 @@ export default class PlayaLevel extends Phaser.Scene{
         this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
         this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
-        
+
+        this.arma = new Arma(this, 0, 0, 'pistol', this.mike);
 
         this.time.addEvent({
             delay: 1000,
@@ -48,10 +50,8 @@ export default class PlayaLevel extends Phaser.Scene{
 
     
     update(t, dt){
-        this.zombie.update();
-        this.skeleton.update();
+        //this.zombie.update();
+        this.skeleton.update()
+        this.arma.update()
     }
-
-
-
 }
