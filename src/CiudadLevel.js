@@ -7,8 +7,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
-        this.potenciadorRecogido = true; // Inicialmente se permite generar el primer potenciador
-        const potenciadorTypes = ['botiquin', 'velocidad', 'vivu', 'invencible'];
+        this.potenciadorSpawneado = false; // Inicialmente se permite generar el primer potenciador
     }
     
     init(data){
@@ -67,18 +66,37 @@ export default class CiudadLevel extends Phaser.Scene{
         
         this.groundUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
 
-        this.time.addEvent({
-            delay: 1000,
-            callback: () => {
-                aux = Phaser.Math.RND.between(0, 3);
-                const potenciador = new Potenciador(this, 0, 0, potenciadorTypes[aux], this.mike);
-                if (this.potenciadorRecogido) {
-                    potenciador.spawnPotenciador(this);
-                }
-            },
-            callbackScope: this,
-            loop: true
-        });
+        const potenciadorTypes = {
+            BOTIQUIN: 'botiquin', 
+            VELOCIDAD: 'velocidad', 
+            SLEEP: 'vivu', 
+            INVENCIBLE: 'invencible',
+        };
+
+        if(!this.potenciadorSpawneado){
+            this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    let aux = Phaser.Math.RND.between(0, 3);
+                    const potenciadorType = Object.values(potenciadorTypes)[aux];
+                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, this.mike);
+                    this.potenciadorSpawneado = true;
+
+                    this.tweens.add({
+                        targets: this.potenciador,
+                        y: this.potenciador.y - 30,
+                        duration: 2000,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1,
+                        delay: 10
+                    })
+                },
+                
+                callbackScope: this,
+                loop: false,
+            });
+        }
     }
 
     
