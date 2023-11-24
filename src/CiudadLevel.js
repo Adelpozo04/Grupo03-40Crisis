@@ -65,9 +65,9 @@ export default class CiudadLevel extends Phaser.Scene{
         this.time.addEvent({
             delay: 1000,
             callback: () => {
-                const potenciador = new Potenciador(this);
+                const potenciador = new Potenciador(this, spawnPoint.x, spawnPoint.y, this.getPotenciadorType(), /*referencia al player?*/);
                 if (this.potenciadorRecogido) {
-                    potenciador.spawnPotenciador(this);
+                    potenciador.spawnPotenciador();
                 }
             },
             callbackScope: this,

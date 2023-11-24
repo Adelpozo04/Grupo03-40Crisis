@@ -1,3 +1,4 @@
+
 export default class arma extends Phaser.GameObjects.Container {
     /** 
     @param {scene} scene - escena a colocar
@@ -28,12 +29,10 @@ export default class arma extends Phaser.GameObjects.Container {
         this.arma.x = newX;
         this.arma.y = newY;
     }
-    preload()
-    {
 
+    ataca(){
+        --this.actualAmmo;
     }
-    create()
-    {
 
     }
     update()

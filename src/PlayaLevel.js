@@ -1,8 +1,6 @@
 import playerContenedor from './playerContenedor.js';
 import Zombie from './zombie.js';
 import Esqueleto from './esqueleto.js';
-import Arma from './arma.js'
-import Potenciador from './potenciadores.js';
 
 export default class PlayaLevel extends Phaser.Scene{
 
@@ -21,7 +19,9 @@ export default class PlayaLevel extends Phaser.Scene{
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin2.jpg', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('pistol', 'pistola.png', {frameWidth: 25, frameHeight: 18})
+
     }
 
 
@@ -37,7 +37,8 @@ export default class PlayaLevel extends Phaser.Scene{
         this.time.addEvent({
             delay: 1000,
             callback: () => {
-                const potenciador = new Potenciador(this);
+                aux = Phaser.Math.RND.between(0, 3);
+                const potenciador = new Potenciador(this, 0, 0, aux, /*referencia al player?*/);
                 if (this.potenciadorRecogido) {
                     potenciador.spawnPotenciador(this);
                 }
