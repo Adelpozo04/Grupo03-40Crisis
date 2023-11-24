@@ -8,6 +8,7 @@ export default class CiudadLevel extends Phaser.Scene{
     constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
         this.potenciadorRecogido = true; // Inicialmente se permite generar el primer potenciador
+        const potenciadorTypes = ['botiquin', 'velocidad', 'vivu', 'invencible'];
     }
     
     init(data){
