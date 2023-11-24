@@ -1,4 +1,3 @@
-
 export default class arma extends Phaser.GameObjects.Container {
     /** 
     @param {scene} scene - escena a colocar
@@ -30,11 +29,6 @@ export default class arma extends Phaser.GameObjects.Container {
         this.arma.y = newY;
     }
 
-    ataca(){
-        --this.actualAmmo;
-    }
-
-    }
     update()
     {
         this.followCursor();

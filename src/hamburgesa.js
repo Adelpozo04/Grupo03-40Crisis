@@ -1,5 +1,5 @@
 import Enemigo from'./enemigo.js'
-export default class Esqueleto extends Enemigo {
+export default class Hamburgesa extends Enemigo {
     /**
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
@@ -15,8 +15,8 @@ export default class Esqueleto extends Enemigo {
         
         this.key = key;
         scene.add.existing(this);
-        this.skeleton = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
-        this.add(this.skeleton);
+        this.burger = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+        this.add(this.burger);
         this.setScale(2); //cuidao que esto igual da problemas
     
         this.attackFlag = true;
@@ -27,11 +27,11 @@ export default class Esqueleto extends Enemigo {
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        this.skeleton.play('attackskeleton', true);
-        this.skeleton.on('animationcomplete', function(){
+        this.burger.play('attack' + key, true);
+        this.burger.on('animationcomplete', function(){
             this.attack();
             this.attackFlag = true;
-            this.skeleton.off('animationcomplete');
+            this.burger.off('animationcomplete');
         }, this)
     }
 
@@ -47,20 +47,20 @@ export default class Esqueleto extends Enemigo {
             this.tryAttack();
         } else if (!super.isAttacking())
         {
-            this.skeleton.play('walkskeleton', true);
+            this.burger.play('walk' + key, true);
             this.attackFlag = true;
-            this.skeleton.off('animationcomplete');
+            this.burger.off('animationcomplete');
         }
 
 
         //flip del sprite en función de la pos del player
         if (this.x < super.getPlayer().x)
         {
-            this.skeleton.setFlip(false, false);
+            this.burger.setFlip(false, false);
         }
         else if (this.x > super.getPlayer().y)
         {
-            this.skeleton.setFlip(true, false);
+            this.burger.setFlip(true, false);
         }
     }
 }

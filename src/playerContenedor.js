@@ -1,4 +1,4 @@
-import Arma from "./arma";
+import Arma from "./arma.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 

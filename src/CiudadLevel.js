@@ -1,7 +1,8 @@
 import playerContenedor from './playerContenedor.js';
 import Zombie from './zombie.js';
 import Esqueleto from './esqueleto.js';
-import Potenciador from './potenciadores.js';
+import Hamburgesa from './hamburgesa.js'
+import Potenciador from './Potenciador.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -27,12 +28,37 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('burgerWalk', './Assets/Sprites/Enemigos/Hamburguesa/Hamburguesa-walk-SpriteSheet.png', {frameHeight: 64, frameWidth:48})
+        this.load.spritesheet('burgerAttack', './Assets/Sprites/Enemigos/Hamburguesa/Hamburguer-attack-SpriteSheet.png', {frameHeight: 64, frameWidth:48})
+    }
+    loadAnimations()
+    {
+        this.anims.create({
+            key: 'walkskeleton',
+            frames: this.anims.generateFrameNumbers('skeleton', {start:0, end:3}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'attackskeleton',
+            frames: this.anims.generateFrameNumbers('skeleton', {start: 4, end: 10}),
+            frameRate: 8
+        });
+        this.anims.create({
+            key: 'walkburger',
+            frames: this.anims.generateFrameNumbers('burgerWalk', {start: 0, end:3}),
+            frameRate: 5,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'attackburger',
+            frames: this.anims.generateFrameNumbers('burgerAttack', {start: 0, end:8}),
+            frameRate: 5
+        })
     }
 
-
     create(){
-
-       
+        this.loadAnimations();
         this.map = this.make.tilemap({ 
 			key: 'ciudadTilemap', 
 			tileWidth: 32, 
@@ -55,6 +81,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.mike = new playerContenedor(this, 300, 300, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
         this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
+        this.hamburger = new Hamburgesa(this, 600, 400, 'burger', this.mike);
 
         this.physics.add.collider(this.mike, this.collisionLayer);
 
@@ -62,17 +89,17 @@ export default class CiudadLevel extends Phaser.Scene{
         
         this.groundUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
 
-        this.time.addEvent({
+        /*this.time.addEvent({
             delay: 1000,
             callback: () => {
-                const potenciador = new Potenciador(this, spawnPoint.x, spawnPoint.y, this.getPotenciadorType(), /*referencia al player?*/);
+                const potenciador = new Potenciador(this, this.spawnPoint.x, this.spawnPoint.y, this.getPotenciadorType(), );
                 if (this.potenciadorRecogido) {
                     potenciador.spawnPotenciador();
                 }
             },
             callbackScope: this,
             loop: true
-        });
+        });*/ 
     }
 
     
