@@ -1,5 +1,6 @@
 import PantallaInicial from "./PantallaInicial.js"
 import PlayaLevel from "./PlayaLevel.js"
+import CiudadLevel from "./CiudadLevel.js"
 
 var config = {
     type: Phaser.AUTO,
@@ -16,7 +17,7 @@ var config = {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
     pixelArt:true,
-    scene : [PantallaInicial, PlayaLevel]
+    scene : [PantallaInicial, PlayaLevel, CiudadLevel]
     
 }
 
