@@ -28,7 +28,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
-        this.load.spritesheet('burgerWalk', './Assets/Sprites/Enemigos/Hamburguesa/Hamburguesa-walk-SpriteSheet.png', {frameHeight: 64, frameWidth:48})
+        this.load.spritesheet('burgerWalk', './Assets/Sprites/Enemigos/Hamburguesa/Hamburguesa-walk-SpriteSheet.png', {frameHeight: 48, frameWidth:64})
         this.load.spritesheet('burgerAttack', './Assets/Sprites/Enemigos/Hamburguesa/Hamburguer-attack-SpriteSheet.png', {frameHeight: 64, frameWidth:48})
     }
     loadAnimations()
@@ -46,13 +46,13 @@ export default class CiudadLevel extends Phaser.Scene{
         });
         this.anims.create({
             key: 'walkburger',
-            frames: this.anims.generateFrameNumbers('burgerWalk', {start: 0, end:3}),
+            frames: this.anims.generateFrameNumbers('burgerWalk', {start: 0, end:2}),
             frameRate: 5,
             repeat: -1
         })
         this.anims.create({
             key: 'attackburger',
-            frames: this.anims.generateFrameNumbers('burgerAttack', {start: 0, end:8}),
+            frames: this.anims.generateFrameNumbers('burgerAttack', {start: 0, end:7}),
             frameRate: 5
         })
     }

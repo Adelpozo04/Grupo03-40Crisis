@@ -17,7 +17,7 @@ export default class Hamburgesa extends Enemigo {
         scene.add.existing(this);
         this.burger = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
         this.add(this.burger);
-        this.setScale(2); //cuidao que esto igual da problemas
+        this.setScale(1); //cuidao que esto igual da problemas
     
         this.attackFlag = true;
     }
@@ -27,7 +27,7 @@ export default class Hamburgesa extends Enemigo {
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        this.burger.play('attack' + key, true);
+        this.burger.play('attackburger', true);
         this.burger.on('animationcomplete', function(){
             this.attack();
             this.attackFlag = true;
@@ -47,7 +47,7 @@ export default class Hamburgesa extends Enemigo {
             this.tryAttack();
         } else if (!super.isAttacking())
         {
-            this.burger.play('walk' + key, true);
+            this.burger.play('walkburger', true);
             this.attackFlag = true;
             this.burger.off('animationcomplete');
         }
