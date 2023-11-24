@@ -1,25 +1,42 @@
-export default class Arma extends Phaser.GameObjects.Sprite {
-    /**
-     * @param {number} daño - daño del arma
-     * @param {number} cadencia - velocidad de disparo
-     * @param {number} maxAmmo - municion del arma
-     * @param {number} actualAmmo - municion actual del arma
-     * @param {playerContenedor} player - referencia al player
-     */ 
 
-    constructor(daño, cadencia, ammo){
-        this.daño = daño;
-        this.cadencia = cadencia;
-        this.maxAmmo = ammo;
+export default class arma extends Phaser.GameObjects.Container {
+    /** 
+    @param {scene} scene - escena a colocar
+    * @param {number} x - posicion x
+    * @param {number} y - posicion y
+    * @param {key} key - key
+    * @param {player} player - referencia a player
+    */
+    constructor(scene, x, y, key, player)
+    {
+        super(scene, x, y);
+        scene.add.existing(this);
+        this.player = player;
         
-        this.añadeMunicion();
+        this.arma = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+        this.add(this.arma)
+        this.setScale(32)
+    }
+
+    followCursor() {
+        let radio = 50;
+        let playerPos = this.player.getCenterPoint();
+        let angle = Phaser.Math.Angle.Between(playerPos.x, playerPos.y, this.arma.x, this.arma.y);
+        // Calcular las nuevas coordenadas
+        let newX = this.player.x + radio * Math.cos(angle);
+        let newY = this.player.y + radio * Math.sin(angle);
+        // Actualizar la posicion del contenedor
+        this.arma.x = newX;
+        this.arma.y = newY;
     }
 
     ataca(){
         --this.actualAmmo;
     }
 
-    añadeMunicion(){
-        this.actualAmmo = this.maxAmmo;
+    }
+    update()
+    {
+        this.followCursor();
     }
 }
