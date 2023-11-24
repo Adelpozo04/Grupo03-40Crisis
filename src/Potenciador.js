@@ -1,4 +1,4 @@
-export default class potenciadores extends Phaser.GameObjects.Container {
+export default class Potenciador extends Phaser.GameObjects.Container {
     /**
     * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
@@ -6,12 +6,16 @@ export default class potenciadores extends Phaser.GameObjects.Container {
     * @param {player} player - referencia al player
     * @param {enemigo} enemigo - referencia al enemigo
     * @param {number} potenciadorID 
+    * @param {key} key - sprite
     */
 
-    constructor(scene, x, y, id, player){
+    constructor(scene, x, y, id, key, player){
         super(scene, x, y);
+        this.key = key;
         this.player = player;
-        this.scene.add.existing(this);
+        scene.add.existing(this);
+        this.skeleton = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+        this.add(this.skeleton);
         this.potenciadorID = id;
         this.type = type
         const potenciadorTypes = ['botiquin', 'velocidad', 'vivu', 'invencible'];
@@ -24,7 +28,7 @@ export default class potenciadores extends Phaser.GameObjects.Container {
 
    
     spawnPotenciador() {
-        if (this.scene.potenciadorRecogido) {
+        if (scene.potenciadorRecogido) {
             const spawnPoints = [
                 { x: 200, y: 200 },
                 { x: 400, y: 400 },
@@ -33,9 +37,7 @@ export default class potenciadores extends Phaser.GameObjects.Container {
 
             const spawnPoint = Phaser.Math.RND.pick(spawnPoints);
 
-            const potenciador = new Potenciador(this, spawnPoint.x, spawnPoint.y, this.getPotenciadorType(), /*referencia al player?*/);
-
-            this.scene.potenciadorRecogido = false; // Establece que el potenciador actual ha sido generado
+            scene.potenciadorRecogido = false; // Establece que el potenciador actual ha sido generado
         }
     }
 

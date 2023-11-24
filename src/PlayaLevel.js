@@ -1,7 +1,7 @@
 import playerContenedor from './playerContenedor.js';
 import Zombie from './zombie.js';
 import Esqueleto from './esqueleto.js';
-import Potenciador from './potenciadores.js';
+import Potenciador from './Potenciador.js';
 
 export default class PlayaLevel extends Phaser.Scene{
 
@@ -20,6 +20,7 @@ export default class PlayaLevel extends Phaser.Scene{
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin2.jpg', {frameWidth: 32, frameHeight: 32});
     }
 
 
