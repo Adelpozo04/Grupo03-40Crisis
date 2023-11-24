@@ -4,8 +4,8 @@ import CiudadLevel from "./CiudadLevel.js"
 
 var config = {
     type: Phaser.AUTO,
-    width: 1500,
-    height: 800,
+    width: 1200,
+    height: 700,
     physics: {
         default: 'arcade',
         arcade:{

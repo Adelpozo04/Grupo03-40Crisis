@@ -60,7 +60,12 @@ export default class CiudadLevel extends Phaser.Scene{
 
         this.cameras.main.startFollow(this.mike);
         
-        this.groundUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
+        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
+
+        this.collisionLayer.setScale(1.35, 1.35);
+        this.groundLayer.setScale(1.35, 1.35);
+        this.groundUpLayer.setScale(1.35, 1.35);
+        this.objectsUpLayer.setScale(1.35, 1.35);
 
         this.time.addEvent({
             delay: 1000,
