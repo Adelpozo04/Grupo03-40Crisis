@@ -4,21 +4,17 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     * @param {number} x - posicion x
     * @param {number} y - posicion y
     * @param {player} player - referencia al player
-    * @param {enemigo} enemigo - referencia al enemigo
-    * @param {number} potenciadorID 
+    * @param {enemigo} enemigo - referencia al enemigo 
     * @param {key} key - sprite
     */
 
-    constructor(scene, x, y, id, key, player){
+    constructor(scene, x, y, key, player){
         super(scene, x, y);
         this.key = key;
         this.player = player;
         scene.add.existing(this);
-        this.skeleton = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
-        this.add(this.skeleton);
-        this.potenciadorID = id;
-        this.type = type
-        const potenciadorTypes = ['botiquin', 'velocidad', 'vivu', 'invencible'];
+        this.Potenciador = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+        this.add(this.Potenciador);
     }
 
     enviarPotenciador(){
@@ -39,9 +35,5 @@ export default class Potenciador extends Phaser.GameObjects.Container {
 
             scene.potenciadorRecogido = false; // Establece que el potenciador actual ha sido generado
         }
-    }
-
-    getPotenciadorType() {
-        return potenciadorTypes[this.potenciadorID];
     }
 }
