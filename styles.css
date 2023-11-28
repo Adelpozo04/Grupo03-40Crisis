@@ -164,6 +164,10 @@ div#historia{
 }
 /*Fin de Menù lateral*/
 
+canvas{
+  position: absolute top;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -265,7 +269,7 @@ div#sobre-nosotros-text {
 
 /* Footer */
 footer {
-  position: absolute bottom;
+  position: static bottom;
   width: 100%;
   height: 300px;
   background: #111;
