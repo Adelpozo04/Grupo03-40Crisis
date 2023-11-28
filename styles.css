@@ -164,10 +164,6 @@ div#historia{
 }
 /*Fin de Menù lateral*/
 
-canvas{
-  position: absolute top;
-}
-
 html, body {
     margin: 0;
     padding: 0;
