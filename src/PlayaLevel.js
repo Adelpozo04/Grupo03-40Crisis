@@ -29,16 +29,46 @@ export default class PlayaLevel extends Phaser.Scene{
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 32, frameHeight: 32});
     }
 
+    loadAnimations()
+    {
+        this.anims.create({
+            key: 'walkskeleton',
+            frames: this.anims.generateFrameNumbers('skeleton', {start:0, end:3}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'attackskeleton',
+            frames: this.anims.generateFrameNumbers('skeleton', {start: 4, end: 10}),
+            frameRate: 8
+        });
+        this.anims.create({
+            key: 'walkburger',
+            frames: this.anims.generateFrameNumbers('burgerWalk', {start: 0, end:2}),
+            frameRate: 5,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'attackburger',
+            frames: this.anims.generateFrameNumbers('burgerAttack', {start: 0, end:7}),
+            frameRate: 5
+        })
+
+        
+
+    }
+
 
     create(){
-        
+
+        this.loadAnimations();
         this.map = this.make.tilemap({ 
 			key: 'playaTilemap', 
 			tileWidth: 32, 
 			tileHeight: 32 
 		});
 
-        const myTile = this.map.addTilesetImage("TilePlaya-export", 'patronesPlayaTilemap', 32, 32, 1, 2);
+        const myTile = this.map.addTilesetImage("TilePlaya-export", 'patronesPlayaTilemap', 32, 32, 0, 0);
 
         this.groundLayer = this.map.createLayer('Suelo', myTile);
 
@@ -50,15 +80,21 @@ export default class PlayaLevel extends Phaser.Scene{
         this.collisionUpLayer = this.map.createLayer('ColisionesEncima', myTile);
         //this.collisionUpLayer.setCollisionByExclusion([-1], true);
 
-        this.objectUpLayer = this.map.createLayer("ObjetosEncima", myTile);
+        
 
         this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
-        this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
+        this.skeleton1 = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
         
+        this.objectUpLayer = this.map.createLayer("ObjetosEncima", myTile);
+
         this.physics.add.collider(this.mike, this.collisionLayer);
 
         this.physics.add.collider(this.mike, this.collisionUpLayer);
+
+        this.physics.add.collider(this.skeleton1, this.collisionLayer);
+
+        this.physics.add.collider(this.skeleton1, this.collisionUpLayer);
 
         this.cameras.main.startFollow(this.mike);
 
@@ -81,7 +117,7 @@ export default class PlayaLevel extends Phaser.Scene{
     
     update(t, dt){
         //this.zombie.update();
-        this.skeleton.update();
+        this.skeleton1.update();
     }
 
 
