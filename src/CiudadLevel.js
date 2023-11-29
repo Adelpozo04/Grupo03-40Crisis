@@ -108,6 +108,9 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
 
+        //Colision de potenciador con player
+        this.physics.add.collider(this.mike, this.potenciador, this.applyEffectPlayer(), null, this);
+
         //Se crea la camara
         this.cameras.main.startFollow(this.mike);
         
@@ -127,6 +130,9 @@ export default class CiudadLevel extends Phaser.Scene{
             SLEEP: 'vivu', 
             INVENCIBLE: 'invencible',
         };
+
+       
+
 
         if(!this.potenciadorSpawneado){
             this.time.addEvent({
@@ -155,7 +161,10 @@ export default class CiudadLevel extends Phaser.Scene{
 
     }
 
-    
+   applyEffectPlayer() {
+       this.mike.applyEffect(this.potenciador);
+
+   }
     update(t, dt){
         //this.zombie.update();
         this.skeleton.update();

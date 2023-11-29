@@ -233,7 +233,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             default:
                 break;
         }
-        scene.potenciadorRecogido = true; // Marcar que el potenciador ha sido recogido
+        scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 
     getPlayer(){
