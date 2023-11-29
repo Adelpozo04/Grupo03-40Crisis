@@ -1,10 +1,8 @@
 import playerContenedor from './playerContenedor.js';
-import Zombie from './zombie.js';
-import Esqueleto from './esqueleto.js';
-import Hamburgesa from './hamburgesa.js'
 import Potenciador from './Potenciador.js';
 import Robot from './robot.js'
 import EnemigoBasico from './enemigoBasico.js';
+import UIManager from './uiManager.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -125,16 +123,12 @@ export default class CiudadLevel extends Phaser.Scene{
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
 
-
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
             VELOCIDAD: 'velocidad', 
             SLEEP: 'vivu', 
             INVENCIBLE: 'invencible',
         };
-
-       
-
 
         if(!this.potenciadorSpawneado){
             this.time.addEvent({
@@ -160,6 +154,10 @@ export default class CiudadLevel extends Phaser.Scene{
                 loop: false,
             });
         }
+
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
 
     }
 

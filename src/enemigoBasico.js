@@ -10,19 +10,19 @@ export default class EnemigoBasico extends Enemigo{
 constructor(scene, x, y, key, player)
 {
     var speedEnemigos = new Map([
-        ['zombie', 3], ['skeleton', 0.5], ['burger', 1]
+        ['zombie', 3], ['skeleton', 0.5], ['burger', 1], ['lutano', 3]
     ]);
     var damageEnemigos = new Map([
-        ['zombie', 1], ['skeleton', 1], ['burger', 1]
+        ['zombie', 2], ['skeleton', 1], ['burger', 5], ['lutano', 2]
     ]);
     var attackDistEnemigos = new Map([
-        ['zombie', 30], ['skeleton', 30], ['burger', 30]
+        ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30]
     ]);
     var vidaEnemigos = new Map([
-        ['zombie', 1], ['skeleton', 1], ['burger', 1]
+        ['zombie', 1], ['skeleton', 1], ['burger', 1], ['lutano', 1]
     ]);
     var scaleEnemigos = new Map([
-        ['zombie', 1], ['skeleton', 2], ['burger', 1]
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 1]
     ]);
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
     this.key = key;

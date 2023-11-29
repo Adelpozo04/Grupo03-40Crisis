@@ -1,6 +1,4 @@
 import playerContenedor from './playerContenedor.js';
-import Zombie from './zombie.js';
-import Esqueleto from './esqueleto.js';
 import Potenciador from './Potenciador.js';
 
 export default class PlayaLevel extends Phaser.Scene{
