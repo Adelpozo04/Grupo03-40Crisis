@@ -7,16 +7,25 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {number} speed - velocidad
      * @param {number} attackDistance - distancia mínima de ataque
      */
-    constructor(scene, x, y, player, speed, attackDistance){
+
+    //Habria que poner una variable life
+    constructor(scene, x, y, player, speed, attackDistance, damage, life){
         super(scene, x, y);
+
+        scene.physics.add.existing(this);
         scene.add.existing(this);
         this.player = player;
         this.speed = speed;
+        this.damage = damage;
+        this.life = life;
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
 
         this.isAttacking = false;
         this.canDamage = true;
+    
+        this.body.setSize(this.width, this.width);
+
     }
     
 
@@ -33,7 +42,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     attack()
     {
-        console.log("attack");
+        this.player.damagePlayer(this.damage);
     }
 
     basicMovement()

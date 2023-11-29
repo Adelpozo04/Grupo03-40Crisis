@@ -198,6 +198,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     damagePlayer(damage){
         this.life = this.life - damage;
+        console.log(this.life);
     }
 
     applyEffect(keyPotenciador){
@@ -235,7 +236,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         scene.potenciadorRecogido = true; // Marcar que el potenciador ha sido recogido
     }
 
-    
+    getLife(){
+        return this.life;
+    }
 
     getPlayer(){
         return this.player;

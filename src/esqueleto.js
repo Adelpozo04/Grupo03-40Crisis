@@ -9,10 +9,14 @@ export default class Esqueleto extends Enemigo {
      */ 
     constructor(scene, x, y, key, player)
     {
-        super(scene, x, y, player, 0.5, 30);
+        
+        super(scene, x, y, player, 1, 30, 10, 25);
+
         this.speed = 1; // velocidad enemigo
         this.attackDistance = 30; // distancia ataque (30 = melee)
-        
+        this.damage = 10;
+        this.life = 25;
+
         this.key = key;
         scene.add.existing(this);
         this.skeleton = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
