@@ -244,6 +244,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return { x: this.x, y: this.y };
     }
 
+    getLife(){
+        return this.life;
+    }
+
     // da el punto en el medio del player, ya que getPosition da la esquina superior izq
     getCenterPoint(){
         return {x: this.x + 16, y: this.y + 16};
