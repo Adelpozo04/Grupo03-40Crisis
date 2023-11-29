@@ -47,7 +47,7 @@ export default class Robot extends Enemigo {
             this.tryAttack();
         } else if (!super.isAttacking())
         {
-            this.robot.play('walkRobot', true);
+            this.robot.play('walkrobot', true);
             this.attackFlag = true;
             this.robot.off('animationcomplete');
         }

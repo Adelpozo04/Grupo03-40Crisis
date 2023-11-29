@@ -30,7 +30,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
 
-        this.load.spritesheet('burger', './Assets/Sprites/Enemigos/Hamburguesa/hamburgesa-spriteSheet.png', {frameWidth: 64, frameHeight:64})
+        this.load.spritesheet('burger', './Assets/Sprites/Enemigos/Hamburguesa/hamburguesa-spriteSheet.png', {frameWidth: 64, frameHeight:64})
         
         this.load.spritesheet('robot', './Assets/Sprites/Enemigos/Robot/Robot-walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
 
@@ -62,11 +62,12 @@ export default class CiudadLevel extends Phaser.Scene{
         this.anims.create({
             key: 'attackburger',
             frames: this.anims.generateFrameNumbers('burger', {start: 0, end:7}),
-            frameRate: 5
+            frameRate: 10
         })
         this.anims.create({
             key: 'walkrobot',
-            frames: this.anims.generateFrameNumbers('robot', {start: 0, end:3})
+            frames: this.anims.generateFrameNumbers('robot', {start: 0, end:3}),
+            frameRate: 5
         })
         
 
@@ -151,6 +152,8 @@ export default class CiudadLevel extends Phaser.Scene{
     update(t, dt){
         //this.zombie.update();
         this.skeleton.update();
+        this.hamburger.update();
+        this.robot.update();
     }
 
 

@@ -47,7 +47,7 @@ export default class Hamburgesa extends Enemigo {
             this.tryAttack();
         } else if (!super.isAttacking())
         {
-            this.burger.play('attackburger', true);
+            this.burger.play('walkburger', true);
             this.attackFlag = true;
             this.burger.off('animationcomplete');
         }
