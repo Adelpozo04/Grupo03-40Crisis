@@ -34,10 +34,10 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Cargado de imagenes de objetos del juego
 
-        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin2.jpg', {frameWidth: 32, frameHeight: 32});
-        this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 32, frameHeight: 32});
-        this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 32, frameHeight: 32});
-        this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
     }
   
     loadAnimations()
@@ -109,7 +109,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.physics.add.collider(this.mike, this.collisionLayer);
 
         //Colision de potenciador con player
-        this.physics.add.collider(this.mike, this.potenciador, this.applyEffectPlayer(), null, this);
+        this.physics.add.collider(this.mike, this.potenciador, this.applyEffectPlayer(this.potenciador), null, this);
 
         //Se crea la camara
         this.cameras.main.startFollow(this.mike);
@@ -162,7 +162,9 @@ export default class CiudadLevel extends Phaser.Scene{
     }
 
    applyEffectPlayer() {
-       this.mike.applyEffect(this.potenciador);
+      
+    console.log("hola");
+    console.log();
 
    }
     update(t, dt){

@@ -254,5 +254,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.personalityExp[personalityID];
 
     }
+
     
 }
