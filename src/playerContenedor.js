@@ -182,8 +182,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.player.play('walk' + this.key, true);
 
             this.body.setVelocity(this.speed * this.dirX, this.speed * this.dirY);
+            this.body.velocity.normalize().scale(this.speed);
 
-            //console.log(this.x + " / " + this.y);
         }
         else{
             this.body.setVelocity(0, 0);

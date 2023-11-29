@@ -10,7 +10,7 @@ export default class Esqueleto extends Enemigo {
     constructor(scene, x, y, key, player)
     {
         super(scene, x, y, player, 0.5, 30);
-        this.speed = 0.5; // velocidad enemigo
+        this.speed = 1; // velocidad enemigo
         this.attackDistance = 30; // distancia ataque (30 = melee)
         
         this.key = key;

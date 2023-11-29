@@ -82,9 +82,9 @@ export default class PlayaLevel extends Phaser.Scene{
 
         
 
-        this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
+        this.mike = new playerContenedor(this, 500, 500, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
-        this.skeleton1 = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
+        this.skeleton1 = new Esqueleto(this, 700, 700, 'skeleton', this.mike);
         
         this.objectUpLayer = this.map.createLayer("ObjetosEncima", myTile);
 
