@@ -1,5 +1,5 @@
 import Enemigo from'./enemigo.js'
-export default class Esqueleto extends Enemigo {
+export default class Zombie extends Enemigo {
     /**
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
@@ -9,36 +9,18 @@ export default class Esqueleto extends Enemigo {
      */ 
     constructor(scene, x, y, key, player)
     {
-        super(scene, x, y, player, 0.5, 30);
-        this.speed = 0.5; // velocidad enemigo
+        super(scene, x, y, player, 1, 30, 10, 25);
+
+        this.speed = 1; // velocidad enemigo
         this.attackDistance = 30; // distancia ataque (30 = melee)
-        
+        this.damage = 10;
+        this.life = 25;
+
         this.key = key;
         scene.add.existing(this);
         this.zombie = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
         this.add(this.zombie);
-        this.setScale(0.25); //cuidao que esto igual da problemas
-    
-        this.scene.anims.create({
-            key: 'walk' + key,
-            frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
-            frameRate: 5,
-            repeat: -1
-        });
-    
-        this.scene.anims.create({
-            key: 'idle' + key,
-            frames: scene.anims.generateFrameNumbers(key, {start: 0, end:0}),
-            frameRate: 5,
-            repeat: -1
-        });
-
-        this.scene.anims.create({
-            key: 'attack' + key,
-            frames: scene.anims.generateFrameNumbers(key, {start: 4, end: 10}),
-            frameRate: 8,
-            repeat: 0
-        });
+        this.setScale(2); //cuidao que esto igual da problemas
     
         this.attackFlag = true;
     }
@@ -48,11 +30,11 @@ export default class Esqueleto extends Enemigo {
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        this.zombie.play('attack' + this.key, true);
+        this.zombie.play('attackzombie', true);
         this.zombie.on('animationcomplete', function(){
             this.attack();
             this.attackFlag = true;
-            this.zombie.off('animationcomplete');
+            this.skeleton.off('animationcomplete');
         }, this)
     }
 
@@ -64,23 +46,24 @@ export default class Esqueleto extends Enemigo {
         // si podemos atacar y seguimos en rango, intentamos atacar
         if (this.attackFlag && super.isAttacking())
         {
-            this.inattackRange = true;
             this.attackFlag = false;
             this.tryAttack();
         } else if (!super.isAttacking())
         {
-            this.zombie.play('walk' + this.key, true);
+            this.skeleton.play('walkskeleton', true);
+            this.attackFlag = true;
+            this.skeleton.off('animationcomplete');
         }
 
 
         //flip del sprite en función de la pos del player
         if (this.x < super.getPlayer().x)
         {
-            this.zombie.setFlip(false, false);
+            this.skeleton.setFlip(false, false);
         }
         else if (this.x > super.getPlayer().y)
         {
-            this.zombie.setFlip(true, false);
+            this.skeleton.setFlip(true, false);
         }
     }
 }
