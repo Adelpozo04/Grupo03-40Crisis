@@ -29,7 +29,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
     }
     
 
-    isAttacking(){
+    isInAttackRange(){
         return this.isAttacking;
     }
     getPlayer(){
@@ -45,7 +45,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.player.damagePlayer(this.damage);
     }
 
-    basicMovement()
+    basicMovement(canMove)
     {
         var playerPosition = this.player.getCenterPoint();
 
@@ -61,20 +61,21 @@ export default class enemigo extends Phaser.GameObjects.Container {
             Math.abs(this.y - playerPosition.y) < this.attackDistance)
         {
             this.isAttacking = true;
-            //attack
         }
         else
         {
             this.isAttacking = false;
-            this.x += this.speed * this.direction.x;
-            this.y += this.speed * this.direction.y;
+            if (canMove)
+            {
+                this.x += this.speed * this.direction.x;
+                this.y += this.speed * this.direction.y;
+            }
         }
     }
 
     applyEffect(keyPotenciador){
 
         if(keyPotenciador == 'botiquin'){
-
             this.life = this.life + 0.5 * this.maxLife;
         }
         else if(keyPotenciador == 'zapato'){

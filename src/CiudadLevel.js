@@ -4,6 +4,7 @@ import Esqueleto from './esqueleto.js';
 import Hamburgesa from './hamburgesa.js'
 import Potenciador from './Potenciador.js';
 import Robot from './robot.js'
+import EnemigoBasico from './enemigoBasico.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -100,9 +101,10 @@ export default class CiudadLevel extends Phaser.Scene{
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
-        this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
-        this.hamburger = new Hamburgesa(this, 600, 400, 'burger', this.mike);
-        this.robot = new Robot(this, 700, 600, 'robot', this.mike);
+        //this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
+        //this.hamburger = new Hamburgesa(this, 600, 400, 'burger', this.mike);
+        //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
 
         //Se indica que colliders chocan entre si
@@ -159,8 +161,8 @@ export default class CiudadLevel extends Phaser.Scene{
     update(t, dt){
         //this.zombie.update();
         this.skeleton.update();
-        this.hamburger.update();
-        this.robot.update();
+        //this.hamburger.update();
+        //this.robot.update();
     }
 
 
