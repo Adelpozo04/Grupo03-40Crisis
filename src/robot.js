@@ -1,5 +1,5 @@
 import Enemigo from'./enemigo.js'
-export default class Hamburgesa extends Enemigo {
+export default class Robot extends Enemigo {
     /**
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
@@ -15,9 +15,9 @@ export default class Hamburgesa extends Enemigo {
         
         this.key = key;
         scene.add.existing(this);
-        this.burger = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
-        this.add(this.burger);
-        this.setScale(1); //cuidao que esto igual da problemas
+        this.robot = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+        this.add(this.robot);
+        this.setScale(0.25); //cuidao que esto igual da problemas
     
         this.attackFlag = true;
     }
@@ -27,12 +27,12 @@ export default class Hamburgesa extends Enemigo {
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        this.burger.play('attackburger', true);
-        this.burger.on('animationcomplete', function(){
+        /*this.robot.play('attackRobot', true);
+        this.robot.on('animationcomplete', function(){
             this.attack();
             this.attackFlag = true;
-            this.burger.off('animationcomplete');
-        }, this)
+            this.skeleton.off('animationcomplete');
+        }, this)*/
     }
 
     update(){
@@ -47,20 +47,20 @@ export default class Hamburgesa extends Enemigo {
             this.tryAttack();
         } else if (!super.isAttacking())
         {
-            this.burger.play('attackburger', true);
+            this.robot.play('walkRobot', true);
             this.attackFlag = true;
-            this.burger.off('animationcomplete');
+            this.robot.off('animationcomplete');
         }
 
 
         //flip del sprite en función de la pos del player
         if (this.x < super.getPlayer().x)
         {
-            this.burger.setFlip(false, false);
+            this.robot.setFlip(false, false);
         }
         else if (this.x > super.getPlayer().y)
         {
-            this.burger.setFlip(true, false);
+            this.robot.setFlip(true, false);
         }
     }
 }
