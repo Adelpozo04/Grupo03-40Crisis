@@ -2,7 +2,7 @@
 
 export default class HealthBar extends Phaser.GameObjects.Graphics{
 
-constructor( scene, x, y, initialValue, width, heigth){
+constructor( scene, x, y, player, width, heigth){
 
     super(scene);
 
@@ -12,22 +12,13 @@ constructor( scene, x, y, initialValue, width, heigth){
     this.w = width;
     this.h = heigth;
 
-    this.maxValue = initialValue;
+    this.player = player;
 
-    this.value = initialValue;
+    this.value = this.player.getLife();
 
     this.draw();
 
     scene.add.existing(this);
-
-}
-
-//Si el valor de vida cambia se aplica el cambiomy se vuelve a dibujar
-changeValue(amount){
-
-    this.value += amount;
-
-    this.draw();
 
 }
 
@@ -56,7 +47,13 @@ draw(){
     this.fillRect(x, y, currentHeatlh, h);
 }
 
+preUpdate(dt, t){
 
+    this.value = player.getLife();
+
+    this.draw();
+
+}
 
 
 

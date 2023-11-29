@@ -18,7 +18,7 @@ var config = {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
     pixelArt:true,
-    scene : [PantallaInicial, PlayaLevel, CiudadLevel]
+    scene : [PantallaInicial, PlayaLevel, CiudadLevel, VolcanLevel]
     
 }
 
