@@ -1,6 +1,7 @@
 import PantallaInicial from "./PantallaInicial.js"
 import PlayaLevel from "./PlayaLevel.js"
 import CiudadLevel from "./CiudadLevel.js"
+import VolcanLevel from "./VolcanLevel.js"
 
 var config = {
     type: Phaser.AUTO,
