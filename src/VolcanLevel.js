@@ -1,6 +1,4 @@
 import playerContenedor from './playerContenedor.js';
-import Zombie from './zombie.js';
-import Esqueleto from './esqueleto.js';
 import Potenciador from './Potenciador.js';
 
 export default class VolcanLevel extends Phaser.Scene{
@@ -23,10 +21,11 @@ export default class VolcanLevel extends Phaser.Scene{
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
-        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin2.jpg', {frameWidth: 32, frameHeight: 32});
-        this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 32, frameHeight: 32});
-        this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 32, frameHeight: 32});
-        this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 32, frameHeight: 32});
+
+        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
     }
 
     loadAnimations()
@@ -78,18 +77,17 @@ export default class VolcanLevel extends Phaser.Scene{
         this.collisionLayer.setCollisionByExclusion([-1], true);     
 
         this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
-        //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
-        this.skeleton1 = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
-        
+
         this.objectUpLayer = this.map.createLayer("Encima", myTile);
 
         this.physics.add.collider(this.mike, this.collisionLayer);
 
         this.physics.add.collider(this.mike, this.collisionUpLayer);
 
-        this.physics.add.collider(this.skeleton1, this.collisionLayer);
-
-        this.physics.add.collider(this.skeleton1, this.collisionUpLayer);
+        this.collisionLayer.setScale(1.5, 1.5);
+        this.groundLayer.setScale(1.5, 1.5);
+        this.groundUpLayer.setScale(1.5, 1.5);
+        this.objectUpLayer.setScale(1.5, 1.5);
 
         this.cameras.main.startFollow(this.mike);
 
@@ -111,8 +109,7 @@ export default class VolcanLevel extends Phaser.Scene{
 
     
     update(t, dt){
-        //this.zombie.update();
-        this.skeleton1.update();
+
     }
 
 

@@ -9,17 +9,17 @@ constructor(scene, key, player){
 
     this.player = player;
 
-    this.healthBar = new HealthBar(0, 0, player, 1024, 64);
-
-    
+    this.healthBar = new HealthBar(scene, 0, 0, player, 341, 32).setScrollFactor(0);
 
     this.key = key;
+
+    scene.add.existing(this);
 
 }
 
 preUpdate(t, dt){
 
-
+    this.healthBar.preUpdate(t, dt);
 
 
 }

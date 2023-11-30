@@ -16,6 +16,8 @@ constructor( scene, x, y, player, width, heigth){
 
     this.value = this.player.getLife();
 
+    this.maxValue = this.value;
+
     this.draw();
 
     scene.add.existing(this);
@@ -30,26 +32,26 @@ draw(){
     //Se pone un borde negro que sirva como margen algo más grande que la barra normal
     this.fillStyle(0x000000);
 
-    this.fillRect(x - 2, y - 2, w + 4, h + 4);
+    this.fillRect(this.x - 2, this.y - 2, this.w + 4, this.h + 4);
 
     //se pone una barra blanca por encima que sirve para marcar la vida perdida
-    this.fillStyle(0xffffff);
+    this.fillStyle(0xFFFFFF);
 
-    this.fillRect(x, y, w, h);
+    this.fillRect(this.x, this.y, this.w, this.h);
 
     //Se pone una barra roja encima de la blanca con el mismo tamaño
     this.fillStyle(0xff0000);
 
     //Su ancho dependera de su valor actual respecto al maximo, siguiendo una regla de tres, de esta froma si disminuye la vida se deja ver
     //la barra blanca
-    var currentHeatlh = (this.value * this.w) / this.maxValue;
+    let currentHealth = (this.value * this.w) / this.maxValue;
 
-    this.fillRect(x, y, currentHeatlh, h);
+    this.fillRect(this.x, this.y, currentHealth, this.h);
 }
 
-preUpdate(dt, t){
+preUpdate(t, dt){
 
-    this.value = player.getLife();
+    this.value = this.player.getLife();
 
     this.draw();
 

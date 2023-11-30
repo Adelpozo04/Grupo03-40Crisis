@@ -1,10 +1,8 @@
 import playerContenedor from './playerContenedor.js';
-import Zombie from './zombie.js';
-import Esqueleto from './esqueleto.js';
-import Hamburgesa from './hamburgesa.js'
 import Potenciador from './Potenciador.js';
 import Robot from './robot.js'
 import EnemigoBasico from './enemigoBasico.js';
+import UIManager from './uiManager.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -100,9 +98,6 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 20, -2000, -2000, 200, 150);
-        //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
-        //this.skeleton = new Esqueleto(this, 300, 300, 'skeleton', this.mike);
-        //this.hamburger = new Hamburgesa(this, 600, 400, 'burger', this.mike);
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
@@ -125,16 +120,12 @@ export default class CiudadLevel extends Phaser.Scene{
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
 
-
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
             VELOCIDAD: 'velocidad', 
             SLEEP: 'vivu', 
             INVENCIBLE: 'invencible',
         };
-
-       
-
 
         if(!this.potenciadorSpawneado){
             this.time.addEvent({
@@ -161,6 +152,10 @@ export default class CiudadLevel extends Phaser.Scene{
             });
         }
 
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+
     }
 
    applyEffectPlayer() {
@@ -170,9 +165,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
    }
     update(t, dt){
-        //this.zombie.update();
         this.skeleton.update();
-        //this.hamburger.update();
         //this.robot.update();
     }
 
