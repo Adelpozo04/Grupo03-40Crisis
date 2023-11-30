@@ -77,12 +77,18 @@ export default class VolcanLevel extends Phaser.Scene{
         this.collisionLayer.setCollisionByExclusion([-1], true);     
 
         this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
+        let player = this.mike;
 
         this.objectUpLayer = this.map.createLayer("Encima", myTile);
 
         this.physics.add.collider(this.mike, this.collisionLayer);
 
         this.physics.add.collider(this.mike, this.collisionUpLayer);
+
+        this.physics.add.collider(this.mike, this.potenciador, this.hola(), null, this);
+
+        
+
 
         this.collisionLayer.setScale(1.5, 1.5);
         this.groundLayer.setScale(1.5, 1.5);
@@ -91,23 +97,64 @@ export default class VolcanLevel extends Phaser.Scene{
 
         this.cameras.main.startFollow(this.mike);
 
-        /*
-        this.time.addEvent({
-            delay: 1000,
-            callback: () => {
-                aux = Phaser.Math.RND.between(0, 3);
-                const potenciador = new Potenciador(this, 0, 0, potenciadorTypes[aux], this.mike);
-                if (this.potenciadorRecogido) {
-                    potenciador.spawnPotenciador(this);
-                }
-            },
-            callbackScope: this,
-            loop: true
-        });
-        */
+
+        const potenciadorTypes = {
+            BOTIQUIN: 'botiquin', 
+            VELOCIDAD: 'velocidad', 
+            SLEEP: 'vivu', 
+            INVENCIBLE: 'invencible',
+        };
+
+        if(!this.potenciadorSpawneado){
+            let pot;
+            this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    let aux = Phaser.Math.RND.between(0, 3);
+                    let potenciadorType = Object.values(potenciadorTypes)[aux];
+                    this.potenciador = new Potenciador(this, 600, 600, potenciadorType, player);
+                    pot = this.potenciador;
+                    this.potenciadorSpawneado = true;
+
+                      
+
+
+                    this.tweens.add({
+                        targets: this.potenciador,
+                        y: this.potenciador.y - 30,
+                        duration: 2000,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1,
+                        delay: 10
+                    })
+                },
+                
+                 //Colision de potenciador con player
+           
+                callbackScope: this,
+                loop: false,
+            });
+
+            //Colision de potenciador con player
+          //  this.physics.add.collider(player, pot, pot.enviarPotenciador(potenciadorType), null, this);
+
+           
+          
+        }
+
+       
+
+
+       
     }
 
-    
+
+    hola() {
+        console.log("hola");
+    }
+
+   
     update(t, dt){
 
     }

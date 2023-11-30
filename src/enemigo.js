@@ -87,6 +87,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         else if(keyPotenciador == 'invencible'){
             this.invencible = true;
         }
+
+        
     }
 }
     
