@@ -102,13 +102,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
     }
 
-    create(){
-
-        this.body.setVelocity(speed, speed);
-        this.setCollideWorldBounds(true);
-
-    }
-
     preUpdate(t, dt){
 
         this.player.preUpdate(t, dt);

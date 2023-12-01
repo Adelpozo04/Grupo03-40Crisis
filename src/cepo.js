@@ -10,7 +10,11 @@ constructor(scene, x, y, key, player){
 
     this.paraliceTime = 5;
 
+    //this.cepo = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+
     scene.add.existing(this);
+
+    //scene.add.existing(this.cepo);
 
     scene.physics.add.existing(this);
 

@@ -13,26 +13,28 @@ constructor(scene, x, y, key, player){
 
     this.elapsedTime = 0;
 
-    this.timeEvent = new Phaser.Time.TimerEvent({
+    this.scene.time.addEvent({
 
-        delay: this.spawnTime * 1000,
+        delay: 5,
         loop: true,
-        callback: this.spawnCepo()
+        callback: this.spawnCepo,
+        callbackScope: this,
 
-    })
-
+    });
 }
 
 spawnCepo(){
 
-    this.cepo = new cepo(this.scene, this.direction.x, this.direction.y, "cepo_" + this.key, this.player);
+    console.log("cepeame esta");
+
+    this.cepo = new cepo(this.scene, this.direction.x, this.direction.y, "cepo", this.player);
 
     this.scene.add.existing(this.cepo);
 
 }
 
 update(){
-    
+
     super.update();
 
 }

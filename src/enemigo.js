@@ -28,7 +28,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     }
     
-
     isInAttackRange(){
         return this.isAttacking;
     }
