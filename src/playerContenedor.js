@@ -182,8 +182,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.player.play('walk' + this.key, true);
 
             this.body.setVelocity(this.speed * this.dirX, this.speed * this.dirY);
+            this.body.velocity.normalize().scale(this.speed);
 
-            //console.log(this.x + " / " + this.y);
         }
         else{
             this.body.setVelocity(0, 0);
@@ -198,6 +198,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     damagePlayer(damage){
         this.life = this.life - damage;
+        console.log(this.life);
     }
 
     applyEffect(keyPotenciador){
@@ -232,10 +233,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             default:
                 break;
         }
-        scene.potenciadorRecogido = true; // Marcar que el potenciador ha sido recogido
+        scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
-
-    
 
     getPlayer(){
         return this.player;
@@ -243,6 +242,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     
     getPosition() {
         return { x: this.x, y: this.y };
+    }
+
+    getLife(){
+        return this.life;
     }
 
     // da el punto en el medio del player, ya que getPosition da la esquina superior izq
@@ -255,5 +258,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.personalityExp[personalityID];
 
     }
+
     
 }

@@ -16,7 +16,16 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         scene.add.existing(this);
         this.sprite = scene.add.sprite(32, 32, key);
         this.add(this.sprite);
-        this.setScale(0.05); //cuidao que esto igual da problemas
+        this.setScale(0.15); //cuidao que esto igual da problemas
+
+
+        const potenciadorTypes = {
+            BOTIQUIN: 'botiquin', 
+            VELOCIDAD: 'velocidad', 
+            SLEEP: 'vivu', 
+            INVENCIBLE: 'invencible',
+        };
+
     }
 
     enviarPotenciador(){
