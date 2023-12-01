@@ -32,29 +32,31 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     }
 
 
-    getPlayer(){
-        return this.player;
-    }
+   
 
     enviarPotenciador(){
-        console.log("hola");
+        console.log(this.key);
         this.player.applyEffect(this.key);
         this.destroy();
     }
 
-    /*
+    
     spawnPotenciador() {
         if (this.scene.potenciadorRecogido) {
             const spawnPoints = [
-                { x: 200, y: 200 },
-                { x: 400, y: 400 },
+                { x: 600, y: 600 },
+                { x: 600, y: 700 },
+                { x: 700, y: 600 },
+                { x: 700, y: 700 },
             //Añadir luego las coordenadas correctas
             ];
 
-            const spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+            
+            let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+            return spawnPoint;
 
             this.scene.potenciadorRecogido = false; // Establece que el potenciador actual ha sido generado
         }
     }
-    */
+    
 }

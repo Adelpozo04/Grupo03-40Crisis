@@ -22,10 +22,10 @@ export default class VolcanLevel extends Phaser.Scene{
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
 
-        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 128, frameHeight: 128});
         this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
-        this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 128, frameHeight: 128});
     }
 
     loadAnimations()
@@ -76,17 +76,18 @@ export default class VolcanLevel extends Phaser.Scene{
         this.collisionLayer = this.map.createLayer('Colisiones', myTile);
         this.collisionLayer.setCollisionByExclusion([-1], true);     
 
-        this.mike = new playerContenedor(this, 150, 150, 'mike', 20, -2000, -2000, 200, 150);
+        this.mike = new playerContenedor(this, 300, 500, 'mike', 20, -2000, -2000, 200, 150);
         let player = this.mike;
 
         this.objectUpLayer = this.map.createLayer("Encima", myTile);
 
+       
         this.physics.add.collider(this.mike, this.collisionLayer);
 
         this.physics.add.collider(this.mike, this.collisionUpLayer);
 
-        this.physics.add.collider(this.mike, this.potenciador, this.hola(), null, this);
-
+        
+      
         
 
 
@@ -105,20 +106,20 @@ export default class VolcanLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
+          
+
         if(!this.potenciadorSpawneado){
-            let pot;
+           
             this.time.addEvent({
-                delay: 1000,
+                delay: 3000,
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
                     let potenciadorType = Object.values(potenciadorTypes)[aux];
                     this.potenciador = new Potenciador(this, 600, 600, potenciadorType, player);
-                    pot = this.potenciador;
+                    let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
-
-                      
-
-
+                
+     
                     this.tweens.add({
                         targets: this.potenciador,
                         y: this.potenciador.y - 30,
@@ -128,31 +129,27 @@ export default class VolcanLevel extends Phaser.Scene{
                         repeat: -1,
                         delay: 10
                     })
+
+                   
+
+                    this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
+                   
                 },
                 
-                 //Colision de potenciador con player
+                 
            
                 callbackScope: this,
                 loop: false,
             });
-
-            //Colision de potenciador con player
-          //  this.physics.add.collider(player, pot, pot.enviarPotenciador(potenciadorType), null, this);
-
-           
-          
+ 
         }
-
        
-
 
        
     }
 
 
-    hola() {
-        console.log("hola");
-    }
+   
 
    
     update(t, dt){
