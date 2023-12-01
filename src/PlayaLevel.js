@@ -25,6 +25,7 @@ export default class PlayaLevel extends Phaser.Scene{
         this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 32, frameHeight: 32});
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 32, frameHeight: 32});
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('pistola', '../pistola.png', {frameWidth: 25, frameHeight: 18});
     }
 
     loadAnimations()

@@ -1,4 +1,3 @@
-
 import Arma from "./arma.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
@@ -21,41 +20,29 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
      * @param {Arma} arma
      * PERSONALIDAD
      */
-
     constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
-
+        this.scene = scene;
         this.x = x;
         this.y = y;
-
         this.key = key;
-
         this.life = life;
         this.maxLife = life;
-
         this.speed = speed;
-
         this.sleep = false;
-
         this.invencible = false;
-
         this.dirX = 0;
         this.dirY = 0;
-
         const Personalities = {
             ANALISTA: 0,
             EXPLORADOR: 1,
             CENTINELA: 2,
-            PACIFISTA: 3,
-      
+            PACIFISTA: 3
         }
-    
         this.personalityExp = [0, 0, 0, 0];
-    
         this.currentPersonality = Personalities.EXPLORADOR;
 
         this.scene.add.sprite();
-
 
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
@@ -65,7 +52,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
             this.myHat.setScale(0.25);
             this.add(this.myHat);
-            
         }
         else{
             this.myHat = null;
@@ -81,15 +67,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         //Tema fisicas
         scene.physics.add.existing(this);
         this.scene.add.existing(this);  
-
-        console.log(this.player.width + " / " + this.player.heigth);
-
         this.body.setSize(this.player.width/2, this.player.width);
 
+        
 
         //Animaciones
         this.scene.anims.create({
-            key: 'walk'+ key,
+            key: 'walk' + key,
             frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
             frameRate: 5,
             repeat: -1
@@ -103,17 +87,17 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
     }
 
-    create(){
-
+    create()
+    {
         this.body.setVelocity(speed, speed);
         this.setCollideWorldBounds(true);
-
+        console.log("buenas")
+        this.arma = new Arma(this.scene, 0, 0, 'pistola', this);
+        console.log(this.arma)
     }
 
-    preUpdate(t, dt){
-
-        this.player.preUpdate(t, dt);
-
+    movimiento()
+    {
         if(this.dirX == 0 || this.dirX == -1){
 
             if(this.aKey.isDown){
@@ -126,15 +110,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                         this.myHat.setFlip(true, false); 
                         this.lookDer = !this.lookDer;
                     }
-                    
                 }
-                
             }
             else if(this.aKey.isUp){
                 this.dirX = 0;
             }
         }
-        
         if(this.dirX == 0 || this.dirX == 1){
             if(this.dKey.isDown){
                 if(this.dirX == 0){
@@ -145,14 +126,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                         this.myHat.setFlip(false, false);
                         this.lookDer = !this.lookDer;
                     }
-                    
                 }   
             }
             else if(this.dKey.isUp){
                 this.dirX = 0;
             }
         }
-        
         if(this.dirY == 0 || this.dirY == -1){
             if(this.wKey.isDown){
                 if(this.dirY == 0){
@@ -189,11 +168,16 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.body.setVelocity(0, 0);
             this.player.play('iddle' + this.key, true);
         }
+    }
 
+    preUpdate(t, dt){
+        this.player.preUpdate(t, dt);
+        this.movimiento();
+        
     }
 
     ataca(){
-        arma.ataca();
+        //arma.ataca();
     }
 
     damagePlayer(damage){
@@ -254,10 +238,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     getPersonalityExp(personalityID){
-
         return this.personalityExp[personalityID];
-
     }
-
-    
 }

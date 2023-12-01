@@ -37,6 +37,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
+
+        this.load.image('pistola', './src/pistola.png');
     }
   
     loadAnimations()
@@ -165,7 +167,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
    }
     update(t, dt){
-        this.skeleton.update();
+        //this.mike.update();
+        //this.skeleton.update();
         //this.robot.update();
     }
 

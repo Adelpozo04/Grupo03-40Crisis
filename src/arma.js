@@ -1,4 +1,4 @@
-export default class arma extends Phaser.GameObjects.Container {
+export default class Arma extends Phaser.GameObjects.Sprite {
     /**
     * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
@@ -8,15 +8,20 @@ export default class arma extends Phaser.GameObjects.Container {
     */
     constructor(scene, x, y, key, player)
     {
-        super(scene, x, y);
-        scene.add.existing(this);
+        super(scene, x, y, key);
+        this.scene.add.existing(this);
         this.player = player;
-        
-        this.arma = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
-        this.add(this.arma)
-        this.setScale(32)
+        this.setScale(12123);
     }
 
+    create()
+    {
+        /*this.input.on('pointermove', function(pointer)
+        {
+            this.sprite.x += pointer.movementX;
+            this.sprite.y += pointer.movementY;
+        })*/
+    }
     followCursor() {
         let radio = 50;
         let playerPos = this.player.getCenterPoint();
@@ -31,6 +36,7 @@ export default class arma extends Phaser.GameObjects.Container {
 
     update()
     {
-        this.followCursor();
+        console.log(this.x + " " + this.y)
+        //this.followCursor();
     }
 }
