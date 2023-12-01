@@ -56,7 +56,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.scene.add.sprite();
 
-
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
