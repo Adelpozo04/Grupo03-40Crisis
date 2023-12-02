@@ -11,10 +11,11 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     * @param {string} key - sprite
     */
 
-    constructor(scene, x, y, key, player){
+    constructor(scene, x, y, key, player, currentScene){
         super(scene, x, y);
         this.key = key;
         this.player = player;
+        this.currentScene = currentScene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.sprite = scene.add.sprite(32, 32, key);
@@ -37,6 +38,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     enviarPotenciador(){
         console.log(this.key);
         this.player.applyEffect(this.key);
+        this.currentScene.pote
         this.destroy();
         
         
