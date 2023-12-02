@@ -1,5 +1,4 @@
 
-
 export default class cepo extends Phaser.GameObjects.Sprite {
 
 constructor(scene, x, y, key, player){
@@ -10,24 +9,31 @@ constructor(scene, x, y, key, player){
 
     this.paraliceTime = 5;
 
-    //this.cepo = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+    this.cepo = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
 
-    scene.add.existing(this);
+    this.setScale(0.2, 0.2);
 
-    //scene.add.existing(this.cepo);
+    this.key = key;
 
-    scene.physics.add.existing(this);
+    this.scene.add.existing(this);
+
+    this.scene.physics.add.existing(this);
+
+    this.body.setSize(32, 32);
+
 
 }
 
 destroyAfterTime(){
 
-    this.timeEvent = new Phaser.Time.TimerEvent({
+    this.cepo.play('attackcepo', true);
+
+    this.scene.time.addEvent({
 
         delay: this.paraliceTime * 1000,
         loop: true,
-        callback: this.destroyMyself()
-
+        callback: this.destroyMyself,
+        callbackScope: this
     })
 
 }
@@ -36,11 +42,14 @@ destroyMyself(){
     this.destroy();
 }
 
-preUpdate(){
+preUpdate(t, dt){
+
+    this.cepo.preUpdate(t, dt);
 
     this.scene.physics.collide(this.player, this, ()=>{
 
         this.player.applyEffect("vivu");
+        this.scene.physics.world.disable(this);
         this.destroyAfterTime();
 
     })

@@ -25,6 +25,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
 
+        this.scene = scene;
+
         this.x = x;
         this.y = y;
 
@@ -103,6 +105,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     preUpdate(t, dt){
+        
+        //console.log(this.speed);
 
         this.player.preUpdate(t, dt);
 
@@ -202,30 +206,30 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 }
                 break;
             case 'velocidad':
-                aux = this.speed;
+                this.aux = this.speed;
                 this.speed = 10;
-                scene.time.delayedCall(3000, () => {
-                    this.speed = aux // Reducir la velocidad de nuevo después de 3 segundos
+                this.scene.time.delayedCall(3000, () => {
+                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                 });
                 break;
             case 'vivu':
-                aux = this.speed;
+                this.aux = this.speed;
                 this.speed = 0;
-                scene.time.delayedCall(5000, () => {
-                    this.speed = aux;
+                this.scene.time.delayedCall(5000, () => {
+                    this.speed = this.aux;
                 });
                 break;
             case 'invencible':
-                aux = this.life;
+                this.aux = this.life;
                 this.life = 999999999999999;
-                scene.time.delayedCall(5000, () => {
-                    this.life = aux;
+                this.scene.time.delayedCall(5000, () => {
+                    this.life = this.aux;
                 });
                 break;
             default:
                 break;
         }
-        scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
+        this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 
     getPlayer(){

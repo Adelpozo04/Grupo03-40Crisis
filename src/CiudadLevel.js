@@ -3,6 +3,7 @@ import Potenciador from './Potenciador.js';
 import Robot from './robot.js'
 import EnemigoBasico from './enemigoBasico.js';
 import lutano from './Lutano.js';
+import cepo from './cepo.js';
 import UIManager from './uiManager.js';
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -33,6 +34,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('robot', './Assets/Sprites/Enemigos/Robot/Robot-walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
         this.load.spritesheet('lutano', './Assets/Sprites/Enemigos/Lutano/Lutano-Walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
         this.load.spritesheet('lutanoAttack', './Assets/Sprites/Enemigos/Lutano/Lutano-attack-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
+        this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256})
 
         //Cargado de imagenes de objetos del juego
 
@@ -82,6 +84,13 @@ export default class CiudadLevel extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('lutanoAttack', {start: 0, end:1}),
             frameRate: 10
         })
+        this.anims.create({
+            key: 'attackcepo',
+            frames: this.anims.generateFrameNumbers('cepo', {start: 0, end: 3}),
+            frameRate: 5,
+            repeat: -1
+        })
+    
         
 
     }
@@ -111,11 +120,13 @@ export default class CiudadLevel extends Phaser.Scene{
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
         //Creacion de entidades
-        this.mike = new playerContenedor(this, 300, 300, 'mike', 20, -2000, -2000, 200, 150);
+        this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         //this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
         this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
+
+        this.cepo = new cepo(this, 600, 700, 'cepo', this.mike);
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
