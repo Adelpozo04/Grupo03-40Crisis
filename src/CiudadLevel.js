@@ -33,8 +33,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('burger', './Assets/Sprites/Enemigos/Hamburguesa/hamburguesa-spriteSheet.png', {frameWidth: 64, frameHeight:64})
         this.load.spritesheet('robot', './Assets/Sprites/Enemigos/Robot/Robot-walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
-        this.load.spritesheet('lutano', './Assets/Sprites/Enemigos/Lutano/Lutano-Walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
-        this.load.spritesheet('lutanoAttack', './Assets/Sprites/Enemigos/Lutano/Lutano-attack-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
+        this.load.spritesheet('lutano', './Assets/Sprites/Enemigos/Lutano/Lutano-Walk-SpriteSheet.png',{frameWidth: 32, frameHeight: 32})
+        this.load.spritesheet('lutanoAttack', './Assets/Sprites/Enemigos/Lutano/Lutano-attack-SpriteSheet.png',{frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256})
 
         //Cargado de imagenes de objetos del juego
@@ -72,7 +72,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.anims.create({
             key: 'walkburger',
             frames: this.anims.generateFrameNumbers('burger', {start: 8, end:10}),
-            frameRate: 5,
+            frameRate: 6,
             repeat: -1
         });
         this.anims.create({
@@ -134,7 +134,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new EnemigoBasico(this, 500, 500, 'zombie', this.mike);
+        this.skeleton = new lutano(this, 500, 500, 'lutano', this.mike);
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
@@ -171,12 +171,12 @@ export default class CiudadLevel extends Phaser.Scene{
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
                     const potenciadorType = Object.values(potenciadorTypes)[aux];
-                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, player);
+                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, this.mike);
 
                     this.potenciadorSpawneado = true;
 
                      //Colision de potenciador con player
-                    this.physics.add.collider(player, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
+                    this.physics.add.collider(this.mike, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
 
 
                     this.tweens.add({

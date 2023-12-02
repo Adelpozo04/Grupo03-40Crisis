@@ -22,22 +22,22 @@ constructor(scene, x, y, key, player)
         ['zombie', 1], ['skeleton', 1], ['burger', 1], ['lutano', 1]
     ]);
     var scaleEnemigos = new Map([
-        ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+        ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2]
     ]);
     var puntosEnemigos = new Map([
         ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
     ]);
     var anchoColliderEnemigos = new Map([
-        ['zombie', 18], ['skeleton', 16], ['burger', 2], ['lutano', 0.3]
+        ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24]
     ]);
     var altoColliderEnemigos = new Map([
-        ['zombie', 26], ['skeleton', 24], ['burger', 2], ['lutano', 0.3]
+        ['zombie', 26], ['skeleton', 24], ['burger', 30], ['lutano', 30]
     ]);
     var posXColliderEnemigos = new Map([
-        ['zombie', 9], ['skeleton', 8], ['burger', 2], ['lutano', 0.3]
+        ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12]
     ]);
     var posYColliderEnemigos = new Map([
-        ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 0.3]
+        ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14]
     ]);
 
 
