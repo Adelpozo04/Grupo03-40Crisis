@@ -134,7 +134,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new lutano(this, 500, 500, 'lutano', this.mike);
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 

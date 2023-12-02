@@ -10,10 +10,10 @@ export default class EnemigoBasico extends Enemigo{
 constructor(scene, x, y, key, player)
 {
     var speedEnemigos = new Map([
-        ['zombie', 75], ['skeleton', 150], ['burger', 50], ['lutano', 75]
+        ['zombie', 75], ['skeleton', 175], ['burger', 50], ['lutano', 75]
     ]);
     var damageEnemigos = new Map([
-        ['zombie', 2], ['skeleton', 1], ['burger', 5], ['lutano', 2]
+        ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2]
     ]);
     var attackDistEnemigos = new Map([
         ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30]
