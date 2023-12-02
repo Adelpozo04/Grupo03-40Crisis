@@ -108,7 +108,6 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se indica el Json, el png de tiles, el tamaño de los tiles y el espaciado del tile con los bordes y el margen entre sprites
         const myTile = this.map.addTilesetImage('tilemapCiudad', 'patronesCiudadTilemap', 32, 32, 1, 2);
 
-
         //Creacion de las Layers del mapa
         this.groundLayer = this.map.createLayer('Suelo', myTile);
 
@@ -124,13 +123,13 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
-        this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
+        //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
         this.cepo = new cepo(this, 600, 700, 'cepo', this.mike);
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
-        this.physics.add.collider(this.lutano, this.collisionLayer);
+        //this.physics.add.collider(this.lutano, this.collisionLayer);
         this.physics.add.collider(this.skeleton, this.collisionLayer);
 
         //Colision de potenciador con player
@@ -195,7 +194,7 @@ export default class CiudadLevel extends Phaser.Scene{
     update(t, dt){
         this.skeleton.update();
         //this.robot.update();
-        this.lutano.update();
+        //this.lutano.update();
     }
 
 

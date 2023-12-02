@@ -56,8 +56,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     
         this.currentPersonality = Personalities.EXPLORADOR;
 
-        this.scene.add.sprite();
-
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
@@ -80,7 +78,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.lookDer = true;
 
         //Tema fisicas
-        scene.physics.add.existing(this);
+        this.scene.physics.add.existing(this);
         this.scene.add.existing(this);  
 
         this.body.setSize(this.player.width/2, this.player.width);

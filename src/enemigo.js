@@ -22,6 +22,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
         this.isAttacking = false;
         this.canDamage = true;
+        
 
     }
     
@@ -61,10 +62,11 @@ export default class enemigo extends Phaser.GameObjects.Container {
         else
         {
             this.isAttacking = false;
+            
             if (canMove)
             {
-                this.x += this.speed * this.direction.x;
-                this.y += this.speed * this.direction.y;
+                this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
+                this.body.velocity.normalize().scale(this.speed);
             }
         }
     }
