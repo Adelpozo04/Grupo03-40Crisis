@@ -10,7 +10,7 @@ export default class EnemigoBasico extends Enemigo{
 constructor(scene, x, y, key, player)
 {
     var speedEnemigos = new Map([
-        ['zombie', 3], ['skeleton', 0.5], ['burger', 1], ['lutano', 3]
+        ['zombie', 3], ['skeleton', 150], ['burger', 1], ['lutano', 0.5]
     ]);
     var damageEnemigos = new Map([
         ['zombie', 2], ['skeleton', 1], ['burger', 5], ['lutano', 2]
@@ -22,16 +22,27 @@ constructor(scene, x, y, key, player)
         ['zombie', 1], ['skeleton', 1], ['burger', 1], ['lutano', 1]
     ]);
     var scaleEnemigos = new Map([
-        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 1]
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
     ]);
+    var puntosEnemigos = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+    ]);
+    var anchoColliderEnemigos = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+    ]);
+    var altoColliderEnemigos = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+    ]);
+
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
     this.key = key;
     
-    scene.add.existing(this);
     this.enemy = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
     this.add(this.enemy);
     this.setScale(scaleEnemigos.get(this.key)); //cuidao que esto igual da problemas
     this.attackFlag = true;
+    scene.physics.add.existing(this);
+    scene.add.existing(this);
 }
 
 // comprobamos si estamos en rango de ataque y atacamos

@@ -1,3 +1,4 @@
+
 import Arma from "./arma.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
@@ -20,29 +21,40 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
      * @param {Arma} arma
      * PERSONALIDAD
      */
+
     constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
+
         this.scene = scene;
+
         this.x = x;
         this.y = y;
+
         this.key = key;
+
         this.life = life;
         this.maxLife = life;
+
         this.speed = speed;
+
         this.sleep = false;
+
         this.invencible = false;
+
         this.dirX = 0;
         this.dirY = 0;
+
         const Personalities = {
             ANALISTA: 0,
             EXPLORADOR: 1,
             CENTINELA: 2,
-            PACIFISTA: 3
+            PACIFISTA: 3,
+      
         }
+    
         this.personalityExp = [0, 0, 0, 0];
+    
         this.currentPersonality = Personalities.EXPLORADOR;
-
-        this.scene.add.sprite();
 
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
@@ -52,6 +64,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
             this.myHat.setScale(0.25);
             this.add(this.myHat);
+            
         }
         else{
             this.myHat = null;
@@ -65,15 +78,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.lookDer = true;
 
         //Tema fisicas
-        scene.physics.add.existing(this);
+        this.scene.physics.add.existing(this);
         this.scene.add.existing(this);  
+
         this.body.setSize(this.player.width/2, this.player.width);
 
-        
 
         //Animaciones
         this.scene.anims.create({
-            key: 'walk' + key,
+            key: 'walk'+ key,
             frames: scene.anims.generateFrameNumbers(key, {start:0, end:3}),
             frameRate: 5,
             repeat: -1
@@ -87,17 +100,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
     }
 
-    create()
-    {
-        this.body.setVelocity(speed, speed);
-        this.setCollideWorldBounds(true);
-        console.log("buenas")
-        this.arma = new Arma(this.scene, 0, 0, 'pistola', this);
-        console.log(this.arma)
-    }
+    preUpdate(t, dt){
+        
+        //console.log(this.speed);
 
-    movimiento()
-    {
+        this.player.preUpdate(t, dt);
+
         if(this.dirX == 0 || this.dirX == -1){
 
             if(this.aKey.isDown){
@@ -110,12 +118,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                         this.myHat.setFlip(true, false); 
                         this.lookDer = !this.lookDer;
                     }
+                    
                 }
+                
             }
             else if(this.aKey.isUp){
                 this.dirX = 0;
             }
         }
+        
         if(this.dirX == 0 || this.dirX == 1){
             if(this.dKey.isDown){
                 if(this.dirX == 0){
@@ -126,12 +137,14 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                         this.myHat.setFlip(false, false);
                         this.lookDer = !this.lookDer;
                     }
+                    
                 }   
             }
             else if(this.dKey.isUp){
                 this.dirX = 0;
             }
         }
+        
         if(this.dirY == 0 || this.dirY == -1){
             if(this.wKey.isDown){
                 if(this.dirY == 0){
@@ -168,16 +181,11 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.body.setVelocity(0, 0);
             this.player.play('iddle' + this.key, true);
         }
-    }
 
-    preUpdate(t, dt){
-        this.player.preUpdate(t, dt);
-        this.movimiento();
-        
     }
 
     ataca(){
-        //arma.ataca();
+        arma.ataca();
     }
 
     damagePlayer(damage){
@@ -186,38 +194,44 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     applyEffect(keyPotenciador){
+       
+        let aux;
         switch (keyPotenciador) {
             case 'botiquin':
-                this.life += maxLife / 2;
+                console.log("boti");
+                this.life += this.maxLife / 2;
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
                 break;
             case 'velocidad':
-                aux = this.speed;
-                this.speed = 10;
-                scene.time.delayedCall(3000, () => {
-                    this.speed = aux // Reducir la velocidad de nuevo después de 3 segundos
+                console.log("velo");
+                this.aux = this.speed;
+                this.speed = 280;
+                this.scene.time.delayedCall(3000, () => {
+                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                 });
                 break;
             case 'vivu':
-                aux = this.speed;
+                console.log("vivu");
+                this.aux = this.speed;
                 this.speed = 0;
-                scene.time.delayedCall(5000, () => {
-                    this.speed = aux;
+                this.scene.time.delayedCall(5000, () => {
+                    this.speed = this.aux;
                 });
                 break;
             case 'invencible':
-                aux = this.life;
+                console.log("inven");
+                this.aux = this.life;
                 this.life = 999999999999999;
-                scene.time.delayedCall(5000, () => {
-                    this.life = aux;
+                this.scene.time.delayedCall(5000, () => {
+                    this.life = this.aux;
                 });
                 break;
             default:
                 break;
         }
-        scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
+        //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 
     getPlayer(){
@@ -238,6 +252,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     getPersonalityExp(personalityID){
+
         return this.personalityExp[personalityID];
+
     }
+
+    
 }

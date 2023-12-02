@@ -83,7 +83,7 @@ export default class PlayaLevel extends Phaser.Scene{
 
         this.mike = new playerContenedor(this, 500, 500, 'mike', 20, -2000, -2000, 200, 150);
         //this.zombie = new Zombie(this, 500, 500,'zombie', this.mike);
-        this.skeleton1 = new Esqueleto(this, 700, 700, 'skeleton', this.mike);
+        //this.skeleton1 = new Esqueleto(this, 700, 700, 'skeleton', this.mike);
         
         this.objectUpLayer = this.map.createLayer("ObjetosEncima", myTile);
 
@@ -91,9 +91,9 @@ export default class PlayaLevel extends Phaser.Scene{
 
         this.physics.add.collider(this.mike, this.collisionUpLayer);
 
-        this.physics.add.collider(this.skeleton1, this.collisionLayer);
+        //this.physics.add.collider(this.skeleton1, this.collisionLayer);
 
-        this.physics.add.collider(this.skeleton1, this.collisionUpLayer);
+        //this.physics.add.collider(this.skeleton1, this.collisionUpLayer);
 
         this.cameras.main.startFollow(this.mike);
 
@@ -116,7 +116,7 @@ export default class PlayaLevel extends Phaser.Scene{
     
     update(t, dt){
         //this.zombie.update();
-        this.skeleton1.update();
+        //this.skeleton1.update();
     }
 
 
