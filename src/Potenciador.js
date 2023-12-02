@@ -38,6 +38,11 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         console.log(this.key);
         this.player.applyEffect(this.key);
         this.destroy();
+        
+        
+            
+            //this.scene.potenciadorSpawneado = false; // Establece que el potenciador actual ha sido generado
+        
     }
 
     
@@ -53,9 +58,11 @@ export default class Potenciador extends Phaser.GameObjects.Container {
 
             
             let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
-            return spawnPoint;
+            let spawnPointX = spawnPoint.x;
+            let spawnPointY = spawnPoint.y;
+           
 
-            this.scene.potenciadorRecogido = false; // Establece que el potenciador actual ha sido generado
+           
         }
     }
     

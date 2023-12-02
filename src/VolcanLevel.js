@@ -5,6 +5,7 @@ export default class VolcanLevel extends Phaser.Scene{
 
     constructor(){
         super({key: 'VolcanLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
+        this.potenciadorSpawneado = false; // Inicialmente se permite generar el primer potenciador
     }
     
     init(data){
@@ -115,7 +116,19 @@ export default class VolcanLevel extends Phaser.Scene{
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
                     let potenciadorType = Object.values(potenciadorTypes)[aux];
-                    this.potenciador = new Potenciador(this, 600, 600, potenciadorType, player);
+                    const spawnPoints = [
+                        { x: 600, y: 600 },
+                        { x: 600, y: 700 },
+                        { x: 700, y: 600 },
+                        { x: 700, y: 700 },
+                    //Añadir luego las coordenadas correctas
+                    ];
+        
+                    let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+                    let spawnPointX = spawnPoint.x;
+                    let spawnPointY = spawnPoint.y;
+                   
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player);
                     let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
                 
@@ -133,7 +146,9 @@ export default class VolcanLevel extends Phaser.Scene{
                    
 
                     this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
-                   
+                  
+                    this.potenciadorSpawneado = false;
+                    console.log("ayayayay");
                 },
                 
                  
