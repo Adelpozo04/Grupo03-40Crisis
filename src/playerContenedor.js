@@ -222,7 +222,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 break;
             case 'vivu':
                 console.log("vivu");
-                aux = this.speed;
+                this.aux = this.speed;
                 this.speed = 0;
                 this.scene.time.delayedCall(5000, () => {
                     this.speed = aux;
