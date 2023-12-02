@@ -27,7 +27,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Cargado de spritessheets de entidades del juego
         this.load.spritesheet('mike', './Assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
-        this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('zombieattack', './Assets/Sprites/Enemigos/Zombie/Zombie-attack-SpriteSheet.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('skeleton', './assets//Sprites//Enemigos//Esqueleto//esqueleto_SpriteSheet.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('burger', './Assets/Sprites/Enemigos/Hamburguesa/hamburguesa-spriteSheet.png', {frameWidth: 64, frameHeight:64})
@@ -46,6 +47,17 @@ export default class CiudadLevel extends Phaser.Scene{
   
     loadAnimations()
     {
+        this.anims.create({
+            key: 'walkzombie',
+            frames: this.anims.generateFrameNumbers('zombie', {start:0, end:3}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'attackzombie',
+            frames: this.anims.generateFrameNumbers('zombieattack', {start: 0, end: 3}),
+            frameRate: 8
+        });
         this.anims.create({
             key: 'walkskeleton',
             frames: this.anims.generateFrameNumbers('skeleton', {start:0, end:3}),
@@ -121,7 +133,7 @@ export default class CiudadLevel extends Phaser.Scene{
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'zombie', this.mike);
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
