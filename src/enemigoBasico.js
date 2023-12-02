@@ -24,14 +24,25 @@ constructor(scene, x, y, key, player)
     var scaleEnemigos = new Map([
         ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
     ]);
+    var puntosEnemigos = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+    ]);
+    var anchoColliderEnemigos = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+    ]);
+    var altoColliderEnemigos = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3]
+    ]);
+
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
     this.key = key;
     
-    scene.add.existing(this);
     this.enemy = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
     this.add(this.enemy);
     this.setScale(scaleEnemigos.get(this.key)); //cuidao que esto igual da problemas
     this.attackFlag = true;
+    scene.physics.add.existing(this);
+    scene.add.existing(this);
 }
 
 // comprobamos si estamos en rango de ataque y atacamos

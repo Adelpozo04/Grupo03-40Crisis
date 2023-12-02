@@ -83,8 +83,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         scene.physics.add.existing(this);
         this.scene.add.existing(this);  
 
-        console.log(this.player.width + " / " + this.player.heigth);
-
         this.body.setSize(this.player.width/2, this.player.width);
 
 

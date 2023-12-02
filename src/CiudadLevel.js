@@ -122,7 +122,7 @@ export default class CiudadLevel extends Phaser.Scene{
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        //this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
         this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
@@ -130,6 +130,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
+        this.physics.add.collider(this.lutano, this.collisionLayer);
+        this.physics.add.collider(this.skeleton, this.collisionLayer);
 
         //Colision de potenciador con player
         this.physics.add.collider(this.mike, this.potenciador, this.applyEffectPlayer(this.potenciador), null, this);
@@ -191,7 +193,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
    }
     update(t, dt){
-        //this.skeleton.update();
+        this.skeleton.update();
         //this.robot.update();
         this.lutano.update();
     }

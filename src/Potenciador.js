@@ -14,6 +14,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         this.key = key;
         this.player = player;
         scene.add.existing(this);
+        scene.physics.add.existing(this);
         this.sprite = scene.add.sprite(32, 32, key);
         this.add(this.sprite);
         this.setScale(0.15); //cuidao que esto igual da problemas
