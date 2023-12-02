@@ -25,6 +25,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
 
+        this.scene = scene;
+
         this.x = x;
         this.y = y;
 
@@ -54,8 +56,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     
         this.currentPersonality = Personalities.EXPLORADOR;
 
-        this.scene.add.sprite();
-
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
@@ -78,10 +78,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.lookDer = true;
 
         //Tema fisicas
-        scene.physics.add.existing(this);
+        this.scene.physics.add.existing(this);
         this.scene.add.existing(this);  
-
-        console.log(this.player.width + " / " + this.player.heigth);
 
         this.body.setSize(this.player.width/2, this.player.width);
 
@@ -103,6 +101,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     preUpdate(t, dt){
+        
+        //console.log(this.speed);
 
         this.player.preUpdate(t, dt);
 
@@ -206,26 +206,26 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 break;
             case 'velocidad':
                 console.log("velo");
-                aux = this.speed;
+                this.aux = this.speed;
                 this.speed = 280;
                 this.scene.time.delayedCall(3000, () => {
-                    this.speed = aux // Reducir la velocidad de nuevo después de 3 segundos
+                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                 });
                 break;
             case 'vivu':
                 console.log("vivu");
-                aux = this.speed;
+                this.aux = this.speed;
                 this.speed = 0;
                 this.scene.time.delayedCall(5000, () => {
-                    this.speed = aux;
+                    this.speed = this.aux;
                 });
                 break;
             case 'invencible':
                 console.log("inven");
-                aux = this.life;
+                this.aux = this.life;
                 this.life = 999999999999999;
                 this.scene.time.delayedCall(5000, () => {
-                    this.life = aux;
+                    this.life = this.aux;
                 });
                 break;
             default:

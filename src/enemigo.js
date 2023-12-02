@@ -11,9 +11,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
     //Habria que poner una variable life
     constructor(scene, x, y, player, speed, attackDistance, damage, life){
         super(scene, x, y);
-
-        scene.physics.add.existing(this);
-        scene.add.existing(this);
+        
+        this.scene.add.existing(this);
         this.player = player;
         this.speed = speed;
         this.damage = damage;
@@ -23,8 +22,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
         this.isAttacking = false;
         this.canDamage = true;
-    
-        this.body.setSize(this.width, this.width);
+        
 
     }
     
@@ -64,10 +62,11 @@ export default class enemigo extends Phaser.GameObjects.Container {
         else
         {
             this.isAttacking = false;
+            
             if (canMove)
             {
-                this.x += this.speed * this.direction.x;
-                this.y += this.speed * this.direction.y;
+                this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
+                this.body.velocity.normalize().scale(this.speed);
             }
         }
     }

@@ -15,19 +15,20 @@ constructor(scene, x, y, key, player){
 
     this.scene.time.addEvent({
 
-        delay: 5,
+        delay: this.spawnTime * 1000,
         loop: true,
         callback: this.spawnCepo,
-        callbackScope: this,
+        callbackScope: this
 
     });
+    
 }
 
 spawnCepo(){
 
     console.log("cepeame esta");
 
-    this.cepo = new cepo(this.scene, this.direction.x, this.direction.y, "cepo", this.player);
+    this.cepo = new cepo(this.scene, this.x, this.y, "cepo", this.player);
 
     this.scene.add.existing(this.cepo);
 
