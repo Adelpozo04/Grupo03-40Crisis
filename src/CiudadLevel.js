@@ -132,6 +132,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
+
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         this.skeleton = new EnemigoBasico(this, 500, 500, 'zombie', this.mike);
 
@@ -144,9 +145,7 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.physics.add.collider(this.lutano, this.collisionLayer);
         this.physics.add.collider(this.skeleton, this.collisionLayer);
 
-        //Colision de potenciador con player
-        this.physics.add.collider(this.mike, this.potenciador, this.applyEffectPlayer(this.potenciador), null, this);
-
+       
         //Se crea la camara
         this.cameras.main.startFollow(this.mike);
         
@@ -172,8 +171,13 @@ export default class CiudadLevel extends Phaser.Scene{
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
                     const potenciadorType = Object.values(potenciadorTypes)[aux];
-                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, this.mike);
+                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, player);
+
                     this.potenciadorSpawneado = true;
+
+                     //Colision de potenciador con player
+                    this.physics.add.collider(player, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
+
 
                     this.tweens.add({
                         targets: this.potenciador,
