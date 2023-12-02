@@ -2,6 +2,7 @@ import playerContenedor from './playerContenedor.js';
 import Potenciador from './Potenciador.js';
 import Robot from './robot.js'
 import EnemigoBasico from './enemigoBasico.js';
+import lutano from './Lutano.js';
 import UIManager from './uiManager.js';
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -30,6 +31,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('burger', './Assets/Sprites/Enemigos/Hamburguesa/hamburguesa-spriteSheet.png', {frameWidth: 64, frameHeight:64})
         this.load.spritesheet('robot', './Assets/Sprites/Enemigos/Robot/Robot-walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
+        this.load.spritesheet('lutano', './Assets/Sprites/Enemigos/Lutano/Lutano-Walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
+        this.load.spritesheet('lutanoAttack', './Assets/Sprites/Enemigos/Lutano/Lutano-attack-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
 
         //Cargado de imagenes de objetos del juego
 
@@ -57,16 +60,27 @@ export default class CiudadLevel extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('burger', {start: 8, end:10}),
             frameRate: 5,
             repeat: -1
-        })
+        });
         this.anims.create({
             key: 'attackburger',
             frames: this.anims.generateFrameNumbers('burger', {start: 0, end:7}),
             frameRate: 10
-        })
+        });
         this.anims.create({
             key: 'walkrobot',
             frames: this.anims.generateFrameNumbers('robot', {start: 0, end:3}),
             frameRate: 5
+        });
+        this.anims.create({
+            key: 'walklutano',
+            frames: this.anims.generateFrameNumbers('lutano', {start: 0, end: 3}),
+            frameRate: 5,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'attacklutano',
+            frames: this.anims.generateFrameNumbers('lutanoAttack', {start: 0, end:1}),
+            frameRate: 10
         })
         
 
@@ -100,8 +114,9 @@ export default class CiudadLevel extends Phaser.Scene{
         this.mike = new playerContenedor(this, 300, 300, 'mike', 20, -2000, -2000, 200, 150);
         let player = this.mike;
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
+        //this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
 
+        this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
@@ -169,8 +184,9 @@ export default class CiudadLevel extends Phaser.Scene{
 
    }
     update(t, dt){
-        this.skeleton.update();
+        //this.skeleton.update();
         //this.robot.update();
+        this.lutano.update();
     }
 
 
