@@ -1,10 +1,12 @@
+import playerContenedor from './playerContenedor.js';
+
 export default class Potenciador extends Phaser.GameObjects.Container {
     /**
     * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
     * @param {sprite} sprite - sprite
     * @param {number} y - posicion y
-    * @param {player} player - referencia al player
+    * @param {playerContenedor} player - referencia al player
     * @param {enemigo} enemigo - referencia al enemigo 
     * @param {string} key - sprite
     */
@@ -14,6 +16,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         this.key = key;
         this.player = player;
         scene.add.existing(this);
+        scene.physics.add.existing(this);
         this.sprite = scene.add.sprite(32, 32, key);
         this.add(this.sprite);
         this.setScale(0.15); //cuidao que esto igual da problemas
@@ -28,24 +31,32 @@ export default class Potenciador extends Phaser.GameObjects.Container {
 
     }
 
+
+   
+
     enviarPotenciador(){
-        player.applyEffect(potenciadorID);
+        console.log(this.key);
+        this.player.applyEffect(this.key);
         this.destroy();
     }
 
-    /*
+    
     spawnPotenciador() {
         if (this.scene.potenciadorRecogido) {
             const spawnPoints = [
-                { x: 200, y: 200 },
-                { x: 400, y: 400 },
+                { x: 600, y: 600 },
+                { x: 600, y: 700 },
+                { x: 700, y: 600 },
+                { x: 700, y: 700 },
             //Añadir luego las coordenadas correctas
             ];
 
-            const spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+            
+            let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+            return spawnPoint;
 
             this.scene.potenciadorRecogido = false; // Establece que el potenciador actual ha sido generado
         }
     }
-    */
+    
 }
