@@ -1,4 +1,3 @@
-
 export default class PantallaInicial extends Phaser.Scene{
 
     constructor(){
@@ -50,6 +49,7 @@ export default class PantallaInicial extends Phaser.Scene{
         this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'PLAY', 50);
         this.playLabel.setInteractive();
         this.playLabel.on('pointerdown', (event) => { this.scene.start("CiudadLevel"); })
+
 	}
 
     /**

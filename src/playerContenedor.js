@@ -194,21 +194,26 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     applyEffect(keyPotenciador){
+       
+        let aux;
         switch (keyPotenciador) {
             case 'botiquin':
-                this.life += maxLife / 2;
+                console.log("boti");
+                this.life += this.maxLife / 2;
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
                 break;
             case 'velocidad':
+                console.log("velo");
                 this.aux = this.speed;
-                this.speed = 10;
+                this.speed = 280;
                 this.scene.time.delayedCall(3000, () => {
                     this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                 });
                 break;
             case 'vivu':
+                console.log("vivu");
                 this.aux = this.speed;
                 this.speed = 0;
                 this.scene.time.delayedCall(5000, () => {
@@ -216,6 +221,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 });
                 break;
             case 'invencible':
+                console.log("inven");
                 this.aux = this.life;
                 this.life = 999999999999999;
                 this.scene.time.delayedCall(5000, () => {
@@ -225,7 +231,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             default:
                 break;
         }
-        this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
+        //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 
     getPlayer(){
