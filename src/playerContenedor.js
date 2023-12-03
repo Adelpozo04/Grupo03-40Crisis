@@ -98,14 +98,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             frameRate: 5,
             repeat: -1
         });
+
+        this.arma = new Arma(this.scene, 0, 0, 'pistola', this)
     }
 
-    preUpdate(t, dt){
-        
-        //console.log(this.speed);
-
-        this.player.preUpdate(t, dt);
-
+    movement()
+    {
         if(this.dirX == 0 || this.dirX == -1){
 
             if(this.aKey.isDown){
@@ -181,6 +179,11 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.body.setVelocity(0, 0);
             this.player.play('iddle' + this.key, true);
         }
+    }
+
+    preUpdate(t, dt)
+    {
+        this.movement()    
 
     }
 

@@ -43,7 +43,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
 
-        this.load.image('pistola', './src/pistola.png');
+        this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
     }
   
     loadAnimations()
@@ -161,12 +161,12 @@ export default class CiudadLevel extends Phaser.Scene{
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
                     const potenciadorType = Object.values(potenciadorTypes)[aux];
-                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, player);
+                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, this.mike);
 
                     this.potenciadorSpawneado = true;
 
                      //Colision de potenciador con player
-                    this.physics.add.collider(player, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
+                    this.physics.add.collider(this.mike, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
 
 
                     this.tweens.add({
@@ -194,16 +194,6 @@ export default class CiudadLevel extends Phaser.Scene{
    applyEffectPlayer() {
       
     console.log("hola");
-    console.log();
 
    }
-    update(t, dt){
-        //this.mike.update();
-        //this.skeleton.update();
-        //this.robot.update();
-        //this.lutano.update();
-    }
-
-
-
 }

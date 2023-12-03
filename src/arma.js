@@ -11,32 +11,58 @@ export default class Arma extends Phaser.GameObjects.Sprite {
         super(scene, x, y, key);
         this.scene.add.existing(this);
         this.player = player;
-        this.setScale(12123);
-    }
+        this.setScale(1);
 
-    create()
-    {
-        /*this.input.on('pointermove', function(pointer)
+
+        this.cursorX = 0
+        this.cursorY = 0
+        // tenemos que usar estas dos coordenadas que son del centro de la pantalla (donde esta mike)
+        // porque el playerPosX y playerPosY usan coordenadas de la pantalla, no de la escena 
+        this.centroPlayerEnPantallaX = 615
+        this.centroPlayerEnPantallaY = 420
+        this.scene.input.on('pointermove', (pointer) =>
         {
-            this.sprite.x += pointer.movementX;
-            this.sprite.y += pointer.movementY;
-        })*/
-    }
-    followCursor() {
-        let radio = 50;
-        let playerPos = this.player.getCenterPoint();
-        let angle = Phaser.Math.Angle.Between(playerPos.x, playerPos.y, this.arma.x, this.arma.y);
-        // Calcular las nuevas coordenadas
-        let newX = this.player.x + radio * Math.cos(angle);
-        let newY = this.player.y + radio * Math.sin(angle);
-        // Actualizar la posicion del contenedor
-        this.arma.x = newX;
-        this.arma.y = newY;
+            this.cursorX = pointer.x
+            this.cursorY = pointer.y
+        })
+        
     }
 
-    update()
+    
+    // funcion que maneja todo el movimiento del arma hacia el cursor
+    followCursor(pointerX, pointerY) {
+        let playerPos = this.player.getCenterPoint();
+        let distanciaCursorPlayer = Phaser.Math.Distance.Between(this.centroPlayerEnPantallaX,this.centroPlayerEnPantallaY,pointerX, pointerY)
+
+        // tenemos el radio mas un valor en función de la distancia para separar un poco el arma del player
+        let radio = 30 + this.mapearValor(distanciaCursorPlayer, 1, 615, 1, 30)
+        
+        let angle = Math.PI + Phaser.Math.Angle.Between(pointerX, pointerY, this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY); 
+        let newX = playerPos.x + radio * Math.cos(angle);
+        let newY = playerPos.y + 10 + radio * Math.sin(angle);
+
+        // Actualizar la posicion del sprite y su rotacioon
+        this.setPosition(newX, newY)
+        this.setRotation(angle)
+        this.setFlipY(newX < playerPos.x)
+    }
+
+    //funcion auxiliar para calcular valores mapeados
+    mapearValor(valor, rangoEntradaMin, rangoEntradaMax, rangoSalidaMin, rangoSalidaMax) {
+        // Asegurarse de que el valor esté dentro del rango de entrada
+        valor = Phaser.Math.Clamp(valor, rangoEntradaMin, rangoEntradaMax);
+    
+        // Calcular la proporción del valor en el rango de entrada
+        let proporcion = (valor - rangoEntradaMin) / (rangoEntradaMax - rangoEntradaMin);
+    
+        // Mapear la proporción al rango de salida
+        let valorSalida = rangoSalidaMin + proporcion * (rangoSalidaMax - rangoSalidaMin);
+    
+        return valorSalida;
+    }
+
+    preUpdate()
     {
-        console.log(this.x + " " + this.y)
-        //this.followCursor();
+        this.followCursor(this.cursorX, this.cursorY);
     }
 }
