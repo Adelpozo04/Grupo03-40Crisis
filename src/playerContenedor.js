@@ -1,5 +1,5 @@
 
-import Arma from "./arma.js";
+import Pistola from "./Armas/pistola.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -99,7 +99,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
 
-        this.arma = new Arma(this.scene, 0, 0, 'pistola', this)
+        this.arma = new Pistola(this.scene, 0, 0, 'pistola', this)
+    }
+
+    preUpdate(t, dt)
+    {
+        this.movement()    
+
     }
 
     movement()
@@ -179,16 +185,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.body.setVelocity(0, 0);
             this.player.play('iddle' + this.key, true);
         }
-    }
-
-    preUpdate(t, dt)
-    {
-        this.movement()    
-
-    }
-
-    ataca(){
-        arma.ataca();
     }
 
     damagePlayer(damage){
