@@ -43,6 +43,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
+
+        this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
     }
   
     loadAnimations()
@@ -204,15 +206,6 @@ export default class CiudadLevel extends Phaser.Scene{
    applyEffectPlayer() {
       
     console.log("hola");
-    console.log();
 
    }
-    update(t, dt){
-        this.skeleton.update();
-        //this.robot.update();
-        //this.lutano.update();
-    }
-
-
-
 }
