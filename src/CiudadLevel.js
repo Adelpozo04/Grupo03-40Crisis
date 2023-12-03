@@ -5,6 +5,7 @@ import EnemigoBasico from './enemigoBasico.js';
 import lutano from './Lutano.js';
 import cepo from './cepo.js';
 import UIManager from './uiManager.js';
+import Bala from './Armas/balas.js'
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -120,6 +121,12 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se le agregan las colisiones a la layer
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
+        // grupo de balas
+        this.grupoBalas = this.add.group({
+            classType: Bala,
+            maxSize: 50
+        })
+
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
 
@@ -129,6 +136,8 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
         this.cepo = new cepo(this, 600, 700, 'cepo', this.mike);
+
+
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
