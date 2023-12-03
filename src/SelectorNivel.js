@@ -41,27 +41,15 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     continueCreate(){
-        this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'SELECT', 50);
-        this.playLabel.setInteractive();
-        this.playLabel.on('pointerdown', (event) => { this.scene.start(this.mapas[this.currentPage]); })
+        let button = this.add.text(this.cameras.main.centerX, 600, 'SELECT', 
+            { fontFamily: 'TitleFont', fontSize: 50, color: 'white' }).setOrigin(0.5,0.5);
+        button.setInteractive();
+        button.on("pointerdown", () => {
+            this.scene.start(this.mapas[this.currentPage]);
+        });
     }
 
     changePage(){
         this.currentPage = this.currentPage % 3;
-    }
-
-    /**
-     * genra y añade
-     * @param {number} x 
-     * @param {number} y 
-     * @param {String} message 
-     * @param {number} size 
-     * @return {G--}
-     */
-    generateText(x, y, message, size){
-		let ogText = this.add.text(x, y, message, 
-            { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
-        ogText.setOrigin(0.5,0.5);	
-        ogText.setScale(1,1);
     }
 }
