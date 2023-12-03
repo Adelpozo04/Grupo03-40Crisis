@@ -35,7 +35,9 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('robot', './Assets/Sprites/Enemigos/Robot/Robot-walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
         this.load.spritesheet('lutano', './Assets/Sprites/Enemigos/Lutano/Lutano-Walk-SpriteSheet.png',{frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('lutanoAttack', './Assets/Sprites/Enemigos/Lutano/Lutano-attack-SpriteSheet.png',{frameWidth: 32, frameHeight: 32})
-        this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256})
+        this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('caracol', './Assets/Sprites/Enemigos/Caracol/Caracol-Walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 32});
+        this.load.spritesheet('caracolattack', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
 
         //Cargado de imagenes de objetos del juego
 
@@ -102,6 +104,17 @@ export default class CiudadLevel extends Phaser.Scene{
             frameRate: 5,
             repeat: -1
         })
+        this.anims.create({
+            key: 'walkcaracol',
+            frames: this.anims.generateFrameNumbers('caracol', {start: 0, end: 3}),
+            frameRate: 5,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'attackcaracol',
+            frames: this.anims.generateFrameNumbers('caracolattack', {start: 0, end:10}),
+            frameRate: 10
+        })
     
         
 
@@ -134,7 +147,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'caracol', this.mike);
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
