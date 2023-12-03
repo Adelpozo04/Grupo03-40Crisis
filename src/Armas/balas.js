@@ -5,10 +5,25 @@ export default class Bala extends Phaser.GameObjects.Sprite {
     * @param {number} y - posicion y
     * @param {key} key - key
     */
-    constructor(x, y, key, direction)
+    constructor(scene, x, y, key)
     {
-        super(x, y, key)
+        super(scene, x, y, key)
+        this.scene.add.existing(this)
+
+
+        this.direction;
     }
 
+    disparar(x, y, direction)
+    {
+        this.setActive(true)
+        this.setVisible(true)
+        this.direction = direction; 
+    }
+    
+    preUpdate()
+    {
+        
+    }
 
 }

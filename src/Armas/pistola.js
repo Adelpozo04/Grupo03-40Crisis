@@ -27,7 +27,11 @@ export default class pistola extends Arma{
     {
         if (this.canShoot)
         {
-            let bala = this.balas.get()
+            const bala = this.scene.grupoBalas.get()
+            if (bala)
+            {
+                bala.disparar(this.x, this.y, {x: })
+            }
             console.log("piu")
         }
         
