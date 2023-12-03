@@ -110,7 +110,7 @@ export default class VolcanLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
-        this.potenciadorSpawneado = true;
+       // this.potenciadorSpawneado = true;
         if(!this.potenciadorSpawneado){
            
             this.time.addEvent({

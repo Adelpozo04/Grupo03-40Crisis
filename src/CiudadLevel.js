@@ -134,6 +134,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
+        let player = this.mike;
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
@@ -168,19 +169,29 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
         if(!this.potenciadorSpawneado){
+           
             this.time.addEvent({
-                delay: 1000,
+                delay: 3000,
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
-                    const potenciadorType = Object.values(potenciadorTypes)[aux];
-                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, this.mike);
-
+                    let potenciadorType = Object.values(potenciadorTypes)[aux];
+                    const spawnPoints = [
+                        { x: 600, y: 600 },
+                        { x: 600, y: 700 },
+                        { x: 700, y: 600 },
+                        { x: 700, y: 700 },
+                    //Añadir luego las coordenadas correctas
+                    ];
+        
+                    let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+                    let spawnPointX = spawnPoint.x;
+                    let spawnPointY = spawnPoint.y;
+                   
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this);
+                    let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
-
-                     //Colision de potenciador con player
-                    this.physics.add.collider(this.mike, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
-
-
+                
+     
                     this.tweens.add({
                         targets: this.potenciador,
                         y: this.potenciador.y - 30,
@@ -190,12 +201,23 @@ export default class CiudadLevel extends Phaser.Scene{
                         repeat: -1,
                         delay: 10
                     })
+
+                   
+
+                    this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
+                  
+                    
+                   
                 },
                 
+                 
+           
                 callbackScope: this,
                 loop: false,
             });
+ 
         }
+       
 
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
