@@ -146,7 +146,7 @@ export default class VolcanLevel extends Phaser.Scene{
                     })
 
                     this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
-  
+
                 },
 
                 callbackScope: this,
