@@ -44,6 +44,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dirX = 0;
         this.dirY = 0;
 
+
+
         const Personalities = {
             ANALISTA: 0,
             EXPLORADOR: 1,
@@ -189,8 +191,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     damagePlayer(damage){
-        this.life = this.life - damage;
-        console.log(this.life);
+        if(!this.invencible)
+        {
+            this.life = this.life - damage;
+            console.log(this.life);
+        }
+       
     }
 
     applyEffect(keyPotenciador){
@@ -222,10 +228,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 break;
             case 'invencible':
                 console.log("inven");
-                this.aux = this.life;
-                this.life = 999999999999999;
+                this.invulnerable = true;
                 this.scene.time.delayedCall(5000, () => {
-                    this.life = this.aux;
+                    this.invulnerable = false;
                 });
                 break;
             default:
