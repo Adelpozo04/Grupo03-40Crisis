@@ -38,8 +38,8 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     enviarPotenciador(){
         console.log(this.key);
         this.player.applyEffect(this.key);
-       // this.currentScene.pote
-        this.destroy();
+        this.currentScene.pote
+
         
         
             

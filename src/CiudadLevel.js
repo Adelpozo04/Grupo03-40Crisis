@@ -177,6 +177,7 @@ export default class CiudadLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
+        
         if(!this.potenciadorSpawneado){
            
             this.time.addEvent({
@@ -211,16 +212,11 @@ export default class CiudadLevel extends Phaser.Scene{
                         delay: 10
                     })
 
-                   
-
                     this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
-                  
-                    
-                   
+  
                 },
-                
-                 
-           
+
+
                 callbackScope: this,
                 loop: false,
             });
