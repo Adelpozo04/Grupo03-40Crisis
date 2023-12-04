@@ -1,3 +1,4 @@
+
 import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
 import Robot from '../Enemies/robot.js'
@@ -5,6 +6,7 @@ import EnemigoBasico from '../Enemies/enemigoBasico.js';
 import lutano from '../Enemies/lutano.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
+
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -45,6 +47,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('velocidad', './Assets/Sprites/Potenciadores/speed.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
+
+        this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
     }
   
     loadAnimations()
@@ -143,8 +147,15 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se le agregan las colisiones a la layer
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
+        // grupo de balas
+        this.grupoBalas = this.add.group({
+            classType: Bala,
+            maxSize: 50
+        })
+
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
+        let player = this.mike;
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         this.skeleton = new EnemigoBasico(this, 500, 500, 'caracol', this.mike);
@@ -152,6 +163,8 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
         this.cepo = new cepo(this, 600, 700, 'cepo', this.mike);
+
+
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
@@ -178,20 +191,31 @@ export default class CiudadLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
+        
         if(!this.potenciadorSpawneado){
+           
             this.time.addEvent({
-                delay: 1000,
+                delay: 3000,
                 callback: () => {
                     let aux = Phaser.Math.RND.between(0, 3);
-                    const potenciadorType = Object.values(potenciadorTypes)[aux];
-                    this.potenciador = new Potenciador(this, 300, 300, potenciadorType, this.mike);
-
+                    let potenciadorType = Object.values(potenciadorTypes)[aux];
+                    const spawnPoints = [
+                        { x: 600, y: 600 },
+                        { x: 600, y: 700 },
+                        { x: 700, y: 600 },
+                        { x: 700, y: 700 },
+                    //Añadir luego las coordenadas correctas
+                    ];
+        
+                    let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+                    let spawnPointX = spawnPoint.x;
+                    let spawnPointY = spawnPoint.y;
+                   
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this);
+                    let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
-
-                     //Colision de potenciador con player
-                    this.physics.add.collider(this.mike, this.potenciador, this.potenciador.enviarPotenciador(potenciadorType), null, this);
-
-
+                
+     
                     this.tweens.add({
                         targets: this.potenciador,
                         y: this.potenciador.y - 30,
@@ -201,12 +225,18 @@ export default class CiudadLevel extends Phaser.Scene{
                         repeat: -1,
                         delay: 10
                     })
+
+                    this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
+  
                 },
-                
+
+
                 callbackScope: this,
                 loop: false,
             });
+ 
         }
+       
 
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
@@ -217,15 +247,6 @@ export default class CiudadLevel extends Phaser.Scene{
    applyEffectPlayer() {
       
     console.log("hola");
-    console.log();
 
    }
-    update(t, dt){
-        this.skeleton.update();
-        //this.robot.update();
-        //this.lutano.update();
-    }
-
-
-
 }

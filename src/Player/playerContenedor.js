@@ -1,5 +1,5 @@
 
-import Arma from "./arma.js";
+import Pistola from "./Armas/pistola.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -43,6 +43,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.dirX = 0;
         this.dirY = 0;
+
+
 
         const Personalities = {
             ANALISTA: 0,
@@ -98,14 +100,18 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             frameRate: 5,
             repeat: -1
         });
+
+        this.arma = new Pistola(this.scene, 0, 0, 'pistola', this)
     }
 
-    preUpdate(t, dt){
-        
-        //console.log(this.speed);
+    preUpdate(t, dt)
+    {
+        this.movement()    
 
-        this.player.preUpdate(t, dt);
+    }
 
+    movement()
+    {
         if(this.dirX == 0 || this.dirX == -1){
 
             if(this.aKey.isDown){
@@ -181,16 +187,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.body.setVelocity(0, 0);
             this.player.play('iddle' + this.key, true);
         }
-
-    }
-
-    ataca(){
-        arma.ataca();
     }
 
     damagePlayer(damage){
-        this.life = this.life - damage;
-        console.log(this.life);
+        if(!this.invencible)
+        {
+            this.life = this.life - damage;
+            console.log(this.life);
+        }
+       
     }
 
     applyEffect(keyPotenciador){
@@ -222,10 +227,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 break;
             case 'invencible':
                 console.log("inven");
-                this.aux = this.life;
-                this.life = 999999999999999;
+                this.invulnerable = true;
                 this.scene.time.delayedCall(5000, () => {
-                    this.life = this.aux;
+                    this.invulnerable = false;
                 });
                 break;
             default:
