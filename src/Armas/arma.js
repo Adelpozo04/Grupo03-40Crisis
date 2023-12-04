@@ -28,6 +28,10 @@ export default class Arma extends Phaser.GameObjects.Sprite {
         
     }
 
+    preUpdate()
+    {
+        this.followCursor(this.cursorX, this.cursorY);
+    }
     
     // funcion que maneja todo el movimiento del arma hacia el cursor
     followCursor(pointerX, pointerY) {
@@ -37,7 +41,7 @@ export default class Arma extends Phaser.GameObjects.Sprite {
         // tenemos el radio mas un valor en función de la distancia para separar un poco el arma del player
         let radio = 30 + this.mapearValor(distanciaCursorPlayer, 1, 615, 1, 30)
         
-        let angle = Math.PI + Phaser.Math.Angle.Between(pointerX, pointerY, this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY); 
+        let angle = Phaser.Math.Angle.Between(this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY, pointerX, pointerY); 
         let newX = playerPos.x + radio * Math.cos(angle);
         let newY = playerPos.y + 10 + radio * Math.sin(angle);
 
@@ -61,8 +65,5 @@ export default class Arma extends Phaser.GameObjects.Sprite {
         return valorSalida;
     }
 
-    preUpdate()
-    {
-        this.followCursor(this.cursorX, this.cursorY);
-    }
+    getAngle() { return Phaser.Math.Angle.Between(this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY, pointerX, pointerY)}
 }
