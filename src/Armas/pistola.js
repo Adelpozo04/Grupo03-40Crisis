@@ -11,7 +11,7 @@ export default class pistola extends Arma{
     constructor(scene, x, y, key, player)
     {
         super(scene,x,y,key,player)
-
+        this.scene = scene
 
         
         this.canShoot = true;
@@ -27,13 +27,11 @@ export default class pistola extends Arma{
     {
         if (this.canShoot)
         {
-            const bala = this.scene.grupoBalas.get()
+            var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala')
             if (bala)
             {
-                //bala.disparar(this.x, this.y, x: )
+                bala.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()))
             }
-            console.log("piu")
-        }
-        
+        }   
     }
 }

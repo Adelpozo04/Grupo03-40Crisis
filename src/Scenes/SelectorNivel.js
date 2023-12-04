@@ -10,9 +10,12 @@ export default class SelectorNivel extends Phaser.Scene {
 
     preload(){
         this.load.image('CiudadLevel', './Assets/Sprites/UI/Selector/MapaCiudadSelection.png');
+        this.load.image('FondoCiudad', './Assets/Sprites/UI/Selector/MapaCiudadSelectionFondo.png');
         this.load.image('PlayaLevel', './Assets/Sprites/UI/Selector/TilePlayaSelection.png');
+        this.load.image('FondoPlaya', './Assets/Sprites/UI/Selector/TilePlayaSelectionFondo.png');
         this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
-        this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.jpg');
+        this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
+        this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
         console.log();
     }
 
@@ -33,16 +36,19 @@ export default class SelectorNivel extends Phaser.Scene {
 
     create(){
         this.mapas = [];
+        this.fondos = [];
         this.mapas[0] = 'CiudadLevel';
+        this.fondos[0] = 'FondoCiudad'
         this.mapas[1] = 'PlayaLevel';
+        this.fondos[1] = 'FondoPlaya';
         this.mapas[2] = 'VolcanLevel';
+        this.fondos[2] = 'FondoVolcan'
         this.currentPage = 0;
-        console.log(this.currentPage % 3);
         
-        let fondo = this.add.image(0, 0, this.mapas[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+        let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.1, 0.1).setOrigin(0.5, 0.5);
-        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.1, 0.1).setOrigin(0.5, 0.5);
+        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
         arrowButtonRight.setInteractive();
@@ -85,10 +91,10 @@ export default class SelectorNivel extends Phaser.Scene {
     changePage(dir){
         if((this.currentPage + dir) < 0) this.currentPage = 3;
         this.currentPage = (this.currentPage + dir) % 3;
-        let fondo = this.add.image(0, 0, this.mapas[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+        let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.1, 0.1).setOrigin(0.5, 0.5);
-        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.1, 0.1).setOrigin(0.5, 0.5);
+        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
         arrowButtonRight.setInteractive();

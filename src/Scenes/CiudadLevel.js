@@ -6,6 +6,7 @@ import EnemigoBasico from '../Enemies/enemigoBasico.js';
 import lutano from '../Enemies/lutano.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
+import Bala from '../Armas/balas.js'
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -49,6 +50,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
 
         this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
+        this.load.image('bala', './Assets/Sprites/Armas/bala.png');
     }
   
     loadAnimations()
@@ -147,14 +149,17 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se le agregan las colisiones a la layer
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
-        /*
+        
         // grupo de balas
         this.grupoBalas = this.add.group({
             classType: Bala,
             maxSize: 50
         })
-        */
-
+       
+        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
+            bala.destroy()
+        }, null, this)
+        
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
@@ -246,6 +251,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
+
+    
 
    applyEffectPlayer() {
       
