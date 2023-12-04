@@ -13,19 +13,25 @@ this.key = key;
 
 this.speed = 125;
 
-this.life = life;
+this.life = 100;
 
 this.potenciador = null;
 
-this.changeMoveTime = 5;
+this.changeMoveTime = 0.5;
+
+this.scene.add.existing(this);
+
+scene.physics.add.existing(this);
+
+Phaser.Math.RandomXY(this.body.velocity, this.speed);
 
 this.scene.time.addEvent({
 
-    delay: this.spawnTime * 1000,
+    delay: this.changeMoveTime * 1000,
     loop: true,
     callback: this.newRandomDirection,
     callbackScope: this,
-    paused: this.potenciador == null
+    paused: this.potenciador != null
 
 });
 
@@ -35,15 +41,13 @@ this.scene.time.addEvent({
 newRandomDirection(){
 
     if(this.potenciador == null){
-        this.vec = Phaser.Math.RandomXY(this.vec);
-
-        this.vec.normalize();
+        Phaser.Math.RandomXY(this.body.velocity, this.speed);
     }
     
 }
 
 setPotenciador(potenciador){
-
+    console.log(potenciador);
     this.potenciador = potenciador;
 }
 
@@ -73,14 +77,23 @@ update(){
             potenciadorPosition.y - this.y
         );
 
-        this.vec.normalize();
+        this.body.setVelocity(this.speed * this.vec.x, this.speed * this.vec.y);
+
+        this.body.velocity.normalize().scale(this.speed);
+    }
+    else{
+        if (this.body.velocity.x >= 0)
+        {
+            this.setFlip(false, false);
+        }
+        else if (this.body.velocity.x < 0)
+        {
+            this.setFlip(true, false);
+        }
     }
 
-    this.body.setVelocity(this.speed * this.vec.x, this.speed * this.vec.y);
 
-    this.body.velocity.normalize().scale(this.speed);
     
-
 }
 
 
