@@ -12,7 +12,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
     constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
-        this.potenciadorSpawneado = false; // Inicialmente se permite generar el primer potenciador
+        this.potenciadorSpawneado = false;
+        this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
     }
     
     init(data){
@@ -193,13 +194,9 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
         
-        if(!this.potenciadorSpawneado){
-           
-            this.time.addEvent({
-                delay: 3000,
-                callback: () => {
-                    let aux = Phaser.Math.RND.between(0, 3);
-                    let potenciadorType = Object.values(potenciadorTypes)[aux];
+       
+        let aux = Phaser.Math.RND.between(0, 3);
+        let potenciadorType = Object.values(potenciadorTypes)[aux];
                     const spawnPoints = [
                         { x: 600, y: 600 },
                         { x: 600, y: 700 },
@@ -212,7 +209,7 @@ export default class CiudadLevel extends Phaser.Scene{
                     let spawnPointX = spawnPoint.x;
                     let spawnPointY = spawnPoint.y;
                    
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this);
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this, this);
                     let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
                 
@@ -228,13 +225,10 @@ export default class CiudadLevel extends Phaser.Scene{
                     })
 
                     this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
+                    
   
-                },
-
-
-                callbackScope: this,
-                loop: false,
-            });
+         
+                }
  
         }
        
@@ -245,13 +239,54 @@ export default class CiudadLevel extends Phaser.Scene{
 
     }
 
-   applyEffectPlayer() {
-      
-    console.log("hola");
+    setPotenciadorSpawned(value) {
+        this.potenciadorSpawneado = value;
+    }
 
-   }
-
+   
+   
    update(dt, t){
     this.skeleton.update();
+
+    if(!this.potenciadorSpawneado){
+           
+        this.time.addEvent({
+            delay: 3000,
+            callback: () => {
+                let aux = Phaser.Math.RND.between(0, 3);
+                let potenciadorType = Object.values(potenciadorTypes)[aux];
+                const spawnPoints = [
+                    { x: 600, y: 600 },
+                    { x: 600, y: 700 },
+                    { x: 700, y: 600 },
+                    { x: 700, y: 700 },
+                //Añadir luego las coordenadas correctas
+                ];
+    
+                let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+                let spawnPointX = spawnPoint.x;
+                let spawnPointY = spawnPoint.y;
+               
+                this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this, this);
+                let pot = this.potenciador;
+                this.potenciadorSpawneado = true;
+            
+ 
+                this.tweens.add({
+                    targets: this.potenciador,
+                    y: this.potenciador.y - 30,
+                    duration: 2000,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true,
+                    repeat: -1,
+                    delay: 10
+                })
+
+                this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
+                
+
+            },
+
+
    }
 }
