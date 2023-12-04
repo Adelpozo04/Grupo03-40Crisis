@@ -1,5 +1,5 @@
 import HealthBar from "./healthBar.js";
-import playerContenedor from "./playerContenedor.js";
+import playerContenedor from "../Player/playerContenedor.js";
 
 export default class UIManager extends Phaser.GameObjects.Container{
 

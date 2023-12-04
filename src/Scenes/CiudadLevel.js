@@ -1,11 +1,12 @@
-import playerContenedor from './playerContenedor.js';
-import Potenciador from './Potenciador.js';
-import Robot from './robot.js'
-import EnemigoBasico from './enemigoBasico.js';
-import lutano from './Lutano.js';
-import cepo from './cepo.js';
-import UIManager from './uiManager.js';
-import Bala from './Armas/balas.js'
+
+import playerContenedor from '../Player/playerContenedor.js';
+import Potenciador from '../Potenciador.js';
+import Robot from '../Enemies/robot.js'
+import EnemigoBasico from '../Enemies/enemigoBasico.js';
+import lutano from '../Enemies/lutano.js';
+import cepo from '../Enemies/cepo.js';
+import UIManager from '../UI/uiManager.js';
+
 
 export default class CiudadLevel extends Phaser.Scene{
 
@@ -36,7 +37,9 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('robot', './Assets/Sprites/Enemigos/Robot/Robot-walk-SpriteSheet.png',{frameWidth: 256, frameHeight: 256})
         this.load.spritesheet('lutano', './Assets/Sprites/Enemigos/Lutano/Lutano-Walk-SpriteSheet.png',{frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('lutanoAttack', './Assets/Sprites/Enemigos/Lutano/Lutano-attack-SpriteSheet.png',{frameWidth: 32, frameHeight: 32})
-        this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256})
+        this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('caracol', './Assets/Sprites/Enemigos/Caracol/Caracol-Walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 32});
+        this.load.spritesheet('caracolattack', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
 
         //Cargado de imagenes de objetos del juego
 
@@ -105,6 +108,17 @@ export default class CiudadLevel extends Phaser.Scene{
             frameRate: 5,
             repeat: -1
         })
+        this.anims.create({
+            key: 'walkcaracol',
+            frames: this.anims.generateFrameNumbers('caracol', {start: 0, end: 3}),
+            frameRate: 5,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'attackcaracol',
+            frames: this.anims.generateFrameNumbers('caracolattack', {start: 0, end:10}),
+            frameRate: 10
+        })
     
         
 
@@ -133,24 +147,25 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se le agregan las colisiones a la layer
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
+        /*
         // grupo de balas
         this.grupoBalas = this.add.group({
             classType: Bala,
             maxSize: 50
         })
+        */
+
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
         let player = this.mike;
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new EnemigoBasico(this, 500, 500, 'skeleton', this.mike);
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'caracol', this.mike);
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
         this.cepo = new cepo(this, 600, 700, 'cepo', this.mike);
-
-
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
@@ -234,5 +249,9 @@ export default class CiudadLevel extends Phaser.Scene{
       
     console.log("hola");
 
+   }
+
+   update(dt, t){
+    this.skeleton.update();
    }
 }

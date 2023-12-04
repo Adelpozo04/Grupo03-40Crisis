@@ -1,4 +1,4 @@
-import playerContenedor from './playerContenedor.js';
+import playerContenedor from './Player/playerContenedor.js';
 
 export default class Potenciador extends Phaser.GameObjects.Container {
     /**

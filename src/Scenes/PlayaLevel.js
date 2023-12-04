@@ -1,5 +1,5 @@
-import playerContenedor from './playerContenedor.js';
-import Potenciador from './Potenciador.js';
+import playerContenedor from '../Player/playerContenedor.js';
+import Potenciador from '../Potenciador.js';
 
 export default class PlayaLevel extends Phaser.Scene{
 

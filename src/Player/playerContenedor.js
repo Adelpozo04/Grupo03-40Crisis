@@ -1,5 +1,5 @@
 
-import Pistola from "./Armas/pistola.js";
+import Pistola from "../Armas/pistola.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -43,8 +43,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.dirX = 0;
         this.dirY = 0;
-
-
 
         const Personalities = {
             ANALISTA: 0,
