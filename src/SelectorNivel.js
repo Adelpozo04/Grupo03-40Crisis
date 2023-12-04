@@ -9,7 +9,10 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('fondo', './Assets/Sprites/UI/PantallaInicial/FondoPlaya.png');
+        this.load.image('CiudadLevel', './Assets/Sprites/UI/Selector/MapaCiudadSelection.png');
+        this.load.image('PlayaLevel', './Assets/Sprites/UI/Selector/TilePlayaSelection.png');
+        this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
+        this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.jpg');
         console.log();
     }
 
@@ -29,15 +32,45 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
-        this.add.image(0, 0, 'fondo').setScale(1, 1).setOrigin(0, 0);
-        this.add.image(0, 0, 'fondo').setScale(0.5, 0.5).setOrigin(-0.3, -0.4);
-        this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
-
         this.mapas = [];
         this.mapas[0] = 'CiudadLevel';
         this.mapas[1] = 'PlayaLevel';
         this.mapas[2] = 'VolcanLevel';
         this.currentPage = 0;
+        console.log(this.currentPage % 3);
+        
+        let fondo = this.add.image(0, 0, this.mapas[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
+        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.1, 0.1).setOrigin(0.5, 0.5);
+        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.1, 0.1).setOrigin(0.5, 0.5);
+        this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
+
+        arrowButtonRight.setInteractive();
+        arrowButtonRight.on("pointerdown", () => {
+            this.changePage(1);
+        });
+
+        arrowButtonLeft.setInteractive();
+        arrowButtonLeft.on("pointerdown", () => {
+            this.changePage(-1);
+        });
+
+        let timeline = this.tweens.timeline
+        this.tweens.add({
+            targets: fondo,
+            x: 200,
+            duration: 3500,
+            yoyo: true,
+            repeat: -1,
+        });
+        this.tweens.add({
+            targets: fondo,
+            x: -200,
+            duration: 3500,
+            yoyo: true,
+            repeat: -1,
+        });
+        timeline.play();
     }
 
     continueCreate(){
@@ -49,7 +82,40 @@ export default class SelectorNivel extends Phaser.Scene {
         });
     }
 
-    changePage(){
-        this.currentPage = this.currentPage % 3;
+    changePage(dir){
+        if((this.currentPage + dir) < 0) this.currentPage = 3;
+        this.currentPage = (this.currentPage + dir) % 3;
+        let fondo = this.add.image(0, 0, this.mapas[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
+        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.1, 0.1).setOrigin(0.5, 0.5);
+        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.1, 0.1).setOrigin(0.5, 0.5);
+        this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
+
+        arrowButtonRight.setInteractive();
+        arrowButtonRight.on("pointerdown", () => {
+            this.changePage(1);
+        });
+
+        arrowButtonLeft.setInteractive();
+        arrowButtonLeft.on("pointerdown", () => {
+            this.changePage(-1);
+        });
+
+        let timeline = this.tweens.timeline
+        this.tweens.add({
+            targets: fondo,
+            x: 200,
+            duration: 3500,
+            yoyo: true,
+            repeat: -1,
+        });
+        this.tweens.add({
+            targets: fondo,
+            x: -200,
+            duration: 3500,
+            yoyo: true,
+            repeat: -1,
+        });
+        timeline.play();
     }
 }
