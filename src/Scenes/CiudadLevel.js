@@ -194,9 +194,28 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
         
+       this.spawnPotenciador();
        
-        let aux = Phaser.Math.RND.between(0, 3);
-        let potenciadorType = Object.values(potenciadorTypes)[aux];
+       
+
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+
+    }
+
+    
+    spawnPotenciador() {
+
+        
+        const potenciadorTypes = {
+            BOTIQUIN: 'botiquin', 
+            VELOCIDAD: 'velocidad', 
+            SLEEP: 'vivu', 
+            INVENCIBLE: 'invencible',
+        };
+                    let aux = Phaser.Math.RND.between(0, 3);
+                    let potenciadorType = Object.values(potenciadorTypes)[aux];
                     const spawnPoints = [
                         { x: 600, y: 600 },
                         { x: 600, y: 700 },
@@ -209,9 +228,10 @@ export default class CiudadLevel extends Phaser.Scene{
                     let spawnPointX = spawnPoint.x;
                     let spawnPointY = spawnPoint.y;
                    
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this, this);
-                    let pot = this.potenciador;
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this);
+                  
                     this.potenciadorSpawneado = true;
+                    this.potenciadorRecogido = false;
                 
      
                     this.tweens.add({
@@ -223,70 +243,35 @@ export default class CiudadLevel extends Phaser.Scene{
                         repeat: -1,
                         delay: 10
                     })
-
-                    this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
-                    
-  
-         
-                }
- 
-        }
-       
-
-        this.myUI = new UIManager(this, 'UIManager', this.mike);
-
-        this.myUI.setScrollFactor(0);
-
-    }
-
-    setPotenciadorSpawned(value) {
-        this.potenciadorSpawneado = value;
+    
+                    this.physics.add.collider(this.mike, this.potenciador, ()=>{this.potenciador.enviarPotenciador()}, null, this);
+    
+              
+        
     }
 
    
    
    update(dt, t){
     this.skeleton.update();
-
-    if(!this.potenciadorSpawneado){
-           
-        this.time.addEvent({
-            delay: 3000,
-            callback: () => {
-                let aux = Phaser.Math.RND.between(0, 3);
-                let potenciadorType = Object.values(potenciadorTypes)[aux];
-                const spawnPoints = [
-                    { x: 600, y: 600 },
-                    { x: 600, y: 700 },
-                    { x: 700, y: 600 },
-                    { x: 700, y: 700 },
-                //Añadir luego las coordenadas correctas
-                ];
-    
-                let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
-                let spawnPointX = spawnPoint.x;
-                let spawnPointY = spawnPoint.y;
+      
+     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        { 
+          // setTimeout(() => {
+                this.spawnPotenciador();
                
-                this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this, this);
-                let pot = this.potenciador;
-                this.potenciadorSpawneado = true;
+          //  }, 5000);
+
             
- 
-                this.tweens.add({
-                    targets: this.potenciador,
-                    y: this.potenciador.y - 30,
-                    duration: 2000,
-                    ease: 'Sine.easeInOut',
-                    yoyo: true,
-                    repeat: -1,
-                    delay: 10
-                })
-
-                this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
-                
-
-            },
-
+                   
+        }
+   
+           
+    
+          
+        
 
    }
+
 }
+            
