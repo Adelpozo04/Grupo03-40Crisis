@@ -1,10 +1,10 @@
-import playerContenedor from '../playerContenedor.js';
+import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
 import Robot from '../Enemies/robot.js'
 import EnemigoBasico from '../Enemies/enemigoBasico.js';
 import lutano from '../Enemies/lutano.js';
 import cepo from '../Enemies/cepo.js';
-import UIManager from '../uiManager.js';
+import UIManager from '../UI/uiManager.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 

@@ -1,8 +1,8 @@
-import PantallaInicial from "./PantallaInicial.js"
-import PlayaLevel from "./PlayaLevel.js"
-import CiudadLevel from "./CiudadLevel.js"
-import VolcanLevel from "./VolcanLevel.js"
-import SelectorNivel from "./SelectorNivel.js"
+import PantallaInicial from "./Scenes/PantallaInicial.js"
+import PlayaLevel from "./Scenes/PlayaLevel.js"
+import CiudadLevel from "./Scenes/CiudadLevel.js"
+import VolcanLevel from "./Scenes/VolcanLevel.js"
+import SelectorNivel from "./Scenes/SelectorNivel.js"
 
 var config = {
     type: Phaser.AUTO,
