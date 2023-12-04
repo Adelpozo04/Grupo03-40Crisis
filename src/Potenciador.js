@@ -33,7 +33,9 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     }
 
 
-   
+    getPosition() {
+        return { x: this.x, y: this.y };
+    }
 
     enviarPotenciador(){
         console.log(this.key);
@@ -63,6 +65,8 @@ export default class Potenciador extends Phaser.GameObjects.Container {
             let spawnPointX = spawnPoint.x;
             let spawnPointY = spawnPoint.y;
            
+            this.x = spawnPoint.x;
+            this.y = spawnPoint.y;
 
            
         }

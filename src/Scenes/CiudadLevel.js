@@ -227,6 +227,8 @@ export default class CiudadLevel extends Phaser.Scene{
                         delay: 10
                     })
 
+                    this.setPotenciador();
+
                     this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador()}, null, this);
   
                 },
@@ -248,6 +250,12 @@ export default class CiudadLevel extends Phaser.Scene{
    applyEffectPlayer() {
       
     console.log("hola");
+
+   }
+
+   setPotenciador(){
+
+        
 
    }
 
