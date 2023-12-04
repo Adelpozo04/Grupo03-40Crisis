@@ -37,7 +37,6 @@ export default class SelectorNivel extends Phaser.Scene {
         this.mapas[1] = 'PlayaLevel';
         this.mapas[2] = 'VolcanLevel';
         this.currentPage = 0;
-        console.log(this.currentPage % 3);
         
         let fondo = this.add.image(0, 0, this.mapas[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
