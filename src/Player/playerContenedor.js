@@ -206,6 +206,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
+                console.log(this.life);
                 break;
             case 'velocidad':
                 console.log("velo");
