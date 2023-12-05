@@ -4,8 +4,10 @@ import Potenciador from '../Potenciador.js';
 import Robot from '../Enemies/robot.js'
 import EnemigoBasico from '../Enemies/enemigoBasico.js';
 import lutano from '../Enemies/lutano.js';
+import Mono from '../Enemies/mono.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
+import Bala from '../Armas/balas.js'
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -41,7 +43,9 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('cepo', './Assets/Sprites/Enemigos/Lutano/Bear_Trap.png',{frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('caracol', './Assets/Sprites/Enemigos/Caracol/Caracol-Walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 32});
         this.load.spritesheet('caracolattack', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
-
+        this.load.spritesheet('mono', './Assets/Sprites/Enemigos/Mono/Monkey-walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 48});
+        //this.load.spritesheet('monopick', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
+        this.load.spritesheet('deathEnemy', './Assets/Sprites/Enemigos/Enemies-death-SpriteSheet.png',{frameWidth: 32, frameHeight: 32});
         //Cargado de imagenes de objetos del juego
 
         this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 64, frameHeight: 64});
@@ -50,6 +54,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
 
         this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
+        this.load.image('bala', './Assets/Sprites/Armas/bala.png');
     }
   
     loadAnimations()
@@ -120,6 +125,17 @@ export default class CiudadLevel extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('caracolattack', {start: 0, end:10}),
             frameRate: 10
         })
+        this.anims.create({
+            key: 'walkmono',
+            frames: this.anims.generateFrameNumbers('mono', {start: 0, end: 1}),
+            frameRate: 7,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'enemydeath',
+            frames: this.anims.generateFrameNumbers('deathEnemy', {start: 0, end: 6}),
+            frameRate: 10
+        })
     
         
 
@@ -148,21 +164,24 @@ export default class CiudadLevel extends Phaser.Scene{
         //Se le agregan las colisiones a la layer
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
-        /*
+        
         // grupo de balas
         this.grupoBalas = this.add.group({
             classType: Bala,
             maxSize: 50
         })
-        */
-
+       
+        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
+            bala.destroy()
+        }, null, this)
+        
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
         let player = this.mike;
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new EnemigoBasico(this, 500, 500, 'caracol', this.mike);
+        this.skeleton = new Mono(this, 500, 500, 'mono');
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
@@ -243,17 +262,33 @@ export default class CiudadLevel extends Phaser.Scene{
                         repeat: -1,
                         delay: 10
                     })
-    
-                    this.physics.add.collider(this.mike, this.potenciador, ()=>{this.potenciador.enviarPotenciador()}, null, this);
-    
-              
-        
+
+
+                    console.log("aparecio potenciador");
+
+                    this.setPotenciador();
+
+                    this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador(); this.skeleton.deletePotenciador()}, null, this);
+  
+                },
+
+
+                callbackScope: this,
+                loop: false,
+            });
+ 
+        }
+       
+
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+
     }
 
-   
-   
-   update(dt, t){
-    this.skeleton.update();
+    
+
+   applyEffectPlayer() {
       
      if(!this.potenciadorSpawneado && this.potenciadorRecogido)
         { 
@@ -266,12 +301,17 @@ export default class CiudadLevel extends Phaser.Scene{
                    
         }
    
-           
-    
           
-        
+   }
+
+   setPotenciador(){
+
+        this.skeleton.setPotenciador(this.potenciador);
 
    }
 
+   update(dt, t){
+    this.skeleton.update();
+   }
 }
-            
+

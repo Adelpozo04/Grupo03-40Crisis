@@ -36,6 +36,11 @@ export default class enemigo extends Phaser.GameObjects.Container {
         return { x: this.direction.x, y: this.direction.y };
     }
 
+    getDamage(damage){
+        this.life -= damage;
+        return this.life;
+    }
+
 
     attack()
     {

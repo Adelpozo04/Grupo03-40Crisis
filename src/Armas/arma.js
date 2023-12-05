@@ -65,5 +65,5 @@ export default class Arma extends Phaser.GameObjects.Sprite {
         return valorSalida;
     }
 
-    getAngle() { return Phaser.Math.Angle.Between(this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY, pointerX, pointerY)}
+    getAngle() { return Phaser.Math.Angle.Between(this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY, this.cursorX, this.cursorY)}
 }
