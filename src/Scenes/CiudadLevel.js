@@ -44,6 +44,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('caracolattack', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
         this.load.spritesheet('mono', './Assets/Sprites/Enemigos/Mono/Monkey-walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 48});
         //this.load.spritesheet('monopick', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
+        this.load.spritesheet('deathEnemy', './Assets/Sprites/Enemigos/Enemies-death-SpriteSheet.png',{frameWidth: 32, frameHeight: 32});
         //Cargado de imagenes de objetos del juego
 
         this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 64, frameHeight: 64});
@@ -128,6 +129,11 @@ export default class CiudadLevel extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('mono', {start: 0, end: 1}),
             frameRate: 7,
             repeat: -1
+        })
+        this.anims.create({
+            key: 'enemydeath',
+            frames: this.anims.generateFrameNumbers('deathEnemy', {start: 0, end: 6}),
+            frameRate: 10
         })
     
         

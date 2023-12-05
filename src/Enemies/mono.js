@@ -11,6 +11,8 @@ this.y = y;
 
 this.key = key;
 
+this.setScale(1.25, 1.25);
+
 this.speed = 125;
 
 this.life = 100;
@@ -22,6 +24,10 @@ this.changeMoveTime = 0.5;
 this.scene.add.existing(this);
 
 scene.physics.add.existing(this);
+
+this.body.setSize(24, 24);
+
+this.body.setOffset(12, 12)
 
 Phaser.Math.RandomXY(this.body.velocity, this.speed);
 
