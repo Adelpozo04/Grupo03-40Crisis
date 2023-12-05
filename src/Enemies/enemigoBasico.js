@@ -71,6 +71,16 @@ tryAttack()
     }, this)
 }
 
+getDamage(damage){
+    var myLifeLeft = super.getDamage(damage);
+
+    if(myLifeLeft <= 0){
+        this.enemy.play('enemydeath', true);
+        
+        this.enemy.on('animationcomplete', this.destroy )
+    }
+}
+
 update(){
     // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
     // y direction.x / y son las variables de direccion
