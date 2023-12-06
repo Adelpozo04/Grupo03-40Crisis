@@ -15,6 +15,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         super(scene, x, y);
         this.key = key;
         this.player = player;
+        this.scene = scene;
         this.currentScene = currentScene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -32,6 +33,11 @@ export default class Potenciador extends Phaser.GameObjects.Container {
 
     }
 
+    getScene()
+    {
+        return this.scene;
+    }
+
 
     getPosition() {
         return { x: this.x, y: this.y };
@@ -40,13 +46,12 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     enviarPotenciador(){
         console.log(this.key);
         this.player.applyEffect(this.key);
-        this.destroy();
 
-        
-        
-            
-            //this.scene.potenciadorSpawneado = false; // Establece que el potenciador actual ha sido generado
-        
+        this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
+        this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
+        console.log(this.getScene().potenciadorSpawneado);
+        this.destroy();
+                
     }
 
     
@@ -71,5 +76,6 @@ export default class Potenciador extends Phaser.GameObjects.Container {
            
         }
     }
+
     
 }

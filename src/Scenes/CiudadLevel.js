@@ -14,7 +14,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
     constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
-        this.potenciadorSpawneado = false; // Inicialmente se permite generar el primer potenciador
+        this.potenciadorSpawneado = false;
+        this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
     }
     
     init(data){
@@ -230,11 +231,26 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
         
-        if(!this.potenciadorSpawneado){
-           
-            this.time.addEvent({
-                delay: 3000,
-                callback: () => {
+       this.spawnPotenciador();
+       
+       
+
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+
+    }
+
+    
+    spawnPotenciador() {
+
+        
+        const potenciadorTypes = {
+            BOTIQUIN: 'botiquin', 
+            VELOCIDAD: 'velocidad', 
+            SLEEP: 'vivu', 
+            INVENCIBLE: 'invencible',
+        };
                     let aux = Phaser.Math.RND.between(0, 3);
                     let potenciadorType = Object.values(potenciadorTypes)[aux];
                     const spawnPoints = [
@@ -249,9 +265,10 @@ export default class CiudadLevel extends Phaser.Scene{
                     let spawnPointX = spawnPoint.x;
                     let spawnPointY = spawnPoint.y;
                    
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, player, this);
-                    let pot = this.potenciador;
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this);
+                  
                     this.potenciadorSpawneado = true;
+                    this.potenciadorRecogido = false;
                 
      
                     this.tweens.add({
@@ -263,6 +280,7 @@ export default class CiudadLevel extends Phaser.Scene{
                         repeat: -1,
                         delay: 10
                     })
+
 
                     console.log("aparecio potenciador");
 
@@ -290,8 +308,24 @@ export default class CiudadLevel extends Phaser.Scene{
    //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){
 
-        //this.skeleton.setPotenciador(this.potenciador);
 
+   //this.skeleton.setPotenciador(this.potenciador);
+
+   applyEffectPlayer() {
+      
+     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        { 
+          // setTimeout(() => {
+                this.spawnPotenciador();
+               
+          //  }, 5000);
+
+
+            
+                   
+        }
+   
+          
    }
 
    sendPoints(points){
@@ -310,3 +344,4 @@ export default class CiudadLevel extends Phaser.Scene{
     this.skeleton.update();
    }
 }
+
