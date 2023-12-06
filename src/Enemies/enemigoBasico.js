@@ -104,6 +104,47 @@ recibeDamage(damage){
     }
 }
 
+applyEffect(keyPotenciador){
+       
+    let aux;
+    switch (keyPotenciador) {
+        case 'botiquin':
+            console.log("boti");
+            this.life += this.maxLife / 2;
+            if (this.life > this.maxLife) {
+                this.life = this.maxLife;
+            }
+            console.log(this.life);
+            break;
+        case 'velocidad':
+            console.log("velo");
+            this.aux = this.speed;
+            this.speed = 280;
+            this.scene.time.delayedCall(3000, () => {
+                this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
+            });
+            break;
+        case 'vivu':
+            console.log("vivu");
+            this.aux = this.speed;
+            this.speed = 0;
+            this.scene.time.delayedCall(5000, () => {
+                this.speed = this.aux;
+            });
+            break;
+        case 'invencible':
+            console.log("inven");
+            this.invulnerable = true;
+            this.scene.time.delayedCall(5000, () => {
+                this.invulnerable = false;
+            });
+            break;
+        default:
+            break;
+    }
+    //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
+}
+
 update(){
     // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
     // y direction.x / y son las variables de direccion
