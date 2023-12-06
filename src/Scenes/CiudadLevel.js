@@ -169,6 +169,12 @@ export default class CiudadLevel extends Phaser.Scene{
             classType: Bala,
             maxSize: 50
         })
+
+        this.grupoEnemigos = this.add.group({
+            classType: EnemigoBasico,
+            runChildUpdate: true,
+
+        })
        
         this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
             bala.destroy()
@@ -180,7 +186,9 @@ export default class CiudadLevel extends Phaser.Scene{
         let player = this.mike;
 
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-        this.skeleton = new Mono(this, 500, 500, 'mono');
+        this.skeleton = new EnemigoBasico(this, 500, 500, 'zombie', this.mike);
+
+        this.grupoEnemigos.add(this.skeleton);
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
@@ -191,7 +199,14 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.physics.add.collider(this.lutano, this.collisionLayer);
         this.physics.add.collider(this.skeleton, this.collisionLayer);
 
-       
+        this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
+            
+            console.log(enemigo);
+            enemigo.recibeDamage(bala.getDamage());
+            bala.destroy();
+
+        });
+
         //Se crea la camara
         this.cameras.main.startFollow(this.mike);
         
@@ -278,7 +293,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
    setPotenciador(){
 
-        this.skeleton.setPotenciador(this.potenciador);
+        //this.skeleton.setPotenciador(this.potenciador);
 
    }
 
