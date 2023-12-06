@@ -76,22 +76,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }
 
-    applyEffect(keyPotenciador){
-
-        if(keyPotenciador == 'botiquin'){
-            this.life = this.life + 0.5 * this.maxLife;
-        }
-        else if(keyPotenciador == 'zapato'){
-            this.speed = this.speed * 1.5;
-        }
-        else if(keyPotenciador == 'vivu'){
-            this.sleep = true;
-        }
-        else if(keyPotenciador == 'invencible'){
-            this.invencible = true;
-        }
-
-        
-    }
+  
 }
     

@@ -8,6 +8,7 @@ import Mono from '../Enemies/mono.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
 import Bala from '../Armas/balas.js'
+import EnemigoSpawner from '../enemySpawner.js';
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -190,8 +191,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
-        let player = this.mike;
-
+       
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
         this.skeleton = new EnemigoBasico(this, 500, 500, 'zombie', this.mike);
 
@@ -231,6 +231,24 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
         
+        // Crear un spawner de enemigos en las coordenadas (600, 600)
+        const spawner = new EnemigoSpawner(this, 600, 600, this.mike);
+
+        // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 3 segundos
+        spawner.spawnEnemies('zombie', 5, 3000);
+
+        // Detener la generación de enemigos después de un tiempo (por ejemplo, 15 segundos)
+        this.time.delayedCall(15000, () => {
+        spawner.stopSpawn();
+        });
+
+        // Limpiar todos los enemigos generados después de cierto tiempo (por ejemplo, 20 segundos)
+        this.time.delayedCall(40000, () => {
+        spawner.clearEnemies();
+        });
+        
+         
+        
        this.spawnPotenciador();
        
        
@@ -265,8 +283,8 @@ export default class CiudadLevel extends Phaser.Scene{
                     let spawnPointX = spawnPoint.x;
                     let spawnPointY = spawnPoint.y;
                    
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this);
-                  
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.skeleton, this);
+                    let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
                     this.potenciadorRecogido = false;
                 
@@ -287,30 +305,32 @@ export default class CiudadLevel extends Phaser.Scene{
                     this.setPotenciador();
 
                     //delete potenciador le indica al mono que el potenciador se ha eliminado
-                    this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador(); this.skeleton.deletePotenciador()}, null, this);
+                    this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
+                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
+                    //; this.skeleton.deletePotenciador() esto estaba dentro de las llaves ??
   
-                },
+                }//,
 
 
-                callbackScope: this,
-                loop: false,
-            });
+                //callbackScope: this,
+               // loop: false,
+         //   });
  
-        }
+        //}
        
 
-        this.myUI = new UIManager(this, 'UIManager', this.mike);
+     //   this.myUI = new UIManager(this, 'UIManager', this.mike);
 
-        this.myUI.setScrollFactor(0);
+     //   this.myUI.setScrollFactor(0);
 
-    }
+   // }
 
    //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){
 
 
    //this.skeleton.setPotenciador(this.potenciador);
-
+   }
    applyEffectPlayer() {
       
      if(!this.potenciadorSpawneado && this.potenciadorRecogido)
@@ -342,6 +362,18 @@ export default class CiudadLevel extends Phaser.Scene{
 
    update(dt, t){
     this.skeleton.update();
+
+    if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+    { 
+      // setTimeout(() => {
+            this.spawnPotenciador();
+           
+      //  }, 5000);
+
+
+        
+               
+    }
    }
 }
 

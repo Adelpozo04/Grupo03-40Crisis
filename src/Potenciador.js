@@ -1,4 +1,6 @@
 import playerContenedor from './Player/playerContenedor.js';
+import Enemigo from "./Enemies/enemigo.js";
+import EnemigoBasico from './Enemies/enemigoBasico.js';
 
 export default class Potenciador extends Phaser.GameObjects.Container {
     /**
@@ -7,14 +9,15 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     * @param {sprite} sprite - sprite
     * @param {number} y - posicion y
     * @param {playerContenedor} player - referencia al player
-    * @param {enemigo} enemigo - referencia al enemigo 
+    * @param {EnemigoBasico} enemigo - referencia al enemigo 
     * @param {string} key - sprite
     */
 
-    constructor(scene, x, y, key, player, currentScene){
+    constructor(scene, x, y, key, player, enemy, currentScene){
         super(scene, x, y);
         this.key = key;
         this.player = player;
+        this.enemy = enemy
         this.scene = scene;
         this.currentScene = currentScene;
         scene.add.existing(this);
@@ -43,7 +46,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         return { x: this.x, y: this.y };
     }
 
-    enviarPotenciador(){
+    enviarPotenciadorPlayer(){
         console.log(this.key);
         this.player.applyEffect(this.key);
 
@@ -54,28 +57,19 @@ export default class Potenciador extends Phaser.GameObjects.Container {
                 
     }
 
-    
-    spawnPotenciador() {
-        if (this.scene.potenciadorRecogido) {
-            const spawnPoints = [
-                { x: 600, y: 600 },
-                { x: 600, y: 700 },
-                { x: 700, y: 600 },
-                { x: 700, y: 700 },
-            //Añadir luego las coordenadas correctas
-            ];
+    enviarPotenciadorEnemy(){
+        console.log(this.enemy);
+        this.enemy.applyEffect(this.key);
 
-            
-            let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
-            let spawnPointX = spawnPoint.x;
-            let spawnPointY = spawnPoint.y;
-           
-            this.x = spawnPoint.x;
-            this.y = spawnPoint.y;
-
-           
-        }
+        this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
+        this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
+        console.log(this.getScene().potenciadorSpawneado);
+        this.destroy();
+                
     }
+
+    
+   
 
     
 }
