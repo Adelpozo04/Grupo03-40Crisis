@@ -48,6 +48,7 @@ constructor(scene, x, y, key, player)
     this.add(this.enemy);
     this.setScale(scaleEnemigos.get(this.key)); //cuidao que esto igual da problemas
     this.attackFlag = true;
+    this.alive = true;
     scene.physics.add.existing(this);
     scene.add.existing(this);
 
@@ -60,6 +61,7 @@ attack() { if (super.isInAttackRange() || this.key == 'caracol') {super.attack()
 // hace la animación y si se termina llamamos a attack en el super
 tryAttack()
 {
+    console.log(this.body);
     this.body.setVelocity(0, 0);
     this.body.velocity.normalize().scale(this.speed);
 
@@ -71,44 +73,64 @@ tryAttack()
     }, this)
 }
 
-getDamage(damage){
+destroyMyself(){
+
+    this.destroy();
+
+}
+
+recibeDamage(damage){
     var myLifeLeft = super.getDamage(damage);
 
+    console.log(myLifeLeft);
+
     if(myLifeLeft <= 0){
+        console.log('muelto');
+
+        this.alive = false;
+
+        this.body.setVelocity(0, 0);
+
+        this.body.destroy();
+
         this.enemy.play('enemydeath', true);
         
-        this.enemy.on('animationcomplete', this.destroy )
+        this.enemy.on('animationcomplete', this.destroyMyself )
     }
 }
 
 update(){
     // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
     // y direction.x / y son las variables de direccion
-    super.basicMovement(this.attackFlag);
 
-    // si podemos atacar y seguimos en rango, intentamos atacar
-    if (this.attackFlag)
-    {
-        if (super.isInAttackRange())
+    if(this.alive){
+        super.basicMovement(this.attackFlag);
+
+        // si podemos atacar y seguimos en rango, intentamos atacar
+        if (this.attackFlag)
         {
-            this.attackFlag = false;
-            this.enemy.off('animationcomplete');
-            this.tryAttack();
+            if (super.isInAttackRange())
+            {
+                this.attackFlag = false;
+                this.enemy.off('animationcomplete');
+                this.tryAttack();
+            }
+            else
+            {
+                this.enemy.play('walk' + this.key, true);
+            }
         }
-        else
+        //flip del sprite en función de la pos del player
+        if (this.x < super.getPlayer().x)
         {
-            this.enemy.play('walk' + this.key, true);
+            this.enemy.setFlip(false, false);
+        }
+        else if (this.x > super.getPlayer().y)
+        {
+            this.enemy.setFlip(true, false);
         }
     }
-    //flip del sprite en función de la pos del player
-    if (this.x < super.getPlayer().x)
-    {
-        this.enemy.setFlip(false, false);
-    }
-    else if (this.x > super.getPlayer().y)
-    {
-        this.enemy.setFlip(true, false);
-    }
+    
 }
 
 }
