@@ -9,11 +9,24 @@ constructor(scene, key, player){
 
     this.player = player;
 
-    this.healthBar = new HealthBar(scene, 0, 0, player, 341, 32).setScrollFactor(0);
+    this.healthBar = new HealthBar(scene, 24, 16, player, 341, 32).setScrollFactor(0);
 
     this.key = key;
 
+    this.totalPoints = 0;
+
     scene.add.existing(this);
+
+    this.ScoreLabel = this.scene.generateText(0, 650, 'Score: ', 32);
+    this.ScoreLabel.setScrollFactor(0);
+
+}
+
+gainPoints(points){
+
+    this.totalPoints += points;
+
+    this.ScoreLabel.text = 'Score: ' + this.totalPoints;
 
 }
 
@@ -23,6 +36,8 @@ preUpdate(t, dt){
 
 
 }
+
+
 
 
 

@@ -45,6 +45,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.spritesheet('mono', './Assets/Sprites/Enemigos/Mono/Monkey-walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 48});
         //this.load.spritesheet('monopick', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
         this.load.spritesheet('deathEnemy', './Assets/Sprites/Enemigos/Enemies-death-SpriteSheet.png',{frameWidth: 32, frameHeight: 32});
+        
         //Cargado de imagenes de objetos del juego
 
         this.load.image('botiquin', './Assets/Sprites/Potenciadores/botiquin.png', {frameWidth: 64, frameHeight: 64});
@@ -54,6 +55,10 @@ export default class CiudadLevel extends Phaser.Scene{
 
         this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
+
+        //Cargado de imagenes de UI de juego
+        this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
+
     }
   
     loadAnimations()
@@ -192,8 +197,6 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
 
-        this.cepo = new cepo(this, 600, 700, 'cepo', this.mike);
-
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
         //this.physics.add.collider(this.lutano, this.collisionLayer);
@@ -265,6 +268,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
                     this.setPotenciador();
 
+                    //delete potenciador le indica al mono que el potenciador se ha eliminado
                     this.physics.add.collider(player, pot, ()=>{pot.enviarPotenciador(); this.skeleton.deletePotenciador()}, null, this);
   
                 },
@@ -282,8 +286,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
-
-    
+ 
 
    applyEffectPlayer() {
       
@@ -291,11 +294,24 @@ export default class CiudadLevel extends Phaser.Scene{
 
    }
 
+   //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){
 
         //this.skeleton.setPotenciador(this.potenciador);
 
    }
+
+   sendPoints(points){
+    this.myUI.gainPoints(points);
+   }
+
+   generateText(x, y, message, size){
+    let ogText = this.add.text(x, y, message, 
+        { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
+    this.textCreated = true;
+
+    return ogText
+}
 
    update(dt, t){
     this.skeleton.update();

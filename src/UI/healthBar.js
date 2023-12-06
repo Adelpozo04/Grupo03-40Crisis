@@ -12,6 +12,8 @@ constructor( scene, x, y, player, width, heigth){
     this.w = width;
     this.h = heigth;
 
+    this.Heart = this.scene.add.sprite(24, 48, 'heart').setScrollFactor(0);
+
     this.player = player;
 
     this.value = this.player.getLife();
@@ -21,6 +23,14 @@ constructor( scene, x, y, player, width, heigth){
     this.draw();
 
     scene.add.existing(this);
+
+    this.scene.anims.create({
+        key: 'heartBeat',
+        frames: this.scene.anims.generateFrameNumbers('heart', {start:0, end:7}),
+        frameRate: 5,
+        repeat: -1
+
+    });
 
 }
 
@@ -54,6 +64,10 @@ preUpdate(t, dt){
     this.value = this.player.getLife();
 
     this.draw();
+
+    this.Heart.preUpdate(t, dt);
+
+    this.Heart.play('heartBeat', true);
 
 }
 

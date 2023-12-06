@@ -19,7 +19,7 @@ constructor(scene, x, y, key, player)
         ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10]
     ]);
     var vidaEnemigos = new Map([
-        ['zombie', 1], ['skeleton', 1], ['burger', 1], ['lutano', 1], ['caracol', 999999]
+        ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999]
     ]);
     var scaleEnemigos = new Map([
         ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
@@ -49,6 +49,7 @@ constructor(scene, x, y, key, player)
     this.setScale(scaleEnemigos.get(this.key)); //cuidao que esto igual da problemas
     this.attackFlag = true;
     this.alive = true;
+    this.points = puntosEnemigos.get(key);
     scene.physics.add.existing(this);
     scene.add.existing(this);
 
@@ -92,6 +93,8 @@ recibeDamage(damage){
         this.body.setVelocity(0, 0);
 
         this.body.destroy();
+
+        this.scene.sendPoints(this.points);
 
         this.enemy.play('enemydeath', true);
         

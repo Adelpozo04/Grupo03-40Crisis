@@ -15,7 +15,7 @@ this.setScale(1.25, 1.25);
 
 this.speed = 125;
 
-this.life = 100;
+this.life = 60;
 
 this.potenciador = null;
 
