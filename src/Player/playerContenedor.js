@@ -1,5 +1,6 @@
 
 import Pistola from "../Armas/pistola.js";
+import metralleta from "../Armas/metralleta.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -99,7 +100,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
 
-        this.arma = new Pistola(this.scene, 0, 0, 'pistola', this)
+        this.arma = new metralleta(this.scene, 0, 0, 'metralleta', this);
+        this.arma.setScale(1.5, 1.5);
     }
 
     preUpdate(t, dt)

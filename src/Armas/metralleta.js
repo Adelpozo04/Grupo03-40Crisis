@@ -1,6 +1,6 @@
 import Arma from "./arma.js"
 import Bala from "./balas.js"
-export default class pistola extends Arma{
+export default class metralleta extends Arma{
     /**
     * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
@@ -13,7 +13,7 @@ export default class pistola extends Arma{
         super(scene,x,y,key,player)
         this.scene = scene
 
-        this.enfriamientoTime = 2;
+        this.enfriamientoTime = 0.1;
 
         this.enfriamientoPasado = true;
 
@@ -44,7 +44,7 @@ export default class pistola extends Arma{
     {
         if (this.canShoot && this.enfriamientoPasado)
         {
-            var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', 5);
+            var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', 2);
             if (bala)
             {
                 bala.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()))
