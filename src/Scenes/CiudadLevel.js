@@ -54,6 +54,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
 
         this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
+        this.load.image('metralleta', './Assets/Sprites/Armas/machinegun.png');
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
 
         //Cargado de imagenes de UI de juego
@@ -204,7 +205,6 @@ export default class CiudadLevel extends Phaser.Scene{
 
         this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
-            console.log(enemigo);
             enemigo.recibeDamage(bala.getDamage());
             bala.destroy();
 
@@ -286,13 +286,6 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
- 
-
-   applyEffectPlayer() {
-      
-    console.log("hola");
-
-   }
 
    //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){

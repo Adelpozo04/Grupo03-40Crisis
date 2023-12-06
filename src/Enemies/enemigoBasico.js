@@ -83,6 +83,8 @@ destroyMyself(){
 recibeDamage(damage){
     var myLifeLeft = super.getDamage(damage);
 
+    console.log(damage);
+
     console.log(myLifeLeft);
 
     if(myLifeLeft <= 0){

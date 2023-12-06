@@ -7,14 +7,15 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
     * @param {number} y - posicion y
     * @param {key} key - key
     */
-    constructor(scene, x, y)
+    constructor(scene, x, y, key, damage)
     {
         super(scene, x, y, 'bala')
         scene.physics.world.enable(this);
         this.scene.add.existing(this);
         this.setScale(3)
-        this.speed = 350
-        this.damage = 5;
+        this.speed = 350;
+        this.damage = damage;
+        this.key = key;
         this.active = false;
     }
 
@@ -25,5 +26,6 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
 
     getDamage(){
         return this.damage;
+        
     }
 }
