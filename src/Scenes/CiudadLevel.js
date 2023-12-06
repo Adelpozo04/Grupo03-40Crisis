@@ -8,6 +8,7 @@ import Mono from '../Enemies/mono.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
 import Bala from '../Armas/balas.js'
+import EnemigoSpawner from '../enemySpawner.js';
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -229,6 +230,24 @@ export default class CiudadLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
+        
+        // Crear un spawner de enemigos en las coordenadas (600, 600)
+        const spawner = new EnemigoSpawner(this, 600, 600, this.mike);
+
+        // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 3 segundos
+        spawner.spawnEnemies('zombie', 5, 3000);
+
+        // Detener la generación de enemigos después de un tiempo (por ejemplo, 15 segundos)
+        this.time.delayedCall(15000, () => {
+        spawner.stopSpawn();
+        });
+
+        // Limpiar todos los enemigos generados después de cierto tiempo (por ejemplo, 20 segundos)
+        this.time.delayedCall(40000, () => {
+        spawner.clearEnemies();
+        });
+        
+         
         
        this.spawnPotenciador();
        
