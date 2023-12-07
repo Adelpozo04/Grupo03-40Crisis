@@ -1,4 +1,6 @@
 import Enemigo from "./enemigo.js";
+import municionBalas from "../Armas/municionBalas.js";
+
 export default class EnemigoBasico extends Enemigo{
 /**
      * @param {scene} scene - escena a colocar
@@ -46,8 +48,11 @@ constructor(scene, x, y, key, player)
 
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
     this.key = key;
+
+    this.posXCentered = posXColliderEnemigos.get(key);
+    this.posYCentered = posYColliderEnemigos.get(key);
     
-    this.enemy = new Phaser.GameObjects.Sprite(scene, posXColliderEnemigos.get(key), posYColliderEnemigos.get(key), key, 0);
+    this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
     this.add(this.enemy);
     this.setScale(scaleEnemigos.get(this.key)); //cuidao que esto igual da problemas
     this.attackFlag = true;
@@ -98,14 +103,23 @@ recibeDamage(damage){
 
         var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
 
+        console.log(dropMunition);
+
         if(dropMunition == 1){
-            
+            this.spawnMunition();
         }
 
         this.enemy.play('enemydeath', true);
         
         this.enemy.on('animationcomplete', this.destroyMyself )
     }
+}
+
+spawnMunition(){
+
+    this.ammo = new municionBalas(this.scene, this.body.x + this.posXCentered, this.body.y + this.posYCentered, 'bulletAmmo');
+    this.scene.addAmmoToGroup(this.ammo);
+    this.scene.add.existing(this.ammo);
 }
 
 applyEffect(keyPotenciador){

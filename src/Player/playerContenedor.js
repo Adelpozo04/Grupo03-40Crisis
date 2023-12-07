@@ -99,7 +99,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
 
-        this.arma = new armaDisparos(this.scene, 0, 0, 'franco', this);
+        this.arma = new armaDisparos(this.scene, 0, 0, 'pistola', this);
         this.arma.setScale(1.5, 1.5);
     }
 
@@ -235,6 +235,11 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 break;
         }
         //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
+    }
+
+    reload(){
+
+        this.arma.reload();
     }
 
     getPlayer(){

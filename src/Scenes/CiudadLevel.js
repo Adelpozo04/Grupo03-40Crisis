@@ -9,6 +9,7 @@ import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
 import Bala from '../Armas/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
+import municionBalas from '../Armas/municionBalas.js';
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -59,6 +60,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('metralleta', './Assets/Sprites/Armas/machinegun.png');
         this.load.image('franco', './Assets/Sprites/Armas/franco.png');
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
+        this.load.image('bulletAmmo', './Assets/Sprites/Armas/MunitionBox_Sprite.png');
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
@@ -179,6 +181,11 @@ export default class CiudadLevel extends Phaser.Scene{
             maxSize: 50
         })
 
+        this.grupoMunicionBalas = this.add.group({
+            classType: municionBalas,
+            maxSize: 50
+        })
+
         this.grupoEnemigos = this.add.group({
             classType: EnemigoBasico,
             runChildUpdate: true,
@@ -231,6 +238,15 @@ export default class CiudadLevel extends Phaser.Scene{
             
             enemigo.recibeDamage(bala.getDamage());
             bala.destroy();
+
+        });
+
+        this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
+            console.log("se tocan jiji");
+
+            ammo.destroyMyself();
+
+            player.reload();
 
         });
 
@@ -327,7 +343,6 @@ export default class CiudadLevel extends Phaser.Scene{
    //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){
 
-
    //this.skeleton.setPotenciador(this.potenciador);
    }
    applyEffectPlayer() {
@@ -345,6 +360,11 @@ export default class CiudadLevel extends Phaser.Scene{
         }
    
           
+   }
+
+   addAmmoToGroup(newAmmo){
+    console.log("añadido " + newAmmo);
+    this.grupoMunicionBalas.add(newAmmo);
    }
 
    sendPoints(points){
