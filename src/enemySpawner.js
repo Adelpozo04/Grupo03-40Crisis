@@ -44,11 +44,11 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     }
 
     createEnemy(enemyType) {
-        // Lógica para crear el enemigo según el tipo y las coordenadas
         const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
         return enemy;
     }
 
+    //Para de spawnear enemigos
     stopSpawn() {
         if (this.spawnTimer) {
             this.spawnTimer.remove();
@@ -56,6 +56,6 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     }
 
     clearEnemies() {
-        this.enemiesGroup.clear(true, true); // Limpia el grupo de enemigos
+        this.grupoEnemigos.clear(true, true); // Limpia el grupo de enemigos
     }
 }
