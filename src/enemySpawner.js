@@ -28,6 +28,10 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         this.spawnTimer = null;
     }
 
+    getEnemyGroup(){
+        return this.grupoEnemigos;
+    }
+
     spawnEnemies(enemyType, numberOfEnemies, timeBetweenSpawn) {
         this.spawnTimer = this.scene.time.addEvent({
             delay: timeBetweenSpawn,

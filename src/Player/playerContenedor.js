@@ -1,6 +1,5 @@
 
-import Pistola from "../Armas/pistola.js";
-import metralleta from "../Armas/metralleta.js";
+import armaDisparos from "../Armas/armaDisparos.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -100,7 +99,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
 
-        this.arma = new metralleta(this.scene, 0, 0, 'metralleta', this);
+        this.arma = new armaDisparos(this.scene, 0, 0, 'franco', this);
         this.arma.setScale(1.5, 1.5);
     }
 
@@ -193,7 +192,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         if(!this.invencible)
         {
             this.life = this.life - damage;
-            console.log(this.life);
         }
        
     }

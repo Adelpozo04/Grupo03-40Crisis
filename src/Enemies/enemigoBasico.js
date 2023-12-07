@@ -39,6 +39,9 @@ constructor(scene, x, y, key, player)
     var posYColliderEnemigos = new Map([
         ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10]
     ]);
+    var munitionDropMaxProbability = new Map([
+        ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1]
+    ]);
 
 
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
@@ -50,6 +53,7 @@ constructor(scene, x, y, key, player)
     this.attackFlag = true;
     this.alive = true;
     this.points = puntosEnemigos.get(key);
+    this.maxDropProbability = munitionDropMaxProbability.get(key);
     scene.physics.add.existing(this);
     scene.add.existing(this);
 
@@ -62,7 +66,6 @@ attack() { if (super.isInAttackRange() || this.key == 'caracol') {super.attack()
 // hace la animación y si se termina llamamos a attack en el super
 tryAttack()
 {
-    console.log(this.body);
     this.body.setVelocity(0, 0);
     this.body.velocity.normalize().scale(this.speed);
 
@@ -83,12 +86,7 @@ destroyMyself(){
 recibeDamage(damage){
     var myLifeLeft = super.getDamage(damage);
 
-    console.log(damage);
-
-    console.log(myLifeLeft);
-
     if(myLifeLeft <= 0){
-        console.log('muelto');
 
         this.alive = false;
 
@@ -97,6 +95,12 @@ recibeDamage(damage){
         this.body.destroy();
 
         this.scene.sendPoints(this.points);
+
+        var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+
+        if(dropMunition == 1){
+            
+        }
 
         this.enemy.play('enemydeath', true);
         
