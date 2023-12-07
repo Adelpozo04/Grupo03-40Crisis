@@ -139,10 +139,10 @@ export default class VolcanLevel extends Phaser.Scene{
         };
 
         
-        // Crear un spawner de enemigos en las coordenadas (600, 600)
+        // Crear un spawner de enemigos en las coordenadas 
         const spawner = new EnemigoSpawner(this, 600, 700, this.mike);
 
-        // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 3 segundos
+        // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 'x' tiempo
         spawner.spawnEnemies('zombie', 5, 3000);
 
         this.physics.add.collider(this.grupoBalas, spawner.getEnemyGroup(), function(bala, enemigo){
@@ -163,12 +163,12 @@ export default class VolcanLevel extends Phaser.Scene{
 
         this.physics.add.collider(spawner.getEnemyGroup(), this.collisionLayer);
 
-        // Detener la generación de enemigos después de un tiempo (por ejemplo, 15 segundos)
+        // Detener la generación de enemigos después de un tiempo 
         this.time.delayedCall(15000, () => {
         spawner.stopSpawn();
         });
 
-        // Limpiar todos los enemigos generados después de cierto tiempo (por ejemplo, 20 segundos)
+        // Limpiar todos los enemigos generados después de cierto tiempo 
         this.time.delayedCall(40000, () => {
         spawner.clearEnemies();
         });

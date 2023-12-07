@@ -24,8 +24,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         scene.physics.add.existing(this);
         this.sprite = scene.add.sprite(32, 32, key);
         this.add(this.sprite);
-        this.setScale(0.15); //cuidao que esto igual da problemas
-
+        this.setScale(0.15); 
 
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
