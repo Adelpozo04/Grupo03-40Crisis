@@ -47,24 +47,15 @@ export default class SelectorNivel extends Phaser.Scene {
         this.mapas[2] = 'VolcanLevel';
         this.fondos[2] = 'FondoVolcan'
         this.currentPage = 0;
-        this.hatID = 2;
+        this.hatID = 0;
         
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);;
-        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
-        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
-
-        arrowButtonRight.setInteractive();
-        arrowButtonRight.on("pointerdown", () => {
-            this.changePage(1);
-        });
-
-        arrowButtonLeft.setInteractive();
-        arrowButtonLeft.on("pointerdown", () => {
-            this.changePage(-1);
-        });
+        this.loadHatArrows(hat);
+        this.loadMainArrows();
+        
 
         let timeline = this.tweens.timeline
         this.tweens.add({
@@ -98,19 +89,10 @@ export default class SelectorNivel extends Phaser.Scene {
         this.currentPage = (this.currentPage + dir) % 3;
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
-        let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
-
-        arrowButtonRight.setInteractive();
-        arrowButtonRight.on("pointerdown", () => {
-            this.changePage(1);
-        });
-
-        arrowButtonLeft.setInteractive();
-        arrowButtonLeft.on("pointerdown", () => {
-            this.changePage(-1);
-        });
+        this.loadMainArrows();
+        this.loadHatArrows(hat);
 
         let timeline = this.tweens.timeline
         this.tweens.add({
@@ -130,11 +112,45 @@ export default class SelectorNivel extends Phaser.Scene {
         timeline.play();
     }
 
-    changeHat(){
-        this.hatID++;
+    changeHat(h, dir){
+        h.destroy();
+        if((this.hatID + dir) < 0) this.hatID = 21;
+        this.hatID = (this.hatID + dir) % 21;
+        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        this.loadHatArrows(hat);
     }
 
     loadScene(){
         this.scene.start(this.mapas[this.currentPage], this.hatID);
+    }
+
+    loadMainArrows(){
+        var arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        var arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+
+        arrowButtonRight.setInteractive();
+        arrowButtonRight.on("pointerdown", () => {
+            this.changePage(1);
+        });
+
+        arrowButtonLeft.setInteractive();
+        arrowButtonLeft.on("pointerdown", () => {
+            this.changePage(-1);
+        });
+    }
+
+    loadHatArrows(h){
+        var arrowButtonRight = this.add.image(725, 75, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        var arrowButtonLeft = this.add.image(475, 75, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+
+        arrowButtonRight.setInteractive();
+        arrowButtonRight.on("pointerdown", () => {
+            this.changeHat(h, 1);
+        });
+
+        arrowButtonLeft.setInteractive();
+        arrowButtonLeft.on("pointerdown", () => {
+            this.changeHat(h, -1);
+        });
     }
 }
