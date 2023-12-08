@@ -1,3 +1,5 @@
+import playerContenedor from '../Player/playerContenedor.js';
+
 export default class SelectorNivel extends Phaser.Scene {
 
     constructor(){
@@ -16,6 +18,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
         this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
         this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
+        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         console.log();
     }
 
@@ -44,9 +47,11 @@ export default class SelectorNivel extends Phaser.Scene {
         this.mapas[2] = 'VolcanLevel';
         this.fondos[2] = 'FondoVolcan'
         this.currentPage = 0;
+        this.hatID = 2;
         
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
+        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);;
         let arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
         let arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
@@ -84,7 +89,7 @@ export default class SelectorNivel extends Phaser.Scene {
             { fontFamily: 'TitleFont', fontSize: 50, color: 'white' }).setOrigin(0.5,0.5);
         button.setInteractive();
         button.on("pointerdown", () => {
-            this.scene.start(this.mapas[this.currentPage]);
+           this.loadScene();
         });
     }
 
@@ -123,5 +128,13 @@ export default class SelectorNivel extends Phaser.Scene {
             repeat: -1,
         });
         timeline.play();
+    }
+
+    changeHat(){
+        this.hatID++;
+    }
+
+    loadScene(){
+        this.scene.start(this.mapas[this.currentPage], this.hatID);
     }
 }
