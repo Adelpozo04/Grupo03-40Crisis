@@ -237,10 +237,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 
-    setHat(hat){
-        this.hatId = hat;
-    }
-
     reload(){
 
         this.arma.reload();

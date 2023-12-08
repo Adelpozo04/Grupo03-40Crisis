@@ -14,10 +14,11 @@ import municionBalas from '../Armas/municionBalas.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 
-    constructor(){
+    constructor(hatID){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
         this.potenciadorSpawneado = false;
         this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
+        this.hatID = hatID;
     }
     
     init(data){
@@ -198,7 +199,7 @@ export default class CiudadLevel extends Phaser.Scene{
         
 
         //Creacion de entidades
-        this.mike = new playerContenedor(this, 300, 300, 'mike', 0, -2000, -2000, 200, 150);
+        this.mike = new playerContenedor(this, 300, 300, 'mike', this.hatID, -2000, -2000, 200, 150);
        
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
 
