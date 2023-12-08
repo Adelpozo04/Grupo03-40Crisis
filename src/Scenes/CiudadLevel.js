@@ -152,7 +152,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     }
 
-    create(){
+    create(data){
         this.loadAnimations();
 
         //Creacion del tilemap a partir de los datos cargados
@@ -199,7 +199,7 @@ export default class CiudadLevel extends Phaser.Scene{
         
 
         //Creacion de entidades
-        this.mike = new playerContenedor(this, 300, 300, 'mike', this.hatID, -2000, -2000, 200, 150);
+        this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
        
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
 
@@ -363,24 +363,25 @@ export default class CiudadLevel extends Phaser.Scene{
           
    }
 
-   addAmmoToGroup(newAmmo){
-    console.log("añadido " + newAmmo);
-    this.grupoMunicionBalas.add(newAmmo);
-   }
+    addAmmoToGroup(newAmmo){
+        console.log("añadido " + newAmmo);
+        this.grupoMunicionBalas.add(newAmmo);
+    }
 
-   sendPoints(points){
-    this.myUI.gainPoints(points);
-   }
+    sendPoints(points){
+        this.myUI.gainPoints(points);
+    }
 
-   generateText(x, y, message, size){
-    let ogText = this.add.text(x, y, message, 
-        { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
-    this.textCreated = true;
+    generateText(x, y, message, size){
+        let ogText = this.add.text(x, y, message, 
+            { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
+        this.textCreated = true;
 
-    return ogText
-}
+        return ogText
+    }
 
-   update(dt, t){
+
+    update(dt, t){
 
     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
     { 

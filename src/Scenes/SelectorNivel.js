@@ -47,7 +47,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.mapas[2] = 'VolcanLevel';
         this.fondos[2] = 'FondoVolcan'
         this.currentPage = 0;
-        this.hatID = 0;
+        this.hatID = 2;
         
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
@@ -89,9 +89,7 @@ export default class SelectorNivel extends Phaser.Scene {
             { fontFamily: 'TitleFont', fontSize: 50, color: 'white' }).setOrigin(0.5,0.5);
         button.setInteractive();
         button.on("pointerdown", () => {
-            this.scene.start(this.mapas[this.currentPage]);
-            let player = new playerContenedor();
-            player.setHat(hatID);
+           this.loadScene();
         });
     }
 
@@ -134,5 +132,9 @@ export default class SelectorNivel extends Phaser.Scene {
 
     changeHat(){
         this.hatID++;
+    }
+
+    loadScene(){
+        this.scene.start(this.mapas[this.currentPage], this.hatID);
     }
 }
