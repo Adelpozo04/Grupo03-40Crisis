@@ -33,15 +33,53 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     }
 
     spawnEnemies(enemyType, numberOfEnemies, timeBetweenSpawn) {
+        let spawnCount = 0;
+    
         this.spawnTimer = this.scene.time.addEvent({
             delay: timeBetweenSpawn,
             repeat: numberOfEnemies - 1,
             callback: () => {
                 const enemy = this.createEnemy(enemyType);
                 this.grupoEnemigos.add(enemy);
-            }
+    
+                spawnCount++;
+    
+                if (spawnCount === numberOfEnemies) {
+                    this.spawnTimer.remove();
+                    this.destroy();
+                }
+            },
+            callbackScope: this
         });
     }
+
+
+    createSpawners(numberOfSpawners) {
+        const spawnerLocations = [];
+        const cameraRect = this.scene.cameras.main.worldView;
+
+        while (spawnerLocations.length < numberOfSpawners) {
+            const randomX = Phaser.Math.RND.between(0, map.widthInPixels);
+            const randomY = Phaser.Math.RND.between(0, map.heightInPixels);
+
+            if (
+                randomX < cameraRect.left || randomX > cameraRect.right ||
+                randomY < cameraRect.top || randomY > cameraRect.bottom
+            ) {
+                const tile = map.getTileAtWorldXY(randomX, randomY, true);
+
+                if (tile && tile.properties.collides !== true) {
+                    spawnerLocations.push({ x: randomX, y: randomY });
+                }
+            }
+        }
+
+        spawnerLocations.forEach((location) => {
+            const newSpawner = new EnemigoSpawner(scene, location.x, location.y);
+            newSpawner.spawnEnemies(enemyType, numberOfEnemies, timeBetweenSpawn);
+        });
+    }
+    
 
     createEnemy(enemyType) {
         const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
