@@ -10,6 +10,7 @@ import UIManager from '../UI/uiManager.js';
 import Bala from '../Armas/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
 import municionBalas from '../Armas/municionBalas.js';
+import explosive from '../Armas/explosive.js';
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -57,11 +58,27 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('vivu', './Assets/Sprites/Potenciadores/pillow.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('invencible', './Assets/Sprites/Potenciadores/shield.png', {frameWidth: 64, frameHeight: 64});
 
+        //Cargado de armas y balas
+
+        //Centinela
         this.load.image('pistola', './Assets/Sprites/Armas/pistola.png');
         this.load.image('metralleta', './Assets/Sprites/Armas/machinegun.png');
         this.load.image('franco', './Assets/Sprites/Armas/franco.png');
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
-        this.load.image('bulletAmmo', './Assets/Sprites/Armas/MunitionBox_Sprite.png');
+        this.load.image('bulletAmmo', './Assets/Sprites/Armas/munitionBox_Sprite.png');
+        //Explorador
+        this.load.image('puño', './Assets/Sprites/Armas/fist.png');
+        this.load.image('bate', './Assets/Sprites/Armas/bat.png');
+        this.load.image('espada', './Assets/Sprites/Armas/sword.png');
+        //Analista
+        this.load.image('muro', './Assets/Sprites/Armas/muro.png');
+        this.load.image('mina', './Assets/Sprites/Armas/mine.png');
+        this.load.image('c4', './Assets/Sprites/Armas/c4.png');
+        this.load.spritesheet('explosion', './Assets/Sprites/Armas/explosion.png', {frameWidth: 32, frameHeight: 32});
+        //Pacifista
+        this.load.image('paralizador', './Assets/Sprites/Armas/paralizador.png');
+        this.load.image('empuje', './Assets/Sprites/Armas/empuje.png');
+        this.load.image('varita', './Assets/Sprites/Armas/varita.png');
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
@@ -192,6 +209,12 @@ export default class CiudadLevel extends Phaser.Scene{
             runChildUpdate: true,
 
         })
+
+        this.grupoExplosivos = this.add.group({
+            classType: explosive,
+            runChildUpdate: true,
+
+        })
        
         this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
             bala.destroy()
@@ -200,6 +223,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
+
+        
        
         //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
 
@@ -235,6 +260,8 @@ export default class CiudadLevel extends Phaser.Scene{
         // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 'x' tiempo
         spawner.spawnEnemies('zombie', 5, 3000);
 
+        this.mina = new explosive(this, 400, 400, 'mina', 0, spawner.getEnemyGroup());
+
         this.physics.add.collider(this.grupoBalas, spawner.getEnemyGroup(), function(bala, enemigo){
             
             enemigo.recibeDamage(bala.getDamage());
@@ -243,7 +270,6 @@ export default class CiudadLevel extends Phaser.Scene{
         });
 
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
-            console.log("se tocan jiji");
 
             ammo.destroyMyself();
 
@@ -261,13 +287,9 @@ export default class CiudadLevel extends Phaser.Scene{
         // Limpiar todos los enemigos generados después de cierto tiempo 
         this.time.delayedCall(40000, () => {
         spawner.clearEnemies();
-        });
+        });   
         
-         
-        
-       this.spawnPotenciador();
-       
-       
+       this.spawnPotenciador();    
 
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
@@ -364,8 +386,11 @@ export default class CiudadLevel extends Phaser.Scene{
    }
 
     addAmmoToGroup(newAmmo){
-        console.log("añadido " + newAmmo);
         this.grupoMunicionBalas.add(newAmmo);
+    }
+
+    addExplosiveToGroup(newExplosive){
+        this.grupoExplosivos.add(newExplosive);
     }
 
     sendPoints(points){
