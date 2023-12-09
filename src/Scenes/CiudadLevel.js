@@ -67,7 +67,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
         this.load.image('bulletAmmo', './Assets/Sprites/Armas/munitionBox_Sprite.png');
         //Explorador
-        this.load.image('puño', './Assets/Sprites/Armas/fist.png');
+        this.load.image('fist', './Assets/Sprites/Armas/fist.png');
         this.load.image('bate', './Assets/Sprites/Armas/bat.png');
         this.load.image('espada', './Assets/Sprites/Armas/sword.png');
         //Analista
@@ -362,6 +362,19 @@ export default class CiudadLevel extends Phaser.Scene{
      //   this.myUI.setScrollFactor(0);
 
    // }
+
+
+   // arma es el sprite del arma a comprobar colisiones
+    comprobarColisionesMelee(arma)
+    {
+        this.grupoEnemigos.getChildren().forEach(enemy => {
+            console.log(enemy)
+            if (Phaser.Geom.Intersects.RectangleToRectangle(arma.getBounds(), enemy.getBounds())) {
+                console.log('Colision con enemigo');
+                // Realizar acciones adicionales si es necesario
+            }})
+        
+    }
 
    //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){

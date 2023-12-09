@@ -73,4 +73,9 @@ export default class armaDisparos extends Arma{
             this.municion--;
         }   
     }
+
+    preUpdate()
+    {
+        super.update(true);
+    }
 }
