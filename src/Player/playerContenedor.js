@@ -1,5 +1,6 @@
 
 import armaDisparos from "../Armas/armaDisparos.js";
+import armaMelee from "../Armas/armaMelee.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -99,7 +100,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
 
-        this.arma = new armaDisparos(this.scene, 0, 0, 'pistola', this);
+        this.arma = new armaMelee(this.scene, 0, 0,'bate', this);
         this.arma.setScale(1.5, 1.5);
     }
 
