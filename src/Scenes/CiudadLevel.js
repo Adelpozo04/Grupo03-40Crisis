@@ -364,6 +364,7 @@ export default class CiudadLevel extends Phaser.Scene{
    // }
 
 
+   // arma es el sprite del arma a comprobar colisiones
     comprobarColisionesMelee(arma)
     {
         this.grupoEnemigos.getChildren().forEach(enemy => {
