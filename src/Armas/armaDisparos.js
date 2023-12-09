@@ -51,7 +51,6 @@ export default class armaDisparos extends Arma{
 
     reload(){
         this.municion += 20;
-        console.log(this.municion);
     }
 
     volverADisparar(){
