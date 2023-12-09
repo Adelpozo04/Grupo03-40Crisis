@@ -21,9 +21,11 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.scene.physics.add.existing(this);
 
+        this.body.setSize(5, 5);
+
         this.tipo = nTipo;
         
-        this.explotionDuration = 1;
+        this.explotionDuration = 2;
 
         this.exploting = false;
 
@@ -31,31 +33,40 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.explosiveArea = 100;
 
+        this.elapsedTime = 0;
+
         this.grupoEnemigos = grupoEnemigos;
 
         this.scene.anims.create({
             key: 'explosionAnimation',
             frames: this.anims.generateFrameNumbers('explosion', {start:0, end:7}),
             frameRate: 5,
-            repeat: 1
+            repeat: 0
         })
 
-        this.scene.time.addEvent({
-
-        delay: this.explotionDuration * 1000,
-        callback: this.spawnCepo,
+        this.event = this.scene.time.addEvent({
+        delay: 1000,
+        callback: this.calculateElapsedTime,
         callbackScope: this,
-        paused: this.exploting == false
+        loop: true
 
         })
 
+        console.log(this.event);
 
     }
 
     destroyMyself(){
 
+        this.zone.body.destroy();
         this.zone.destroy();
         this.destroy();
+
+    }
+
+    calculateElapsedTime(){
+
+        this.elapsedTime += 1;
 
     }
 
@@ -71,12 +82,15 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         this.scene.physics.world.enable(this.zone);
         this.zone.body.setCircle(this.explosiveArea / 2);
 
+        console.log(this.damage);
+
         this.scene.physics.add.overlap(this.zone, this.grupoEnemigos, function(zone, enemy){
 
-            console.log('enemigo pupa');
-            enemy.recibeDamage(this.damage);
+            enemy.recibeDamage(10);
 
         });
+
+        this.elapsedTime = 0;
     }
 
     update(){
@@ -86,6 +100,10 @@ export default class explosive extends Phaser.GameObjects.Sprite{
             explosive.detonar();
 
         });
+
+        if(this.elapsedTime >= this.explotionDuration && this.exploting == true){
+            this.destroyMyself();
+        }
 
     }
 
