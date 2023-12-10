@@ -1,5 +1,4 @@
 
-
 export default class explosive extends Phaser.GameObjects.Sprite{
 
 
@@ -86,7 +85,7 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.scene.physics.add.overlap(this.zone, this.grupoEnemigos, function(zone, enemy){
 
-            enemy.recibeDamage(10);
+            enemy.recieveDamage(10);
 
         });
 
@@ -94,7 +93,7 @@ export default class explosive extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-
+        console.log("NASHE" + this.grupoEnemigos.children.size)
         this.scene.physics.add.collider(this, this.grupoEnemigos, function(explosive, enemy){
 
             explosive.detonar();
