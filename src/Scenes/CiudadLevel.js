@@ -254,23 +254,46 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
         
-        // Crear un spawner de enemigos en las coordenadas 
-        //const spawner = new EnemigoSpawner(this, 600, 700, this.mike);
-
-        // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 'x' tiempo
-        //spawner.spawnEnemies('zombie', 5, 3000);
-
-        const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
        
-        spawnerLocations.forEach((location) => {
+
+       
+        
+        let numberOfSpawners = 3;
+        const cameraRect = this.camera.worldView;
+        for(let contador = 0; contador < numberOfSpawners; ++contador) {
+
+            const randomX = Phaser.Math.RND.between(0, this.map.widthInPixels);
+            const randomY = Phaser.Math.RND.between(0, this.map.heightInPixels);
+    
+                if ( randomX < cameraRect.left || randomX > cameraRect.right ||
+                    randomY < cameraRect.top || randomY > cameraRect.bottom) 
+                {
+                    const tile = this.map.getTileAtWorldXY(randomX, randomY, true);
+    
+                    if (tile && tile.properties.collides !== true) {
+                        this.spawner = new EnemigoSpawner(this, randomX, randomY, this.mike);
+                        this.spawner.spawnEnemies('zombie', 5, 3000);
+                        
+            
+                    }
+                }
+               
+
+        }
+           
+      
+        
+        //const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
+       
+       /* spawnerLocations.forEach((location) => {
             this.newSpawner = new EnemigoSpawner(this, location.x, location.y);
             this.newSpawner.spawnEnemies('zombie', 5, 3000);
-        });
+        }); */
     
 
-        this.mina = new explosive(this, 400, 400, 'mina', 0, this.newSpawner.getEnemyGroup());
+        this.mina = new explosive(this, 400, 400, 'mina', 0, this.spawner.getEnemyGroup());
 
-        this.physics.add.collider(this.grupoBalas, this.newSpawner.getEnemyGroup(), function(bala, enemigo){
+        this.physics.add.collider(this.grupoBalas, this.spawner.getEnemyGroup(), function(bala, enemigo){
             
             enemigo.recibeDamage(bala.getDamage());
             bala.destroy();
@@ -285,17 +308,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
         });
 
-        this.physics.add.collider(this.newSpawner.getEnemyGroup(), this.collisionLayer);
+        this.physics.add.collider(this.spawner.getEnemyGroup(), this.collisionLayer);
 
-        // Detener la generación de enemigos después de un tiempo 
-        this.time.delayedCall(15000, () => {
-        spawner.stopSpawn();
-        });
-
-        // Limpiar todos los enemigos generados después de cierto tiempo 
-        this.time.delayedCall(40000, () => {
-        spawner.clearEnemies();
-        });   
         
        this.spawnPotenciador();    
 
@@ -418,8 +432,18 @@ export default class CiudadLevel extends Phaser.Scene{
             this.spawnPotenciador();
            
       //  }, 5000);  
-               
+            
     }
+
+     // Detener la generación de enemigos después de un tiempo 
+     this.time.delayedCall(15000, () => {
+        this.spawner.stopSpawn();
+        });
+
+         // Limpiar todos los enemigos generados después de cierto tiempo 
+         this.time.delayedCall(40000, () => {
+        this.spawner.clearEnemies();
+        });  
    }
 }
 

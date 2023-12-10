@@ -53,16 +53,18 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                 if (spawnCount === numberOfEnemies) {
                     this.spawnTimer.remove();
                     this.destroy();
+                      
                 }
             },
             callbackScope: this
         });
+        
     }
 
 
     static createSpawnersPos( map, camera, numberOfSpawners) {
         const spawnerLocations = [];
-        const cameraRect = camera.worldView;
+        const cameraRect = camera.main.worldView;
 
         while (spawnerLocations.length < numberOfSpawners) {
             const randomX = Phaser.Math.RND.between(0, map.widthInPixels);
