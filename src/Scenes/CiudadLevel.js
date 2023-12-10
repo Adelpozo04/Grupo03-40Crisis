@@ -255,19 +255,12 @@ export default class CiudadLevel extends Phaser.Scene{
 
         
         // Crear un spawner de enemigos en las coordenadas 
-        const spawner = new EnemigoSpawner(this, 600, 700, this.mike);
+        const spawner = new EnemigoSpawner(this, 600, 700, this.mike, this.grupoEnemigos);
 
         // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 'x' tiempo
         spawner.spawnEnemies('zombie', 5, 3000);
 
-        this.mina = new explosive(this, 400, 400, 'mina', 0, spawner.getEnemyGroup());
-
-        this.physics.add.collider(this.grupoBalas, spawner.getEnemyGroup(), function(bala, enemigo){
-            
-            enemigo.recibeDamage(bala.getDamage());
-            bala.destroy();
-
-        });
+        this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigos);
 
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
 
@@ -276,8 +269,6 @@ export default class CiudadLevel extends Phaser.Scene{
             player.reload();
 
         });
-
-        this.physics.add.collider(spawner.getEnemyGroup(), this.collisionLayer);
 
         // Detener la generación de enemigos después de un tiempo 
         this.time.delayedCall(15000, () => {
@@ -296,8 +287,6 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
-
-    
     spawnPotenciador() {
 
         
@@ -363,19 +352,6 @@ export default class CiudadLevel extends Phaser.Scene{
 
    // }
 
-
-   // arma es el sprite del arma a comprobar colisiones
-    comprobarColisionesMelee(arma)
-    {
-        this.grupoEnemigos.getChildren().forEach(enemy => {
-            console.log(enemy)
-            if (Phaser.Geom.Intersects.RectangleToRectangle(arma.getBounds(), enemy.getBounds())) {
-                console.log('Colision con enemigo');
-                // Realizar acciones adicionales si es necesario
-            }})
-        
-    }
-
    //Le pasa la info del potenciador a cualquier entidad que sea un mono
    setPotenciador(){
 
@@ -418,9 +394,7 @@ export default class CiudadLevel extends Phaser.Scene{
         return ogText
     }
 
-
     update(dt, t){
-
     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
     { 
       // setTimeout(() => {

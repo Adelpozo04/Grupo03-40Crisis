@@ -10,26 +10,20 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     * @param {number} y - posicion y
     * @param {playerContenedor} player - referencia al player
     * @param {EnemigoBasico} enemigo - referencia al enemigo 
-    */
+    * @param {grupoEnemigos} grupoEnemigos - grupoEnemigos del level
+    */ 
 
-    constructor(scene, x, y, player) {
+    constructor(scene, x, y, player, grupoEnemigos) {
         super(scene, x, y);
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
+        this.grupoEnemigos = grupoEnemigos
         this.spawnX = x;
         this.spawnY = y;
-        this.grupoEnemigos = this.scene.add.group({
-            classType: EnemigoBasico,
-            runChildUpdate: true,
-
-        })
+        
         this.player = player;
         this.spawnTimer = null;
-    }
-
-    getEnemyGroup(){
-        return this.grupoEnemigos;
     }
 
     spawnEnemies(enemyType, numberOfEnemies, timeBetweenSpawn) {

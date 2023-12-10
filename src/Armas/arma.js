@@ -11,7 +11,7 @@ export default class Arma extends Phaser.GameObjects.Sprite {
         super(scene, x, y, key);
         this.scene.add.existing(this);
         this.player = player;
-        this.setScale(1);
+        this.setScale(1.5);
 
         this.radio = 0;
         this.cursorX = 0
@@ -26,7 +26,16 @@ export default class Arma extends Phaser.GameObjects.Sprite {
             this.cursorY = pointer.y
         })
         
+        this.deactivate()
     }
+
+    activate() { 
+        this.setActive(true);
+        this.setVisible(true); }
+
+    deactivate() { 
+        this.setActive(false);
+        this.setVisible(false); }
 
     /**
      * 

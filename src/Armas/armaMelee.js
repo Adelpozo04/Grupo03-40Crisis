@@ -2,26 +2,23 @@ import Arma from "./arma.js"
 export default class armaMelee extends Arma{
     /**
     * @param {scene} scene - escena a colocar
-    * @param {number} x - posicion x
-    * @param {number} y - posicion y
+    * @param {number} tiempoCooldown - tiempo entre ataques
+    * @param {number} damageArma - daño del arma
     * @param {key} key - key
     * @param {player} player - referencia a player
     */
-    constructor(scene, x, y, key, player)
+    constructor(scene, tiempoCooldown, damageArma, key, player)
     {
-        super(scene,x,y,key,player);
+        super(scene,0,0,key,player);
         this.key = key;
         scene.physics.world.enable(this);
-        this.enfriamientoTime = new Map([
-            ['fist', 600], ['bate', 1000], ['espada', 800]
-        ]);
-        this.damageArma = new Map([
-            ['fist', 1], ['bate', 1], ['espada', 1]
-        ]);
 
-        this.Attacking = false;
+        this.tiempoCooldown = tiempoCooldown
+        this.damageArma = damageArma
+
         this.colliderActive = false;
 
+        this.Attacking = false;
         this.newAngle = 0
         this.scene.input.on('pointerdown', (pointer) =>
         {
@@ -29,8 +26,6 @@ export default class armaMelee extends Arma{
                 this.tryAttack()
         })
     }
-
-
 
     startAttack()
     {
@@ -75,7 +70,7 @@ export default class armaMelee extends Arma{
     {
         this.Attacking = true;
         // llamada para para cooldown del ataque
-        this.scene.time.delayedCall(this.enfriamientoTime.get(this.key), this.startAttack, [], this);
+        this.scene.time.delayedCall(this.tiempoCooldown, this.startAttack, [], this);
         this.swingingAnimation()
     }
 
@@ -91,12 +86,22 @@ export default class armaMelee extends Arma{
             
             this.setPosition(newX, newY)
             this.setRotation(this.newAngle)
-
-            if (this.colliderActive)
-            {
-                this.scene.comprobarColisionesMelee(this)
-            }
         }
-        
+
+        // comprobar colisiones creando una zona circular que se destruye si no ha hecho overlap
+        if (this.colliderActive)
+        {
+            var radioAtaque = 20
+            var zone = this.scene.add.zone(this.x ,this.y, radioAtaque*2, radioAtaque*2)
+            this.scene.physics.world.enable(zone);
+            zone.body.setCircle(radioAtaque)
+
+            this.scene.physics.add.overlap(zone, this.scene.grupoEnemigos, function(zone, enemy){
+                enemy.recieveDamage(this.damageArma)
+                //enemy.knockBack();
+            })
+            
+            this.scene.time.delayedCall(20, () => { zone.destroy(); })
+        }
     }
 }
