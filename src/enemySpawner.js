@@ -28,6 +28,12 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         this.spawnTimer = null;
     }
 
+    getScene()
+    {
+        return this.scene;
+    }
+
+
     getEnemyGroup(){
         return this.grupoEnemigos;
     }
@@ -54,9 +60,9 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     }
 
 
-    createSpawners(numberOfSpawners) {
+    static createSpawnersPos( map, camera, numberOfSpawners) {
         const spawnerLocations = [];
-        const cameraRect = this.scene.cameras.main.worldView;
+        const cameraRect = camera.worldView;
 
         while (spawnerLocations.length < numberOfSpawners) {
             const randomX = Phaser.Math.RND.between(0, map.widthInPixels);
@@ -74,10 +80,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
             }
         }
 
-        spawnerLocations.forEach((location) => {
-            const newSpawner = new EnemigoSpawner(scene, location.x, location.y);
-            newSpawner.spawnEnemies(enemyType, numberOfEnemies, timeBetweenSpawn);
-        });
+        return spawnerLocations;
     }
     
 

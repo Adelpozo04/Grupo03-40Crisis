@@ -1,9 +1,10 @@
+import playerContenedor from '../Player/playerContenedor.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
      * @param {number} y - posicion y
-     * @param {player} player - referencia al player
+     * @param {playerContenedor} player - referencia al player
      * @param {number} speed - velocidad
      * @param {number} attackDistance - distancia mínima de ataque
      */

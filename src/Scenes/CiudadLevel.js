@@ -235,7 +235,7 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.physics.add.collider(this.lutano, this.collisionLayer);
 
         //Se crea la camara
-        this.cameras.main.startFollow(this.mike);
+        this.camera = this.cameras.main.startFollow(this.mike);
         
         //Se crean layers por encima de las entidades
         this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
@@ -255,14 +255,22 @@ export default class CiudadLevel extends Phaser.Scene{
 
         
         // Crear un spawner de enemigos en las coordenadas 
-        const spawner = new EnemigoSpawner(this, 600, 700, this.mike);
+        //const spawner = new EnemigoSpawner(this, 600, 700, this.mike);
 
         // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 'x' tiempo
-        spawner.spawnEnemies('zombie', 5, 3000);
+        //spawner.spawnEnemies('zombie', 5, 3000);
 
-        this.mina = new explosive(this, 400, 400, 'mina', 0, spawner.getEnemyGroup());
+        const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
+       
+        spawnerLocations.forEach((location) => {
+            this.newSpawner = new EnemigoSpawner(this, location.x, location.y);
+            this.newSpawner.spawnEnemies('zombie', 5, 3000);
+        });
+    
 
-        this.physics.add.collider(this.grupoBalas, spawner.getEnemyGroup(), function(bala, enemigo){
+        this.mina = new explosive(this, 400, 400, 'mina', 0, this.newSpawner.getEnemyGroup());
+
+        this.physics.add.collider(this.grupoBalas, this.newSpawner.getEnemyGroup(), function(bala, enemigo){
             
             enemigo.recibeDamage(bala.getDamage());
             bala.destroy();
@@ -277,7 +285,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         });
 
-        this.physics.add.collider(spawner.getEnemyGroup(), this.collisionLayer);
+        this.physics.add.collider(this.newSpawner.getEnemyGroup(), this.collisionLayer);
 
         // Detener la generación de enemigos después de un tiempo 
         this.time.delayedCall(15000, () => {
@@ -375,11 +383,7 @@ export default class CiudadLevel extends Phaser.Scene{
           // setTimeout(() => {
                 this.spawnPotenciador();
                
-          //  }, 5000);
-
-
-            
-                   
+          //  }, 5000);        
         }
    
           
@@ -413,10 +417,7 @@ export default class CiudadLevel extends Phaser.Scene{
       // setTimeout(() => {
             this.spawnPotenciador();
            
-      //  }, 5000);
-
-
-        
+      //  }, 5000);  
                
     }
    }
