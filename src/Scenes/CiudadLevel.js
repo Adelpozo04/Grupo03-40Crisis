@@ -15,11 +15,10 @@ import explosive from '../Armas/explosive.js';
 
 export default class CiudadLevel extends Phaser.Scene{
 
-    constructor(hatID){
+    constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
         this.potenciadorSpawneado = false;
         this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
-        this.hatID = hatID;
     }
     
     init(data){
@@ -384,6 +383,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     sendPoints(points){
         this.myUI.gainPoints(points);
+        this.events.emit('cambiarCiudadPoints', points);
     }
 
     generateText(x, y, message, size){

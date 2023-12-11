@@ -1,5 +1,11 @@
 import playerContenedor from '../Player/playerContenedor.js';
 
+var globalPoints  = {
+    ciudadPoints: 0,
+    playaPoints: 0,
+    volcanPoints: 0
+}
+
 export default class SelectorNivel extends Phaser.Scene {
 
     constructor(){
@@ -38,6 +44,16 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
+        this.events.on('cambiarCiudadPoints', function (nuevoValor) {
+            globalPoints.ciudadPoints += nuevoValor;
+        });
+        this.events.on('cambiarPlayaPoints', function (nuevoValor) {
+            globalPoints.playaPoints += nuevoValor;
+        });
+        this.events.on('cambiarVolcanPoints', function (nuevoValor) {
+            globalPoints.volcanPoints += nuevoValor;
+        });
+
         this.mapas = [];
         this.fondos = [];
         this.mapas[0] = 'CiudadLevel';
