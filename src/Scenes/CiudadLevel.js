@@ -259,32 +259,33 @@ export default class CiudadLevel extends Phaser.Scene{
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320);
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400);
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320);
-       
         
-      /*  let numberOfSpawners = 3;
-        const cameraRect = this.camera.worldView;
-        for(let contador = 0; contador < numberOfSpawners; ++contador) {
+       
+        this.enemySpawner1.spawnEnemies('mono', 5, 3000);
+        this.enemySpawner2.spawnEnemies('zombie', 5, 3000);
+        this.enemySpawner3.spawnEnemies('zombie',5, 3000);
+        this.enemySpawner4.spawnEnemies('zombie', 5, 3000);
 
-            const randomX = Phaser.Math.RND.between(0, this.map.widthInPixels);
-            const randomY = Phaser.Math.RND.between(0, this.map.heightInPixels);
-    
-                if ( randomX < cameraRect.left || randomX > cameraRect.right ||
-                    randomY < cameraRect.top || randomY > cameraRect.bottom) 
-                {
-                    const tile = this.map.getTileAtWorldXY(randomX, randomY, true);
-    
-                    if (tile && tile.properties.collides !== true) {
-                        this.spawner = new EnemigoSpawner(this, randomX, randomY, this.mike);
-                        this.spawner.spawnEnemies('zombie', 5, 3000);
-                        
-            
-                    }
-                }
-               
+        // Crear un grupo para almacenar todos los enemigos generados por los spawners
+        this.grupoEnemigosTotales = this.add.group();
+        this.grupoEnemigosTotales.add(this.enemySpawner1.getEnemyGroup());
+        this.grupoEnemigosTotales.add(this.enemySpawner2.getEnemyGroup());
+        this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
+        this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
 
-        }*/
-           
-      
+        this.time.delayedCall(15000, () => {
+            this.enemySpawner1.stopSpawn();
+            this.enemySpawner2.stopSpawn();
+            this.enemySpawner3.stopSpawn();
+            this.enemySpawner4.stopSpawn();
+        });
+       // Limpiar todos los enemigos generados después de cierto tiempo 
+        this.time.delayedCall(40000, () => {
+            this.enemySpawner1.clearEnemies();
+            this.enemySpawner2.clearEnemies();
+            this.enemySpawner3.clearEnemies();
+            this.enemySpawner4.clearEnemies();
+        });      
         
         //const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
        
@@ -294,9 +295,9 @@ export default class CiudadLevel extends Phaser.Scene{
         }); */
     
 
-        this.mina = new explosive(this, 400, 400, 'mina', 0, this.spawner.getEnemyGroup());
+        this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
 
-        this.physics.add.collider(this.grupoBalas, this.spawner.getEnemyGroup(), function(bala, enemigo){
+        this.physics.add.collider(this.grupoBalas, this.grupoEnemigosTotales, function(bala, enemigo){
             
             enemigo.recibeDamage(bala.getDamage());
             bala.destroy();
@@ -311,7 +312,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         });
 
-        this.physics.add.collider(this.spawner.getEnemyGroup(), this.collisionLayer);
+        this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
 
         
        this.spawnPotenciador();    
@@ -438,15 +439,8 @@ export default class CiudadLevel extends Phaser.Scene{
             
     }
 
-     // Detener la generación de enemigos después de un tiempo 
-     this.time.delayedCall(15000, () => {
-        this.spawner.stopSpawn();
-        });
 
-         // Limpiar todos los enemigos generados después de cierto tiempo 
-         this.time.delayedCall(40000, () => {
-        this.spawner.clearEnemies();
-        });  
+      
    }
 }
 
