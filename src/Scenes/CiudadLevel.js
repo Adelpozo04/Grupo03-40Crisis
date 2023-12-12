@@ -255,10 +255,13 @@ export default class CiudadLevel extends Phaser.Scene{
 
         
        
-
+        this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400);
+        this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320);
+        this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400);
+        this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320);
        
         
-        let numberOfSpawners = 3;
+      /*  let numberOfSpawners = 3;
         const cameraRect = this.camera.worldView;
         for(let contador = 0; contador < numberOfSpawners; ++contador) {
 
@@ -279,7 +282,7 @@ export default class CiudadLevel extends Phaser.Scene{
                 }
                
 
-        }
+        }*/
            
       
         
