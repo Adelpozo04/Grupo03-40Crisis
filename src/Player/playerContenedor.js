@@ -1,5 +1,6 @@
 
 import armaDisparos from "../Armas/armaDisparos.js";
+import armaMelee from "../Armas/armaMelee.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -21,7 +22,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
      * @param {Arma} arma
      * PERSONALIDAD
      */
-
     constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
 
@@ -48,9 +48,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ANALISTA: 0,
             EXPLORADOR: 1,
             CENTINELA: 2,
-            PACIFISTA: 3,
-      
-        }
+            PACIFISTA: 3,}
     
         this.personalityExp = [0, 0, 0, 0];
     
@@ -64,7 +62,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
             this.myHat.setScale(0.25);
             this.add(this.myHat);
-            
         }
         else{
             this.myHat = null;
@@ -98,15 +95,40 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             frameRate: 5,
             repeat: -1
         });
+        
+        var tiempoCooldown = new Map([
+            ['fist', 600], ['bate', 1000], ['espada', 800],
+            ['pistola', 2], ['metralleta', 0.2], ['franco', 7],
+        ]);
+        var damageArmas = new Map([
+            ['fist', 1], ['bate', 1], ['espada', 1],
+            ['pistola', 5], ['metralleta', 2], ['franco', 30],
+        ]);
 
-        this.arma = new armaDisparos(this.scene, 0, 0, 'pistola', this);
-        this.arma.setScale(1.5, 1.5);
+        this.armas = new Map([
+            ['fist', new armaMelee(this.scene, tiempoCooldown.get('fist'), damageArmas.get('fist'),'fist', this)],
+            ['bate', new armaMelee(this.scene, tiempoCooldown.get('bate'), damageArmas.get('bate'),'bate', this)],
+            ['espada', new armaMelee(this.scene, tiempoCooldown.get('espada'), damageArmas.get('espada'),'espada', this)],
+            ['pistola', new armaDisparos(this.scene, tiempoCooldown.get('pistola'), damageArmas.get('pistola'),'pistola', this)],
+            ['metralleta', new armaDisparos(this.scene, tiempoCooldown.get('metralleta'), damageArmas.get('metralleta'),'metralleta', this)],
+            ['franco', new armaDisparos(this.scene, tiempoCooldown.get('franco'), damageArmas.get('franco'),'franco', this)],
+        ])
+
+        this.arma = this.armas.get('bate')
+        this.arma.activate();
+    }
+
+
+    changeWeapon(newWeaponName)
+    {
+        this.arma.deactivate()
+        this.arma = this.armas.get(newWeaponName)
+        this.arma.activate()
     }
 
     preUpdate(t, dt)
     {
         this.movement()    
-
     }
 
     movement()

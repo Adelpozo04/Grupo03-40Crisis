@@ -67,7 +67,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
         this.load.image('bulletAmmo', './Assets/Sprites/Armas/munitionBox_Sprite.png');
         //Explorador
-        this.load.image('puño', './Assets/Sprites/Armas/fist.png');
+        this.load.image('fist', './Assets/Sprites/Armas/fist.png');
         this.load.image('bate', './Assets/Sprites/Armas/bat.png');
         this.load.image('espada', './Assets/Sprites/Armas/sword.png');
         //Analista
@@ -253,15 +253,13 @@ export default class CiudadLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
-        
-       
+           
         this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike);
         //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike);
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike);
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike);
-        
-       
+           
 
         // Crear un grupo para almacenar todos los enemigos generados por los spawners
         this.grupoEnemigosTotales = this.add.group();
@@ -281,6 +279,7 @@ export default class CiudadLevel extends Phaser.Scene{
         }); */
     
 
+
         this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
 
         this.physics.add.collider(this.grupoBalas, this.grupoEnemigosTotales, function(bala, enemigo){
@@ -298,7 +297,14 @@ export default class CiudadLevel extends Phaser.Scene{
 
         });
 
+
         this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
+
+        // Detener la generación de enemigos después de un tiempo 
+        this.time.delayedCall(15000, () => {
+        spawner.stopSpawn();
+        });
+
 
         
        this.spawnPotenciador();    
@@ -308,8 +314,6 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
-
-    
     spawnPotenciador() {
 
         
@@ -413,6 +417,7 @@ export default class CiudadLevel extends Phaser.Scene{
         return ogText
     }
 
+
     enemySpawners() {
         const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
 
@@ -432,9 +437,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     
 
-
     update(dt, t){
-
     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
     { 
       // setTimeout(() => {
