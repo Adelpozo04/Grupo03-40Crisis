@@ -48,6 +48,7 @@ constructor(scene, x, y, key, player)
 
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
     this.key = key;
+    this.scene = scene;
 
     this.posXCentered = posXColliderEnemigos.get(key);
     this.posYCentered = posYColliderEnemigos.get(key);
@@ -57,6 +58,7 @@ constructor(scene, x, y, key, player)
     this.setScale(scaleEnemigos.get(this.key)); //cuidao que esto igual da problemas
     this.attackFlag = true;
     this.alive = true;
+    this.explosiveState = false;
     this.points = puntosEnemigos.get(key);
     this.maxDropProbability = munitionDropMaxProbability.get(key);
     scene.physics.add.existing(this);
@@ -80,6 +82,25 @@ tryAttack()
         this.attack();
         this.enemy.off('animationcomplete');
     }, this)
+}
+
+gainExplosiveState(explosionTime){
+
+    this.explosiveState = true;
+
+    this.event = this.scene.time.addEvent({
+        delay: 1000 * explosionTime,
+        callback: this.lostExplosiveState,
+        callbackScope: this,
+        loop: false
+
+        })
+
+}
+
+lostExplosiveState(){
+    console.log("volvio a la normalidad")
+    this.explosiveState = false;
 }
 
 preUpdate(){

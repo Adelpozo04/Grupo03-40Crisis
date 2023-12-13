@@ -1,6 +1,7 @@
 
 import armaDisparos from "../Armas/armaDisparos.js";
 import armaMelee from "../Armas/armaMelee.js";
+import armaObjetosSpawneado from "../Armas/armaObjetoSpawneado.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -99,6 +100,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         var tiempoCooldown = new Map([
             ['fist', 600], ['bate', 1000], ['espada', 800],
             ['pistola', 2], ['metralleta', 0.2], ['franco', 7],
+            ['muro', 2], ['mina', 4], ['c4', 6]
         ]);
         var damageArmas = new Map([
             ['fist', 1], ['bate', 1], ['espada', 1],
@@ -113,9 +115,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['pistola', new armaDisparos(this.scene, tiempoCooldown.get('pistola'), damageArmas.get('pistola'),'pistola', this)],
             ['metralleta', new armaDisparos(this.scene, tiempoCooldown.get('metralleta'), damageArmas.get('metralleta'),'metralleta', this)],
             ['franco', new armaDisparos(this.scene, tiempoCooldown.get('franco'), damageArmas.get('franco'),'franco', this)],
+            ['mina', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('mina'), 'mina', this)],
         ])
 
-        this.arma = this.armas.get('bate')
+        this.arma = this.armas.get('mina');
         this.arma.activate();
     }
 

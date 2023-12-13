@@ -6,6 +6,8 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         super(scene, x, y, key);
 
+        //Añadidos a la escena
+
         this.scene.add.existing(this);
 
         this.scene.addExplosiveToGroup(this);
@@ -14,13 +16,17 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.setScale(1.5, 1.5);
 
-        this.x = x;
-
-        this.y = y;
+        //Fisicas
 
         this.scene.physics.add.existing(this);
 
         this.body.setSize(5, 5);
+
+        //Inicializacion de variables
+
+        this.x = x;
+
+        this.y = y;
 
         this.tipo = nTipo;
         
@@ -51,13 +57,10 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         })
 
-        console.log(this.event);
-
     }
 
     destroyMyself(){
 
-        this.zone.body.destroy();
         this.zone.destroy();
         this.destroy();
 
@@ -72,8 +75,6 @@ export default class explosive extends Phaser.GameObjects.Sprite{
     detonar(){
         this.body.destroy();
 
-        console.log('Bum');
-
         this.exploting = true;
 
         this.play('explosionAnimation');
@@ -81,13 +82,12 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         this.scene.physics.world.enable(this.zone);
         this.zone.body.setCircle(this.explosiveArea / 2);
 
-        console.log(this.damage);
-
         this.scene.physics.add.overlap(this.zone, this.grupoEnemigos, function(zone, enemy){
 
             enemy.recieveDamage(10);
+            enemy.gainExplosiveState(this.explotionDuration);
 
-        });
+        }, null, this);
 
         this.elapsedTime = 0;
     }

@@ -1,4 +1,5 @@
 import playerContenedor from '../Player/playerContenedor.js';
+import municionBalas from '../Armas/municionBalas.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar
@@ -37,26 +38,29 @@ export default class enemigo extends Phaser.GameObjects.Container {
     }
 
     recieveDamage(damage){
-        this.life -= damage;
+        if(!this.explosiveState){
+            this.life -= damage;
 
-        console.log(this.life + " " + this.damage)
-        if(this.life <= 0){
-            this.alive = false;
-            this.body.setVelocity(0, 0);
-            this.body.destroy();
-            this.scene.sendPoints(this.points);
+            console.log(this.life + " " + this.damage)
+            if(this.life <= 0){
+                this.alive = false;
+                this.body.setVelocity(0, 0);
+                this.body.destroy();
+                this.scene.sendPoints(this.points);
+        
+                var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+        
+                console.log(dropMunition);
+        
+                if(dropMunition == 1){
+                    this.spawnMunition();
+                }
     
-            var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
-    
-            console.log(dropMunition);
-    
-            if(dropMunition == 1){
-                this.spawnMunition();
+                this.enemy.play('enemydeath', true);
+                this.enemy.on('animationcomplete', this.destroyMyself )
             }
-
-            this.enemy.play('enemydeath', true);
-            this.enemy.on('animationcomplete', this.destroyMyself )
         }
+        
     }   
 
 
