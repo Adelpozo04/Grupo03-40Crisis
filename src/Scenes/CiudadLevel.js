@@ -261,10 +261,10 @@ export default class CiudadLevel extends Phaser.Scene{
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320);
         
        
-        this.enemySpawner1.spawnEnemies('mono', 5, 3000);
-        this.enemySpawner2.spawnEnemies('zombie', 5, 3000);
-        this.enemySpawner3.spawnEnemies('zombie',5, 3000);
-        this.enemySpawner4.spawnEnemies('zombie', 5, 3000);
+        this.enemySpawner1.spawnEnemies(5, 3000);
+        this.enemySpawner2.spawnEnemies(5, 3000);
+        this.enemySpawner3.spawnEnemies(5, 3000);
+        this.enemySpawner4.spawnEnemies(5, 3000);
 
         // Crear un grupo para almacenar todos los enemigos generados por los spawners
         this.grupoEnemigosTotales = this.add.group();
@@ -273,12 +273,12 @@ export default class CiudadLevel extends Phaser.Scene{
         this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
         this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
 
-        this.time.delayedCall(15000, () => {
+        /*this.time.delayedCall(15000, () => {
             this.enemySpawner1.stopSpawn();
             this.enemySpawner2.stopSpawn();
             this.enemySpawner3.stopSpawn();
             this.enemySpawner4.stopSpawn();
-        });
+        }); */
        // Limpiar todos los enemigos generados después de cierto tiempo 
         this.time.delayedCall(40000, () => {
             this.enemySpawner1.clearEnemies();
