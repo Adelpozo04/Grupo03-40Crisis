@@ -3,7 +3,7 @@
 export default class explosive extends Phaser.GameObjects.Sprite{
 
 
-    constructor(scene, x, y, key, nTipo, grupoEnemigos){
+    constructor(scene, x, y, key, nTipo){
 
         super(scene, x, y, key);
 
@@ -35,7 +35,7 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.elapsedTime = 0;
 
-        this.grupoEnemigos = grupoEnemigos;
+        this.grupoEnemigos = this.scene.grupoEnemigos;
 
         this.scene.anims.create({
             key: 'explosionAnimation',

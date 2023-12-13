@@ -22,7 +22,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
      * PERSONALIDAD
      */
 
-    constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
+    constructor(scene, x, y, key, hatId, hatX, hatY, life, speed, grupoEnemigos){
         super(scene, x, y);
 
         this.scene = scene;
@@ -99,7 +99,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
 
-        this.arma = new armaDisparos(this.scene, 0, 0, 'pistola', this);
+        this.arma = new armaDisparos(this.scene, 0, 0, 'metralleta', this);
         this.arma.setScale(1.5, 1.5);
     }
 
