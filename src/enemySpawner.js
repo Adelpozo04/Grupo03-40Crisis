@@ -29,6 +29,8 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         })
         this.player = player;
         this.spawnTimer = null;
+        this.collisionArea = this.scene.add.rectangle(x, y, 20, 20);
+        this.scene.physics.add.existing(this.collisionArea);
     }
 
     getScene()
@@ -43,66 +45,50 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
    
     selectEnemyType(randomProbability) {
         // Define los rangos de probabilidad para cada tipo de enemigo
-        const enemyRanges = [
-            { type: 'zombie', range: { min: 0, max: 0.4 } },
-            { type: 'skeleton', range: { min: 0.4, max: 0.7 } },
-            { type: 'burger', range: { min: 0.7, max: 0.9 } },
-            { type: 'lutano', range: { min: 0.9, max: 1.0 } }
+        const enemyTypes = [
+            { type: 'zombie', probability: 0.35 },
+            { type: 'skeleton', probability: 0.25 },
+            { type: 'burger', probability: 0.15 },
+            { type: 'lutano', probability: 0.1 },
+            { type: 'mono', probability: 0.05 },
+            { type: 'robot', probability: 0.1}
         ];
 
-        // Verifica si la probabilidad cae dentro de alguno de los rangos definidos
-        for (const enemy of enemyRanges) 
-        {
-            if (randomProbability >= enemy.range.min && randomProbability < enemy.range.max) {
-                return enemy.type; // Devuelve el tipo de enemigo si la probabilidad está dentro del rango
+        let cumulativeProbability = 0;
+
+        for (let i = 0; i < enemyTypes.length; i++) {
+            cumulativeProbability += enemyTypes[i].probability;
+
+            if (randomProbability <= cumulativeProbability) {
+                return enemyTypes[i].type;
             }
         }
     }
     
     spawnEnemies(numberOfEnemies, timeBetweenSpawn) {
         let enemiesSpawned = 0;
-
-        const spawnEnemy = () => {
-            if (enemiesSpawned < numberOfEnemies) {
+        this.spawnTimer = this.scene.time.addEvent({
+        delay: timeBetweenSpawn,
+        callback: () => {
+           if (enemiesSpawned < numberOfEnemies) {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
 
                 if (enemyType) {
-                    const enemy = this.createEnemy(enemyType);
+                    const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
                     this.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
-            } else {
-               // this.stopSpawn();
             }
-        };
-
-        this.spawnTimer = this.scene.time.addEvent({
-            delay: timeBetweenSpawn,
-            callback: spawnEnemy,
+            else{
+                this.stopSpawn();
+            }
+        },
             callbackScope: this,
             repeat: numberOfEnemies - 1
         });
     }
-    /*spawnEnemies(enemyType, quantity, interval) {
-        this.timerEvent = this.scene.time.addEvent({
-            delay: interval,
-            callback: () => {
-                for (let i = 0; i < quantity; i++) {
-                    this.createEnemy(enemyType);
-                }
-            },
-            callbackScope: this,
-            loop: true
-        });
-    } */
     
-    
-
-    createEnemy(enemyType) {
-        const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
-        return enemy;
-    }
 
     //Para de spawnear enemigos
     stopSpawn() {

@@ -255,16 +255,16 @@ export default class CiudadLevel extends Phaser.Scene{
 
         
        
-        this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400);
-        this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320);
-        this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400);
-        this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320);
+        this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike);
+        //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
+
+        this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike);
+
+        this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike);
+
+        this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike);
         
        
-        this.enemySpawner1.spawnEnemies(5, 3000);
-        this.enemySpawner2.spawnEnemies(5, 3000);
-        this.enemySpawner3.spawnEnemies(5, 3000);
-        this.enemySpawner4.spawnEnemies(5, 3000);
 
         // Crear un grupo para almacenar todos los enemigos generados por los spawners
         this.grupoEnemigosTotales = this.add.group();
@@ -273,12 +273,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
         this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
 
-        /*this.time.delayedCall(15000, () => {
-            this.enemySpawner1.stopSpawn();
-            this.enemySpawner2.stopSpawn();
-            this.enemySpawner3.stopSpawn();
-            this.enemySpawner4.stopSpawn();
-        }); */
+    
        // Limpiar todos los enemigos generados después de cierto tiempo 
         this.time.delayedCall(40000, () => {
             this.enemySpawner1.clearEnemies();
@@ -439,8 +434,41 @@ export default class CiudadLevel extends Phaser.Scene{
             
     }
 
+   /* const overlapSpawner1 = this.physics.overlapRect(this.camera.worldView, this.enemySpawner1.getBounds());
+    const overlapSpawner2 = this.physics.overlapRect(this.camera.worldView, this.enemySpawner2.getBounds());
+    const overlapSpawner3 = this.physics.overlapRect(this.camera.worldView, this.enemySpawner3.getBounds());
+    const overlapSpawner4 = this.physics.overlapRect(this.camera.worldView, this.enemySpawner4.getBounds()); */
 
-      
+
+    const overlapSpawner1 = Phaser.Geom.Intersects.RectangleToRectangle(
+        this.camera.worldView,
+        this.enemySpawner1.getBounds()
+    );
+    const overlapSpawner2 = Phaser.Geom.Intersects.RectangleToRectangle(
+        this.camera.worldView,
+        this.enemySpawner2.getBounds()
+    );
+    const overlapSpawner3 = Phaser.Geom.Intersects.RectangleToRectangle(
+        this.camera.worldView,
+        this.enemySpawner3.getBounds()
+    );
+    const overlapSpawner4 = Phaser.Geom.Intersects.RectangleToRectangle(
+        this.camera.worldView,
+        this.enemySpawner4.getBounds()
+    );
+    // Si no hay superposición, permitir la generación de enemigos
+    if (!overlapSpawner1) {
+        this.enemySpawner1.spawnEnemies(5, 3000);
+    }
+    if (!overlapSpawner2) {
+        this.enemySpawner2.spawnEnemies(5, 3000);
+    }
+    if (!overlapSpawner3) {
+        this.enemySpawner3.spawnEnemies(5, 3000);
+    }
+    if (!overlapSpawner4) {
+        this.enemySpawner4.spawnEnemies(5, 3000);
+    }
    }
 }
 
