@@ -1,14 +1,14 @@
+import playerContenedor from '../Player/playerContenedor.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar
      * @param {number} x - posicion x
      * @param {number} y - posicion y
-     * @param {player} player - referencia al player
+     * @param {playerContenedor} player - referencia al player
      * @param {number} speed - velocidad
      * @param {number} attackDistance - distancia mínima de ataque
      */
 
-    //Habria que poner una variable life
     constructor(scene, x, y, player, speed, attackDistance, damage, life){
         super(scene, x, y);
         
@@ -22,8 +22,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
         this.isAttacking = false;
         this.canDamage = true;
-        
 
+        this.alive = true;
     }
     
     isInAttackRange(){
@@ -36,10 +36,28 @@ export default class enemigo extends Phaser.GameObjects.Container {
         return { x: this.direction.x, y: this.direction.y };
     }
 
-    getDamage(damage){
+    recieveDamage(damage){
         this.life -= damage;
-        return this.life;
-    }
+
+        console.log(this.life + " " + this.damage)
+        if(this.life <= 0){
+            this.alive = false;
+            this.body.setVelocity(0, 0);
+            this.body.destroy();
+            this.scene.sendPoints(this.points);
+    
+            var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+    
+            console.log(dropMunition);
+    
+            if(dropMunition == 1){
+                this.spawnMunition();
+            }
+
+            this.enemy.play('enemydeath', true);
+            this.enemy.on('animationcomplete', this.destroyMyself )
+        }
+    }   
 
 
     attack()
@@ -50,7 +68,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
     basicMovement(canMove)
     {
         var playerPosition = this.player.getCenterPoint();
-
+        
         this.direction = new Phaser.Math.Vector2(
             playerPosition.x - this.x,
             playerPosition.y - this.y
@@ -76,6 +94,55 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }
 
-  
-}
+    destroyMyself(){
+        this.destroy();
+    }
     
+    spawnMunition(){
+    
+        this.ammo = new municionBalas(this.scene, this.body.x + this.posXCentered, this.body.y + this.posYCentered, 'bulletAmmo');
+        this.scene.addAmmoToGroup(this.ammo);
+        this.scene.add.existing(this.ammo);
+    }
+    
+    applyEffect(keyPotenciador){
+           
+        let aux;
+        switch (keyPotenciador) {
+            case 'botiquin':
+                console.log("boti");
+                this.life += this.maxLife / 2;
+                if (this.life > this.maxLife) {
+                    this.life = this.maxLife;
+                }
+                console.log(this.life);
+                break;
+            case 'velocidad':
+                console.log("velo");
+                this.aux = this.speed;
+                this.speed = 280;
+                this.scene.time.delayedCall(3000, () => {
+                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
+                });
+                break;
+            case 'vivu':
+                console.log("vivu");
+                this.aux = this.speed;
+                this.speed = 0;
+                this.scene.time.delayedCall(5000, () => {
+                    this.speed = this.aux;
+                });
+                break;
+            case 'invencible':
+                console.log("inven");
+                this.invulnerable = true;
+                this.scene.time.delayedCall(5000, () => {
+                    this.invulnerable = false;
+                });
+                break;
+            default:
+                break;
+        }
+        //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
+    }
+}

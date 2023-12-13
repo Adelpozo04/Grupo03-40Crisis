@@ -67,7 +67,7 @@ export default class CiudadLevel extends Phaser.Scene{
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
         this.load.image('bulletAmmo', './Assets/Sprites/Armas/munitionBox_Sprite.png');
         //Explorador
-        this.load.image('puño', './Assets/Sprites/Armas/fist.png');
+        this.load.image('fist', './Assets/Sprites/Armas/fist.png');
         this.load.image('bate', './Assets/Sprites/Armas/bat.png');
         this.load.image('espada', './Assets/Sprites/Armas/sword.png');
         //Analista
@@ -229,7 +229,7 @@ export default class CiudadLevel extends Phaser.Scene{
         //this.physics.add.collider(this.lutano, this.collisionLayer);
 
         //Se crea la camara
-        this.cameras.main.startFollow(this.mike);
+        this.camera = this.cameras.main.startFollow(this.mike);
         
         //Se crean layers por encima de las entidades
         this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
@@ -247,16 +247,36 @@ export default class CiudadLevel extends Phaser.Scene{
             INVENCIBLE: 'invencible',
         };
 
+           
+        this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike);
+        //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
+        this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike);
+        this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike);
+        this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike);
+           
+
+        // Crear un grupo para almacenar todos los enemigos generados por los spawners
+        this.grupoEnemigosTotales = this.add.group();
+        this.grupoEnemigosTotales.add(this.enemySpawner1.getEnemyGroup());
+        this.grupoEnemigosTotales.add(this.enemySpawner2.getEnemyGroup());
+        this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
+        this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
+
+        this.enemySpawners();
+           
         
-        // Crear un spawner de enemigos en las coordenadas 
-        const spawner = new EnemigoSpawner(this, 600, 700, this.mike);
+        //const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
+       
+       /* spawnerLocations.forEach((location) => {
+            this.newSpawner = new EnemigoSpawner(this, location.x, location.y);
+            this.newSpawner.spawnEnemies('zombie', 5, 3000);
+        }); */
+    
 
-        // Ejemplo de uso: generar una oleada de 5 enemigos de tipo 'zombie' cada 'x' tiempo
-        spawner.spawnEnemies('zombie', 5, 3000);
 
-        this.mina = new explosive(this, 400, 400, 'mina', 0, spawner.getEnemyGroup());
+        this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
 
-        this.physics.add.collider(this.grupoBalas, spawner.getEnemyGroup(), function(bala, enemigo){
+        this.physics.add.collider(this.grupoBalas, this.grupoEnemigosTotales, function(bala, enemigo){
             
             enemigo.recibeDamage(bala.getDamage());
             bala.destroy();
@@ -271,17 +291,15 @@ export default class CiudadLevel extends Phaser.Scene{
 
         });
 
-        this.physics.add.collider(spawner.getEnemyGroup(), this.collisionLayer);
+
+        this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
 
         // Detener la generación de enemigos después de un tiempo 
         this.time.delayedCall(15000, () => {
         spawner.stopSpawn();
         });
 
-        // Limpiar todos los enemigos generados después de cierto tiempo 
-        this.time.delayedCall(40000, () => {
-        spawner.clearEnemies();
-        });   
+
         
        this.spawnPotenciador();    
 
@@ -290,8 +308,6 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
-
-    
     spawnPotenciador() {
 
         
@@ -369,11 +385,7 @@ export default class CiudadLevel extends Phaser.Scene{
           // setTimeout(() => {
                 this.spawnPotenciador();
                
-          //  }, 5000);
-
-
-            
-                   
+          //  }, 5000);        
         }
    
           
@@ -400,19 +412,35 @@ export default class CiudadLevel extends Phaser.Scene{
     }
 
 
-    update(dt, t){
+    enemySpawners() {
+        const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
 
+        // Verifica la colisión entre la cámara y cada uno de los spawners
+        allSpawners.forEach((spawner) => {
+            const isColliding = Phaser.Geom.Intersects.RectangleToRectangle(this.camera.worldView, spawner.getBounds());
+            if (!isColliding) {
+                // Si hay colisión, spawnear enemigos
+                spawner.spawnEnemies(5, 3000); // Ajusta el número y tiempo según lo que necesites
+                // Limpiar todos los enemigos generados después de cierto tiempo 
+                this.time.delayedCall(40000, () => {
+                    spawner.clearEnemies();
+                });     
+            }
+        });
+    };
+
+    
+
+    update(dt, t){
     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
     { 
       // setTimeout(() => {
             this.spawnPotenciador();
            
-      //  }, 5000);
-
-
-        
-               
+      //  }, 5000);  
+            
     }
+
    }
 }
 
