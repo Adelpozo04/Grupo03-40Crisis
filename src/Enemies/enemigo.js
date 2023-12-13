@@ -50,7 +50,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     basicMovement(canMove)
     {
-        console.log(this.player);
         var playerPosition = this.player.getCenterPoint();
         
         this.direction = new Phaser.Math.Vector2(
