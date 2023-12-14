@@ -433,15 +433,14 @@ export default class CiudadLevel extends Phaser.Scene{
     
 
     update(dt, t){
-    if(!this.potenciadorSpawneado && this.potenciadorRecogido)
-    { 
-      // setTimeout(() => {
-            this.spawnPotenciador();
-           
-      //  }, 5000);  
+        if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        { 
+        // setTimeout(() => {
+                this.spawnPotenciador();
             
-    }
-
+        //  }, 5000);  
+                
+        }
    }
 }
 

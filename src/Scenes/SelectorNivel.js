@@ -1,11 +1,5 @@
 import playerContenedor from '../Player/playerContenedor.js';
 
-var globalPoints  = {
-    ciudadPoints: 0,
-    playaPoints: 0,
-    volcanPoints: 0
-}
-
 export default class SelectorNivel extends Phaser.Scene {
 
     constructor(){
@@ -44,34 +38,50 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
+        this.globalPoints = [];
+        this.globalPoints[0] = 0;
+        this.globalPoints[1] = 0;
+        this.globalPoints[2] = 0;
+
         this.events.on('cambiarCiudadPoints', function (nuevoValor) {
-            globalPoints.ciudadPoints += nuevoValor;
+            this.ganarExperiencia(0, nuevoValor);
         });
         this.events.on('cambiarPlayaPoints', function (nuevoValor) {
-            globalPoints.playaPoints += nuevoValor;
+            this.ganarExperiencia(1, nuevoValor);
         });
         this.events.on('cambiarVolcanPoints', function (nuevoValor) {
-            globalPoints.volcanPoints += nuevoValor;
+            this.ganarExperiencia(2, nuevoValor);
         });
 
         this.mapas = [];
         this.fondos = [];
+
         this.mapas[0] = 'CiudadLevel';
         this.fondos[0] = 'FondoCiudad'
+
         this.mapas[1] = 'PlayaLevel';
         this.fondos[1] = 'FondoPlaya';
+
         this.mapas[2] = 'VolcanLevel';
         this.fondos[2] = 'FondoVolcan'
+
         this.currentPage = 0;
         this.hatID = 0;
+
+        this.experienciaMaxima = 100;
         
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
+
         let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
+
         this.loadHatArrows(hat);
         this.loadMainArrows();
-        
+
+        this.barraXP();
 
         let timeline = this.tweens.timeline
         this.tweens.add({
@@ -168,5 +178,45 @@ export default class SelectorNivel extends Phaser.Scene {
         arrowButtonLeft.on("pointerdown", () => {
             this.changeHat(h, -1);
         });
+    }
+
+    barraXP(){
+        this.barraProgreso = this.add.graphics();
+        this.longitudBarra = [];
+        this.actualizarBarraDeProgreso();
+
+        // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic
+        this.input.on('pointerdown', () => {
+            this.ganarExperiencia(0, 10);
+        });
+    }
+
+    ganarExperiencia(nivel, xp) {
+        this.globalPoints[nivel] += xp; // Ganar 10 puntos de experiencia (puedes ajustar esto)
+        
+        // Actualizar la barra de progreso
+        this.actualizarBarraDeProgreso();
+    
+        // Verificar si se alcanzó la experiencia máxima
+        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
+            console.log('¡Nivel alcanzado!');
+            // Puedes agregar lógica adicional aquí, como subir de nivel o reiniciar la barra de experiencia
+        }
+    }
+    
+    actualizarBarraDeProgreso() {
+        // Limpiar la barra de progreso
+        this.barraProgreso.clear();
+
+        // Calcular la longitud de la barra de progreso en función de la experiencia actual y máxima
+        this.longitudBarra[this.currentPage] = (this.globalPoints[this.currentPage] / this.experienciaMaxima) * 300;
+    
+        // Dibujar la barra de progreso actualizada
+        this.barraProgreso.fillStyle(0x00ff00);
+        this.barraProgreso.fillRect(50, 50, this.longitudBarra[this.currentPage], 20);
+        
+        // Puedes agregar un borde a la barra si lo deseas
+        this.barraProgreso.lineStyle(2, 0x000000);
+        this.barraProgreso.strokeRect(50, 50, 300, 20);
     }
 }
