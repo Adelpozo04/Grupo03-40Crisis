@@ -24,7 +24,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
         this.isAttacking = false;
         this.canDamage = true;
-
+        this.inKnockBack = false;
         this.alive = true;
     }
     
@@ -95,7 +95,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         {
             this.isAttacking = false;
             
-            if (canMove)
+            if (canMove && !this.inKnockBack)
             {
                 this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
                 this.body.velocity.normalize().scale(this.speed);
@@ -105,6 +105,14 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     destroyMyself(){
         this.destroy();
+    }
+
+    knockBack(direction)
+    {
+        let knockBackSpeed = 10
+        this.inKnockBack = true;
+        this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
+        this.scene.time.delayedCall(100, () =>{ this.inKnockBack = false })
     }
     
     spawnMunition(){
