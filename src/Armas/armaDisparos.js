@@ -13,7 +13,6 @@ export default class armaDisparos extends Arma{
         super(scene,0,0,key,player)
         this.scene = scene
 
-
         this.municion = 30;
 
         this.enfriamientoTime = tiempoCooldown;

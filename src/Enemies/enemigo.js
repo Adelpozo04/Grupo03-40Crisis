@@ -1,4 +1,5 @@
 import playerContenedor from '../Player/playerContenedor.js';
+import municionBalas from '../Armas/municionBalas.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar
@@ -19,6 +20,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.life = life;
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
+        this.objetive = player;
 
         this.isAttacking = false;
         this.canDamage = true;
@@ -36,38 +38,45 @@ export default class enemigo extends Phaser.GameObjects.Container {
         return { x: this.direction.x, y: this.direction.y };
     }
 
+    changeObjetive(objetive){
+        this.objetive = objetive;
+    }
+
     recieveDamage(damage){
-        this.life -= damage;
+        if(!this.explosiveState){
+            this.life -= damage;
 
-        console.log(this.life + " " + this.damage)
-        if(this.life <= 0){
-            this.alive = false;
-            this.body.setVelocity(0, 0);
-            this.body.destroy();
-            this.scene.sendPoints(this.points);
+            console.log(this.life + " " + this.damage)
+            if(this.life <= 0){
+                this.alive = false;
+                this.body.setVelocity(0, 0);
+                this.body.destroy();
+                this.scene.sendPoints(this.points);
+        
+                var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+        
+                console.log(dropMunition);
+        
+                if(dropMunition == 1){
+                    this.spawnMunition();
+                }
     
-            var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
-    
-            console.log(dropMunition);
-    
-            if(dropMunition == 1){
-                this.spawnMunition();
+                this.enemy.play('enemydeath', true);
+                this.enemy.on('animationcomplete', this.destroyMyself )
             }
-
-            this.enemy.play('enemydeath', true);
-            this.enemy.on('animationcomplete', this.destroyMyself )
         }
+        
     }   
 
 
     attack()
     {
-        this.player.damagePlayer(this.damage);
+        this.objetive.receiveDamage(this.damage);
     }
 
     basicMovement(canMove)
     {
-        var playerPosition = this.player.getCenterPoint();
+        var playerPosition = this.objetive.getCenterPoint();
         
         this.direction = new Phaser.Math.Vector2(
             playerPosition.x - this.x,
