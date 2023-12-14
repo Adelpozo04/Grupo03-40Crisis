@@ -216,7 +216,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.longitudBarra[this.currentPage] = (this.globalPoints[this.currentPage] / this.experienciaMaxima) * 300;
     
         // Dibujar la barra de progreso actualizada
-        this.barraProgreso.fillStyle(0x00ff00);
+        this.barraProgreso.fillStyle(0xE6E6FA);
         this.barraProgreso.fillRect(this.cameras.main.centerX - 150, 575, this.longitudBarra[this.currentPage], 20);
         
         // Puedes agregar un borde a la barra si lo deseas
