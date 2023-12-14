@@ -11,6 +11,7 @@ export default class armaMelee extends Arma{
     {
         super(scene,0,0,key,player);
         this.key = key;
+        this.player = player;
         scene.physics.world.enable(this);
 
         this.tiempoCooldown = tiempoCooldown
@@ -96,9 +97,9 @@ export default class armaMelee extends Arma{
             this.scene.physics.world.enable(zone);
             zone.body.setCircle(radioAtaque)
 
-            this.scene.physics.add.overlap(zone, this.scene.grupoEnemigos, function(zone, enemy){
+            this.scene.physics.add.overlap(zone, this.scene.grupoEnemigos, (zone, enemy) =>{
                 enemy.recieveDamage(this.damageArma)
-                //enemy.knockBack();
+                enemy.knockBack({x: enemy.x - this.player.x, y: enemy.y - this.player.y});
             })
             
             this.scene.time.delayedCall(20, () => { zone.destroy(); })
