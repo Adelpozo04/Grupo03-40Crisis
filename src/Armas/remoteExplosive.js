@@ -34,12 +34,14 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         this.grupoEnemigos = this.scene.grupoEnemigos;
 
+        this.scene.input.mouse.disableContextMenu();
+
         this.scene.input.on('pointerdown', (pointer) =>
         {
             if(pointer.rightButtonDown()){
                 this.detonar();
             }
-        })
+        }, this)
 
         this.scene.anims.create({
             key: 'explosionAnimation',
@@ -74,6 +76,9 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
     detonar(){
 
         console.log(this);
+
+        
+        console.log(this.scene);
 
         this.exploting = true;
 

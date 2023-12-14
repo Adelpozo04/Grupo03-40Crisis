@@ -30,8 +30,10 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.scene.input.on('pointerdown', (pointer) =>
         {
-            if (this.active)
-            this.tryAttack()
+            if (this.active && pointer.leftButtonDown()){
+                this.tryAttack();
+            }
+            
         })
 
         this.event = this.scene.time.addEvent({
@@ -70,6 +72,7 @@ export default class armaObjetosSpawneado extends Arma{
                 let explosiveObj = new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
             }
             else if(this.key == 'c4'){
+                console.log(this.scene);
                 let explosiveRemObj = new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
             }
 
