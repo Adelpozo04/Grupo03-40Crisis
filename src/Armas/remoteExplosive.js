@@ -1,8 +1,8 @@
 
-export default class explosive extends Phaser.GameObjects.Sprite{
+export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
 
-    constructor(scene, x, y, key, nTipo){
+    constructor(scene, x, y, key){
 
         super(scene, x, y, key);
 
@@ -16,31 +16,30 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.setScale(1.5, 1.5);
 
-        //Fisicas
-
-        this.scene.physics.add.existing(this);
-
-        this.body.setSize(5, 5);
-
         //Inicializacion de variables
 
         this.x = x;
 
         this.y = y;
-
-        this.tipo = nTipo;
         
         this.explotionDuration = 2;
 
         this.exploting = false;
 
-        this.damage = 20;
+        this.damage = 10;
 
         this.explosiveArea = 100;
 
         this.elapsedTime = 0;
 
         this.grupoEnemigos = this.scene.grupoEnemigos;
+
+        this.scene.input.on('pointerdown', (pointer) =>
+        {
+            if(pointer.rightButtonDown()){
+                this.detonar();
+            }
+        })
 
         this.scene.anims.create({
             key: 'explosionAnimation',
@@ -73,7 +72,8 @@ export default class explosive extends Phaser.GameObjects.Sprite{
     }
 
     detonar(){
-        this.body.destroy();
+
+        console.log(this);
 
         this.exploting = true;
 
@@ -93,12 +93,6 @@ export default class explosive extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-        console.log("NASHE" + this.grupoEnemigos.children.size)
-        this.scene.physics.add.collider(this, this.grupoEnemigos, function(explosive, enemy){
-
-            explosive.detonar();
-
-        });
 
         if(this.elapsedTime >= this.explotionDuration && this.exploting == true){
             this.destroyMyself();

@@ -116,9 +116,11 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['metralleta', new armaDisparos(this.scene, tiempoCooldown.get('metralleta'), damageArmas.get('metralleta'),'metralleta', this)],
             ['franco', new armaDisparos(this.scene, tiempoCooldown.get('franco'), damageArmas.get('franco'),'franco', this)],
             ['mina', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('mina'), 'mina', this)],
+            ['muro', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('muro'), 'muro', this)],
+            ['c4', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('c4'), 'c4', this)],
         ])
 
-        this.arma = this.armas.get('mina');
+        this.arma = this.armas.get('c4');
         this.arma.activate();
     }
 
@@ -214,7 +216,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
     }
 
-    damagePlayer(damage){
+    receiveDamage(damage){
         if(!this.invencible)
         {
             this.life = this.life - damage;

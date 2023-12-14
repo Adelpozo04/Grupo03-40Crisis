@@ -1,5 +1,8 @@
 import Arma from "./arma.js"
 import explosive from "./explosive.js";
+import muro from "./muro.js";
+import remoteExplosive from "./remoteExplosive.js";
+
 export default class armaObjetosSpawneado extends Arma{
     /**
     * @param {scene} scene - escena a colocar
@@ -27,6 +30,7 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.scene.input.on('pointerdown', (pointer) =>
         {
+            if (this.active)
             this.tryAttack()
         })
 
@@ -53,9 +57,23 @@ export default class armaObjetosSpawneado extends Arma{
 
         if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.municion > 0)
         {
-            if(this.key = 'mina'){
-                this.explosive = new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, this.key, 0);
+
+            console.log(this.key);
+
+            if(this.key == 'muro'){
+                console.log(this.key);
+                let muroObj = new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
+                
             }
+            else if(this.key == 'mina'){
+                console.log(this.key);
+                let explosiveObj = new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
+            }
+            else if(this.key == 'c4'){
+                let explosiveRemObj = new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
+            }
+
+            console.log(this.key);
 
             this.elapsedTime = 0;
             
