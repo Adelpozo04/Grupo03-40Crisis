@@ -102,7 +102,7 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     continueCreate(){
-        let button = this.add.text(this.cameras.main.centerX, 600, 'SELECT', 
+        let button = this.add.text(this.cameras.main.centerX, 650, 'SELECT', 
             { fontFamily: 'TitleFont', fontSize: 50, color: 'white' }).setOrigin(0.5,0.5);
         button.setInteractive();
         button.on("pointerdown", () => {
@@ -119,6 +119,8 @@ export default class SelectorNivel extends Phaser.Scene {
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
         this.loadMainArrows();
         this.loadHatArrows(hat);
+
+        this.barraXP();
 
         let timeline = this.tweens.timeline
         this.tweens.add({
@@ -187,13 +189,15 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic
         this.input.on('pointerdown', () => {
-            this.ganarExperiencia(0, 10);
+            this.ganarExperiencia(this.currentPage, 10);
         });
     }
 
     ganarExperiencia(nivel, xp) {
-        this.globalPoints[nivel] += xp; // Ganar 10 puntos de experiencia (puedes ajustar esto)
-        
+        if(this.globalPoints[this.currentPage] < this.experienciaMaxima) {
+            this.globalPoints[nivel] += xp; // Ganar 10 puntos de experiencia (puedes ajustar esto)
+        }
+
         // Actualizar la barra de progreso
         this.actualizarBarraDeProgreso();
     
@@ -213,10 +217,10 @@ export default class SelectorNivel extends Phaser.Scene {
     
         // Dibujar la barra de progreso actualizada
         this.barraProgreso.fillStyle(0x00ff00);
-        this.barraProgreso.fillRect(50, 50, this.longitudBarra[this.currentPage], 20);
+        this.barraProgreso.fillRect(this.cameras.main.centerX - 150, 575, this.longitudBarra[this.currentPage], 20);
         
         // Puedes agregar un borde a la barra si lo deseas
         this.barraProgreso.lineStyle(2, 0x000000);
-        this.barraProgreso.strokeRect(50, 50, 300, 20);
+        this.barraProgreso.strokeRect(this.cameras.main.centerX - 150, 575, 300, 20);
     }
 }
