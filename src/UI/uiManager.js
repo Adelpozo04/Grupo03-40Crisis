@@ -38,7 +38,6 @@ gainPoints(points){
         yoyo: true, // Hace que la animación se repita en sentido inverso
         repeat: 0 // Repite infinitamente
     });
-
 }
 
 preUpdate(t, dt){
