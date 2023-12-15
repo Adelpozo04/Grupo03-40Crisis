@@ -16,11 +16,10 @@ import Enemigo from "../Enemies/enemigo.js";
 
 export default class CiudadLevel extends Phaser.Scene{
 
-    constructor(hatID){
+    constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
         this.potenciadorSpawneado = false;
         this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
-        this.hatID = hatID;
     }
     
     init(data){
@@ -225,12 +224,6 @@ export default class CiudadLevel extends Phaser.Scene{
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
 
-        
-       
-        //this.robot = new Robot(this, 700, 600, 'robot', this.mike);
-
-        //this.lutano = new lutano(this, 600, 600, 'lutano', this.mike);
-
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
         //this.physics.add.collider(this.lutano, this.collisionLayer);
@@ -255,12 +248,13 @@ export default class CiudadLevel extends Phaser.Scene{
         };
 
            
-        this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike);
+        this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike, this.grupoEnemigos);
         //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
-        this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike);
-        this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike);
-        this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike);
+        this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike, this.grupoEnemigos);
+        this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike, this.grupoEnemigos);
+        this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike, this.grupoEnemigos);
            
+        console.log(this.enemySpawner1.getEnemyGroup());
 
         // Crear un grupo para almacenar todos los enemigos generados por los spawners
         this.grupoEnemigosTotales = this.add.group();
@@ -280,8 +274,7 @@ export default class CiudadLevel extends Phaser.Scene{
         }); */
     
 
-
-        this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
+        //this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
 
         this.physics.add.collider(this.grupoBalas, this.grupoEnemigosTotales, function(bala, enemigo){
             
@@ -300,11 +293,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
 
         this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
-
-
-
         
-       this.spawnPotenciador();    
+        this.spawnPotenciador();    
 
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
@@ -383,6 +373,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     sendPoints(points){
         this.myUI.gainPoints(points);
+        this.events.emit('cambiarCiudadPoints', points);
     }
 
     generateText(x, y, message, size){
@@ -414,15 +405,14 @@ export default class CiudadLevel extends Phaser.Scene{
     
 
     update(dt, t){
-    if(!this.potenciadorSpawneado && this.potenciadorRecogido)
-    { 
-      // setTimeout(() => {
-            this.spawnPotenciador();
-           
-      //  }, 5000);  
+        if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        { 
+        // setTimeout(() => {
+                this.spawnPotenciador();
             
-    }
-
+        //  }, 5000);  
+                
+        }
    }
 }
 

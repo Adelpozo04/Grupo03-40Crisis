@@ -1,4 +1,5 @@
 import playerContenedor from '../Player/playerContenedor.js';
+import municionBalas from '../Armas/municionBalas.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar
@@ -19,10 +20,11 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.life = life;
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
+        this.objetive = player;
 
         this.isAttacking = false;
         this.canDamage = true;
-
+        this.inKnockBack = false;
         this.alive = true;
         this.invencible = false;
 
@@ -40,9 +42,14 @@ export default class enemigo extends Phaser.GameObjects.Container {
         return { x: this.direction.x, y: this.direction.y };
     }
 
+    changeObjetive(objetive){
+        this.objetive = objetive;
+    }
+
     recieveDamage(damage){
-        if(!this.invencible)
-        {
+
+        if(!this.explosiveState && !this.invencible){
+          
             this.life -= damage;
 
             console.log(this.life + " " + this.damage)
@@ -64,18 +71,18 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.enemy.on('animationcomplete', this.destroyMyself )
             }
         }
-       
+
     }   
 
 
     attack()
     {
-        this.player.damagePlayer(this.damage);
+        this.objetive.receiveDamage(this.damage);
     }
 
     basicMovement(canMove)
     {
-        var playerPosition = this.player.getCenterPoint();
+        var playerPosition = this.objetive.getCenterPoint();
         
         this.direction = new Phaser.Math.Vector2(
             playerPosition.x - this.x,
@@ -94,7 +101,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         {
             this.isAttacking = false;
             
-            if (canMove)
+            if (canMove && !this.inKnockBack)
             {
                 this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
                 this.body.velocity.normalize().scale(this.speed);
@@ -104,6 +111,14 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     destroyMyself(){
         this.destroy();
+    }
+
+    knockBack(direction)
+    {
+        let knockBackSpeed = 10
+        this.inKnockBack = true;
+        this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
+        this.scene.time.delayedCall(100, () =>{ this.inKnockBack = false })
     }
     
     spawnMunition(){
