@@ -1,4 +1,4 @@
-import Level from "../Scenes/Level.js"
+import LevelBase from './levelBase.js'
 import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
 import Robot from '../Enemies/robot.js'
@@ -13,7 +13,7 @@ import municionBalas from '../Armas/municionBalas.js';
 import explosive from '../Armas/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 
-export default class CiudadLevel extends Level{
+export default class CiudadLevel extends LevelBase{
 
     constructor(){
         super('CiudadLevel'); 
