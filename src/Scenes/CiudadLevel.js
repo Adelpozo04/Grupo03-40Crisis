@@ -255,13 +255,6 @@ export default class CiudadLevel extends Phaser.Scene{
            
         console.log(this.enemySpawner1.getEnemyGroup());
 
-        // Crear un grupo para almacenar todos los enemigos generados por los spawners
-        this.grupoEnemigosTotales = this.add.group();
-        this.grupoEnemigosTotales.add(this.enemySpawner1.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner2.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
-
         this.enemySpawners();
     
 
@@ -313,7 +306,7 @@ export default class CiudadLevel extends Phaser.Scene{
                     let spawnPointX = spawnPoint.x;
                     let spawnPointY = spawnPoint.y;
                    
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.enemy, this);
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.grupoEnemigos, this);
                     let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
                     this.potenciadorRecogido = false;
@@ -335,10 +328,10 @@ export default class CiudadLevel extends Phaser.Scene{
 
                     //delete potenciador le indica al mono que el potenciador se ha eliminado
                     this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-                    //this.physics.add.collider(this.grupoEnemigosTotales, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
+                    //this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
   
-                    const enemigos = this.grupoEnemigosTotales.getChildren();
-                    console.log(this.grupoEnemigosTotales.getChildren()[0]);
+                    const enemigos = this.grupoEnemigos;
+                    console.log(this.grupoEnemigos.getChildren()[0]);
                     // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
                    enemigos.forEach(enemigo => {
                    // Verificar si el potenciador colisiona con este enemigo específico

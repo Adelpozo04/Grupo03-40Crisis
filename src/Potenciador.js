@@ -57,7 +57,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     enviarPotenciadorEnemy(){
         console.log("enemigoooo");
         // Obtener la lista de enemigos en el grupo
-       
+        this.enemy.applyEffect(this.key);
         this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
         this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
         this.destroy();
