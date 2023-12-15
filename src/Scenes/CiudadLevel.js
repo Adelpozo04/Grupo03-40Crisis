@@ -264,21 +264,11 @@ export default class CiudadLevel extends Phaser.Scene{
         this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
 
         this.enemySpawners();
-           
-        
-        //const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
-       
-       /* spawnerLocations.forEach((location) => {
-            this.newSpawner = new EnemigoSpawner(this, location.x, location.y);
-            this.newSpawner.spawnEnemies('zombie', 5, 3000);
-        }); */
     
 
-        //this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
-
-        this.physics.add.collider(this.grupoBalas, this.grupoEnemigosTotales, function(bala, enemigo){
+        this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
-            enemigo.recibeDamage(bala.getDamage());
+            enemigo.recieveDamage(bala.getDamage());
             bala.destroy();
 
         });
@@ -292,7 +282,7 @@ export default class CiudadLevel extends Phaser.Scene{
         });
 
 
-        this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
+        this.physics.add.collider(this.grupoEnemigos, this.collisionLayer);
         
         this.spawnPotenciador();    
 

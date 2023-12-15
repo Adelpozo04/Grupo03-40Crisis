@@ -40,8 +40,6 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.elapsedTime = 0;
 
-        this.grupoEnemigos = this.scene.grupoEnemigos;
-
         this.scene.anims.create({
             key: 'explosionAnimation',
             frames: this.anims.generateFrameNumbers('explosion', {start:0, end:7}),
@@ -82,7 +80,7 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         this.scene.physics.world.enable(this.zone);
         this.zone.body.setCircle(this.explosiveArea / 2);
 
-        this.scene.physics.add.overlap(this.zone, this.grupoEnemigos, function(zone, enemy){
+        this.scene.physics.add.overlap(this.zone, this.scene.grupoEnemigos, function(zone, enemy){
 
             enemy.recieveDamage(10);
             enemy.gainExplosiveState(this.explotionDuration);
@@ -93,8 +91,8 @@ export default class explosive extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-        console.log("NASHE" + this.grupoEnemigos.children.size)
-        this.scene.physics.add.collider(this, this.grupoEnemigos, function(explosive, enemy){
+        console.log("NASHE" + this.scene.grupoEnemigos.children.size)
+        this.scene.physics.add.collider(this, this.scene.grupoEnemigos, function(explosive, enemy){
 
             explosive.detonar();
 

@@ -127,7 +127,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['c4', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('c4'), 'c4', this)],
         ])
 
-        this.arma = this.armas.get('fist');
+        this.arma = this.armas.get('mina');
 
         this.arma.activate();
     }
