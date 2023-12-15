@@ -257,13 +257,6 @@ export default class CiudadLevel extends Phaser.Scene{
            
         console.log(this.enemySpawner1.getEnemyGroup());
 
-        // Crear un grupo para almacenar todos los enemigos generados por los spawners
-        this.grupoEnemigosTotales = this.add.group();
-        this.grupoEnemigosTotales.add(this.enemySpawner1.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner2.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
-
         this.enemySpawners();
     
 
@@ -309,16 +302,17 @@ export default class CiudadLevel extends Phaser.Scene{
             { x: 700, y: 700 },
             //Añadir luego las coordenadas correctas
         ];
+        
 
         let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
         let spawnPointX = spawnPoint.x;
         let spawnPointY = spawnPoint.y;
-        
-        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.enemy, this);
+
+        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.grupoEnemigos, this);
         let pot = this.potenciador;
         this.potenciadorSpawneado = true;
         this.potenciadorRecogido = false;
-    
+
 
         this.tweens.add({
             targets: this.potenciador,
@@ -331,8 +325,14 @@ export default class CiudadLevel extends Phaser.Scene{
         })
 
 
+
         console.log("aparecio potenciador");
 
+                    //delete potenciador le indica al mono que el potenciador se ha eliminado
+                    this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
+                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);            
+      
+                }
 
         //delete potenciador le indica al mono que el potenciador se ha eliminado
         this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
@@ -352,10 +352,13 @@ export default class CiudadLevel extends Phaser.Scene{
 
 
 
+    
+                
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
     }
+
 
     addExplosiveToGroup(newExplosive){
         this.grupoExplosivos.add(newExplosive);
@@ -373,6 +376,10 @@ export default class CiudadLevel extends Phaser.Scene{
 
         return ogText
     }
+
+
+    getGrupoEnenmigos(){
+        return this.grupoEnemigos;
 
     changeInventory(currentPersonality){
         this.myUI.changeInventory(currentPersonality);
