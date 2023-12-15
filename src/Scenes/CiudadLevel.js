@@ -76,14 +76,6 @@ export default class CiudadLevel extends LevelBase{
         this.groundLayer.setScale(1.35, 1.35);
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
-
-        const potenciadorTypes = {
-            BOTIQUIN: 'botiquin', 
-            VELOCIDAD: 'velocidad', 
-            SLEEP: 'vivu', 
-            INVENCIBLE: 'invencible',
-        };
-
            
         this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike, this.grupoEnemigos);
         //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
@@ -93,6 +85,7 @@ export default class CiudadLevel extends LevelBase{
 
         this.enemySpawners();
 
+        // balas con enemigos
         this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
             enemigo.recieveDamage(bala.getDamage());
@@ -100,6 +93,7 @@ export default class CiudadLevel extends LevelBase{
 
         });
 
+        // municion con player
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
 
             ammo.destroyMyself();
@@ -107,7 +101,7 @@ export default class CiudadLevel extends LevelBase{
 
         });
 
-
+        // enemigos con entorno
         this.physics.add.collider(this.grupoEnemigos, this.collisionLayer);
         
         this.spawnPotenciador();    
@@ -135,17 +129,12 @@ export default class CiudadLevel extends LevelBase{
             //Añadir luego las coordenadas correctas
         ];
         
-
         let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
         let spawnPointX = spawnPoint.x;
         let spawnPointY = spawnPoint.y;
 
-        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.grupoEnemigos, this);
-        let pot = this.potenciador;
-        this.potenciadorSpawneado = true;
-        this.potenciadorRecogido = false;
-
-
+        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
+        
         this.tweens.add({
             targets: this.potenciador,
             y: this.potenciador.y - 30,
@@ -155,42 +144,11 @@ export default class CiudadLevel extends LevelBase{
             repeat: -1,
             delay: 10
         })
-
-
-
-        console.log("aparecio potenciador");
-
-                    //delete potenciador le indica al mono que el potenciador se ha eliminado
-                    this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);            
-      
-                
-
-        //delete potenciador le indica al mono que el potenciador se ha eliminado
-        this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-        //this.physics.add.collider(this.grupoEnemigosTotales, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
-
-        const enemigos = this.grupoEnemigosTotales.getChildren();
-        console.log(this.grupoEnemigosTotales.getChildren()[0]);
-        // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
-        enemigos.forEach(enemigo => {
-            // Verificar si el potenciador colisiona con este enemigo específico
-            if (this.physics.overlap(this, enemigo)) {
-                enemigo.applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
-                pot.enviarPotenciadorEnemy();
-            }
-        });
     }
-
-
-
-    
-                
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
     }
-
 
     addExplosiveToGroup(newExplosive){
         this.grupoExplosivos.add(newExplosive);
@@ -206,13 +164,13 @@ export default class CiudadLevel extends LevelBase{
             { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
         this.textCreated = true;
 
-        return ogText
+        return ogText;
     }
-
 
     getGrupoEnenmigos(){
         return this.grupoEnemigos;
     }
+    
     changeInventory(currentPersonality){
         this.myUI.changeInventory(currentPersonality);
         this.myUI.changeInventorySelect(0);
@@ -245,11 +203,12 @@ export default class CiudadLevel extends LevelBase{
     update(dt, t){
         if(!this.potenciadorSpawneado && this.potenciadorRecogido)
         { 
-        // setTimeout(() => {
+            this.potenciadorSpawneado = true;
+            this.potenciadorRecogido = false;
+            this.time.delayedCall(5000, () => {
                 this.spawnPotenciador();
-            
-        //  }, 5000);  
                 
+            })
         }
    }
 }
