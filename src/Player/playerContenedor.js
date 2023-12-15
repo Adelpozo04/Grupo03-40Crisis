@@ -128,6 +128,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         ])
 
         this.arma = this.armas.get('fist');
+
         this.arma.activate();
     }
 

@@ -9,7 +9,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     * @param {sprite} sprite - sprite
     * @param {number} y - posicion y
     * @param {playerContenedor} player - referencia al player
-    * @param {EnemigoBasico} enemigo - referencia al enemigo 
+    * @param {Enemigo} enemigo - referencia al enemigo 
     * @param {string} key - sprite
     */
 
@@ -45,23 +45,21 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     }
 
     enviarPotenciadorPlayer(){
-        console.log(this.key);
+
         this.player.applyEffect(this.key);
 
         this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
         this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
-        console.log(this.getScene().potenciadorSpawneado);
         this.destroy();
                 
     }
 
     enviarPotenciadorEnemy(){
-        console.log(this.enemy);
-        this.enemy.applyEffect(this.key);
-
+        console.log("enemigoooo");
+        // Obtener la lista de enemigos en el grupo
+       
         this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
         this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
-        console.log(this.getScene().potenciadorSpawneado);
         this.destroy();
                 
     }

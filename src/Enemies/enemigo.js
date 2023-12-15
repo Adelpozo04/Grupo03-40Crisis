@@ -24,8 +24,12 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
         this.isAttacking = false;
         this.canDamage = true;
-
+        this.inKnockBack = false;
         this.alive = true;
+        this.invencible = false;
+
+        this.scene.physics.add.existing(this);
+        this.scene.add.existing(this);  
     }
     
     isInAttackRange(){
@@ -43,7 +47,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
     }
 
     recieveDamage(damage){
-        if(!this.explosiveState){
+
+        if(!this.explosiveState && !this.invencible){
+          
             this.life -= damage;
 
             console.log(this.life + " " + this.damage)
@@ -65,7 +71,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.enemy.on('animationcomplete', this.destroyMyself )
             }
         }
-        
+
     }   
 
 
@@ -95,7 +101,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         {
             this.isAttacking = false;
             
-            if (canMove)
+            if (canMove && !this.inKnockBack)
             {
                 this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
                 this.body.velocity.normalize().scale(this.speed);
@@ -105,6 +111,14 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     destroyMyself(){
         this.destroy();
+    }
+
+    knockBack(direction)
+    {
+        let knockBackSpeed = 10
+        this.inKnockBack = true;
+        this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
+        this.scene.time.delayedCall(100, () =>{ this.inKnockBack = false })
     }
     
     spawnMunition(){
@@ -129,7 +143,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
             case 'velocidad':
                 console.log("velo");
                 this.aux = this.speed;
-                this.speed = 280;
+                this.speed = 250;
                 this.scene.time.delayedCall(3000, () => {
                     this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                 });
