@@ -149,15 +149,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[2] = 0; // Volcan
 
         // Evento para poder subir experiencia segun el nivel jugado
-        this.events.on('cambiarCiudadPoints', function (nuevoValor) {
-            this.ganarExperiencia(0, nuevoValor);
-        });
-        this.events.on('cambiarPlayaPoints', function (nuevoValor) {
-            this.ganarExperiencia(1, nuevoValor);
-        });
-        this.events.on('cambiarVolcanPoints', function (nuevoValor) {
-            this.ganarExperiencia(2, nuevoValor);
-        });
+        this.events.on('cambiarXP', this.ganarExperiencia);
     }
 
     // Cambio de sombrero
@@ -224,19 +216,20 @@ export default class SelectorNivel extends Phaser.Scene {
         });
     }
 
-    ganarExperiencia(nivel, xp) {
+    ganarExperiencia(nivel, points) {
+        console.log("a");
         if(this.globalPoints[this.currentPage] < this.experienciaMaxima) {
-            this.globalPoints[nivel] += xp; // Ganar 10 puntos de experiencia (puedes ajustar esto)
+            this.globalPoints[nivel] += points; // Ganar 10 puntos de experiencia (puedes ajustar esto)
         }
 
         // Actualizar la barra de progreso
         this.actualizarBarraDeProgreso();
     
         // Verificar si se alcanzó la experiencia máxima
-        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
+        /*if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
             console.log('¡Nivel alcanzado!');
             // Puedes agregar lógica adicional aquí, como subir de nivel o reiniciar la barra de experiencia
-        }
+        }*/
     }
     
     actualizarBarraDeProgreso() {

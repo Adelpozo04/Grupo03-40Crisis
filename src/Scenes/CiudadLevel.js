@@ -291,63 +291,62 @@ export default class CiudadLevel extends Phaser.Scene{
 
     }
     spawnPotenciador() {
-
-        
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
             VELOCIDAD: 'velocidad', 
             SLEEP: 'vivu', 
             INVENCIBLE: 'invencible',
         };
-                    let aux = Phaser.Math.RND.between(0, 3);
-                    let potenciadorType = Object.values(potenciadorTypes)[aux];
-                    const spawnPoints = [
-                        { x: 600, y: 600 },
-                        { x: 600, y: 700 },
-                        { x: 700, y: 600 },
-                        { x: 700, y: 700 },
-                    //Añadir luego las coordenadas correctas
-                    ];
+
+        let aux = Phaser.Math.RND.between(0, 3);
+        let potenciadorType = Object.values(potenciadorTypes)[aux];
+        const spawnPoints = [
+            { x: 600, y: 600 },
+            { x: 600, y: 700 },
+            { x: 700, y: 600 },
+            { x: 700, y: 700 },
+            //Añadir luego las coordenadas correctas
+        ];
+
+        let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+        let spawnPointX = spawnPoint.x;
+        let spawnPointY = spawnPoint.y;
         
-                    let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
-                    let spawnPointX = spawnPoint.x;
-                    let spawnPointY = spawnPoint.y;
-                   
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.enemy, this);
-                    let pot = this.potenciador;
-                    this.potenciadorSpawneado = true;
-                    this.potenciadorRecogido = false;
-                
-     
-                    this.tweens.add({
-                        targets: this.potenciador,
-                        y: this.potenciador.y - 30,
-                        duration: 2000,
-                        ease: 'Sine.easeInOut',
-                        yoyo: true,
-                        repeat: -1,
-                        delay: 10
-                    })
+        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.enemy, this);
+        let pot = this.potenciador;
+        this.potenciadorSpawneado = true;
+        this.potenciadorRecogido = false;
+    
+
+        this.tweens.add({
+            targets: this.potenciador,
+            y: this.potenciador.y - 30,
+            duration: 2000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+            delay: 10
+        })
 
 
-                    console.log("aparecio potenciador");
+        console.log("aparecio potenciador");
 
 
-                    //delete potenciador le indica al mono que el potenciador se ha eliminado
-                    this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-                    //this.physics.add.collider(this.grupoEnemigosTotales, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
-  
-                    const enemigos = this.grupoEnemigosTotales.getChildren();
-                    console.log(this.grupoEnemigosTotales.getChildren()[0]);
-                    // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
-                   enemigos.forEach(enemigo => {
-                   // Verificar si el potenciador colisiona con este enemigo específico
-                   if (this.physics.overlap(this, enemigo)) {
-                       enemigo.applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
-                       pot.enviarPotenciadorEnemy();
-                   }
-               });
-                }
+        //delete potenciador le indica al mono que el potenciador se ha eliminado
+        this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
+        //this.physics.add.collider(this.grupoEnemigosTotales, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
+
+        const enemigos = this.grupoEnemigosTotales.getChildren();
+        console.log(this.grupoEnemigosTotales.getChildren()[0]);
+        // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
+        enemigos.forEach(enemigo => {
+            // Verificar si el potenciador colisiona con este enemigo específico
+            if (this.physics.overlap(this, enemigo)) {
+                enemigo.applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
+                pot.enviarPotenciadorEnemy();
+            }
+        });
+    }
 
 
 
@@ -362,7 +361,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     sendPoints(points){
         this.myUI.gainPoints(points);
-        this.events.emit('cambiarCiudadPoints', points);
+        this.events.emit('cambiarXP', 0, points);
     }
 
     generateText(x, y, message, size){
