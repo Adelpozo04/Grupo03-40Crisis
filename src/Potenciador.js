@@ -56,16 +56,18 @@ export default class Potenciador extends Phaser.GameObjects.Container {
 
     enviarPotenciadorEnemy(){
         // Obtener la lista de enemigos en el grupo
-        const enemigos = this.scene.grupoEnemigos;
+        /*const enemigosArray = this.scene.grupoEnemigos.getChildren();
         let i = 0;
-        while(i < enemigos.children.size){
+        while(i < enemigosArray.length){
             // Verificar si el potenciador colisiona con este enemigo específico
-            if (this.scene.physics.overlap(this, enemigos.children[i])) {
-                enemigos.children[i].applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
+            if (this.scene.physics.add.collider(this, enemigosArray[i])) {
+                enemigosArray[i].applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
             }
             else
                 i++;
-        };
+        }; */
+
+        //Los enemigos cogen el potenciadore, entra al metodo applyEffect pero el juego se queda congelado
         this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
         this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
         this.destroy();
