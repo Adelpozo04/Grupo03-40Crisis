@@ -11,11 +11,12 @@ import Bala from '../Armas/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
 import municionBalas from '../Armas/municionBalas.js';
 import explosive from '../Armas/explosive.js';
+import Enemigo from "../Enemies/enemigo.js";
 
 
 export default class CiudadLevel extends Phaser.Scene{
 
-    constructor(hatID){
+    constructor(){
         super({key: 'CiudadLevel'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
         this.potenciadorSpawneado = false;
         this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
@@ -117,6 +118,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
+        this.load.image('inventory', './Assets/Sprites/UI/PlayGame/inventory.png');
+        this.load.image('slot', './Assets/Sprites/UI/PlayGame/slotSel.png');
 
     }
   
@@ -240,7 +243,6 @@ export default class CiudadLevel extends Phaser.Scene{
         })
 
         this.grupoEnemigos = this.add.group({
-            classType: EnemigoBasico,
             runChildUpdate: true,
 
         })
@@ -291,29 +293,12 @@ export default class CiudadLevel extends Phaser.Scene{
            
         console.log(this.enemySpawner1.getEnemyGroup());
 
-        // Crear un grupo para almacenar todos los enemigos generados por los spawners
-        this.grupoEnemigosTotales = this.add.group();
-        this.grupoEnemigosTotales.add(this.enemySpawner1.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner2.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner3.getEnemyGroup());
-        this.grupoEnemigosTotales.add(this.enemySpawner4.getEnemyGroup());
-
         this.enemySpawners();
-           
-        
-        //const spawnerLocations = EnemigoSpawner.createSpawnersPos(this.map, this.camera, 3);
-       
-       /* spawnerLocations.forEach((location) => {
-            this.newSpawner = new EnemigoSpawner(this, location.x, location.y);
-            this.newSpawner.spawnEnemies('zombie', 5, 3000);
-        }); */
     
 
-        //this.mina = new explosive(this, 400, 400, 'mina', 0, this.grupoEnemigosTotales);
-
-        this.physics.add.collider(this.grupoBalas, this.grupoEnemigosTotales, function(bala, enemigo){
+        this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
-            enemigo.recibeDamage(bala.getDamage());
+            enemigo.recieveDamage(bala.getDamage());
             bala.destroy();
 
         });
@@ -327,17 +312,9 @@ export default class CiudadLevel extends Phaser.Scene{
         });
 
 
-        this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
-
-        /*
-        // Detener la generación de enemigos después de un tiempo 
-        this.time.delayedCall(15000, () => {
-        spawner.stopSpawn();
-        });
-
-        */
+        this.physics.add.collider(this.grupoEnemigos, this.collisionLayer);
         
-       this.spawnPotenciador();    
+        this.spawnPotenciador();    
 
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
@@ -365,91 +342,79 @@ export default class CiudadLevel extends Phaser.Scene{
     }
     
     spawnPotenciador() {
-
-        
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
             VELOCIDAD: 'velocidad', 
             SLEEP: 'vivu', 
             INVENCIBLE: 'invencible',
         };
-                    let aux = Phaser.Math.RND.between(0, 3);
-                    let potenciadorType = Object.values(potenciadorTypes)[aux];
-                    const spawnPoints = [
-                        { x: 600, y: 600 },
-                        { x: 600, y: 700 },
-                        { x: 700, y: 600 },
-                        { x: 700, y: 700 },
-                    //Añadir luego las coordenadas correctas
-                    ];
+
+        let aux = Phaser.Math.RND.between(0, 3);
+        let potenciadorType = Object.values(potenciadorTypes)[aux];
+        const spawnPoints = [
+            { x: 600, y: 600 },
+            { x: 600, y: 700 },
+            { x: 700, y: 600 },
+            { x: 700, y: 700 },
+            //Añadir luego las coordenadas correctas
+        ];
         
-                    let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
-                    let spawnPointX = spawnPoint.x;
-                    let spawnPointY = spawnPoint.y;
-                   
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.skeleton, this);
-                    let pot = this.potenciador;
-                    this.potenciadorSpawneado = true;
-                    this.potenciadorRecogido = false;
-                
-     
-                    this.tweens.add({
-                        targets: this.potenciador,
-                        y: this.potenciador.y - 30,
-                        duration: 2000,
-                        ease: 'Sine.easeInOut',
-                        yoyo: true,
-                        repeat: -1,
-                        delay: 10
-                    })
+
+        let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+        let spawnPointX = spawnPoint.x;
+        let spawnPointY = spawnPoint.y;
+
+        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.grupoEnemigos, this);
+        let pot = this.potenciador;
+        this.potenciadorSpawneado = true;
+        this.potenciadorRecogido = false;
 
 
-                    console.log("aparecio potenciador");
+        this.tweens.add({
+            targets: this.potenciador,
+            y: this.potenciador.y - 30,
+            duration: 2000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+            delay: 10
+        })
 
-                    this.setPotenciador();
+
+
+        console.log("aparecio potenciador");
 
                     //delete potenciador le indica al mono que el potenciador se ha eliminado
                     this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
-                    //; this.skeleton.deletePotenciador() esto estaba dentro de las llaves ??
-  
-                }//,
-
-
-                //callbackScope: this,
-               // loop: false,
-         //   });
- 
-        //}
-       
-
-     //   this.myUI = new UIManager(this, 'UIManager', this.mike);
-
-     //   this.myUI.setScrollFactor(0);
-
-   // }
-
-   //Le pasa la info del potenciador a cualquier entidad que sea un mono
-   setPotenciador(){
-
-   //this.skeleton.setPotenciador(this.potenciador);
-   }
-   applyEffectPlayer() {
+                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);            
       
-     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
-        { 
-          // setTimeout(() => {
-                this.spawnPotenciador();
-               
-          //  }, 5000);        
-        }
-   
-          
-   }
+                }
+
+        //delete potenciador le indica al mono que el potenciador se ha eliminado
+        this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
+        //this.physics.add.collider(this.grupoEnemigosTotales, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
+
+        const enemigos = this.grupoEnemigosTotales.getChildren();
+        console.log(this.grupoEnemigosTotales.getChildren()[0]);
+        // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
+        enemigos.forEach(enemigo => {
+            // Verificar si el potenciador colisiona con este enemigo específico
+            if (this.physics.overlap(this, enemigo)) {
+                enemigo.applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
+                pot.enviarPotenciadorEnemy();
+            }
+        });
+    }
+
+
+
+    
+                
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
     }
+
 
     addExplosiveToGroup(newExplosive){
         this.grupoExplosivos.add(newExplosive);
@@ -457,6 +422,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     sendPoints(points){
         this.myUI.gainPoints(points);
+        this.events.emit('cambiarXP', 0, points);
     }
 
     generateText(x, y, message, size){
@@ -465,6 +431,19 @@ export default class CiudadLevel extends Phaser.Scene{
         this.textCreated = true;
 
         return ogText
+    }
+
+
+    getGrupoEnenmigos(){
+        return this.grupoEnemigos;
+
+    changeInventory(currentPersonality){
+        this.myUI.changeInventory(currentPersonality);
+        this.myUI.changeInventorySelect(0);
+    }
+
+    changeInvenSelection(currentWea){
+        this.myUI.changeInventorySelect(currentWea);
     }
 
 
@@ -488,15 +467,14 @@ export default class CiudadLevel extends Phaser.Scene{
     
 
     update(dt, t){
-    if(!this.potenciadorSpawneado && this.potenciadorRecogido)
-    { 
-      // setTimeout(() => {
-            this.spawnPotenciador();
-           
-      //  }, 5000);  
+        if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        { 
+        // setTimeout(() => {
+                this.spawnPotenciador();
             
-    }
-
+        //  }, 5000);  
+                
+        }
    }
 }
 

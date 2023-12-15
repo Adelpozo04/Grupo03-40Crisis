@@ -30,6 +30,9 @@ export default class armaMelee extends Arma{
 
     startAttack()
     {
+        if(this.key == this.player.getCurrentWeaponName()){
+            this.player.gainPersonalityExp(1);
+        }
         this.Attacking = false; 
     }
 
@@ -70,6 +73,7 @@ export default class armaMelee extends Arma{
     tryAttack()
     {
         this.Attacking = true;
+        
         // llamada para para cooldown del ataque
         this.scene.time.delayedCall(this.tiempoCooldown, this.startAttack, [], this);
         this.swingingAnimation()

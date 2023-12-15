@@ -1,4 +1,6 @@
 import HealthBar from "./healthBar.js";
+import inventoryBar from "./inventoryBar.js";
+import personalityWheel from "./personalityWheel.js";
 import playerContenedor from "../Player/playerContenedor.js";
 
 export default class UIManager extends Phaser.GameObjects.Container{
@@ -13,6 +15,10 @@ constructor(scene, key, player){
 
     this.healthBar = new HealthBar(scene, 24, 16, player, 341, 32).setScrollFactor(0);
 
+    this.inventoryBar = new inventoryBar(scene, 1075, 650, player).setScrollFactor(0);
+
+    this.personalityWheel = new personalityWheel(scene, 1100, 100, player).setScrollFactor(0);
+
     this.key = key;
 
     this.totalPoints = 0;
@@ -22,6 +28,14 @@ constructor(scene, key, player){
     this.ScoreLabel = this.scene.generateText(0, 650, 'Score: ', 32);
     this.ScoreLabel.setScrollFactor(0);
 
+}
+
+changeInventory(currentPer){
+    this.inventoryBar.changeIcons(currentPer);
+}
+
+changeInventorySelect(currentWea){
+    this.inventoryBar.changeSelection(currentWea);
 }
 
 gainPoints(points){
@@ -38,7 +52,6 @@ gainPoints(points){
         yoyo: true, // Hace que la animación se repita en sentido inverso
         repeat: 0 // Repite infinitamente
     });
-
 }
 
 preUpdate(t, dt){
