@@ -20,6 +20,41 @@ export default class CiudadLevel extends Phaser.Scene{
         this.potenciadorSpawneado = false;
         this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
         this.hatID = hatID;
+
+        // ENEMIES DATA
+        this.speedEnemigos = new Map([
+            ['zombie', 75], ['skeleton', 175], ['burger', 50], ['lutano', 75], ['caracol', 25]
+        ]);
+        this.damageEnemigos = new Map([
+            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999]
+        ]);
+        this.attackDistEnemigos = new Map([
+            ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10]
+        ]);
+        this.vidaEnemigos = new Map([
+            ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999]
+        ]);
+        this.scaleEnemigos = new Map([
+            ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
+        ]);
+        this.puntosEnemigos = new Map([
+            ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3], ['caracol', 25]
+        ]);
+        this.anchoColliderEnemigos = new Map([
+            ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18]
+        ]);
+        this.altoColliderEnemigos = new Map([
+            ['zombie', 26], ['skeleton', 24], ['burger', 30], ['lutano', 30], ['caracol', 26]
+        ]);
+        this.posXColliderEnemigos = new Map([
+            ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12], ['caracol', 9]
+        ]);
+        this.posYColliderEnemigos = new Map([
+            ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10]
+        ]);
+        this.munitionDropMaxProbability = new Map([
+            ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1]
+        ]);
     }
     
     init(data){
@@ -309,6 +344,26 @@ export default class CiudadLevel extends Phaser.Scene{
         this.myUI.setScrollFactor(0);
 
     }
+
+    // crea el config del enemigo (json) para instanciar los enemigos
+    generateEnemyConfig(enemyType)
+    {
+        let config = {
+            speed: this.speedEnemigos.get(enemyType),
+            damage: this.damageEnemigos.get(enemyType),
+            attackDistance: this.attackDistEnemigos.get(enemyType),
+            vida: this.vidaEnemigos.get(enemyType),
+            scale: this.scaleEnemigos.get(enemyType),
+            puntos: this.puntosEnemigos.get(enemyType),
+            anchoCollider: this.anchoColliderEnemigos.get(enemyType),
+            altoCollider: this.altoColliderEnemigos.get(enemyType),
+            posXCollider: this.posXColliderEnemigos.get(enemyType),
+            posYCollider: this.posYColliderEnemigos.get(enemyType),
+            ammoDrop: this.munitionDropMaxProbability.get(enemyType)
+        }
+        return config;
+    }
+    
     spawnPotenciador() {
 
         
