@@ -205,7 +205,6 @@ export default class CiudadLevel extends Phaser.Scene{
         })
 
         this.grupoEnemigos = this.add.group({
-            classType: EnemigoBasico,
             runChildUpdate: true,
 
         })
