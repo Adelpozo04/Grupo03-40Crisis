@@ -55,9 +55,17 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     }
 
     enviarPotenciadorEnemy(){
-        console.log("enemigoooo");
         // Obtener la lista de enemigos en el grupo
-        this.enemy.applyEffect(this.key);
+        const enemigos = this.scene.grupoEnemigos;
+        let i = 0;
+        while(i < enemigos.children.size){
+            // Verificar si el potenciador colisiona con este enemigo específico
+            if (this.scene.physics.overlap(this, enemigos.children[i])) {
+                enemigos.children[i].applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
+            }
+            else
+                i++;
+        };
         this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
         this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
         this.destroy();

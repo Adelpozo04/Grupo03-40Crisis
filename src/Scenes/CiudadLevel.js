@@ -328,26 +328,20 @@ export default class CiudadLevel extends Phaser.Scene{
 
                     //delete potenciador le indica al mono que el potenciador se ha eliminado
                     this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-                    //this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
-  
-                    const enemigos = this.grupoEnemigos;
-                    console.log(this.grupoEnemigos.getChildren()[0]);
-                    // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
-                   enemigos.forEach(enemigo => {
-                   // Verificar si el potenciador colisiona con este enemigo específico
-                   if (this.physics.overlap(this, enemigo)) {
-                       enemigo.applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
-                       pot.enviarPotenciadorEnemy();
-                   }
-               });
+                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
+           
+                
+      
                 }
 
 
-
+    
+                
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
     }
+
 
     addExplosiveToGroup(newExplosive){
         this.grupoExplosivos.add(newExplosive);
@@ -364,6 +358,10 @@ export default class CiudadLevel extends Phaser.Scene{
         this.textCreated = true;
 
         return ogText
+    }
+
+    getGrupoEnenmigos(){
+        return this.grupoEnemigos;
     }
 
 
