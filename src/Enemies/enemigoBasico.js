@@ -65,6 +65,7 @@ constructor(scene, x, y, key, player)
     scene.add.existing(this);
 
     this.body.setSize(anchoColliderEnemigos.get(key), altoColliderEnemigos.get(key));
+
 }
 
 // comprobamos si estamos en rango de ataque y atacamos

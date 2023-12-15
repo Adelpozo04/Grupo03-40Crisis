@@ -76,22 +76,24 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
 
                 if (enemyType === 'mono') {
                     const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType);
-                    this.grupoEnemigos.add(enemy);
+                    this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
                 else if(enemyType === 'lutano'){
                     const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
-                    this.grupoEnemigos.add(enemy);
+                    this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
                 else if(enemyType === 'robot') {
+                    /*
                     const enemy = new Robot(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
-                    this.grupoEnemigos.add(enemy);
+                    this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
+                    */
                 }
                 else {
                     const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
-                    this.grupoEnemigos.add(enemy);
+                    this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
             }
