@@ -26,11 +26,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     constructor(scene, x, y, key, hatId, hatX, hatY, life, speed){
         super(scene, x, y);
 
-        this.scene = scene;
-
-        this.x = x;
-        this.y = y;
-
         this.key = key;
 
         this.life = life;
@@ -81,6 +76,19 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.qKey = this.scene.input.keyboard.addKey('Q');
         this.eKey = this.scene.input.keyboard.addKey('E');
 
+        this.scene.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) =>
+        {
+
+            if(deltaY > 0){
+                this.changeWeaponAux(true);
+            }
+            else if(deltaY < 0){
+                this.changeWeaponAux(false);
+            }
+
+        });
+
+
         this.lookDer = true;
 
         //Tema fisicas
@@ -127,10 +135,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['c4', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('c4'), 'c4', this)],
         ])
 
-        this.arma = this.armas.get('mina');
+        this.arma = this.armas.get('fist');
 
         this.arma.activate();
     }
+
+    //Metodos de personalidades
 
     unlockPerChange(){
         this.changePerBlock = false;
@@ -161,6 +171,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         }
 
+        this.scene.changeInventory(this.currentPersonality);
+
         this.currentWeapon = 0;
         let name = this.weaponNameByPersonality();
         console.log(name);
@@ -168,6 +180,32 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     }
 
+    personalityInput(){
+        if(!this.changePerBlock){
+            if(this.eKey.isDown){
+                this.changePersonality(true);
+            }
+            else if(this.qKey.isDown){
+                this.changePersonality(false);
+            }
+        }
+        
+    }
+
+    getCurrentPersonality(){
+        return this.currentPersonality;
+    }
+
+    getPersonalityExp(personalityID){
+        return this.personalityExp[personalityID];
+    }
+
+    gainPersonalityExp(exp){
+        this.personalityExp[this.currentPersonality] += exp;
+        console.log(this.currentPersonality, this.personalityExp[this.currentPersonality]);
+    }
+
+    //Metodos de armas
     weaponNameByPersonality(){
         let weaponName = ' '
 
@@ -233,6 +271,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         }
 
+        this.scene.changeInvenSelection(this.currentWeapon);
         this.changeWeapon(this.weaponNameByPersonality());
     }
 
@@ -242,6 +281,14 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
+    }
+
+    getCurrentWeaponName(){
+        return this.weaponNameByPersonality();
+    }
+
+    reload(){
+        this.arma.reload();
     }
 
     preUpdate(t, dt)
@@ -329,18 +376,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
     }
 
-    personalityInput(){
-        if(!this.changePerBlock){
-            if(this.eKey.isDown){
-                this.changePersonality(true);
-            }
-            else if(this.qKey.isDown){
-                this.changePersonality(false);
-            }
-        }
-        
-    }
-
     receiveDamage(damage){
         if(!this.invencible)
         {
@@ -390,11 +425,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 
-    reload(){
-
-        this.arma.reload();
-    }
-
     getPlayer(){
         return this.player;
     }
@@ -412,15 +442,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return {x: this.x + 16, y: this.y + 16};
     }
 
-    getPersonalityExp(personalityID){
-
-        return this.personalityExp[personalityID];
-
-    }
-
-    gainPersonalityExp(exp){
-        this.personalityExp[this.currentPersonality] += exp;
-    }
+    
 
     
 }

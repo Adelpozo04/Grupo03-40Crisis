@@ -27,7 +27,7 @@ constructor(scene, x, y, key, player)
         ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
     ]);
     var puntosEnemigos = new Map([
-        ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3], ['caracol', 25]
+        ['zombie', 1], ['skeleton', 2], ['burger', 10], ['lutano', 5], ['caracol', 25]
     ]);
     var anchoColliderEnemigos = new Map([
         ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18]
@@ -44,6 +44,9 @@ constructor(scene, x, y, key, player)
     var munitionDropMaxProbability = new Map([
         ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1]
     ]);
+    var experienceGiven = new Map([
+        ['zombie', 1], ['skeleton', 2], ['burger', 5], ['lutano', 3], ['caracol', 100000], ['mono', 10]
+    ])
 
 
     super(scene, x, y, player, speedEnemigos.get(key), attackDistEnemigos.get(key), damageEnemigos.get(key), vidaEnemigos.get(key));
@@ -60,6 +63,7 @@ constructor(scene, x, y, key, player)
     this.alive = true;
     this.explosiveState = false;
     this.points = puntosEnemigos.get(key);
+    this.exp = experienceGiven.get(key);
     this.maxDropProbability = munitionDropMaxProbability.get(key);
     scene.physics.add.existing(this);
     scene.add.existing(this);
