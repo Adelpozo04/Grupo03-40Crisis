@@ -28,7 +28,6 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
     }
 
     getDamage(){
-        return this.damage;
-        
+        return this.damage; 
     }
 }

@@ -63,7 +63,6 @@ export default class CiudadLevel extends LevelBase{
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
-        //this.physics.add.collider(this.lutano, this.collisionLayer);
 
         //Se crea la camara
         this.camera = this.cameras.main.startFollow(this.mike);
@@ -78,31 +77,36 @@ export default class CiudadLevel extends LevelBase{
         this.objectsUpLayer.setScale(1.35, 1.35);
            
         this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike, this.grupoEnemigos);
-        //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike, this.grupoEnemigos);
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike, this.grupoEnemigos);
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike, this.grupoEnemigos);
 
         this.enemySpawners();
 
-        // balas con enemigos
+        // balas player con enemigos
         this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
             enemigo.recieveDamage(bala.getDamage());
             bala.destroy();
-
         });
+               
+        // balas player con el entorno
+        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
+            bala.destroy()
+        }, null, this)
 
         // municion con player
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
-
             ammo.destroyMyself();
             player.reload();
-
         });
 
         // enemigos con entorno
         this.physics.add.collider(this.grupoEnemigos, this.collisionLayer);
+
+        this.physics.add.collider(this.grupoBalasRobot, this.player, function (bala, player){
+            player.recieveDamage(bala.getDamage())
+        })
         
         this.spawnPotenciador();    
 
@@ -111,95 +115,6 @@ export default class CiudadLevel extends LevelBase{
         this.myUI.setScrollFactor(0);
     }
 
-    spawnPotenciador() {
-        const potenciadorTypes = {
-            BOTIQUIN: 'botiquin', 
-            VELOCIDAD: 'velocidad', 
-            SLEEP: 'vivu', 
-            INVENCIBLE: 'invencible',
-        };
-
-        let aux = Phaser.Math.RND.between(0, 3);
-        let potenciadorType = Object.values(potenciadorTypes)[aux];
-        const spawnPoints = [
-            { x: 600, y: 600 },
-            { x: 600, y: 700 },
-            { x: 700, y: 600 },
-            { x: 700, y: 700 },
-            //Añadir luego las coordenadas correctas
-        ];
-        
-        let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
-        let spawnPointX = spawnPoint.x;
-        let spawnPointY = spawnPoint.y;
-
-        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
-        
-        this.tweens.add({
-            targets: this.potenciador,
-            y: this.potenciador.y - 30,
-            duration: 2000,
-            ease: 'Sine.easeInOut',
-            yoyo: true,
-            repeat: -1,
-            delay: 10
-        })
-    }
-
-    addAmmoToGroup(newAmmo){
-        this.grupoMunicionBalas.add(newAmmo);
-    }
-
-    addExplosiveToGroup(newExplosive){
-        this.grupoExplosivos.add(newExplosive);
-    }
-
-    sendPoints(points){
-        this.myUI.gainPoints(points);
-        this.events.emit('cambiarXP', 0, points);
-    }
-
-    generateText(x, y, message, size){
-        let ogText = this.add.text(x, y, message, 
-            { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
-        this.textCreated = true;
-
-        return ogText;
-    }
-
-    getGrupoEnenmigos(){
-        return this.grupoEnemigos;
-    }
-    
-    changeInventory(currentPersonality){
-        this.myUI.changeInventory(currentPersonality);
-        this.myUI.changeInventorySelect(0);
-    }
-
-    changeInvenSelection(currentWea){
-        this.myUI.changeInventorySelect(currentWea);
-    }
-
-
-    enemySpawners() {
-        const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
-
-        // Verifica la colisión entre la cámara y cada uno de los spawners
-        allSpawners.forEach((spawner) => {
-            const isColliding = Phaser.Geom.Intersects.RectangleToRectangle(this.camera.worldView, spawner.getBounds());
-            if (!isColliding) {
-                // Si hay colisión, spawnear enemigos
-                spawner.spawnEnemies(5, 3000); // Ajusta el número y tiempo según lo que necesites
-                // Limpiar todos los enemigos generados después de cierto tiempo 
-                this.time.delayedCall(40000, () => {
-                    spawner.clearEnemies();
-                });     
-            }
-        });
-    };
-
-    
-
     update(dt, t){
         if(!this.potenciadorSpawneado && this.potenciadorRecogido)
         { 
@@ -207,7 +122,6 @@ export default class CiudadLevel extends LevelBase{
             this.potenciadorRecogido = false;
             this.time.delayedCall(5000, () => {
                 this.spawnPotenciador();
-                
             })
         }
    }

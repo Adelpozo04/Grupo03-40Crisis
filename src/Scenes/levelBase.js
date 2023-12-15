@@ -19,16 +19,16 @@ export default class Level extends Phaser.Scene{
 
         // ENEMIES DATA
         this.speedEnemigos = new Map([
-            ['zombie', 75], ['skeleton', 175], ['burger', 50], ['lutano', 75], ['caracol', 25]
+            ['zombie', 75], ['skeleton', 175], ['burger', 50], ['lutano', 75], ['caracol', 25], ['robot', 75]
         ]);
         this.damageEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999]
+            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999], ['robot', 3]
         ]);
         this.attackDistEnemigos = new Map([
-            ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10]
+            ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10], ['robot', 100]
         ]);
         this.vidaEnemigos = new Map([
-            ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999]
+            ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999], ['robot', 25]
         ]);
         this.scaleEnemigos = new Map([
             ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
@@ -211,8 +211,7 @@ export default class Level extends Phaser.Scene{
 
         // grupo de balas
         this.grupoBalas = this.add.group({
-            classType: Bala,
-            maxSize: 50
+            classType: Bala
         })
 
         this.grupoMunicionBalas = this.add.group({
@@ -222,18 +221,16 @@ export default class Level extends Phaser.Scene{
 
         this.grupoEnemigos = this.add.group({
             runChildUpdate: true,
-
         })
 
         this.grupoExplosivos = this.add.group({
             classType: explosive,
             runChildUpdate: true,
-
         })
-       
-        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
-            bala.destroy()
-        }, null, this)
+
+        this.grupoBalasRobot = this.add.group({
+            classType: Bala
+        })
     }
 
     // crea el config del enemigo (json) para instanciar los enemigos
@@ -253,5 +250,87 @@ export default class Level extends Phaser.Scene{
             ammoDrop: this.munitionDropMaxProbability.get(enemyType)
         }
         return config;
+    }
+
+    spawnPotenciador() {
+        const potenciadorTypes = {
+            BOTIQUIN: 'botiquin', 
+            VELOCIDAD: 'velocidad', 
+            SLEEP: 'vivu', 
+            INVENCIBLE: 'invencible',
+        };
+
+        let aux = Phaser.Math.RND.between(0, 3);
+        let potenciadorType = Object.values(potenciadorTypes)[aux];
+        const spawnPoints = [
+            { x: 600, y: 600 },
+            { x: 600, y: 700 },
+            { x: 700, y: 600 },
+            { x: 700, y: 700 },
+            //Añadir luego las coordenadas correctas
+        ];
+        
+        let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
+        let spawnPointX = spawnPoint.x;
+        let spawnPointY = spawnPoint.y;
+
+        this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
+        
+        this.tweens.add({
+            targets: this.potenciador,
+            y: this.potenciador.y - 30,
+            duration: 2000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+            delay: 10
+        })
+    }
+
+    enemySpawners() {
+        const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
+
+        // Verifica la colisión entre la cámara y cada uno de los spawners
+        allSpawners.forEach((spawner) => {
+            const isColliding = Phaser.Geom.Intersects.RectangleToRectangle(this.camera.worldView, spawner.getBounds());
+            if (!isColliding) {
+                // Si hay colisión, spawnear enemigos
+                spawner.spawnEnemies(5, 3000); // Ajusta el número y tiempo según lo que necesites
+                // Limpiar todos los enemigos generados después de cierto tiempo 
+                this.time.delayedCall(40000, () => {
+                    spawner.clearEnemies();
+                });     
+            }
+        });
+    };
+
+    addAmmoToGroup(newAmmo){
+        this.grupoMunicionBalas.add(newAmmo);
+    }
+
+    addExplosiveToGroup(newExplosive){
+        this.grupoExplosivos.add(newExplosive);
+    }
+
+    sendPoints(points){
+        this.myUI.gainPoints(points);
+        this.events.emit('cambiarXP', 0, points);
+    }
+
+    generateText(x, y, message, size){
+        let ogText = this.add.text(x, y, message, 
+            { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
+        this.textCreated = true;
+
+        return ogText;
+    }
+
+    changeInventory(currentPersonality){
+        this.myUI.changeInventory(currentPersonality);
+        this.myUI.changeInventorySelect(0);
+    }
+
+    changeInvenSelection(currentWea){
+        this.myUI.changeInventorySelect(currentWea);
     }
 }

@@ -9,15 +9,12 @@ export default class Robot extends Enemigo {
      */ 
     constructor(scene, x, y, key, player, config)
     {
-        super(scene, x, y, player, 0.5, 160);
-        this.speed = config.speed; // velocidad enemigo
-        this.attackDistance = config.attackDistance; // distancia ataque (30 = melee)
-        
+        super(scene, x, y, player, config.speed, config.attackDistance, config.damage, config.vida, config.points);
         this.key = key;
         scene.add.existing(this);
         this.robot = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
         this.add(this.robot);
-        this.setScale(0.1); //cuidao que esto igual da problemas
+        this.setScale(config.scale); //cuidao que esto igual da problemas
     
         this.attackFlag = true;
     }
