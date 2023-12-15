@@ -30,12 +30,14 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         this.scene.input.mouse.disableContextMenu();
 
-        this.scene.input.on('pointerdown', (pointer) =>
+        let callback = (pointer) =>
         {
             if(pointer.rightButtonDown()){
                 this.detonar();
+                this.scene.input.off('pointerdown', callback, this)
             }
-        }, this)
+        }
+        this.scene.input.on('pointerdown', callback, this);
 
         this.scene.anims.create({
             key: 'explosionAnimation',

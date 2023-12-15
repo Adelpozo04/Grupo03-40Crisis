@@ -87,7 +87,6 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
-        //this.physics.add.collider(this.lutano, this.collisionLayer);
 
         //Se crea la camara
         this.camera = this.cameras.main.startFollow(this.mike);
@@ -100,17 +99,8 @@ export default class CiudadLevel extends Phaser.Scene{
         this.groundLayer.setScale(1.35, 1.35);
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
-
-        const potenciadorTypes = {
-            BOTIQUIN: 'botiquin', 
-            VELOCIDAD: 'velocidad', 
-            SLEEP: 'vivu', 
-            INVENCIBLE: 'invencible',
-        };
-
            
         this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike, this.grupoEnemigos);
-        //this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike);
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike, this.grupoEnemigos);
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike, this.grupoEnemigos);
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike, this.grupoEnemigos);
