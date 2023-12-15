@@ -82,6 +82,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
+        this.load.image('inventory', './Assets/Sprites/UI/PlayGame/inventory.png')
 
     }
   
@@ -370,6 +371,15 @@ export default class CiudadLevel extends Phaser.Scene{
         this.textCreated = true;
 
         return ogText
+    }
+
+    changeInventory(currentPersonality){
+        this.myUI.changeInventory(currentPersonality);
+        this.myUI.changeInventorySelect(0);
+    }
+
+    changeInvenSelection(currentWea){
+        this.myUI.changeInventorySelect(currentWea);
     }
 
 
