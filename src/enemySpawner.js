@@ -73,26 +73,25 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
            if (enemiesSpawned < numberOfEnemies) {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
-
                 if (enemyType === 'mono') {
                     const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType);
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
                 else if(enemyType === 'lutano'){
-                    const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
+                    const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
                 else if(enemyType === 'robot') {
                     /*
-                    const enemy = new Robot(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
+                    const enemy = new Robot(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                     */
                 }
                 else {
-                    const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
+                    const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }

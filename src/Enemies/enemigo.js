@@ -10,7 +10,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {number} attackDistance - distancia mínima de ataque
      */
 
-    constructor(scene, x, y, player, speed, attackDistance, damage, life, experience){
+    constructor(scene, x, y, player, speed, attackDistance, damage, life, points){
         super(scene, x, y);
         
         this.scene.add.existing(this);
@@ -20,6 +20,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.life = life;
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
+        this.points = points;
+
         this.objetive = player;
 
         this.isAttacking = false;
@@ -114,12 +116,16 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.destroy();
     }
 
+    // tienes que pasarle un Phaser.Math.Vector2D normalizado
     knockBack(direction)
     {
-        let knockBackSpeed = 10
-        this.inKnockBack = true;
-        this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
-        this.scene.time.delayedCall(100, () =>{ this.inKnockBack = false })
+        if (!this.inKnockBack)
+        {
+            let knockBackSpeed = 1000
+            this.inKnockBack = true;
+            this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
+            this.scene.time.delayedCall(100, () =>{ this.inKnockBack = false })
+        }
     }
     
     spawnMunition(){
@@ -130,27 +136,21 @@ export default class enemigo extends Phaser.GameObjects.Container {
     }
     
     applyEffect(keyPotenciador){
-           
-        let aux;
         switch (keyPotenciador) {
             case 'botiquin':
-                console.log("boti");
                 this.life += this.maxLife / 2;
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
-                console.log(this.life);
                 break;
             case 'velocidad':
-                console.log("velo");
                 this.aux = this.speed;
                 this.speed = 250;
-                this.scene.time.delayedCall(3000, () => {
-                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
+                this.scene.time.delayedCall(6000, () => {
+                    this.speed = this.aux 
                 });
                 break;
             case 'vivu':
-                console.log("vivu");
                 this.aux = this.speed;
                 this.speed = 0;
                 this.scene.time.delayedCall(5000, () => {
@@ -158,7 +158,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 });
                 break;
             case 'invencible':
-                console.log("inven");
                 this.invulnerable = true;
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
@@ -167,6 +166,5 @@ export default class enemigo extends Phaser.GameObjects.Container {
             default:
                 break;
         }
-        //this.scene.potenciadorSpawneado = false; // Marcar que el potenciador ha sido recogido
     }
 }
