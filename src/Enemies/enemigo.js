@@ -10,7 +10,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {number} attackDistance - distancia mínima de ataque
      */
 
-    constructor(scene, x, y, player, speed, attackDistance, damage, life){
+    constructor(scene, x, y, player, speed, attackDistance, damage, life, experience){
         super(scene, x, y);
         
         this.scene.add.existing(this);
@@ -58,6 +58,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.body.setVelocity(0, 0);
                 this.body.destroy();
                 this.scene.sendPoints(this.points);
+                this.player.gainPersonalityExp(this.exp);
         
                 var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
         

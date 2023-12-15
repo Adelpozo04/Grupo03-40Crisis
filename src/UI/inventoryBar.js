@@ -6,6 +6,8 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
     
         this.Bar = this.scene.add.sprite(x, y, 'inventory').setScrollFactor(0);
 
+        this.slotSel = this.scene.add.sprite(x - 54, y, 'slot').setScrollFactor(0);
+
         this.Icon1 = this.scene.add.sprite(x - 64, y, 'fist').setScrollFactor(0).setAngle(-45);
 
         this.Icon2 = this.scene.add.sprite(x, y, 'bate').setScrollFactor(0).setAngle(-45);
@@ -13,6 +15,8 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
         this.Icon3 = this.scene.add.sprite(x + 64, y, 'espada').setScrollFactor(0).setAngle(-45);
 
         this.Bar.setScale(3.5, 3.5);
+
+        this.slotSel.setScale(3.5, 3.5);
     
         this.player = player;
 
@@ -48,21 +52,17 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
     }
 
     changeSelection(currentWeapon){
-        this.currentSelection.clearTint();
-
-        console.log("colorcito");
 
         if(currentWeapon == 0){
-            this.currentSelection = this.Icon1;
+            this.slotSel.x = this.x - 54;
         }
         else if(currentWeapon == 1){
-            this.currentSelection = this.Icon2;
+            this.slotSel.x = this.x + 4;
         }
         else if(currentWeapon == 2){
-            this.currentSelection = this.Icon3;
+            this.slotSel.x = this.x + 64;
         }
 
-        this.currentSelection.setTint(0x9b870c, 0x9b870c, 0x9b870c, 0x9b870c);
     }
     
     

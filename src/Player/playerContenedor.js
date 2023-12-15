@@ -192,12 +192,17 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         
     }
 
+    getCurrentPersonality(){
+        return this.currentPersonality;
+    }
+
     getPersonalityExp(personalityID){
         return this.personalityExp[personalityID];
     }
 
     gainPersonalityExp(exp){
         this.personalityExp[this.currentPersonality] += exp;
+        console.log(this.currentPersonality, this.personalityExp[this.currentPersonality]);
     }
 
     //Metodos de armas
@@ -276,6 +281,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
+    }
+
+    getCurrentWeaponName(){
+        return this.weaponNameByPersonality();
     }
 
     reload(){

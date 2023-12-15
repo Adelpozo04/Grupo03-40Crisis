@@ -60,23 +60,24 @@ export default class armaObjetosSpawneado extends Arma{
         if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.municion > 0)
         {
 
-            console.log(this.key);
 
             if(this.key == 'muro'){
-                console.log(this.key);
+                
                 let muroObj = new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
                 
             }
             else if(this.key == 'mina'){
-                console.log(this.key);
+                
                 let explosiveObj = new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
             }
             else if(this.key == 'c4'){
-                console.log(this.scene);
+                
                 let explosiveRemObj = new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
             }
 
-            console.log(this.key);
+            if(this.key == this.player.getCurrentWeaponName()){
+                this.player.gainPersonalityExp(1);
+            }
 
             this.elapsedTime = 0;
             

@@ -82,7 +82,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
-        this.load.image('inventory', './Assets/Sprites/UI/PlayGame/inventory.png')
+        this.load.image('inventory', './Assets/Sprites/UI/PlayGame/inventory.png');
+        this.load.image('slot', './Assets/Sprites/UI/PlayGame/slotSel.png');
 
     }
   

@@ -11,6 +11,8 @@ export default class armaDisparos extends Arma{
     constructor(scene, tiempoCooldown, damageArma, key, player)
     {
         super(scene,0,0,key,player)
+        this.key = key;
+
         this.scene = scene
 
         this.municion = 30;
@@ -18,7 +20,6 @@ export default class armaDisparos extends Arma{
         this.enfriamientoTime = tiempoCooldown;
         this.damageArma = damageArma;
 
-        this.enfriamientoPasado = true;
         this.canShoot = true;
         this.elapsedTime = 0;
 
@@ -56,9 +57,13 @@ export default class armaDisparos extends Arma{
             {
                 bala.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()))
             }
-            this.enfriamientoPasado = false;
             this.municion--;
             this.elapsedTime = 0;
+
+            console.log(this.key, this.player.getCurrentWeaponName())
+            if(this.key == this.player.getCurrentWeaponName()){
+                this.player.gainPersonalityExp(1);
+            }
         }   
     }
 
