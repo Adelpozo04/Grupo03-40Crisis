@@ -11,6 +11,7 @@ import Bala from '../Armas/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
 import municionBalas from '../Armas/municionBalas.js';
 import explosive from '../Armas/explosive.js';
+import Enemigo from "../Enemies/enemigo.js";
 
 
 export default class CiudadLevel extends Phaser.Scene{
@@ -292,16 +293,8 @@ export default class CiudadLevel extends Phaser.Scene{
 
 
         this.physics.add.collider(this.grupoEnemigosTotales, this.collisionLayer);
-
-        /*
-        // Detener la generación de enemigos después de un tiempo 
-        this.time.delayedCall(15000, () => {
-        spawner.stopSpawn();
-        });
-
-        */
         
-       this.spawnPotenciador();    
+        this.spawnPotenciador();    
 
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
@@ -331,7 +324,7 @@ export default class CiudadLevel extends Phaser.Scene{
                     let spawnPointX = spawnPoint.x;
                     let spawnPointY = spawnPoint.y;
                    
-                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.skeleton, this);
+                    this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike, this.enemy, this);
                     let pot = this.potenciador;
                     this.potenciadorSpawneado = true;
                     this.potenciadorRecogido = false;
@@ -350,46 +343,25 @@ export default class CiudadLevel extends Phaser.Scene{
 
                     console.log("aparecio potenciador");
 
-                    this.setPotenciador();
 
                     //delete potenciador le indica al mono que el potenciador se ha eliminado
                     this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
-                    this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
-                    //; this.skeleton.deletePotenciador() esto estaba dentro de las llaves ??
+                    //this.physics.add.collider(this.grupoEnemigosTotales, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);
   
-                }//,
+                    const enemigos = this.grupoEnemigosTotales.getChildren();
+                    console.log(this.grupoEnemigosTotales.getChildren()[0]);
+                    // Iterar sobre los enemigos para aplicar el efecto del potenciador a cada uno
+                   enemigos.forEach(enemigo => {
+                   // Verificar si el potenciador colisiona con este enemigo específico
+                   if (this.physics.overlap(this, enemigo)) {
+                       enemigo.applyEffect(this.key); // Aplicar efecto del potenciador al enemigo
+                       pot.enviarPotenciadorEnemy();
+                   }
+               });
+                }
 
 
-                //callbackScope: this,
-               // loop: false,
-         //   });
- 
-        //}
-       
 
-     //   this.myUI = new UIManager(this, 'UIManager', this.mike);
-
-     //   this.myUI.setScrollFactor(0);
-
-   // }
-
-   //Le pasa la info del potenciador a cualquier entidad que sea un mono
-   setPotenciador(){
-
-   //this.skeleton.setPotenciador(this.potenciador);
-   }
-   applyEffectPlayer() {
-      
-     if(!this.potenciadorSpawneado && this.potenciadorRecogido)
-        { 
-          // setTimeout(() => {
-                this.spawnPotenciador();
-               
-          //  }, 5000);        
-        }
-   
-          
-   }
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);

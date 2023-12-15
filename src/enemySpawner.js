@@ -16,12 +16,12 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     * @param {grupoEnemigos} grupoEnemigos - grupoEnemigos del level
     */ 
 
-    constructor(scene, x, y, player, grupoEnemigos) {
+    constructor(scene, x, y, player) {
         super(scene, x, y);
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.grupoEnemigos = grupoEnemigos
+        //this.grupoEnemigos = grupoEnemigos
         this.spawnX = x;
         this.spawnY = y;
         
@@ -29,6 +29,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         this.spawnTimer = null;
         this.collisionArea = this.scene.add.rectangle(x, y, 20, 20);
         this.scene.physics.add.existing(this.collisionArea);
+        this.grupoEnemigos = this.scene.add.group();
     }
 
     getScene()
@@ -73,7 +74,22 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
 
-                if (enemyType) {
+                if (enemyType === 'mono') {
+                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType);
+                    this.grupoEnemigos.add(enemy);
+                    enemiesSpawned++;
+                }
+                else if(enemyType === 'lutano'){
+                    const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
+                    this.grupoEnemigos.add(enemy);
+                    enemiesSpawned++;
+                }
+                else if(enemyType === 'robot') {
+                    const enemy = new Robot(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
+                    this.grupoEnemigos.add(enemy);
+                    enemiesSpawned++;
+                }
+                else {
                     const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player);
                     this.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
