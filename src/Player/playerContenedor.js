@@ -37,6 +37,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.invencible = false;
 
+        this.maxExp = 1800;
+
         this.dirX = 0;
         this.dirY = 0;
 
@@ -200,9 +202,21 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.personalityExp[personalityID];
     }
 
+    getMaxExp(){
+        return this.maxExp;
+    }
+
     gainPersonalityExp(exp){
-        this.personalityExp[this.currentPersonality] += exp;
-        console.log(this.currentPersonality, this.personalityExp[this.currentPersonality]);
+
+        if(this.personalityExp[this.currentPersonality] < this.maxExp){
+            this.personalityExp[this.currentPersonality] += exp;
+
+            if(this.personalityExp[this.currentPersonality] > this.maxExp){
+                this.personalityExp[this.currentPersonality] = this.maxExp;
+            }
+        }
+        
+
     }
 
     //Metodos de armas

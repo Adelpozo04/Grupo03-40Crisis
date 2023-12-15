@@ -1,8 +1,8 @@
-export default class personalityWheel extends Phaser.GameObjects.Container{
+export default class personalityWheel extends Phaser.GameObjects.Sprite{
 
     constructor( scene, x, y, player){
     
-        super(scene);
+        super(scene, x, y);
     
         this.x = x;
         this.y = y;
@@ -11,65 +11,36 @@ export default class personalityWheel extends Phaser.GameObjects.Container{
     
         this.currentPer = this.player.getCurrentPersonality();
 
-        this.analistaGradosFin = 30;
+        this.analistaGradosFin = 0;
         this.centinelaGradosFin = 90;
         this.exploradorGradosFin = 180;
         this.pacifistaGradosFin = 270;
-
-        this.fondoArc = this.scene.add.graphics().setScrollFactor(0);
-        this.analistaArc = this.scene.add.arc(scene, x, y, 128, 0, 90, false, 0xff00ff, 1).setScrollFactor(0).setDepth(20);
-        this.scene.add.existing(this.analistaArc);
-        console.log(this.analistaArc);
-        this.centinelaArc = this.scene.add.graphics().setScrollFactor(0);
-        this.exploradorArc = this.scene.add.graphics().setScrollFactor(0);
-        this.pacifistaArc = this.scene.add.graphics().setScrollFactor(0);
-
-        
 
         this.GradosIni = new Map([
             ['analista', 0], ['centinela', 90], ['explorador', 180], ['pacifista', 270]
         ]);
 
-        /*
-        this.fondoArc.lineStyle(25, 0x000000);
-        this.analistaArc.lineStyle(25, 0xff00ff);
-        this.centinelaArc.lineStyle(25, 0xffff00);
-        this.exploradorArc.lineStyle(25, 0x0000ff);
-        this.pacifistaArc.lineStyle(25, 0x00ff00);
+        //this.fondoArc = this.scene.add.graphics().setScrollFactor(0);
 
-        //Rueda blanca margen
-        this.fondoArc.beginPath();
-        this.fondoArc.arc(x, y, 50, Phaser.Math.DegToRad(0), Phaser.Math.DegToRad(360), false, 0.02);
-        this.fondoArc.strokePath();
-        this.fondoArc.closePath();
+        this.analistaArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('analista'), 0, false).setScrollFactor(0);
+        this.analistaArc.setStrokeStyle(20, 0xff00ff, 1);
+        this.analistaArc.closePath = false;
+        this.scene.add.existing(this.analistaArc);
 
-        //Analista
-        this.analistaArc.beginPath();
-        this.analistaArc.arc(x, y, 40, Phaser.Math.DegToRad(this.GradosIni.get('analista')), Phaser.Math.DegToRad(this.analistaGradosFin), false, 0.02);
-        this.analistaArc.strokePath();
-        this.analistaArc.closePath();
+        this.centinelaArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('centinela'), 90, false).setScrollFactor(0);
+        this.centinelaArc.setStrokeStyle(20, 0x0000ff, 1);
+        this.centinelaArc.closePath = false;
+        this.scene.add.existing(this.centinelaArc);
 
-        //Centinela
-        this.centinelaArc.beginPath();
-        this.centinelaArc.arc(x, y, 40, Phaser.Math.DegToRad(this.GradosIni.get('centinela')), Phaser.Math.DegToRad(this.centinelaGradosFin), false, 0.02);
-        this.centinelaArc.strokePath();
-        this.centinelaArc.closePath();
+        this.exploradorArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('explorador'), 180, false).setScrollFactor(0);
+        this.exploradorArc.setStrokeStyle(20, 0xffff00, 1);
+        this.exploradorArc.closePath = false;
+        this.scene.add.existing(this.exploradorArc);
 
-        //Explorador
-        this.exploradorArc.beginPath();
-        this.exploradorArc.arc(x, y, 40, Phaser.Math.DegToRad(this.GradosIni.get('explorador')), Phaser.Math.DegToRad(this.exploradorGradosFin), false, 0.02);
-        this.exploradorArc.strokePath();
-        this.exploradorArc.closePath();
-
-
-        //Pacifista
-        this.pacifistaArc.beginPath();
-        this.pacifistaArc.arc(x, y, 40, Phaser.Math.DegToRad(this.GradosIni.get('pacifista')), Phaser.Math.DegToRad(this.pacifistaGradosFin), false, 0.02);
-        this.pacifistaArc.strokePath();
-        this.pacifistaArc.closePath();
-*/
-
-        this.draw();
+        this.pacifistaArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('pacifista'), 270, false).setScrollFactor(0);
+        this.pacifistaArc.setStrokeStyle(20, 0x00ff00, 1);
+        this.pacifistaArc.closePath = false;
+        this.scene.add.existing(this.pacifistaArc);
     
         scene.add.existing(this);
     
@@ -78,32 +49,29 @@ export default class personalityWheel extends Phaser.GameObjects.Container{
     //Dibuja la barra de vida
     draw(){
         
-        /*
-        this.fondoArc.fillPath();
+        this.analistaArc.setEndAngle(this.analistaGradosFin);
 
-        this.analistaArc.fillPath();
+        this.centinelaArc.setEndAngle(this.centinelaGradosFin);
 
-        this.centinelaArc.fillPath();
+        this.exploradorArc.setEndAngle(this.exploradorGradosFin);
 
-        this.exploradorArc.fillPath();
-
-        this.pacifistaArc.fillPath();
-        */
+        this.pacifistaArc.setEndAngle(this.pacifistaGradosFin);
 
     }
 
     preUpdate(t, dt){
-        /*
-        this.exploradorGradosFin = (this.player.getPersonalityExp(0) * 360) / 1800;
+        
+        this.analistaGradosFin = this.GradosIni.get('analista') + (this.player.getPersonalityExp(0) * 360) / this.player.getMaxExp();
 
-        this.exploradorGradosFin = (this.player.getPersonalityExp(1) * 360) / 1800;
+        this.centinelaGradosFin = this.GradosIni.get('centinela') + (this.player.getPersonalityExp(2) * 360) / this.player.getMaxExp();
 
-        this.centinelaGradosFin = (this.player.getPersonalityExp(2) * 360) / 1800;
+        this.exploradorGradosFin = this.GradosIni.get('explorador') + (this.player.getPersonalityExp(1) * 360) / this.player.getMaxExp(); 
 
-        this.pacifistaGradosFin = (this.player.getPersonalityExp(3) * 360) / 1800;
+        this.pacifistaGradosFin = this.GradosIni.get('pacifista') + (this.player.getPersonalityExp(3) * 360) / this.player.getMaxExp();
+
+        console.log(this.player.getPersonalityExp(0), this.player.getPersonalityExp(1), this.player.getPersonalityExp(2), this.player.getPersonalityExp(3));
 
         this.draw();
-        */
     }
     
     
