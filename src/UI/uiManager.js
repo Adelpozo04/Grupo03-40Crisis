@@ -1,5 +1,6 @@
 import HealthBar from "./healthBar.js";
 import inventoryBar from "./inventoryBar.js";
+import personalityWheel from "./personalityWheel.js";
 import playerContenedor from "../Player/playerContenedor.js";
 
 export default class UIManager extends Phaser.GameObjects.Container{
@@ -14,7 +15,9 @@ constructor(scene, key, player){
 
     this.healthBar = new HealthBar(scene, 24, 16, player, 341, 32).setScrollFactor(0);
 
-    this.inventoryBar = new inventoryBar(scene, 1100, 650).setScrollFactor(0);
+    this.inventoryBar = new inventoryBar(scene, 1075, 650, player).setScrollFactor(0);
+
+    this.personalityWheel = new personalityWheel(scene, 1100, 100, player).setScrollFactor(0);
 
     this.key = key;
 
