@@ -76,7 +76,7 @@ export default class SelectorNivel extends Phaser.Scene {
             yoyo: true,
             repeat: -1,
         });
-        timeline.play();
+        //timeline.play();
     }
 
     // Boton de inicio
@@ -122,7 +122,7 @@ export default class SelectorNivel extends Phaser.Scene {
             yoyo: true,
             repeat: -1,
         });
-        timeline.play();
+        //timeline.play();
     }
 
     setMaps(){
@@ -188,14 +188,15 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        var arrowButtonRight = this.add.image(725, 75, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        var arrowButtonRight = this.add.image(725, 0, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
         var arrowButtonLeft = this.add.image(475, 75, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
 
         arrowButtonRight.setInteractive();
         arrowButtonRight.on("pointerdown", () => {
+            console.log("FLECHA")
             this.changeHat(h, 1);
         });
-
+        
         arrowButtonLeft.setInteractive();
         arrowButtonLeft.on("pointerdown", () => {
             this.changeHat(h, -1);
@@ -211,9 +212,11 @@ export default class SelectorNivel extends Phaser.Scene {
         this.actualizarBarraDeProgreso();
 
         // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic
+        /*
         this.input.on('pointerdown', () => {
             this.ganarExperiencia(this.currentPage, 10);
         });
+        */
     }
 
     ganarExperiencia(nivel, points) {
