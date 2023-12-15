@@ -45,7 +45,11 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dirX = 0;
         this.dirY = 0;
 
-        const Personalities = {
+        this.changePerCooldown = 1;
+
+        this.changePerBlock = false;
+
+        this.Personalities = {
             ANALISTA: 0,
             EXPLORADOR: 1,
             CENTINELA: 2,
@@ -53,7 +57,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     
         this.personalityExp = [0, 0, 0, 0];
     
-        this.currentPersonality = Personalities.EXPLORADOR;
+        this.currentPersonality = this.Personalities.EXPLORADOR;
+
+        this.currentWeapon = 0;
 
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
@@ -72,6 +78,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dKey = this.scene.input.keyboard.addKey('D');
         this.wKey = this.scene.input.keyboard.addKey('W');
         this.sKey = this.scene.input.keyboard.addKey('S');
+        this.qKey = this.scene.input.keyboard.addKey('Q');
+        this.eKey = this.scene.input.keyboard.addKey('E');
 
         this.lookDer = true;
 
@@ -80,7 +88,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.scene.add.existing(this);  
 
         this.body.setSize(this.player.width/2, this.player.width);
-
 
         //Animaciones
         this.scene.anims.create({
@@ -120,21 +127,127 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['c4', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('c4'), 'c4', this)],
         ])
 
-        this.arma = this.armas.get('bate');
+        this.arma = this.armas.get('fist');
+
         this.arma.activate();
     }
 
+    unlockPerChange(){
+        this.changePerBlock = false;
+    }
+
+    changePersonality(right){
+
+        this.changePerBlock = true;
+
+        this.scene.time.addEvent({
+            delay: 1000 * this.changePerCooldown,
+            callback: this.unlockPerChange,
+            callbackScope: this,
+            loop: false
+
+        })
+
+        if(right){
+            this.currentPersonality = (this.currentPersonality + 1) % 4;
+        }
+        else{
+            if(this.currentPersonality == 0){
+                this.currentPersonality = 3;
+            }
+            else{
+                this.currentPersonality--;
+            }
+
+        }
+
+        this.currentWeapon = 0;
+        let name = this.weaponNameByPersonality();
+        console.log(name);
+        this.changeWeapon(name);
+
+    }
+
+    weaponNameByPersonality(){
+        let weaponName = ' '
+
+        if(this.currentPersonality == this.Personalities.ANALISTA){
+            if(this.currentWeapon == 0){
+                weaponName = 'muro';
+            }
+            else if(this.currentWeapon  == 1){
+                weaponName = 'mina';
+            }
+            else if(this.currentWeapon  == 2){
+                weaponName = 'c4';
+            }
+        }
+        else if(this.currentPersonality == this.Personalities.CENTINELA){
+            if(this.currentWeapon  == 0){
+                weaponName = 'pistola';
+            }
+            else if(this.currentWeapon  == 1){
+                weaponName = 'metralleta';
+            }
+            else if(this.currentWeapon  == 2){
+                weaponName = 'franco';
+            }
+        }
+        else if(this.currentPersonality == this.Personalities.EXPLORADOR){
+            if(this.currentWeapon  == 0){
+                weaponName = 'fist';
+            }
+            else if(this.currentWeapon  == 1){
+                weaponName = 'bate';
+            }
+            else if(this.currentWeapon  == 2){
+                weaponName = 'espada';
+            }
+        }
+        else if(this.currentPersonality == this.Personalities.PACIFISTA){
+            if(this.currentWeapon  == 0){
+                weaponName = 'paralizador';
+            }
+            else if(this.currentWeapon  == 1){
+                weaponName = 'empujon';
+            }
+            else if(this.currentWeapon  == 2){
+                weaponName = 'varita';
+            }
+        }
+
+        return weaponName;
+    }
+
+    changeWeaponAux(up){
+        if(up){
+            this.currentWeapon = (this.currentWeapon + 1) % 3;
+        }
+        else{
+            if(this.currentWeapon == 0){
+                this.currentWeapon = 2;
+            }
+            else{
+                this.currentWeapon--;
+            }
+
+        }
+
+        this.changeWeapon(this.weaponNameByPersonality());
+    }
 
     changeWeapon(newWeaponName)
     {
         this.arma.deactivate()
+        console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
     }
 
     preUpdate(t, dt)
     {
-        this.movement()    
+        this.movement();
+        this.personalityInput();
     }
 
     movement()
@@ -216,6 +329,18 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
     }
 
+    personalityInput(){
+        if(!this.changePerBlock){
+            if(this.eKey.isDown){
+                this.changePersonality(true);
+            }
+            else if(this.qKey.isDown){
+                this.changePersonality(false);
+            }
+        }
+        
+    }
+
     receiveDamage(damage){
         if(!this.invencible)
         {
@@ -291,6 +416,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         return this.personalityExp[personalityID];
 
+    }
+
+    gainPersonalityExp(exp){
+        this.personalityExp[this.currentPersonality] += exp;
     }
 
     

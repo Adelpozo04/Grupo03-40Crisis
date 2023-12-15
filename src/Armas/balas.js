@@ -12,7 +12,8 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'bala')
         scene.physics.world.enable(this);
         this.scene.add.existing(this);
-        this.setScale(3)
+        this.setScale(3);
+        this.scene.grupoBalas.add(this);
         this.speed = 350;
         this.damage = damage;
         this.key = key;
