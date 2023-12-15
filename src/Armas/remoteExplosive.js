@@ -12,15 +12,9 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         this.scene.addExplosiveToGroup(this);
 
-        this.scene = scene;
-
         this.setScale(1.5, 1.5);
 
         //Inicializacion de variables
-
-        this.x = x;
-
-        this.y = y;
         
         this.explotionDuration = 2;
 
@@ -75,10 +69,7 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
     detonar(){
 
-        console.log(this);
-
-        
-        console.log(this.scene);
+        this.scene.input.clear(this);
 
         this.exploting = true;
 
