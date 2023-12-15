@@ -10,7 +10,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {number} attackDistance - distancia mínima de ataque
      */
 
-    constructor(scene, x, y, player, speed, attackDistance, damage, life, experience){
+    constructor(scene, x, y, player, speed, attackDistance, damage, life, points){
         super(scene, x, y);
         
         this.scene.add.existing(this);
@@ -20,6 +20,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.life = life;
         this.direction = new Phaser.Math.Vector2();
         this.attackDistance = attackDistance;
+        this.points = points;
+
         this.objetive = player;
 
         this.isAttacking = false;

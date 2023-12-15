@@ -74,7 +74,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
                 if (enemyType === 'mono') {
-                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType, this.scene.generateEnemyConfig(enemyType));
+                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType);
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }

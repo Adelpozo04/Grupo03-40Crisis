@@ -12,7 +12,7 @@ export default class EnemigoBasico extends Enemigo{
      */ 
 constructor(scene, x, y, key, player, config)
 {
-    super(scene, x, y, player, config.speed, config.attackDistance, config.damage, config.vida);
+    super(scene, x, y, player, config.speed, config.attackDistance, config.damage, config.vida, config.points);
     this.key = key;
     this.scene = scene;
 
