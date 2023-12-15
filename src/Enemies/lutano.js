@@ -3,9 +3,9 @@ import cepo from "./cepo.js";
 
 export default class lutano extends EnemigoBasico{
 
-constructor(scene, x, y, key, player){
+constructor(scene, x, y, key, player, config){
 
-    super(scene, x, y, key, player)
+    super(scene, x, y, key, player, config)
 
     this.scene = scene;
 

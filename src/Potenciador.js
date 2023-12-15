@@ -9,15 +9,13 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     * @param {sprite} sprite - sprite
     * @param {number} y - posicion y
     * @param {playerContenedor} player - referencia al player
-    * @param {Enemigo} enemigo - referencia al enemigo 
     * @param {string} key - sprite
     */
 
-    constructor(scene, x, y, key, player, enemy){
+    constructor(scene, x, y, key, player){
         super(scene, x, y);
         this.key = key;
         this.player = player;
-        this.enemy = enemy
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -25,47 +23,17 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         this.add(this.sprite);
         this.setScale(0.15); 
 
-        const potenciadorTypes = {
-            BOTIQUIN: 'botiquin', 
-            VELOCIDAD: 'velocidad', 
-            SLEEP: 'vivu', 
-            INVENCIBLE: 'invencible',
-        };
-
+        scene.physics.add.collider(this, this.player, ()=>{
+            this.player.applyEffect(this.key)
+            this.scene.potenciadorRecogido = true;
+            this.scene.potenciadorSpawneado = false;
+            this.destroy();
+        })
+        scene.physics.add.collider(this, scene.grupoEnemigos, (pot, enemigo)=>{
+            enemigo.applyEffect(this.key)
+            this.scene.potenciadorRecogido = true;
+            this.scene.potenciadorSpawneado = false;
+            this.destroy();
+        })
     }
-
-    getScene()
-    {
-        return this.scene;
-    }
-
-
-    getPosition() {
-        return { x: this.x, y: this.y };
-    }
-
-    enviarPotenciadorPlayer(){
-
-        this.player.applyEffect(this.key);
-
-        this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
-        this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
-        this.destroy();
-                
-    }
-
-    enviarPotenciadorEnemy(){
-        console.log("enemigoooo");
-        // Obtener la lista de enemigos en el grupo
-       
-        this.getScene().potenciadorRecogido = true; // Indica que el potenciador ha sido recogido
-        this.getScene().potenciadorSpawneado = false;  // Habilita la generación del próximo potenciador
-        this.destroy();
-                
-    }
-
-    
-   
-
-    
 }

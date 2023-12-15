@@ -7,11 +7,11 @@ export default class Robot extends Enemigo {
      * @param {key} key - sprite
      * @param {player} player - referencia al player
      */ 
-    constructor(scene, x, y, key, player)
+    constructor(scene, x, y, key, player, config)
     {
         super(scene, x, y, player, 0.5, 160);
-        this.speed = 0.5; // velocidad enemigo
-        this.attackDistance = 160; // distancia ataque (30 = melee)
+        this.speed = config.speed; // velocidad enemigo
+        this.attackDistance = config.attackDistance; // distancia ataque (30 = melee)
         
         this.key = key;
         scene.add.existing(this);

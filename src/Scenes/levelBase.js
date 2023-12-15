@@ -1,34 +1,59 @@
+import playerContenedor from '../Player/playerContenedor.js';
+import Potenciador from '../Potenciador.js';
+import Robot from '../Enemies/robot.js'
+import EnemigoBasico from '../Enemies/enemigoBasico.js';
+import lutano from '../Enemies/lutano.js';
+import Mono from '../Enemies/mono.js';
+import cepo from '../Enemies/cepo.js';
+import UIManager from '../UI/uiManager.js';
+import Bala from '../Armas/balas.js'
+import EnemigoSpawner from '../enemySpawner.js';
+import municionBalas from '../Armas/municionBalas.js';
+import explosive from '../Armas/explosive.js';
+import Enemigo from "../Enemies/enemigo.js";
 
+export default class Level extends Phaser.Scene{
 
-export default class load extends Phaser.Scene{
+    constructor(levelName){
+        super({key: levelName})
 
-
-    constructor(){
-        super({key: 'load'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
-        this.potenciadorSpawneado = false;
-        this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
+        // ENEMIES DATA
+        this.speedEnemigos = new Map([
+            ['zombie', 75], ['skeleton', 175], ['burger', 50], ['lutano', 75], ['caracol', 25]
+        ]);
+        this.damageEnemigos = new Map([
+            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999]
+        ]);
+        this.attackDistEnemigos = new Map([
+            ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10]
+        ]);
+        this.vidaEnemigos = new Map([
+            ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999]
+        ]);
+        this.scaleEnemigos = new Map([
+            ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
+        ]);
+        this.puntosEnemigos = new Map([
+            ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3], ['caracol', 25]
+        ]);
+        this.anchoColliderEnemigos = new Map([
+            ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18]
+        ]);
+        this.altoColliderEnemigos = new Map([
+            ['zombie', 26], ['skeleton', 24], ['burger', 30], ['lutano', 30], ['caracol', 26]
+        ]);
+        this.posXColliderEnemigos = new Map([
+            ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12], ['caracol', 9]
+        ]);
+        this.posYColliderEnemigos = new Map([
+            ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10]
+        ]);
+        this.munitionDropMaxProbability = new Map([
+            ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1]
+        ]);
     }
-    
-    init(data){
-        console.log(data);
-    }
-    
+
     preload(){
-
-        //Se carga el Json
-        this.load.tilemapTiledJSON('ciudadTilemap', './Assets/JSON/MapaCiudad.json');
-
-        //Se carga el png con los tiles que usa el Json
-        this.load.image('patronesCiudadTilemap', './Assets/Sprites/Tilesets/Ciudad/tilemapCiudadExtruded.png');
-
-        this.load.tilemapTiledJSON('playaTilemap', './Assets/JSON/MapaPlaya.json');
-
-        this.load.image('patronesPlayaTilemap', './Assets/Sprites/Tilesets/Playa/TilePlaya-export.png');
-
-        this.load.tilemapTiledJSON('volcanTilemap', './Assets/JSON/MapaVolcan.json');
-
-        this.load.image('patronesVolcanTilemap', './Assets/Sprites/Tilesets/Volcan/TileVolcan.png');
-
         //Cargado de spritessheets de entidades del juego
         this.load.spritesheet('mike', './Assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 32, frameHeight: 32});
@@ -79,9 +104,20 @@ export default class load extends Phaser.Scene{
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
         this.load.image('inventory', './Assets/Sprites/UI/PlayGame/inventory.png');
         this.load.image('slot', './Assets/Sprites/UI/PlayGame/slotSel.png');
-
     }
-  
+
+    loadFont(name, url) {
+		let self = this;
+	    let newFont = new FontFace(name, `url(${url})`);
+	    newFont.load()
+	    .then(function (loaded) { 
+	        document.fonts.add(loaded);
+	        self.continueCreate();
+	    }).catch(function (error) {
+	        return error;
+    	});
+	}
+
     loadAnimations()
     {
         this.anims.create({
@@ -161,13 +197,61 @@ export default class load extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('deathEnemy', {start: 0, end: 6}),
             frameRate: 10
         })
-    
-        
-
     }
 
-    create(data){
+    create()
+    {
         this.loadAnimations();
-        this.scene.start("PantallaInicial");
+        this.hsv = Phaser.Display.Color.HSVColorWheel();
+        this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
+        
+        this.textCreated = false;
+        this.scaleEffect = false;
+        this.letterColor = 0;
+
+        // grupo de balas
+        this.grupoBalas = this.add.group({
+            classType: Bala,
+            maxSize: 50
+        })
+
+        this.grupoMunicionBalas = this.add.group({
+            classType: municionBalas,
+            maxSize: 50
+        })
+
+        this.grupoEnemigos = this.add.group({
+            runChildUpdate: true,
+
+        })
+
+        this.grupoExplosivos = this.add.group({
+            classType: explosive,
+            runChildUpdate: true,
+
+        })
+       
+        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
+            bala.destroy()
+        }, null, this)
+    }
+
+    // crea el config del enemigo (json) para instanciar los enemigos
+    generateEnemyConfig(enemyType)
+    {
+        let config = {
+            speed: this.speedEnemigos.get(enemyType),
+            damage: this.damageEnemigos.get(enemyType),
+            attackDistance: this.attackDistEnemigos.get(enemyType),
+            vida: this.vidaEnemigos.get(enemyType),
+            scale: this.scaleEnemigos.get(enemyType),
+            puntos: this.puntosEnemigos.get(enemyType),
+            anchoCollider: this.anchoColliderEnemigos.get(enemyType),
+            altoCollider: this.altoColliderEnemigos.get(enemyType),
+            posXCollider: this.posXColliderEnemigos.get(enemyType),
+            posYCollider: this.posYColliderEnemigos.get(enemyType),
+            ammoDrop: this.munitionDropMaxProbability.get(enemyType)
+        }
+        return config;
     }
 }

@@ -29,7 +29,6 @@ export default class PantallaInicial extends Phaser.Scene{
 	}
 
     create(){
-
         this.add.image(0, 0, 'PlayaFondo').setScale(1, 1).setOrigin(0, 0)
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
@@ -39,8 +38,6 @@ export default class PantallaInicial extends Phaser.Scene{
         this.letterColor = 0;
 
         this.nextKey = this.input.keyboard.addKey('O');
-
-        
     }
 
     continueCreate() {
