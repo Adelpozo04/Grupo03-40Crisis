@@ -388,7 +388,7 @@ export default class CiudadLevel extends Phaser.Scene{
                     this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
                     this.physics.add.collider(this.grupoEnemigos, pot, ()=>{pot.enviarPotenciadorEnemy()}, null, this);            
       
-                }
+                
 
         //delete potenciador le indica al mono que el potenciador se ha eliminado
         this.physics.add.collider(this.mike, pot, ()=>{pot.enviarPotenciadorPlayer()}, null, this);
@@ -436,7 +436,7 @@ export default class CiudadLevel extends Phaser.Scene{
 
     getGrupoEnenmigos(){
         return this.grupoEnemigos;
-
+    }
     changeInventory(currentPersonality){
         this.myUI.changeInventory(currentPersonality);
         this.myUI.changeInventorySelect(0);
