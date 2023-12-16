@@ -1,5 +1,6 @@
 import Arma from "../arma.js"
 import Bala from "./balas.js"
+import BalaMagica from "./balasMagicas.js";
 export default class armaDisparos extends Arma{
     /**
     * @param {scene} scene - escena a colocar
@@ -44,19 +45,35 @@ export default class armaDisparos extends Arma{
     tryAttack()
     {
 
+        console.log('disparo', this.key);
+
         if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.player.disparosAmmo > 0)
         {
-            var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', this.damageArma);
-            if (bala)
-            {
-                bala.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()))
-            }
-            this.player.disparosAmmo--;
-            this.elapsedTime = 0;
+            console.log(this.key, this.key == 'varita');
 
-            if(this.key == this.player.getCurrentWeaponName()){
-                this.player.gainPersonalityExp(1);
+            if(this.key == 'varita'){
+
+                var balaMag = new BalaMagica(this.scene, this.x, this.y, 'balaMagica', this.damageArma);
+
+                balaMag.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()));
+
             }
+            else{
+                var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', this.damageArma);
+                if (bala)
+                {
+                    bala.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()))
+                }
+                this.player.disparosAmmo--;
+                
+            }
+
+            this.elapsedTime = 0;
+    
+                if(this.key == this.player.getCurrentWeaponName()){
+                    this.player.gainPersonalityExp(1);
+                }
+            
         }   
     }
 

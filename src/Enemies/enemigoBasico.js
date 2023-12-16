@@ -25,6 +25,7 @@ constructor(scene, x, y, key, player, config)
     this.attackFlag = true;
     this.alive = true;
     this.explosiveState = false;
+    this.objetiveState = false;
     this.points = config.puntos;
     this.maxDropProbability = config.ammoDrop;
     scene.physics.add.existing(this);
@@ -63,6 +64,8 @@ gainExplosiveState(explosionTime){
         })
 
 }
+
+
 
 lostExplosiveState(){
     console.log("volvio a la normalidad")

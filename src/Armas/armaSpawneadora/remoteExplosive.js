@@ -82,7 +82,7 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         this.scene.physics.add.overlap(this.zone, this.grupoEnemigos, function(zone, enemy){
 
-            enemy.recieveDamage(10);
+            enemy.receiveDamage(10);
             enemy.gainExplosiveState(this.explotionDuration);
 
         }, null, this);

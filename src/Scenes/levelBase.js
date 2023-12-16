@@ -11,6 +11,7 @@ import EnemigoSpawner from '../enemySpawner.js';
 import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
+import BalaMagica from '../Armas/armaDisparos/balasMagicas.js';
 
 export default class Level extends Phaser.Scene{
 
@@ -103,6 +104,7 @@ export default class Level extends Phaser.Scene{
         this.load.image('paralizador', './Assets/Sprites/Armas/paralizador.png');
         this.load.image('empuje', './Assets/Sprites/Armas/empuje.png');
         this.load.image('varita', './Assets/Sprites/Armas/varita.png');
+        this.load.image('balaMagica', './Assets/Sprites/Armas/balaMagica.png')
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
@@ -219,6 +221,11 @@ export default class Level extends Phaser.Scene{
             maxSize: 50
         })
 
+        this.grupoBalasMagicas = this.add.group({
+            classType: BalaMagica,
+            maxSize: 50
+        })
+
         this.grupoMunicionBalas = this.add.group({
             classType: municionBalas,
             maxSize: 50
@@ -235,9 +242,6 @@ export default class Level extends Phaser.Scene{
 
         })
        
-        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
-            bala.destroy()
-        }, null, this)
     }
 
     // crea el config del enemigo (json) para instanciar los enemigos

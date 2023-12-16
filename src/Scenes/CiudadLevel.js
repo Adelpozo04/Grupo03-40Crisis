@@ -83,13 +83,28 @@ export default class CiudadLevel extends LevelBase{
 
         this.enemySpawners();
 
+        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, layer){
+            bala.destroy()
+        }, null, this)
+
+        this.physics.add.collider(this.grupoBalasMagicas, this.collisionLayer, function(bala, layer){
+            bala.destroy()
+        }, null, this)
+
         // balas con enemigos
         this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
-            enemigo.recieveDamage(bala.getDamage());
+            enemigo.receiveDamage(bala.getDamage());
             bala.destroy();
 
         });
+
+        this.physics.add.collider(this.grupoBalasMagicas, this.grupoEnemigos, function(bala, enemy){
+
+            enemy.gainObjetiveState();
+            bala.destroy();
+
+        })
 
         // municion con player
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
