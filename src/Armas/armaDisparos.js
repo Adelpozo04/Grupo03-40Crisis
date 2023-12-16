@@ -15,8 +15,6 @@ export default class armaDisparos extends Arma{
 
         this.scene = scene
 
-        this.municion = 30;
-
         this.enfriamientoTime = tiempoCooldown;
         this.damageArma = damageArma;
 
@@ -39,10 +37,6 @@ export default class armaDisparos extends Arma{
         
     }
 
-    reload(){
-        this.municion += 20;
-    }
-
     calculateElapsedTime(){
         this.elapsedTime += 1;
     }
@@ -50,17 +44,16 @@ export default class armaDisparos extends Arma{
     tryAttack()
     {
 
-        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.municion > 0)
+        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.player.disparosAmmo > 0)
         {
             var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', this.damageArma);
             if (bala)
             {
                 bala.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()))
             }
-            this.municion--;
+            this.player.disparosAmmo--;
             this.elapsedTime = 0;
 
-            console.log(this.key, this.player.getCurrentWeaponName())
             if(this.key == this.player.getCurrentWeaponName()){
                 this.player.gainPersonalityExp(1);
             }

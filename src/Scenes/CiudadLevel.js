@@ -95,7 +95,7 @@ export default class CiudadLevel extends LevelBase{
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
 
             ammo.destroyMyself();
-            player.reload();
+            player.reloadDisparosAmmo();
 
         });
 

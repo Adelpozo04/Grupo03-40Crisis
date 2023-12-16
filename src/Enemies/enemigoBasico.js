@@ -25,7 +25,7 @@ constructor(scene, x, y, key, player, config)
     this.attackFlag = true;
     this.alive = true;
     this.explosiveState = false;
-    this.points = config.puntos;
+    this.points = config.puntosEnemigo;
     this.maxDropProbability = config.ammoDrop;
     scene.physics.add.existing(this);
     scene.add.existing(this);

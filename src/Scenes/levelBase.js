@@ -34,7 +34,7 @@ export default class Level extends Phaser.Scene{
             ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
         ]);
         this.puntosEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3], ['caracol', 25]
+            ['zombie', 1], ['skeleton', 2], ['burger', 10], ['lutano', 5], ['caracol', 25]
         ]);
         this.anchoColliderEnemigos = new Map([
             ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18]
@@ -48,9 +48,13 @@ export default class Level extends Phaser.Scene{
         this.posYColliderEnemigos = new Map([
             ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10]
         ]);
+
+        //1 = 100%, 3 = 33%, 10 = 1% ...
         this.munitionDropMaxProbability = new Map([
-            ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1]
+            ['zombie', 10], ['skeleton', 1], ['burger', 5], ['lutano', 3], ['caracol', 1]
         ]);
+
+        
     }
 
     preload(){

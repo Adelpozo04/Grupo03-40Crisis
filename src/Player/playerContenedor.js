@@ -58,6 +58,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.currentWeapon = 0;
 
+        this.disparosAmmo = 30;
+
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
@@ -301,9 +303,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.weaponNameByPersonality();
     }
 
-    reload(){
-        this.arma.reload();
+    reloadDisparosAmmo(){
+        this.disparosAmmo += 10;
+        console.log(this.disparosAmmo);
     }
+
+    getAmmo(){
+        return this.disparosAmmo;
+    }
+
 
     preUpdate(t, dt)
     {
@@ -311,6 +319,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.personalityInput();
     }
 
+    //Movimiento y fisicas
     movement()
     {
         if(this.dirX == 0 || this.dirX == -1){
@@ -398,6 +407,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
        
     }
 
+    //Potenciadores
     applyEffect(keyPotenciador){
         switch (keyPotenciador) {
             case 'botiquin':
@@ -431,6 +441,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
     }
 
+    //Gets generales
     getPlayer(){
         return this.player;
     }

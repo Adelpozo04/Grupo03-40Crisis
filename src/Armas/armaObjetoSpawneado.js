@@ -18,8 +18,6 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.key = key;
 
-        this.municion = 30;
-
         this.enfriamientoTime = TiempoCooldown;
 
         this.enfriamientoPasado = true;
@@ -46,10 +44,6 @@ export default class armaObjetosSpawneado extends Arma{
         
     }
 
-    reload(){
-        this.municion += 20;
-    }
-
     calculateElapsedTime(){
         this.elapsedTime += 1;
     }
@@ -57,7 +51,7 @@ export default class armaObjetosSpawneado extends Arma{
     tryAttack()
     {
 
-        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.municion > 0)
+        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime)
         {
 
 

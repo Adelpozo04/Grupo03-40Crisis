@@ -60,7 +60,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.body.setVelocity(0, 0);
                 this.body.destroy();
                 this.scene.sendPoints(this.points);
-                this.player.gainPersonalityExp(this.exp);
+                this.player.gainPersonalityExp(2);
         
                 var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
         
