@@ -102,7 +102,7 @@ export default class armaMelee extends Arma{
             zone.body.setCircle(radioAtaque)
 
             this.scene.physics.add.overlap(zone, this.scene.grupoEnemigos, (zone, enemy) =>{
-                enemy.recieveDamage(this.damageArma)
+                enemy.receiveDamage(this.damageArma)
                 let direction = new Phaser.Math.Vector2(enemy.x - this.player.x, enemy.y - this.player.y)
                 direction.normalize()
                 enemy.knockBack(direction);

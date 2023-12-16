@@ -1,7 +1,7 @@
 
-import armaDisparos from "../Armas/armaDisparos.js";
+import armaDisparos from "../Armas/armaDisparos/armaDisparos.js";
 import armaMelee from "../Armas/armaMelee.js";
-import armaObjetosSpawneado from "../Armas/armaObjetoSpawneado.js";
+import armaObjetosSpawneado from "../Armas/armaSpawneadora/armaObjetoSpawneado.js";
 
 export default class playerContenedor extends Phaser.GameObjects.Container {
 
@@ -57,6 +57,8 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.currentPersonality = this.Personalities.EXPLORADOR;
 
         this.currentWeapon = 0;
+
+        this.disparosAmmo = 30;
 
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
@@ -117,11 +119,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         var tiempoCooldown = new Map([
             ['fist', 600], ['bate', 1000], ['espada', 800],
             ['pistola', 2], ['metralleta', 0.2], ['franco', 7],
-            ['muro', 2], ['mina', 4], ['c4', 6]
+            ['muro', 2], ['mina', 4], ['c4', 6],
+            ['paralizador', 2], ['empuje', 400], ['varita', 1]
         ]);
         var damageArmas = new Map([
             ['fist', 1], ['bate', 1], ['espada', 1],
             ['pistola', 5], ['metralleta', 2], ['franco', 30],
+            ['empuje', 0], ['varita', 0]
         ]);
 
 
@@ -135,9 +139,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['mina', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('mina'), 'mina', this)],
             ['muro', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('muro'), 'muro', this)],
             ['c4', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('c4'), 'c4', this)],
+            ['paralizador', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('paralizador'), 'paralizador', this)],
+            ['empuje', new armaMelee(this.scene, tiempoCooldown.get('empuje'), damageArmas.get('empuje'), 'empuje', this)],
+            ['varita', new armaDisparos(this.scene, tiempoCooldown.get('varita'), damageArmas.get('varita'), 'varita', this)]
         ])
 
-        this.arma = this.armas.get('fist');
+        this.arma = this.armas.get('paralizador');
 
         this.arma.activate();
     }
@@ -261,7 +268,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 weaponName = 'paralizador';
             }
             else if(this.currentWeapon  == 1){
-                weaponName = 'empujon';
+                weaponName = 'empuje';
             }
             else if(this.currentWeapon  == 2){
                 weaponName = 'varita';
@@ -301,9 +308,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.weaponNameByPersonality();
     }
 
-    reload(){
-        this.arma.reload();
+    reloadDisparosAmmo(){
+        this.disparosAmmo += 10;
+        console.log(this.disparosAmmo);
     }
+
+    getAmmo(){
+        return this.disparosAmmo;
+    }
+
 
     preUpdate(t, dt)
     {
@@ -311,6 +324,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.personalityInput();
     }
 
+    //Movimiento y fisicas
     movement()
     {
         if(this.dirX == 0 || this.dirX == -1){
@@ -398,6 +412,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
        
     }
 
+    //Potenciadores
     applyEffect(keyPotenciador){
         switch (keyPotenciador) {
             case 'botiquin':
@@ -431,6 +446,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
     }
 
+    //Gets generales
     getPlayer(){
         return this.player;
     }

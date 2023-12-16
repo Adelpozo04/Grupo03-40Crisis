@@ -1,5 +1,5 @@
 import playerContenedor from '../Player/playerContenedor.js';
-import municionBalas from '../Armas/municionBalas.js';
+import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar
@@ -48,19 +48,45 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.objetive = objetive;
     }
 
-    recieveDamage(damage){
+    gainObjetiveState(){
 
-        if(!this.explosiveState && !this.invencible){
+        this.objetiveState = true;
+    
+        this.zone = this.scene.add.zone(this.x, this.y, 100, 100);
+            this.scene.physics.world.enable(this.zone);
+            this.zone.body.setCircle(100 / 2);
+    
+            this.overlapObject = this.scene.physics.add.overlap(this.scene.grupoEnemigos, this.zone, function(enemy, zone){
+                if(enemy != this){
+                    this.attacker = enemy;
+                    enemy.changeObjetive(this);
+                    this.zone.destroy();
+                }
+                
+            }, null, this)
+    
+    }
+
+    receiveDamage(damage){
+
+        if(!this.explosiveState && !this.invencible && this.alive){
           
             this.life -= damage;
 
             console.log(this.life + " " + this.damage)
             if(this.life <= 0){
+
+                if(this.objetiveState){
+
+                    this.attacker.changeObjetive(this.player);
+
+                }
+
                 this.alive = false;
                 this.body.setVelocity(0, 0);
                 this.body.destroy();
                 this.scene.sendPoints(this.points);
-                this.player.gainPersonalityExp(this.exp);
+                this.player.gainPersonalityExp(2);
         
                 var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
         
@@ -69,6 +95,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 if(dropMunition == 1){
                     this.spawnMunition();
                 }
+
+                console.log(this.key);
+                console.log(this.enemy);
     
                 this.enemy.play('enemydeath', true);
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -85,31 +114,43 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     basicMovement(canMove)
     {
-        var playerPosition = this.objetive.getCenterPoint();
+        if(!this.objetiveState){
+            var playerPosition = this.objetive.getCenterPoint();
         
-        this.direction = new Phaser.Math.Vector2(
-            playerPosition.x - this.x,
-            playerPosition.y - this.y
-        );
-        this.direction.normalize();
-        
-        // calcular la distancia entre enemigo y player, si está debajo del mínimo de distancia
-        // de ataque, dejar de acercarse y atacar
-        if (Math.abs(this.x - playerPosition.x) < this.attackDistance &&
-            Math.abs(this.y - playerPosition.y) < this.attackDistance)
-        {
-            this.isAttacking = true;
-        }
-        else
-        {
-            this.isAttacking = false;
+            this.direction = new Phaser.Math.Vector2(
+                playerPosition.x - this.x,
+                playerPosition.y - this.y
+            );
+            this.direction.normalize();
             
-            if (canMove && !this.inKnockBack)
+            // calcular la distancia entre enemigo y player, si está debajo del mínimo de distancia
+            // de ataque, dejar de acercarse y atacar
+            if (Math.abs(this.x - playerPosition.x) < this.attackDistance &&
+                Math.abs(this.y - playerPosition.y) < this.attackDistance)
             {
-                this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
-                this.body.velocity.normalize().scale(this.speed);
+                this.isAttacking = true;
+            }
+            else
+            {
+                this.isAttacking = false;
+                
+                if (canMove && !this.inKnockBack)
+                {
+                    this.body.setVelocity(this.speed * this.direction.x, this.speed * this.direction.y);
+                    this.body.velocity.normalize().scale(this.speed);
+                }
             }
         }
+        else{
+            this.body.setVelocity(0, 0);
+        }
+        
+        
+        if(this.zone != undefined){
+            this.zone.x = this.body.x + 16;
+            this.zone.y = this.body.y + 16;
+        }
+        
     }
 
     destroyMyself(){
@@ -166,5 +207,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
             default:
                 break;
         }
+    }
+
+    getCenterPoint(){
+        return {x: this.x + 16, y: this.y + 16};
     }
 }
