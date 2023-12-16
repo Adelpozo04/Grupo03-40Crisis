@@ -1,5 +1,5 @@
 import playerContenedor from '../Player/playerContenedor.js';
-import municionBalas from '../Armas/municionBalas.js';
+import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 export default class enemigo extends Phaser.GameObjects.Container {
     /**
      * @param {scene} scene - escena a colocar

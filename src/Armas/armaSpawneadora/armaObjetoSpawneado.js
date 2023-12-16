@@ -1,7 +1,8 @@
-import Arma from "./arma.js"
+import Arma from "../arma.js"
 import explosive from "./explosive.js";
 import muro from "./muro.js";
 import remoteExplosive from "./remoteExplosive.js";
+import paralizador from "./paralizador.js";
 
 export default class armaObjetosSpawneado extends Arma{
     /**
@@ -57,16 +58,19 @@ export default class armaObjetosSpawneado extends Arma{
 
             if(this.key == 'muro'){
                 
-                let muroObj = new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
+                new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
                 
             }
             else if(this.key == 'mina'){
                 
-                let explosiveObj = new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
+                new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
             }
             else if(this.key == 'c4'){
                 
-                let explosiveRemObj = new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
+                new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
+            }
+            else if(this.key == 'paralizador'){
+                new paralizador(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'paralizador');
             }
 
             if(this.key == this.player.getCurrentWeaponName()){

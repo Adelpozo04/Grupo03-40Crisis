@@ -1,4 +1,4 @@
-import EnemigoBasico from "../Enemies/enemigoBasico.js";
+import EnemigoBasico from "../../Enemies/enemigoBasico.js";
 
 export default class Bala extends Phaser.Physics.Arcade.Sprite {
     /**

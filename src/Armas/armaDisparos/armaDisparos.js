@@ -1,4 +1,4 @@
-import Arma from "./arma.js"
+import Arma from "../arma.js"
 import Bala from "./balas.js"
 export default class armaDisparos extends Arma{
     /**

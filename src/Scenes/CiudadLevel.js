@@ -7,10 +7,10 @@ import lutano from '../Enemies/lutano.js';
 import Mono from '../Enemies/mono.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
-import Bala from '../Armas/balas.js'
+import Bala from '../Armas/armaDisparos/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
-import municionBalas from '../Armas/municionBalas.js';
-import explosive from '../Armas/explosive.js';
+import municionBalas from '../Armas/armaDisparos/municionBalas.js';
+import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 
 export default class CiudadLevel extends LevelBase{
