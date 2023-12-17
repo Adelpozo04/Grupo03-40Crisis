@@ -20,39 +20,39 @@ export default class Level extends Phaser.Scene{
 
         // ENEMIES DATA
         this.speedEnemigos = new Map([
-            ['zombie', 75], ['skeleton', 175], ['burger', 50], ['lutano', 75], ['caracol', 25]
+            ['zombie', 75], ['skeleton', 140], ['burger', 50], ['lutano', 75], ['caracol', 25], ['robot', 75]
         ]);
         this.damageEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999]
+            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999], ['robot', 5]
         ]);
         this.attackDistEnemigos = new Map([
-            ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10]
+            ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10], ['robot', 300]
         ]);
         this.vidaEnemigos = new Map([
-            ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999]
+            ['zombie', 10], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999], ['robot', 30]
         ]);
         this.scaleEnemigos = new Map([
-            ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
-        ]);
+            ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5], ['robot', 0.25]
+        ]);5
         this.puntosEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 2], ['burger', 10], ['lutano', 5], ['caracol', 25]
+            ['zombie', 1], ['skeleton', 2], ['burger', 10], ['lutano', 5], ['caracol', 25], ['robot', 10]
         ]);
         this.anchoColliderEnemigos = new Map([
-            ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18]
+            ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18], ['robot', 100]
         ]);
         this.altoColliderEnemigos = new Map([
-            ['zombie', 26], ['skeleton', 24], ['burger', 30], ['lutano', 30], ['caracol', 26]
+            ['zombie', 26], ['skeleton', 24], ['burger', 30], ['lutano', 30], ['caracol', 26],  ['robot', 180]
         ]);
         this.posXColliderEnemigos = new Map([
-            ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12], ['caracol', 9]
+            ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12], ['caracol', 9], ['robot', 50]
         ]);
         this.posYColliderEnemigos = new Map([
-            ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10]
+            ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10], ['robot',90]
         ]);
 
         //1 = 100%, 3 = 33%, 10 = 1% ...
         this.munitionDropMaxProbability = new Map([
-            ['zombie', 10], ['skeleton', 1], ['burger', 5], ['lutano', 3], ['caracol', 1]
+            ['zombie', 10], ['skeleton', 1], ['burger', 5], ['lutano', 3], ['caracol', 1], ['robot', 3]
         ]);
 
         
@@ -87,7 +87,12 @@ export default class Level extends Phaser.Scene{
         // grupo de balas
         this.grupoBalas = this.add.group({
             classType: Bala,
-            maxSize: 50
+            maxSize: 100
+        })
+
+        this.grupoBalasRobot = this.add.group({
+            classType: Bala,
+            maxSize: 100
         })
 
         this.grupoBalasMagicas = this.add.group({
