@@ -25,7 +25,7 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.canShoot = true;
 
-        this.elapsedTime = 0;
+        this.elapsedTime = TiempoCooldown;
 
         this.scene.input.on('pointerdown', (pointer) =>
         {
@@ -74,7 +74,7 @@ export default class armaObjetosSpawneado extends Arma{
             }
 
             if(this.key == this.player.getCurrentWeaponName()){
-                this.player.gainPersonalityExp(1);
+                this.player.gainPersonalityExp(1);           
             }
 
             this.elapsedTime = 0;

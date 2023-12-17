@@ -61,6 +61,8 @@ preUpdate(t, dt){
 
     this.healthBar.preUpdate(t, dt);
 
+    this.inventoryBar.preUpdate(t, dt);
+
     if(this.AmmoLabel.visible){
         this.AmmoLabel.text = 'Ammo X ' + this.player.getAmmo();
     }
