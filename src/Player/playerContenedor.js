@@ -37,7 +37,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.invencible = false;
 
-        this.maxExp = 1800;
+        this.maxExp = 1200;
 
         this.dirX = 0;
         this.dirY = 0;
@@ -279,6 +279,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     changeWeaponAux(up){
+        
         if(up){
             this.currentWeapon = (this.currentWeapon + 1) % 3;
         }
@@ -290,6 +291,16 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 this.currentWeapon--;
             }
 
+        }
+
+        console.log(this.currentWeapon, this.getPersonalityExp(this.currentPersonality))
+
+        if(this.currentWeapon == 1 && this.getPersonalityExp(this.currentPersonality) < this.maxExp / 3){
+            this.currentWeapon = 0;
+        }
+
+        if(this.currentWeapon == 2 && this.getPersonalityExp(this.currentPersonality) < (this.maxExp * 2) / 3){
+            this.currentWeapon = 0;
         }
 
         this.scene.changeInvenSelection(this.currentWeapon);

@@ -1,5 +1,4 @@
 
-
 export default class BalaMagica extends Phaser.Physics.Arcade.Sprite {
     /**
     * @param {scene} scene - escena a colocar
@@ -22,9 +21,10 @@ export default class BalaMagica extends Phaser.Physics.Arcade.Sprite {
         
     }
 
-    disparar(directionX, directionY)
+    disparar(directionX, directionY, rotation)
     {
         this.setVelocity(this.speed * directionX, this.speed * directionY);
+        this.rotation = rotation;
     }
 
     getDamage(){
