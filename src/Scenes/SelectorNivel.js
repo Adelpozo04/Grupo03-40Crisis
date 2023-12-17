@@ -186,13 +186,19 @@ export default class SelectorNivel extends Phaser.Scene {
     // Carga de escena
     loadScene(){
         console.log(this.mapas[this.currentPage], this.hatID)
-        this.scene.start(this.mapas[this.currentPage], this.hatID);
+        if(this.hatUnlocked[this.hatID]){
+            this.scene.start(this.mapas[this.currentPage], this.hatID);
+        }
+        else{
+            this.scene.start(this.mapas[this.currentPage], -1);
+        }
+
     }
 
     // Flechas para selccionar nivel
     loadMainArrows(){
-        let mainArrowRight = this.add.sprite(1000, this.cameras.main.centerY, 'flecha').setInteractive().setScale(0.15, 0.15);
-        let mainArrowLeft = this.add.sprite(200, this.cameras.main.centerY, 'flecha').setInteractive().setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let mainArrowRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
+        let mainArrowLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
 
         mainArrowRight.on("pointerdown", () => {
             this.changePage(1);
@@ -205,8 +211,8 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive().setDisplaySize(100, 100).setOrigin(0.5, 0.5);
-        let hatArrowLeft = this.add.image(475, 75, 'flecha').setOrigin(0.5, 0.5).setScale(-0.15, 0.15).setInteractive();
+        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive();
+        let hatArrowLeft = this.add.image(475, 75, 'flecha').setInteractive();
 
         hatArrowRight.on("pointerdown", () => {
             this.changeHat(h, 1);         
