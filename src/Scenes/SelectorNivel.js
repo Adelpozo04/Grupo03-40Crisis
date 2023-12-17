@@ -8,6 +8,10 @@ export default class SelectorNivel extends Phaser.Scene {
         this.currentPage = 0;
         this.hatID = 0;
         this.experienciaMaxima = 100;
+        this.hatUnlocked = [];
+        for(var i = 0; i < 21; ++i){
+            this.hatUnlocked[i] = false;
+        }
     }
 
     init(data){
@@ -23,6 +27,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
         this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
         console.log();
     }
 
@@ -51,21 +56,26 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina inicial
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF"); // Boton de inicio
 
-        this.loadHatArrows(hat); // Flechas
+        this.loadHatArrows(this.hat); // Flechas
         this.loadMainArrows();
 
         this.barraXP(); // Pase de batalla
 
         // Tweens del fondo
-        let timeline = this.tweens.timeline
         this.tweens.add({
             targets: fondo,
             x: 200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
@@ -73,10 +83,10 @@ export default class SelectorNivel extends Phaser.Scene {
             targets: fondo,
             x: -200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
-        //timeline.play();
     }
 
     // Boton de inicio
@@ -98,20 +108,25 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina nueva
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
         this.loadMainArrows();
-        this.loadHatArrows(hat);
+        this.loadHatArrows(this.hat);
 
         this.barraXP();
 
-        let timeline = this.tweens.timeline
         this.tweens.add({
             targets: fondo,
             x: 200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
@@ -119,10 +134,10 @@ export default class SelectorNivel extends Phaser.Scene {
             targets: fondo,
             x: -200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
-        //timeline.play();
     }
 
     setMaps(){
@@ -160,9 +175,14 @@ export default class SelectorNivel extends Phaser.Scene {
         this.hatID = (this.hatID + dir) % 21;
 
         // Nuevo sombrero
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
-        this.loadHatArrows(hat);
+        this.loadHatArrows(this.hat);
     }
 
     // Carga de escena
@@ -172,33 +192,28 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para selccionar nivel
     loadMainArrows(){
-        var arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
-        var arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let mainArrowRight = this.add.sprite(1000, this.cameras.main.centerY, 'flecha').setInteractive().setScale(0.15, 0.15);
+        let mainArrowLeft = this.add.sprite(200, this.cameras.main.centerY, 'flecha').setInteractive().setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
 
-        arrowButtonRight.setInteractive();
-        arrowButtonRight.on("pointerdown", () => {
+        mainArrowRight.on("pointerdown", () => {
             this.changePage(1);
         });
 
-        arrowButtonLeft.setInteractive();
-        arrowButtonLeft.on("pointerdown", () => {
+        mainArrowLeft.on("pointerdown", () => {
             this.changePage(-1);
         });
     }
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        var arrowButtonRight = this.add.image(725, 0, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
-        var arrowButtonLeft = this.add.image(475, 75, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive().setDisplaySize(100, 100).setOrigin(0.5, 0.5);
+        let hatArrowLeft = this.add.image(475, 75, 'flecha').setOrigin(0.5, 0.5).setScale(-0.15, 0.15).setInteractive();
 
-        arrowButtonRight.setInteractive();
-        arrowButtonRight.on("pointerdown", () => {
-            console.log("FLECHA")
-            this.changeHat(h, 1);
+        hatArrowRight.on("pointerdown", () => {
+            this.changeHat(h, 1);         
         });
         
-        arrowButtonLeft.setInteractive();
-        arrowButtonLeft.on("pointerdown", () => {
+        hatArrowLeft.on("pointerdown", () => {
             this.changeHat(h, -1);
         });
     }
@@ -211,7 +226,7 @@ export default class SelectorNivel extends Phaser.Scene {
         // Actualización
         this.actualizarBarraDeProgreso();
 
-        // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic
+        // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic SOLO DEBUG
         /*
         this.input.on('pointerdown', () => {
             this.ganarExperiencia(this.currentPage, 10);
@@ -229,10 +244,9 @@ export default class SelectorNivel extends Phaser.Scene {
         this.actualizarBarraDeProgreso();
     
         // Verificar si se alcanzó la experiencia máxima
-        /*if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
-            console.log('¡Nivel alcanzado!');
-            // Puedes agregar lógica adicional aquí, como subir de nivel o reiniciar la barra de experiencia
-        }*/
+        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
+            this.hatUnlocked[0] = true;
+        }
     }
     
     actualizarBarraDeProgreso() {
