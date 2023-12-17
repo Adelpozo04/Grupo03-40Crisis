@@ -168,33 +168,28 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para selccionar nivel
     loadMainArrows(){
-        var arrowButtonRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
-        var arrowButtonLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let mainArrowRight = this.add.sprite(1000, this.cameras.main.centerY, 'flecha').setInteractive().setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        let mainArrowLeft = this.add.sprite(200, this.cameras.main.centerY, 'flecha').setInteractive().setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
 
-        arrowButtonRight.setInteractive();
-        arrowButtonRight.on("pointerdown", () => {
+        mainArrowRight.on("pointerdown", () => {
             this.changePage(1);
         });
 
-        arrowButtonLeft.setInteractive();
-        arrowButtonLeft.on("pointerdown", () => {
+        mainArrowLeft.on("pointerdown", () => {
             this.changePage(-1);
         });
     }
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        var arrowButtonRight = this.add.image(725, 0, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5);
-        var arrowButtonLeft = this.add.image(475, 75, 'flecha').setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let hatArrowRight= this.add.sprite(725, 75, 'flecha').setInteractive().setScale(0.15, 0.15).setOrigin(0.5, 0.5);
+        let hatArrowLeft = this.add.sprite(475, 75, 'flecha').setInteractive().setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
 
-        arrowButtonRight.setInteractive();
-        arrowButtonRight.on("pointerdown", () => {
-            console.log("FLECHA")
+        hatArrowRight.on("pointerdown", () => {
             this.changeHat(h, 1);
         });
         
-        arrowButtonLeft.setInteractive();
-        arrowButtonLeft.on("pointerdown", () => {
+        hatArrowLeft.on("pointerdown", () => {
             this.changeHat(h, -1);
         });
     }
