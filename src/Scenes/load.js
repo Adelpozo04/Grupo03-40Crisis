@@ -39,6 +39,7 @@ export default class load extends Phaser.Scene{
         this.load.image('metralleta', './Assets/Sprites/Armas/machinegun.png');
         this.load.image('franco', './Assets/Sprites/Armas/franco.png');
         this.load.image('bala', './Assets/Sprites/Armas/bala.png');
+        this.load.image('balaRobot', './Assets/Sprites/Armas/balaRobot.png');
         this.load.image('bulletAmmo', './Assets/Sprites/Armas/munitionBox_Sprite.png');
         //Explorador
         this.load.image('fist', './Assets/Sprites/Armas/fist.png');
@@ -120,6 +121,10 @@ export default class load extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('robot', {start: 0, end:3}),
             frameRate: 5
         });
+        this.anims.create({
+            key: 'attackrobot',
+            frame: this.anims.generateFrameNumbers('robot', {start: 0, end:0})
+        })
         this.anims.create({
             key: 'walklutano',
             frames: this.anims.generateFrameNumbers('lutano', {start: 0, end: 3}),

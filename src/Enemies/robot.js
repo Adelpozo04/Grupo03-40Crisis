@@ -11,38 +11,52 @@ export default class Robot extends Enemigo {
     {
         super(scene, x, y, player, config.speed, config.attackDistance, config.damage, config.vida, config.points);
         this.key = key;
+        this.posXCentered = config.posXCollider;
+        this.posYCentered = config.posYCollider;
         scene.add.existing(this);
-        this.robot = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
+
+        this.robot = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
         this.add(this.robot);
         this.setScale(config.scale); //cuidao que esto igual da problemas
     
+        this.body.setSize(config.anchoCollider,config.altoCollider);
+        this.cooldownDisparos = 750;
         this.attackFlag = true;
     }
 
-    attack() { super.attack() }
+    attack() 
+    {  
+        this.body.setVelocity(0,0)
+        var bala = this.scene.grupoBalasRobot.get(this.body.x + 16, this.body.y + 32, 'balaRobot', this.damageArma);
+        var angle = Phaser.Math.Angle.Between(this.body.x + 16, this.body.y + 32, this.player.getCenterPoint().x, this.player.getCenterPoint().y)
+        if (bala)
+        {
+            bala.disparar(Math.cos(angle) , Math.sin(angle))
+        }
+    }
 
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        /*this.robot.play('attackRobot', true);
+        this.robot.play('attackRobot', true);
         this.robot.on('animationcomplete', function(){
             this.attack();
-            this.attackFlag = true;
-            this.skeleton.off('animationcomplete');
-        }, this)*/
+            this.scene.time.delayedCall(this.cooldownDisparos, ()=> {this.attackFlag = true});
+            this.robot.off('animationcomplete');
+        }, this)
     }
 
-    update(){
+    preUpdate(){
         // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
         // y direction.x / y son las variables de direccion
-        super.basicMovement();
+        super.basicMovement(this.attackFlag);
 
         // si podemos atacar y seguimos en rango, intentamos atacar
-        if (this.attackFlag && super.isAttacking())
+        if (this.attackFlag && super.isInAttackRange())
         {
             this.attackFlag = false;
             this.tryAttack();
-        } else if (!super.isAttacking())
+        } else if (!super.isInAttackRange())
         {
             this.robot.play('walkrobot', true);
             this.attackFlag = true;

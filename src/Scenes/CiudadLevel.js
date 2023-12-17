@@ -111,6 +111,15 @@ export default class CiudadLevel extends LevelBase{
 
         })
 
+        //balas robot con el player
+        this.physics.add.collider(this.grupoBalasRobot, this.mike, function(bala,player){
+            player.receiveDamage(bala.getDamage())
+            bala.destroy();
+        })
+        this.physics.add.collider(this.grupoBalasRobot, this.collisionLayer, function(bala, entorno){
+            bala.destroy();
+        })
+
         // municion con player
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
 
@@ -126,6 +135,7 @@ export default class CiudadLevel extends LevelBase{
 
         //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
+
 
         this.myUI.setScrollFactor(0);
     }

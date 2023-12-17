@@ -84,11 +84,11 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                     enemiesSpawned++;
                 }
                 else if(enemyType === 'robot') {
-                    /*
+                    
                     const enemy = new Robot(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
-                    */
+                    
                 }
                 else {
                     const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
