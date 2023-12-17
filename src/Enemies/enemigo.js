@@ -101,6 +101,14 @@ export default class enemigo extends Phaser.GameObjects.Container {
     
                 this.enemy.play('enemydeath', true);
                 this.enemy.on('animationcomplete', this.destroyMyself )
+
+                  // Asegúrate de contabilizar la eliminación solo una vez
+                if (!this.isDestroyed) {
+                console.log("alealeale");
+                this.scene.decreaseEnemiesLeft();
+                this.isDestroyed = true;
+             
+                }
             }
         }
 

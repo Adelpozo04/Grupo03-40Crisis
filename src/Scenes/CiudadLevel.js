@@ -218,6 +218,35 @@ export default class CiudadLevel extends LevelBase{
         });
     };
 
+
+    decreaseEnemiesLeft() {
+        this.roundManager.enemiesLeft--;
+
+
+         // Verifica si se eliminaron todos los enemigos
+         const checkRoundEnd = () => {
+            
+            console.log(this.roundManager.enemiesLeft);
+            // Verifica si se eliminaron todos los enemigos
+            const allEnemiesEliminated = this.roundManager.enemiesLeft === 0;
+
+            if (allEnemiesEliminated) {
+             this.roundManager.startRound(); // Comienza la siguiente ronda
+            }
+
+        };
+
+        // Establece un evento que verifique si se ha completado la ronda cada cierto intervalo
+        this.time.addEvent({
+        delay: 1000, // Intervalo para verificar el final de la ronda
+        loop: true,
+        callback: checkRoundEnd,
+        callbackScope: this
+        });
+    };
+    
+
+
     
 
     update(dt, t){
