@@ -82,4 +82,12 @@ export default class Arma extends Phaser.GameObjects.Sprite {
     getRadio() { return this.radio }
 
     getAngle() { return Phaser.Math.Angle.Between(this.centroPlayerEnPantallaX, this.centroPlayerEnPantallaY, this.cursorX, this.cursorY)}
+
+    getCooldownTime(){
+        return this.enfriamientoTime;
+    }
+
+    getCurrentCooldown(){
+        return this.enfriamientoTime - this.elapsedTime;
+    }
 }

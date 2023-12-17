@@ -1,8 +1,8 @@
-export default class personalityWheel extends Phaser.GameObjects.Graphics{
+export default class personalityWheel extends Phaser.GameObjects.Sprite{
 
     constructor( scene, x, y, player){
     
-        super(scene);
+        super(scene, x, y);
     
         this.x = x;
         this.y = y;
@@ -11,44 +11,56 @@ export default class personalityWheel extends Phaser.GameObjects.Graphics{
     
         this.currentPer = this.player.getCurrentPersonality();
 
-        this.Arc = this.scene.add.graphics().setScrollFactor(0);
+        this.analistaGradosFin = 0;
+        this.centinelaGradosFin = 90;
+        this.exploradorGradosFin = 180;
+        this.pacifistaGradosFin = 270;
 
-        this.Arc.lineStyle(25, 0x000000);
+        this.GradosIni = new Map([
+            ['analista', 0], ['centinela', 90], ['explorador', 180], ['pacifista', 270]
+        ]);
 
-        this.Arc.beginPath();
-        this.Arc.arc(x, y, 50, Phaser.Math.DegToRad(0), Phaser.Math.DegToRad(360), false, 0.02);
-        this.Arc.strokePath();
-        this.Arc.closePath();
+        //this.fondoArc = this.scene.add.graphics().setScrollFactor(0);
 
-        this.Arc.beginPath();
-        this.Arc.lineStyle(15, 0xff00ff);
-        this.Arc.arc(x, y, 50, Phaser.Math.DegToRad(0), Phaser.Math.DegToRad(90), false, 0.02);
-        this.Arc.strokePath();
-        this.Arc.closePath();
+        this.analistaArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('analista'), 0, false).setScrollFactor(0);
+        this.analistaArc.setStrokeStyle(20, 0xff00ff, 1).setDepth(5);
+        this.analistaArc.closePath = false;
+        this.scene.add.existing(this.analistaArc);
 
-        this.Arc.beginPath();
-        this.Arc.lineStyle(15, 0xffff00);
-        this.Arc.arc(x, y, 50, Phaser.Math.DegToRad(90), Phaser.Math.DegToRad(180), false, 0.02);
-        this.Arc.strokePath();
-        this.Arc.closePath();
+        this.centinelaArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('centinela'), 90, false).setScrollFactor(0);
+        this.centinelaArc.setStrokeStyle(20, 0x0000ff, 1).setDepth(5);
+        this.centinelaArc.closePath = false;
+        this.scene.add.existing(this.centinelaArc);
 
-        this.Arc.beginPath();
-        this.Arc.lineStyle(15, 0x0000ff);
-        this.Arc.arc(x, y, 50, Phaser.Math.DegToRad(180), Phaser.Math.DegToRad(270), false, 0.02);
-        this.Arc.strokePath();
-        this.Arc.closePath();
+        this.exploradorArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('explorador'), 180, false).setScrollFactor(0);
+        this.exploradorArc.setStrokeStyle(20, 0xffff00, 1).setDepth(5);
+        this.exploradorArc.closePath = false;
+        this.scene.add.existing(this.exploradorArc);
 
-        this.Arc.beginPath();
-        this.Arc.lineStyle(15, 0x00ff00);
-        this.Arc.arc(x, y, 50, Phaser.Math.DegToRad(270), Phaser.Math.DegToRad(360), false, 0.02);
-        this.Arc.strokePath();
-        this.Arc.closePath();
+        this.pacifistaArc = new Phaser.GameObjects.Arc(scene, x, y, 40, this.GradosIni.get('pacifista'), 270, false).setScrollFactor(0);
+        this.pacifistaArc.setStrokeStyle(20, 0x00ff00, 1).setDepth(5);
+        this.pacifistaArc.closePath = false;
+        this.scene.add.existing(this.pacifistaArc);
 
+        var limitArc;
 
-    
-        this.maxValue = this.value;
-    
-        this.draw();
+        var startAngle = -2;
+        var endAngle = 2;
+
+        for(let i = 0; i < 12; i++){
+            limitArc = new Phaser.GameObjects.Arc(scene, x, y, 40, startAngle, endAngle, false).setScrollFactor(0);
+            limitArc.setStrokeStyle(20, 0x000000, 1).setDepth(5);
+            limitArc.closePath = false;
+            this.scene.add.existing(limitArc);
+
+            startAngle += 30;
+
+            endAngle += 30;
+
+        }
+        
+
+        
     
         scene.add.existing(this);
     
@@ -57,7 +69,29 @@ export default class personalityWheel extends Phaser.GameObjects.Graphics{
     //Dibuja la barra de vida
     draw(){
         
+        this.analistaArc.setEndAngle(this.analistaGradosFin);
 
+        this.centinelaArc.setEndAngle(this.centinelaGradosFin);
+
+        this.exploradorArc.setEndAngle(this.exploradorGradosFin);
+
+        this.pacifistaArc.setEndAngle(this.pacifistaGradosFin);
+
+    }
+
+    preUpdate(t, dt){
+        
+        this.analistaGradosFin = this.GradosIni.get('analista') + (this.player.getPersonalityExp(0) * 90) / this.player.getMaxExp();
+
+        this.centinelaGradosFin = this.GradosIni.get('centinela') + (this.player.getPersonalityExp(2) * 90) / this.player.getMaxExp();
+
+        this.exploradorGradosFin = this.GradosIni.get('explorador') + (this.player.getPersonalityExp(1) * 90) / this.player.getMaxExp(); 
+
+        this.pacifistaGradosFin = this.GradosIni.get('pacifista') + (this.player.getPersonalityExp(3) * 90) / this.player.getMaxExp();
+
+        console.log(this.player.getPersonalityExp(0), this.player.getPersonalityExp(1), this.player.getPersonalityExp(2), this.player.getPersonalityExp(3));
+
+        this.draw();
     }
     
     

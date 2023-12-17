@@ -14,10 +14,12 @@ export default class armaMelee extends Arma{
         this.player = player;
         scene.physics.world.enable(this);
 
-        this.tiempoCooldown = tiempoCooldown
+        this.enfriamientoTime = tiempoCooldown
         this.damageArma = damageArma
 
         this.colliderActive = false;
+
+        this.elapsedTime = tiempoCooldown;
 
         this.Attacking = false;
         this.newAngle = 0
@@ -26,6 +28,18 @@ export default class armaMelee extends Arma{
             if (!this.Attacking)
                 this.tryAttack()
         })
+
+        this.event = this.scene.time.addEvent({
+            delay: 1000,
+            callback: this.calculateElapsedTime,
+            callbackScope: this,
+            loop: true
+    
+            })
+    }
+
+    calculateElapsedTime(){
+        this.elapsedTime += 1;
     }
 
     startAttack()
@@ -75,7 +89,8 @@ export default class armaMelee extends Arma{
         this.Attacking = true;
         
         // llamada para para cooldown del ataque
-        this.scene.time.delayedCall(this.tiempoCooldown, this.startAttack, [], this);
+        this.scene.time.delayedCall(this.enfriamientoTime * 1000, this.startAttack, [], this);
+        this.elapsedTime = 0;
         this.swingingAnimation()
     }
 
@@ -102,7 +117,7 @@ export default class armaMelee extends Arma{
             zone.body.setCircle(radioAtaque)
 
             this.scene.physics.add.overlap(zone, this.scene.grupoEnemigos, (zone, enemy) =>{
-                enemy.recieveDamage(this.damageArma)
+                enemy.receiveDamage(this.damageArma)
                 let direction = new Phaser.Math.Vector2(enemy.x - this.player.x, enemy.y - this.player.y)
                 direction.normalize()
                 enemy.knockBack(direction);
