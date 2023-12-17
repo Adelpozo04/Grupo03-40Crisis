@@ -1,4 +1,6 @@
 import playerContenedor from '../Player/playerContenedor.js';
+import CiudadLevel from './CiudadLevel.js';
+import PlayaLevel from './PlayaLevel.js';
 
 export default class SelectorNivel extends Phaser.Scene {
 
@@ -19,15 +21,6 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('CiudadLevel', './Assets/Sprites/UI/Selector/MapaCiudadSelection.png');
-        this.load.image('FondoCiudad', './Assets/Sprites/UI/Selector/MapaCiudadSelectionFondo.png');
-        this.load.image('PlayaLevel', './Assets/Sprites/UI/Selector/TilePlayaSelection.png');
-        this.load.image('FondoPlaya', './Assets/Sprites/UI/Selector/TilePlayaSelectionFondo.png');
-        this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
-        this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
-        this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
-        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
-        this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
         console.log();
     }
 
@@ -52,6 +45,10 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Carga de los niveles
         this.setMaps();
+
+        this.backgroundMusic = this.sound.add('selectorMusic', {loop: true});
+
+        this.backgroundMusic.play();
 
         // Pagina inicial
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
@@ -95,6 +92,7 @@ export default class SelectorNivel extends Phaser.Scene {
             { fontFamily: 'TitleFont', fontSize: 50, color: 'white' }).setOrigin(0.5,0.5);
         button.setInteractive();
         button.on("pointerdown", () => {
+            this.backgroundMusic.destroy();
            this.loadScene(); // Se carga el nivel en caso de click
         });
     }
@@ -187,6 +185,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Carga de escena
     loadScene(){
+        console.log(this.mapas[this.currentPage], this.hatID)
         this.scene.start(this.mapas[this.currentPage], this.hatID);
     }
 

@@ -38,6 +38,12 @@ export default class CiudadLevel extends LevelBase{
     create(data){
         super.create();
 
+
+        //Cargado de la musica
+        this.backgroundMusic = this.sound.add('ciudadMusic', {loop: true});
+
+        this.backgroundMusic.play();
+
         //Creacion del tilemap a partir de los datos cargados
         this.map = this.make.tilemap({ 
 			key: 'ciudadTilemap', 
@@ -55,27 +61,23 @@ export default class CiudadLevel extends LevelBase{
 
         this.collisionLayer = this.map.createLayer('Colisiones', myTile);
 
-        //Se le agregan las colisiones a la layer
+        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile).setDepth(3);
+
+        //Se le agregan las colisiones a las layers
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
 
-        //Se indica que colliders chocan entre si
-        this.physics.add.collider(this.mike, this.collisionLayer);
-
-        //Se crea la camara
         this.camera = this.cameras.main.startFollow(this.mike);
-        
-        //Se crean layers por encima de las entidades
-        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile).setDepth(3);
 
         //Se ajusta el tamaño del mapa
         this.collisionLayer.setScale(1.35, 1.35);
         this.groundLayer.setScale(1.35, 1.35);
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
-           
+
+        //Creacion de los spawners
         this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike, this.grupoEnemigos);
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike, this.grupoEnemigos);
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike, this.grupoEnemigos);
@@ -83,6 +85,9 @@ export default class CiudadLevel extends LevelBase{
 
         this.enemySpawners();
 
+        //Se indica que colliders chocan entre si
+        this.physics.add.collider(this.mike, this.collisionLayer);
+ 
         this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, layer){
             bala.destroy()
         }, null, this)
@@ -119,6 +124,7 @@ export default class CiudadLevel extends LevelBase{
         
         this.spawnPotenciador();    
 
+        //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
         this.myUI.setScrollFactor(0);
