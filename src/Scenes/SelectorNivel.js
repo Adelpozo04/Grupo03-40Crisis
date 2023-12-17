@@ -61,7 +61,6 @@ export default class SelectorNivel extends Phaser.Scene {
         this.barraXP(); // Pase de batalla
 
         // Tweens del fondo
-        let timeline = this.tweens.timeline
         this.tweens.add({
             targets: fondo,
             x: 200,
@@ -76,7 +75,6 @@ export default class SelectorNivel extends Phaser.Scene {
             yoyo: true,
             repeat: -1,
         });
-        //timeline.play();
     }
 
     // Boton de inicio
@@ -107,7 +105,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.barraXP();
 
-        let timeline = this.tweens.timeline
         this.tweens.add({
             targets: fondo,
             x: 200,
@@ -122,7 +119,6 @@ export default class SelectorNivel extends Phaser.Scene {
             yoyo: true,
             repeat: -1,
         });
-        //timeline.play();
     }
 
     setMaps(){
@@ -211,7 +207,7 @@ export default class SelectorNivel extends Phaser.Scene {
         // Actualización
         this.actualizarBarraDeProgreso();
 
-        // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic
+        // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic SOLO DEBUG
         /*
         this.input.on('pointerdown', () => {
             this.ganarExperiencia(this.currentPage, 10);
