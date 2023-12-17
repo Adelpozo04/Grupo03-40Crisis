@@ -52,7 +52,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Carga de los niveles
         this.setMaps();
-        console.log(this.hatUnlocked[this.hatID]);
+
         // Pagina inicial
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
@@ -75,6 +75,7 @@ export default class SelectorNivel extends Phaser.Scene {
             targets: fondo,
             x: 200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
@@ -82,6 +83,7 @@ export default class SelectorNivel extends Phaser.Scene {
             targets: fondo,
             x: -200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
@@ -124,6 +126,7 @@ export default class SelectorNivel extends Phaser.Scene {
             targets: fondo,
             x: 200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
@@ -131,6 +134,7 @@ export default class SelectorNivel extends Phaser.Scene {
             targets: fondo,
             x: -200,
             duration: 3500,
+            ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
