@@ -6,11 +6,12 @@ import lutano from '../Enemies/lutano.js';
 import Mono from '../Enemies/mono.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
-import Bala from '../Armas/balas.js'
+import Bala from '../Armas/armaDisparos/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
-import municionBalas from '../Armas/municionBalas.js';
-import explosive from '../Armas/explosive.js';
+import municionBalas from '../Armas/armaDisparos/municionBalas.js';
+import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
+import BalaMagica from '../Armas/armaDisparos/balasMagicas.js';
 
 export default class Level extends Phaser.Scene{
 
@@ -34,7 +35,7 @@ export default class Level extends Phaser.Scene{
             ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5]
         ]);
         this.puntosEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 2], ['burger', 2], ['lutano', 0.3], ['caracol', 25]
+            ['zombie', 1], ['skeleton', 2], ['burger', 10], ['lutano', 5], ['caracol', 25]
         ]);
         this.anchoColliderEnemigos = new Map([
             ['zombie', 18], ['skeleton', 16], ['burger', 30], ['lutano', 24], ['caracol', 18]
@@ -48,9 +49,13 @@ export default class Level extends Phaser.Scene{
         this.posYColliderEnemigos = new Map([
             ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10]
         ]);
+
+        //1 = 100%, 3 = 33%, 10 = 1% ...
         this.munitionDropMaxProbability = new Map([
-            ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1]
+            ['zombie', 10], ['skeleton', 1], ['burger', 5], ['lutano', 3], ['caracol', 1]
         ]);
+
+        
     }
 
     preload(){
@@ -99,6 +104,7 @@ export default class Level extends Phaser.Scene{
         this.load.image('paralizador', './Assets/Sprites/Armas/paralizador.png');
         this.load.image('empuje', './Assets/Sprites/Armas/empuje.png');
         this.load.image('varita', './Assets/Sprites/Armas/varita.png');
+        this.load.image('balaMagica', './Assets/Sprites/Armas/balaMagica.png')
 
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
@@ -215,6 +221,11 @@ export default class Level extends Phaser.Scene{
             maxSize: 50
         })
 
+        this.grupoBalasMagicas = this.add.group({
+            classType: BalaMagica,
+            maxSize: 50
+        })
+
         this.grupoMunicionBalas = this.add.group({
             classType: municionBalas,
             maxSize: 50
@@ -225,15 +236,14 @@ export default class Level extends Phaser.Scene{
 
         })
 
+        Phaser.Actions.SetDepth(this.grupoEnemigos, 1);
+
         this.grupoExplosivos = this.add.group({
             classType: explosive,
             runChildUpdate: true,
 
         })
        
-        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, enemigo){
-            bala.destroy()
-        }, null, this)
     }
 
     // crea el config del enemigo (json) para instanciar los enemigos

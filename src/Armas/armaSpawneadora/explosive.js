@@ -1,8 +1,8 @@
 
-export default class remoteExplosive extends Phaser.GameObjects.Sprite{
+export default class explosive extends Phaser.GameObjects.Sprite{
 
 
-    constructor(scene, x, y, key){
+    constructor(scene, x, y, key, nTipo){
 
         super(scene, x, y, key);
 
@@ -12,32 +12,33 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         this.scene.addExplosiveToGroup(this);
 
+        this.scene = scene;
+
         this.setScale(1.5, 1.5);
 
+        //Fisicas
+
+        this.scene.physics.add.existing(this);
+
+        this.body.setSize(5, 5);
+
         //Inicializacion de variables
+
+        this.x = x;
+
+        this.y = y;
+
+        this.tipo = nTipo;
         
         this.explotionDuration = 2;
 
         this.exploting = false;
 
-        this.damage = 10;
+        this.damage = 20;
 
         this.explosiveArea = 100;
 
         this.elapsedTime = 0;
-
-        this.grupoEnemigos = this.scene.grupoEnemigos;
-
-        this.scene.input.mouse.disableContextMenu();
-
-        let callback = (pointer) =>
-        {
-            if(pointer.rightButtonDown()){
-                this.detonar();
-                this.scene.input.off('pointerdown', callback, this)
-            }
-        }
-        this.scene.input.on('pointerdown', callback, this);
 
         this.scene.anims.create({
             key: 'explosionAnimation',
@@ -70,8 +71,7 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
     }
 
     detonar(){
-
-        this.scene.input.clear(this);
+        this.body.destroy();
 
         this.exploting = true;
 
@@ -80,9 +80,9 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
         this.scene.physics.world.enable(this.zone);
         this.zone.body.setCircle(this.explosiveArea / 2);
 
-        this.scene.physics.add.overlap(this.zone, this.grupoEnemigos, function(zone, enemy){
+        this.scene.physics.add.overlap(this.zone, this.scene.grupoEnemigos, function(zone, enemy){
 
-            enemy.recieveDamage(10);
+            enemy.receiveDamage(10);
             enemy.gainExplosiveState(this.explotionDuration);
 
         }, null, this);
@@ -91,6 +91,12 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
     }
 
     update(){
+        console.log("NASHE" + this.scene.grupoEnemigos.children.size)
+        this.scene.physics.add.collider(this, this.scene.grupoEnemigos, function(explosive, enemy){
+
+            explosive.detonar();
+
+        });
 
         if(this.elapsedTime >= this.explotionDuration && this.exploting == true){
             this.destroyMyself();

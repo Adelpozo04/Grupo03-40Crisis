@@ -7,10 +7,10 @@ import lutano from '../Enemies/lutano.js';
 import Mono from '../Enemies/mono.js';
 import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
-import Bala from '../Armas/balas.js'
+import Bala from '../Armas/armaDisparos/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
-import municionBalas from '../Armas/municionBalas.js';
-import explosive from '../Armas/explosive.js';
+import municionBalas from '../Armas/armaDisparos/municionBalas.js';
+import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
 
@@ -70,7 +70,7 @@ export default class CiudadLevel extends LevelBase{
         this.camera = this.cameras.main.startFollow(this.mike);
         
         //Se crean layers por encima de las entidades
-        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
+        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile).setDepth(3);
 
         //Se ajusta el tamaño del mapa
         this.collisionLayer.setScale(1.35, 1.35);
@@ -90,19 +90,34 @@ export default class CiudadLevel extends LevelBase{
         this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
         this.roundManager.startRound(); // Comienza la primera ronda
 
+        this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, layer){
+            bala.destroy()
+        }, null, this)
+
+        this.physics.add.collider(this.grupoBalasMagicas, this.collisionLayer, function(bala, layer){
+            bala.destroy()
+        }, null, this)
+
         // balas con enemigos
-        this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
+        this.physics.add.overlap(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
-            enemigo.recieveDamage(bala.getDamage());
+            enemigo.receiveDamage(bala.getDamage());
             bala.destroy();
 
         });
+
+        this.physics.add.collider(this.grupoBalasMagicas, this.grupoEnemigos, function(bala, enemy){
+
+            enemy.gainObjetiveState();
+            bala.destroy();
+
+        })
 
         // municion con player
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
 
             ammo.destroyMyself();
-            player.reload();
+            player.reloadDisparosAmmo();
 
         });
 

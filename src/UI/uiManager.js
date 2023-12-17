@@ -13,7 +13,7 @@ constructor(scene, key, player){
 
     this.player = player;
 
-    this.healthBar = new HealthBar(scene, 24, 16, player, 341, 32).setScrollFactor(0);
+    this.healthBar = new HealthBar(scene, 24, 16, player, 341, 32).setScrollFactor(0).setDepth(5);
 
     this.inventoryBar = new inventoryBar(scene, 1075, 650, player).setScrollFactor(0);
 
@@ -26,7 +26,10 @@ constructor(scene, key, player){
     scene.add.existing(this);
 
     this.ScoreLabel = this.scene.generateText(0, 650, 'Score: ', 32);
-    this.ScoreLabel.setScrollFactor(0);
+    this.ScoreLabel.setScrollFactor(0).setDepth(5);
+
+    this.AmmoLabel = this.scene.generateText(1000, 575, 'Ammo: ', 24);
+    this.AmmoLabel.setScrollFactor(0).setDepth(5);
 
 }
 
@@ -57,6 +60,20 @@ gainPoints(points){
 preUpdate(t, dt){
 
     this.healthBar.preUpdate(t, dt);
+
+    this.inventoryBar.preUpdate(t, dt);
+
+    if(this.AmmoLabel.visible){
+        this.AmmoLabel.text = 'Ammo X ' + this.player.getAmmo();
+    }
+    
+
+    if(this.player.getCurrentPersonality() == this.player.Personalities.CENTINELA){
+        this.AmmoLabel.visible = true;
+    }
+    else{
+        this.AmmoLabel.visible = false;
+    }
 
 
 }

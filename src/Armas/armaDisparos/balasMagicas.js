@@ -1,6 +1,5 @@
-import EnemigoBasico from "../Enemies/enemigoBasico.js";
 
-export default class Bala extends Phaser.Physics.Arcade.Sprite {
+export default class BalaMagica extends Phaser.Physics.Arcade.Sprite {
     /**
     * @param {scene} scene - escena a colocar
     * @param {number} x - posicion x
@@ -9,12 +8,12 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
     */
     constructor(scene, x, y, key, damage)
     {
-        super(scene, x, y, 'bala')
+        super(scene, x, y, key)
         scene.physics.world.enable(this);
         this.scene.add.existing(this);
         this.setScale(3);
-        this.scene.grupoBalas.add(this);
 
+        this.scene.grupoBalasMagicas.add(this);
         this.speed = 350;
         this.damage = damage;
         this.key = key;
@@ -22,9 +21,10 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
         
     }
 
-    disparar(directionX, directionY)
+    disparar(directionX, directionY, rotation)
     {
         this.setVelocity(this.speed * directionX, this.speed * directionY);
+        this.rotation = rotation;
     }
 
     getDamage(){

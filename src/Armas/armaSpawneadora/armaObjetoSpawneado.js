@@ -1,7 +1,8 @@
-import Arma from "./arma.js"
+import Arma from "../arma.js"
 import explosive from "./explosive.js";
 import muro from "./muro.js";
 import remoteExplosive from "./remoteExplosive.js";
+import paralizador from "./paralizador.js";
 
 export default class armaObjetosSpawneado extends Arma{
     /**
@@ -18,15 +19,13 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.key = key;
 
-        this.municion = 30;
-
         this.enfriamientoTime = TiempoCooldown;
 
         this.enfriamientoPasado = true;
 
         this.canShoot = true;
 
-        this.elapsedTime = 0;
+        this.elapsedTime = TiempoCooldown;
 
         this.scene.input.on('pointerdown', (pointer) =>
         {
@@ -46,10 +45,6 @@ export default class armaObjetosSpawneado extends Arma{
         
     }
 
-    reload(){
-        this.municion += 20;
-    }
-
     calculateElapsedTime(){
         this.elapsedTime += 1;
     }
@@ -57,26 +52,29 @@ export default class armaObjetosSpawneado extends Arma{
     tryAttack()
     {
 
-        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.municion > 0)
+        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime)
         {
 
 
             if(this.key == 'muro'){
                 
-                let muroObj = new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
+                new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
                 
             }
             else if(this.key == 'mina'){
                 
-                let explosiveObj = new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
+                new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
             }
             else if(this.key == 'c4'){
                 
-                let explosiveRemObj = new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
+                new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
+            }
+            else if(this.key == 'paralizador'){
+                new paralizador(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'paralizador');
             }
 
             if(this.key == this.player.getCurrentWeaponName()){
-                this.player.gainPersonalityExp(1);
+                this.player.gainPersonalityExp(1);           
             }
 
             this.elapsedTime = 0;
