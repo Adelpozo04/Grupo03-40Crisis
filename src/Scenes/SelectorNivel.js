@@ -26,8 +26,8 @@ export default class SelectorNivel extends Phaser.Scene {
         this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
         this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
         this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
-        this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
-        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
         console.log();
     }
 
@@ -175,9 +175,14 @@ export default class SelectorNivel extends Phaser.Scene {
         this.hatID = (this.hatID + dir) % 21;
 
         // Nuevo sombrero
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
-        this.loadHatArrows(hat);
+        this.loadHatArrows(this.hat);
     }
 
     // Carga de escena
