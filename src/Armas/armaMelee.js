@@ -89,7 +89,7 @@ export default class armaMelee extends Arma{
         this.Attacking = true;
         
         // llamada para para cooldown del ataque
-        this.scene.time.delayedCall(this.enfriamientoTime * 100, this.startAttack, [], this);
+        this.scene.time.delayedCall(this.enfriamientoTime * 1000, this.startAttack, [], this);
         this.elapsedTime = 0;
         this.swingingAnimation()
     }
