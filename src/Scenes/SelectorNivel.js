@@ -235,10 +235,9 @@ export default class SelectorNivel extends Phaser.Scene {
         this.actualizarBarraDeProgreso();
     
         // Verificar si se alcanzó la experiencia máxima
-        /*if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
-            console.log('¡Nivel alcanzado!');
-            // Puedes agregar lógica adicional aquí, como subir de nivel o reiniciar la barra de experiencia
-        }*/
+        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
+            this.hatUnlocked[0] = true;
+        }
     }
     
     actualizarBarraDeProgreso() {
