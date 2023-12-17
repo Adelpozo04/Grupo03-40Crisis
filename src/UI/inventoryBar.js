@@ -4,15 +4,15 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
     
         super(scene, x, y);
     
-        this.Bar = this.scene.add.sprite(x, y, 'inventory').setScrollFactor(0);
+        this.Bar = this.scene.add.sprite(x, y, 'inventory').setScrollFactor(0).setDepth(5);
 
-        this.slotSel = this.scene.add.sprite(x - 54, y, 'slot').setScrollFactor(0);
+        this.slotSel = this.scene.add.sprite(x - 54, y, 'slot').setScrollFactor(0).setDepth(5);
 
-        this.Icon1 = this.scene.add.sprite(x - 64, y, 'fist').setScrollFactor(0).setAngle(-45);
+        this.Icon1 = this.scene.add.sprite(x - 64, y, 'fist').setScrollFactor(0).setAngle(-45).setDepth(5);
 
-        this.Icon2 = this.scene.add.sprite(x, y, 'bate').setScrollFactor(0).setAngle(-45);
+        this.Icon2 = this.scene.add.sprite(x, y, 'bate').setScrollFactor(0).setAngle(-45).setDepth(5);
 
-        this.Icon3 = this.scene.add.sprite(x + 64, y, 'espada').setScrollFactor(0).setAngle(-45);
+        this.Icon3 = this.scene.add.sprite(x + 64, y, 'espada').setScrollFactor(0).setAngle(-45).setDepth(5);
 
         this.Bar.setScale(3.5, 3.5);
 

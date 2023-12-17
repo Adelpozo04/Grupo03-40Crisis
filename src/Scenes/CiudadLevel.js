@@ -68,7 +68,7 @@ export default class CiudadLevel extends LevelBase{
         this.camera = this.cameras.main.startFollow(this.mike);
         
         //Se crean layers por encima de las entidades
-        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile);
+        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile).setDepth(3);
 
         //Se ajusta el tamaño del mapa
         this.collisionLayer.setScale(1.35, 1.35);
@@ -92,7 +92,7 @@ export default class CiudadLevel extends LevelBase{
         }, null, this)
 
         // balas con enemigos
-        this.physics.add.collider(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
+        this.physics.add.overlap(this.grupoBalas, this.grupoEnemigos, function(bala, enemigo){
             
             enemigo.receiveDamage(bala.getDamage());
             bala.destroy();

@@ -55,7 +55,7 @@ export default class armaDisparos extends Arma{
 
                 var balaMag = new BalaMagica(this.scene, this.x, this.y, 'balaMagica', this.damageArma);
 
-                balaMag.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()));
+                balaMag.disparar(Math.cos(super.getAngle()) , Math.sin(super.getAngle()), this.rotation);
 
             }
             else{

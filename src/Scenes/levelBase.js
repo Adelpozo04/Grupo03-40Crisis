@@ -236,6 +236,8 @@ export default class Level extends Phaser.Scene{
 
         })
 
+        Phaser.Actions.SetDepth(this.grupoEnemigos, 1);
+
         this.grupoExplosivos = this.add.group({
             classType: explosive,
             runChildUpdate: true,
