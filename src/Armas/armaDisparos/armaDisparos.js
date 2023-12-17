@@ -20,7 +20,7 @@ export default class armaDisparos extends Arma{
         this.damageArma = damageArma;
 
         this.canShoot = true;
-        this.elapsedTime = 0;
+        this.elapsedTime = tiempoCooldown;
 
         this.scene.input.on('pointerdown', (pointer) =>
         {
@@ -70,9 +70,10 @@ export default class armaDisparos extends Arma{
 
             this.elapsedTime = 0;
     
-                if(this.key == this.player.getCurrentWeaponName()){
-                    this.player.gainPersonalityExp(1);
-                }
+            if(this.key == this.player.getCurrentWeaponName()){
+                this.player.gainPersonalityExp(1);
+            }
+
             
         }   
     }

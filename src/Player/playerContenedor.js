@@ -52,7 +52,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             CENTINELA: 2,
             PACIFISTA: 3,}
     
-        this.personalityExp = [0, 0, 0, 0];
+        this.personalityExp = [0, 0, 0, 1200];
     
         this.currentPersonality = this.Personalities.EXPLORADOR;
 
@@ -117,10 +117,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
         
         var tiempoCooldown = new Map([
-            ['fist', 600], ['bate', 1000], ['espada', 800],
-            ['pistola', 2], ['metralleta', 0.2], ['franco', 7],
-            ['muro', 2], ['mina', 4], ['c4', 6],
-            ['paralizador', 2], ['empuje', 400], ['varita', 1]
+            ['fist', 6], ['bate', 10], ['espada', 8],
+            ['pistola', 2], ['metralleta', 0.2], ['franco', 13],
+            ['muro', 8], ['mina', 12], ['c4', 15],
+            ['paralizador', 4], ['empuje', 4], ['varita', 20]
         ]);
         var damageArmas = new Map([
             ['fist', 1], ['bate', 1], ['espada', 1],
@@ -144,7 +144,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['varita', new armaDisparos(this.scene, tiempoCooldown.get('varita'), damageArmas.get('varita'), 'varita', this)]
         ])
 
-        this.arma = this.armas.get('paralizador');
+        this.arma = this.armas.get('fist');
 
         this.arma.activate();
     }
@@ -313,6 +313,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
+    }
+
+    getWeapon(){
+        return this.arma;
     }
 
     getCurrentWeaponName(){
