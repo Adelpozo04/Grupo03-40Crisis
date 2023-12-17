@@ -30,6 +30,10 @@ export default class PlayaLevel extends LevelBase{
 
         super.create();
 
+        this.backgroundMusic = this.sound.add('playaMusic', {loop: true});
+
+        this.backgroundMusic.play();
+
         //Creacion del tilemap a partir de los datos cargados
         this.map = this.make.tilemap({ 
 			key: 'playaTilemap', 

@@ -1,17 +1,8 @@
 import LevelBase from './levelBase.js'
 import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
-import Robot from '../Enemies/robot.js'
-import EnemigoBasico from '../Enemies/enemigoBasico.js';
-import lutano from '../Enemies/lutano.js';
-import Mono from '../Enemies/mono.js';
-import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
-import Bala from '../Armas/armaDisparos/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
-import municionBalas from '../Armas/armaDisparos/municionBalas.js';
-import explosive from '../Armas/armaSpawneadora/explosive.js';
-import Enemigo from "../Enemies/enemigo.js";
 
 export default class CiudadLevel extends LevelBase{
 
