@@ -15,8 +15,8 @@ export default class Robot extends Enemigo {
         this.posYCentered = config.posYCollider;
         scene.add.existing(this);
 
-        this.robot = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
-        this.add(this.robot);
+        this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
+        this.add(this.enemy);
         this.setScale(config.scale); //cuidao que esto igual da problemas
     
         this.body.setSize(config.anchoCollider,config.altoCollider);
@@ -38,15 +38,17 @@ export default class Robot extends Enemigo {
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        this.robot.play('attackRobot', true);
-        this.robot.on('animationcomplete', function(){
+        this.enemy.play('attackRobot', true);
+        this.enemy.on('animationcomplete', function(){
             this.attack();
             this.scene.time.delayedCall(this.cooldownDisparos, ()=> {this.attackFlag = true});
-            this.robot.off('animationcomplete');
+            this.enemy.off('animationcomplete');
         }, this)
     }
 
     preUpdate(){
+        if (this.alive)
+        {
         // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
         // y direction.x / y son las variables de direccion
         super.basicMovement(this.attackFlag);
@@ -58,20 +60,23 @@ export default class Robot extends Enemigo {
             this.tryAttack();
         } else if (!super.isInAttackRange())
         {
-            this.robot.play('walkrobot', true);
+            this.enemy.play('walkrobot', true);
             this.attackFlag = true;
-            this.robot.off('animationcomplete');
+            this.enemy.off('animationcomplete');
         }
 
 
         //flip del sprite en función de la pos del player
         if (this.x < super.getPlayer().x)
         {
-            this.robot.setFlip(false, false);
+            this.enemy.setFlip(false, false);
         }
         else if (this.x > super.getPlayer().y)
         {
-            this.robot.setFlip(true, false);
+            this.enemy.setFlip(true, false);
         }
+        }
+        
     }
 }
+sd

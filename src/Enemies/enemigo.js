@@ -69,7 +69,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     receiveDamage(damage){
 
-        if(!this.explosiveState && !this.invencible && this.alive){
+        if(!this.invencible && this.alive){
           
             this.life -= damage;
 
@@ -95,9 +95,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 if(dropMunition == 1){
                     this.spawnMunition();
                 }
-
-                console.log(this.key);
-                console.log(this.enemy);
     
                 this.enemy.play('enemydeath', true);
                 this.enemy.on('animationcomplete', this.destroyMyself )

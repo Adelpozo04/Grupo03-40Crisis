@@ -1,47 +1,24 @@
+import enemigo from "./enemigo.js";
 
-export default class Mono extends Phaser.GameObjects.Sprite{
+export default class Mono extends enemigo{
 
-constructor(scene, x, y, key){
+constructor(scene, x, y, key, player, config){
+    super(scene, x, y, player, config.speed, config.attackDistance, config.damage, config.life, config.points);
 
-super(scene, x, y);
+    this.x = x;
+    this.y = y;
+    this.key = key;
 
-this.x = x;
-
-this.y = y;
-
-this.key = key;
-
-this.setScale(1.25, 1.25);
-
-this.speed = 125;
-
-this.life = 60;
-
-this.potenciador = null;
-
-this.changeMoveTime = 0.5;
-
-this.scene.add.existing(this);
-
-scene.physics.add.existing(this);
-
-this.body.setSize(24, 24);
-
-this.body.setOffset(12, 12)
-
-Phaser.Math.RandomXY(this.body.velocity, this.speed);
-
-this.scene.time.addEvent({
-
-    delay: this.changeMoveTime * 1000,
-    loop: true,
-    callback: this.newRandomDirection,
-    callbackScope: this,
-    paused: this.potenciador != null
-
-});
+    this.setScale(config.scale);
+    this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
+    this.scene.add.existing(this);
+    scene.physics.add.existing(this);
+    this.add(this.enemy)
+    this.body.setSize(config.anchoCollider, config.altoCollider);
+    this.body.setOffset(config.posXCollider, config.posYCollider);
 
 
+    Phaser.Math.RandomXY(this.body.velocity, this.speed);
 }
 
 newRandomDirection(){
@@ -49,61 +26,34 @@ newRandomDirection(){
     if(this.potenciador == null){
         Phaser.Math.RandomXY(this.body.velocity, this.speed);
     }
-    
 }
 
-setPotenciador(potenciador){
-    console.log(potenciador);
-    this.potenciador = potenciador;
-}
+preUpdate(){
 
-deletePotenciador(){
-    this.potenciador = null;
-    this.newRandomDirection();
-}
+    if (this.alive)
+    {
+        this.enemy.play('walk' + this.key, true);
 
-update(){
-
-    this.play('walk' + this.key, true);
-
-    if(this.potenciador != null){
-        if (this.x < this.potenciador.getPosition().x)
+        if (this.scene.potenciadorSpawneado)
         {
-            this.setFlip(false, false);
+            this.changeObjetive(this.scene.getPotenciador())
+            super.basicMovement(true);
         }
-        else if (this.x > this.potenciador.getPosition().y)
+        else
         {
-            this.setFlip(true, false);
+            Phaser.Math.RandomXY(this.body.velocity, this.speed);
+            
         }
-
-        var potenciadorPosition = this.potenciador.getPosition();
-
-        this.vec = new Phaser.Math.Vector2(
-            potenciadorPosition.x - this.x,
-            potenciadorPosition.y - this.y
-        );
-
-        this.body.setVelocity(this.speed * this.vec.x, this.speed * this.vec.y);
-
-        this.body.velocity.normalize().scale(this.speed);
-    }
-    else{
         if (this.body.velocity.x >= 0)
         {
-            this.setFlip(false, false);
+            this.enemy.setFlip(false, false);
         }
         else if (this.body.velocity.x < 0)
         {
-            this.setFlip(true, false);
+            this.enemy.setFlip(true, false);
         }
     }
-
-
     
 }
-
-
-
+    
 }
-
-

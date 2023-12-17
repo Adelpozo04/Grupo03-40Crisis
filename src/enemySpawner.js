@@ -60,7 +60,6 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
 
             if (randomProbability <= cumulativeProbability) {
                 return enemyTypes[i].type;
-
             }
         }
     }
@@ -74,7 +73,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
                 if (enemyType === 'mono') {
-                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType);
+                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
@@ -88,7 +87,6 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                     const enemy = new Robot(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
-                    
                 }
                 else {
                     const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
