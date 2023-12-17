@@ -206,7 +206,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        let hatArrowRight= this.add.image(725, 75, 'flecha').setScale(0.15, 0.15).setOrigin(0.5, 0.5).setInteractive();
+        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive().setDisplaySize(100, 100).setOrigin(0.5, 0.5);
         let hatArrowLeft = this.add.image(475, 75, 'flecha').setOrigin(0.5, 0.5).setScale(-0.15, 0.15).setInteractive();
 
         hatArrowRight.on("pointerdown", () => {
