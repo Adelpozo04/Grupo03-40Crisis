@@ -8,6 +8,10 @@ export default class SelectorNivel extends Phaser.Scene {
         this.currentPage = 0;
         this.hatID = 0;
         this.experienciaMaxima = 100;
+        this.hatUnlocked = [];
+        for(var i = 0; i < 21; ++i){
+            this.hatUnlocked[i] = false;
+        }
     }
 
     init(data){
@@ -22,7 +26,8 @@ export default class SelectorNivel extends Phaser.Scene {
         this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
         this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
         this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
-        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
         console.log();
     }
 
@@ -47,15 +52,20 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Carga de los niveles
         this.setMaps();
-
+        console.log(this.hatUnlocked[this.hatID]);
         // Pagina inicial
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF"); // Boton de inicio
 
-        this.loadHatArrows(hat); // Flechas
+        this.loadHatArrows(this.hat); // Flechas
         this.loadMainArrows();
 
         this.barraXP(); // Pase de batalla
@@ -96,12 +106,17 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina nueva
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        let hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
         this.loadMainArrows();
-        this.loadHatArrows(hat);
+        this.loadHatArrows(this.hat);
 
         this.barraXP();
 
