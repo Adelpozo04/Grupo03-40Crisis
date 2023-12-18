@@ -17,7 +17,7 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        console.log(data);
+        console.log(data)
     }
 
     preload(){
@@ -40,6 +40,7 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
+        console.log(this);
         // Experiencia de cada nivel
         this.setExperience();
 
@@ -162,7 +163,9 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[2] = 0; // Volcan
 
         // Evento para poder subir experiencia segun el nivel jugado
-        this.events.on('cambiarXP', this.ganarExperiencia);
+        this.registry.events.on('cambiarXP', (nivel) => {
+            this.ganarExperiencia(nivel);
+        });
     }
 
     // Cambio de sombrero
@@ -186,13 +189,28 @@ export default class SelectorNivel extends Phaser.Scene {
     // Carga de escena
     loadScene(){
         console.log(this.mapas[this.currentPage], this.hatID)
-        this.scene.start(this.mapas[this.currentPage], this.hatID);
+        if(this.hatUnlocked[this.hatID]){
+            //this.scene.sleep(this.scene);
+            //this.scene.start(this.mapas[this.currentPage], this.hatID);
+            this.scene.switch('SelectorNivel', this.mapas[this.currentPage]);
+            
+            console.log('a');
+        }
+        else{
+            console.log(this.scene.key);
+            this.scene.sleep(this.scene.key);
+            this.scene.start(this.mapas[this.currentPage], -1);
+
+            //this.scene.switch(this.mapas[this.currentPage]);
+            
+            console.log('b');
+        }
     }
 
     // Flechas para selccionar nivel
     loadMainArrows(){
-        let mainArrowRight = this.add.sprite(1000, this.cameras.main.centerY, 'flecha').setInteractive().setScale(0.15, 0.15);
-        let mainArrowLeft = this.add.sprite(200, this.cameras.main.centerY, 'flecha').setInteractive().setScale(-0.15, 0.15).setOrigin(0.5, 0.5);
+        let mainArrowRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
+        let mainArrowLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
 
         mainArrowRight.on("pointerdown", () => {
             this.changePage(1);
@@ -205,8 +223,8 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive().setDisplaySize(100, 100).setOrigin(0.5, 0.5);
-        let hatArrowLeft = this.add.image(475, 75, 'flecha').setOrigin(0.5, 0.5).setScale(-0.15, 0.15).setInteractive();
+        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive();
+        let hatArrowLeft = this.add.image(475, 75, 'flecha').setInteractive();
 
         hatArrowRight.on("pointerdown", () => {
             this.changeHat(h, 1);         
@@ -233,10 +251,10 @@ export default class SelectorNivel extends Phaser.Scene {
         */
     }
 
-    ganarExperiencia(nivel, points) {
-        console.log("a");
+    ganarExperiencia(nivel) {
+        console.log(this.xpGained);
         if(this.globalPoints[this.currentPage] < this.experienciaMaxima) {
-            this.globalPoints[nivel] += points; // Ganar 10 puntos de experiencia (puedes ajustar esto)
+            this.globalPoints[nivel] += this.xpGained; // Ganar 10 puntos de experiencia (puedes ajustar esto)
         }
 
         // Actualizar la barra de progreso
@@ -257,10 +275,10 @@ export default class SelectorNivel extends Phaser.Scene {
     
         // Dibujar la barra de progreso actualizada
         this.barraProgreso.fillStyle(0xE6E6FA);
-        this.barraProgreso.fillRect(this.cameras.main.centerX - 150, 575, this.longitudBarra[this.currentPage], 20);
-        
+        this.barraProgreso.fillRect(600 - 150, 575, this.longitudBarra[this.currentPage], 20);
+
         // Borde
         this.barraProgreso.lineStyle(2, 0x000000);
-        this.barraProgreso.strokeRect(this.cameras.main.centerX - 150, 575, 300, 20);
+        this.barraProgreso.strokeRect(600 - 150, 575, 300, 20);
     }
 }

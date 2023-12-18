@@ -16,7 +16,9 @@ export default class CiudadLevel extends LevelBase{
         this.potenciadorSpawneado = false;
         this.spawningPotenciador = false;
         //this.hatID = hatID; 
+        this.points = 0;
         this.roundManager = null;
+
     }
     
     init(data){
@@ -191,8 +193,8 @@ export default class CiudadLevel extends LevelBase{
     }
 
     sendPoints(points){
+        this.points += points;
         this.myUI.gainPoints(points);
-        this.events.emit('cambiarXP', 0, points);
     }
 
     generateText(x, y, message, size){
@@ -234,6 +236,12 @@ export default class CiudadLevel extends LevelBase{
         });
     };
 
+    die(){
+        this.scene.wake('SelectorNivel', this.points);
+        this.registry.events.emit('cambiarXP', 0);
+        this.scene.stop(this.scene.key);
+    }
+
     numberEnemiesCheckers() {
         this.roundManager.enemiesLeft--;
 
@@ -274,6 +282,7 @@ export default class CiudadLevel extends LevelBase{
     };
 
     
+
 
     update(dt, t){
         if(!this.potenciadorSpawneado && !this.spawningPotenciador)

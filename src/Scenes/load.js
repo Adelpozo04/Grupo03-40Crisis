@@ -68,7 +68,7 @@ export default class load extends Phaser.Scene{
         this.load.image('FondoPlaya', './Assets/Sprites/UI/Selector/TilePlayaSelectionFondo.png');
         this.load.image('VolcanLevel', './Assets/Sprites/UI/Selector/MapaVolcanSelection.png');
         this.load.image('FondoVolcan', './Assets/Sprites/UI/Selector/MapaVolcanSelectionFondo.png');
-        this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha.png');
+        this.load.image('flecha', './Assets/Sprites/UI/Selector/flecha1.png');
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
 
