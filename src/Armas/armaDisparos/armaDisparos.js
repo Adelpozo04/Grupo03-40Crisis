@@ -34,7 +34,9 @@ export default class armaDisparos extends Arma{
             callbackScope: this,
             loop: true
     
-            })
+        });
+
+        this.effectShoot = this.scene.sound.add('disparoEffect', {loop: false});
         
     }
 
@@ -59,6 +61,9 @@ export default class armaDisparos extends Arma{
 
             }
             else{
+
+                this.effectShoot.play();
+
                 var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', this.damageArma);
                 if (bala)
                 {

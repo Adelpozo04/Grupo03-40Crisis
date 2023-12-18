@@ -17,10 +17,11 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        console.log(data)
+        console.log(data);
     }
 
     preload(){
+        console.log(this.xpGained);
         console.log();
     }
 
@@ -40,7 +41,16 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
+
+        this.effectConfirm = this.sound.add('confirmarEffect', {loop: false});
+        this.effectMoveOptions = this.sound.add('moverOpcionesEffect', {loop: false});
+
         console.log(this);
+
+        this.events.on('resume', (xp) => {
+            console.log(xp);
+        });
+
         // Experiencia de cada nivel
         this.setExperience();
 
@@ -94,12 +104,16 @@ export default class SelectorNivel extends Phaser.Scene {
         button.setInteractive();
         button.on("pointerdown", () => {
             this.backgroundMusic.destroy();
+            this.effectConfirm.play();
            this.loadScene(); // Se carga el nivel en caso de click
         });
     }
 
     // Cambio de pagina
     changePage(dir){
+
+        this.effectMoveOptions.play();
+
         // Comprobacion para ciclar en ambos sentidos
         if((this.currentPage + dir) < 0) this.currentPage = 3;
         this.currentPage = (this.currentPage + dir) % 3; // Cuenta para poder ciclar el array
@@ -170,6 +184,8 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Cambio de sombrero
     changeHat(h, dir){
+        this.effectMoveOptions.play();
+
         h.destroy();
         // Comprobacion para ciclar en ambos sentidos
         if((this.hatID + dir) < 0) this.hatID = 21;
@@ -188,7 +204,9 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Carga de escena
     loadScene(){
+
         console.log(this.mapas[this.currentPage], this.hatID)
+
         if(this.hatUnlocked[this.hatID]){
             //this.scene.sleep(this.scene);
             //this.scene.start(this.mapas[this.currentPage], this.hatID);
@@ -198,8 +216,8 @@ export default class SelectorNivel extends Phaser.Scene {
         }
         else{
             console.log(this.scene.key);
-            this.scene.sleep(this.scene.key);
-            this.scene.start(this.mapas[this.currentPage], -1);
+            this.scene.pause(this.scene.key);
+            this.scene.launch(this.mapas[this.currentPage], -1);
 
             //this.scene.switch(this.mapas[this.currentPage]);
             
