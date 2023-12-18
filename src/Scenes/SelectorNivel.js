@@ -198,10 +198,10 @@ export default class SelectorNivel extends Phaser.Scene {
         }
         else{
             console.log(this.scene.key);
-            //this.scene.sleep(this.scene.key);
-            //this.scene.start(this.mapas[this.currentPage], -1);
+            this.scene.sleep(this.scene.key);
+            this.scene.start(this.mapas[this.currentPage], -1);
 
-            this.scene.switch(this.mapas[this.currentPage]);
+            //this.scene.switch(this.mapas[this.currentPage]);
             
             console.log('b');
         }
