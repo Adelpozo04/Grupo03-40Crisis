@@ -273,7 +273,7 @@ export default class CiudadLevel extends LevelBase{
         this.registry.events.emit('cambiarXP', 0);
         this.scene.stop(this.scene.key);
         */
-        this.scene.start('gameOver');
+        this.scene.start('gameOver', {points: this.points});
     }
 
     numberEnemiesCheckers() {

@@ -25,8 +25,6 @@ constructor(scene, x, y, key, player, config)
     this.setScale(config.scale);
     this.attackFlag = true;
     this.alive = true;
-    this.explosiveState = false;
-    this.objetiveState = false;
     scene.physics.add.existing(this);
     scene.add.existing(this);
 
@@ -50,26 +48,7 @@ tryAttack()
     }, this)
 }
 
-gainExplosiveState(explosionTime){
 
-    this.explosiveState = true;
-
-    this.event = this.scene.time.addEvent({
-        delay: 1000 * explosionTime,
-        callback: this.lostExplosiveState,
-        callbackScope: this,
-        loop: false
-
-        })
-
-}
-
-
-
-lostExplosiveState(){
-    console.log("volvio a la normalidad")
-    this.explosiveState = false;
-}
 
 preUpdate(){
     // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
