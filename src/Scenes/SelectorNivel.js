@@ -17,10 +17,11 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        console.log(data)
+        console.log(data);
     }
 
     preload(){
+        console.log(this.xpGained);
         console.log();
     }
 
@@ -40,7 +41,9 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
-        console.log(this);
+        this.events.on('resume', (xp) => {
+            console.log(xp);
+        });
         // Experiencia de cada nivel
         this.setExperience();
 
@@ -198,8 +201,8 @@ export default class SelectorNivel extends Phaser.Scene {
         }
         else{
             console.log(this.scene.key);
-            this.scene.sleep(this.scene.key);
-            this.scene.start(this.mapas[this.currentPage], -1);
+            this.scene.pause(this.scene.key);
+            this.scene.launch(this.mapas[this.currentPage], -1);
 
             //this.scene.switch(this.mapas[this.currentPage]);
             
