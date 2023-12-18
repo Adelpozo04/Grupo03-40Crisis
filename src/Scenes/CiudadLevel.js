@@ -140,7 +140,7 @@ export default class CiudadLevel extends LevelBase{
         this.spawnPotenciador();    
 
         // en segundos
-        let tiempoEntreEventos = 3
+        let tiempoEntreEventos = 9
         // llama a crear un evento cada x tiempo
         this.time.addEvent({
             delay: tiempoEntreEventos * 1000,
@@ -157,12 +157,20 @@ export default class CiudadLevel extends LevelBase{
 
     eventManager()
     {
-        let x = Phaser.Math.RND.between(300, 3000)
-        let y = Phaser.Math.RND.between(300, 2250)
+        let choice = Phaser.Math.RND.between(0,1)
 
-
-        new DamageWave(this, 500, 500, 'coche')
-        //new EffectArea(this, x, y, 'bocaIncendios', 15000)
+        if (choice == 0)
+        {
+            
+            let x = Phaser.Math.RND.between(300, 3000)
+            let y = Phaser.Math.RND.between(300, 2250)
+            new EffectArea(this, x, y, 'humo', 15000, 0.25)
+        }
+        else if (choice == 1)
+        {
+            let y = Phaser.Math.RND.between(300, 2250)
+            new DamageWave(this, 3000, y, 'coche', 0.15)
+        }
     }
 
     getPotenciador()

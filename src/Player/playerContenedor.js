@@ -61,11 +61,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.disparosAmmo = 30;
 
         this.inKnockback = false;
+        this.canGetHitByWave = true;
 
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
-        this.player.setDepth(2)
+        this.player.setDepth(3)
 
         if(hatId != -1){
             this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
@@ -130,6 +131,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['pistola', 5], ['metralleta', 2], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);
+        var knockBackArmas = new Map([
+            ['fist', 500], ['bate', 500], ['espada', 500], ['empuje', 1000]
+        ])
 
 
         this.armas = new Map([
@@ -354,6 +358,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     preUpdate(t, dt)
     {
+        this.player.setDepth(3)
         this.movement();
         this.personalityInput();
 
@@ -455,12 +460,14 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         {
             this.effectSerGolpeado.play();
             this.life = this.life - damage;
+
          
             if(this.life <= 0){
                 this.scene.die();
             }
         }
        
+
     }
 
     //Potenciadores
@@ -513,7 +520,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.invulnerable = false;
                 });
                 break;
-            case 'bocaIncendios':
+            case 'humo':
                 if (!this.underSpeedEffect)
                 {
                     this.underSpeedEffect = true;
@@ -524,6 +531,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                         this.underSpeedEffect = false;
                     });
                 }
+                break;
+            case 'coche':
+                this.canGetHitByWave = false;
+                this.receiveDamage(5)
+                this.scene.time.delayedCall(300, () => {
+                    this.canGetHitByWave = true;
+                });
                 break;
             default:
                 break;
