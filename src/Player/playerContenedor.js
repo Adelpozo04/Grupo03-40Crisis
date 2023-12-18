@@ -354,8 +354,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
                     if(this.lookDer){
                         this.player.setFlip(true, false);
-                        this.myHat.x = this.myHat.x + this.player.x / 2;
-                        this.myHat.setFlip(true, false); 
+
+                        if(this.myHat != null){
+                            this.myHat.x = this.myHat.x + this.player.x / 2;
+                            this.myHat.setFlip(true, false); 
+                        }
+                        
                         this.lookDer = !this.lookDer;
                     }
                     
@@ -373,8 +377,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.dirX = 1;
                     if(!this.lookDer){
                         this.player.setFlip(false, false);
-                        this.myHat.x = this.myHat.x - this.player.x / 2;
-                        this.myHat.setFlip(false, false);
+                        
+                        if(this.myHat != null){
+                            this.myHat.x = this.myHat.x - this.player.x / 2;
+                            this.myHat.setFlip(false, false);
+                        }
+                        
                         this.lookDer = !this.lookDer;
                     }
                     
