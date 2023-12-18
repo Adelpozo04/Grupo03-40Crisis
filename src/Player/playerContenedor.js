@@ -356,9 +356,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     {
         this.movement();
         this.personalityInput();
-        if(this.life <= 0){
-            this.scene.die();
-        }
+
     }
 
     //Movimiento y fisicas
@@ -457,6 +455,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         {
             this.effectSerGolpeado.play();
             this.life = this.life - damage;
+         
+            if(this.life <= 0){
+                this.scene.die();
+            }
         }
        
     }
