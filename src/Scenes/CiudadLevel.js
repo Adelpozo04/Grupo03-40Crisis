@@ -89,6 +89,7 @@ export default class CiudadLevel extends LevelBase{
         // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
         this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
         this.roundManager.startRound(); // Comienza la primera ronda
+        this.numberEnemiesCheckers();
 
         this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, layer){
             bala.destroy()
@@ -219,19 +220,28 @@ export default class CiudadLevel extends LevelBase{
     };
 
 
-    decreaseEnemiesLeft() {
+    numberEnemiesCheckers() {
         this.roundManager.enemiesLeft--;
 
 
          // Verifica si se eliminaron todos los enemigos
          const checkRoundEnd = () => {
             
-            console.log(this.roundManager.enemiesLeft);
+            console.log(this.roundManager.totalEnemiesLeft);
+            console.log(this.roundManager.enemiesDefeated);
             // Verifica si se eliminaron todos los enemigos
-            const allEnemiesEliminated = this.roundManager.enemiesLeft === 0;
+            const allEnemiesEliminated = this.roundManager.enemiesDefeated === this.roundManager.totalEnemiesLeft;
 
             if (allEnemiesEliminated) {
-             this.roundManager.startRound(); // Comienza la siguiente ronda
+            this.roundManager.totalEnemiesLeft = (this.roundManager.enemiesPerRound + this.roundManager.increasePerRound * this.roundManager.currentRound) * 4;
+
+             this.time.delayedCall(5000, () => {
+                console.log("paso de ronda");
+
+                this.roundManager.startRound(); // Comienza la siguiente ronda
+
+             })
+             
             }
 
         };
@@ -244,6 +254,11 @@ export default class CiudadLevel extends LevelBase{
         callbackScope: this
         });
     };
+
+    decreaseEnemiesLeft() {
+        this.roundManager.enemiesDefeated++;
+    };
+
     
 
 
