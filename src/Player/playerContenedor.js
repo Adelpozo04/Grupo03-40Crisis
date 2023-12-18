@@ -468,6 +468,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.invulnerable = false;
                 });
                 break;
+            case 'bocaIncendios':
+                this.aux = this.speed;
+                this.speed = 50;
+                this.scene.time.delayedCall(6000, () => {
+                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
+                });
+                break;
             default:
                 break;
         }

@@ -7,6 +7,7 @@ import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
+import EffectArea from '../Scenes/Event/effectArea.js'
 
 
 export default class CiudadLevel extends LevelBase{
@@ -18,7 +19,6 @@ export default class CiudadLevel extends LevelBase{
         //this.hatID = hatID; 
         this.points = 0;
         this.roundManager = null;
-
     }
     
     init(data){
@@ -137,10 +137,28 @@ export default class CiudadLevel extends LevelBase{
         
         this.spawnPotenciador();    
 
-        //Creacion de la UI
+        // en segundos
+        let tiempoEntreEventos = 3
+        // llama a crear un evento cada x tiempo
+        this.time.addEvent({
+            delay: tiempoEntreEventos * 1000,
+            loop: true,
+            callback: this.eventManager,
+            callbackScope: this
+        });
+
+      //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
         this.myUI.setScrollFactor(0);
+    }
+
+    eventManager()
+    {
+        let x = Phaser.Math.RND.between(300, 500)
+        let y = Phaser.Math.RND.between(300, 500)
+
+        new EffectArea(this, 500, 500, 'bocaIncendios', 5000)
     }
 
     getPotenciador()
