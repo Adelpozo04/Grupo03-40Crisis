@@ -6,22 +6,22 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {number} x - posicion x
      * @param {number} y - posicion y
      * @param {playerContenedor} player - referencia al player
-     * @param {number} speed - velocidad
-     * @param {number} attackDistance - distancia mínima de ataque
+     * @param {config} config - config
      */
 
-    constructor(scene, x, y, player, speed, attackDistance, damage, life, points){
+    constructor(scene, x, y, player, config){
         super(scene, x, y);
         
         this.scene.add.existing(this);
         this.player = player;
-        this.speed = speed;
-        this.damage = damage;
-        this.life = life;
-        this.direction = new Phaser.Math.Vector2();
-        this.attackDistance = attackDistance;
-        this.points = points;
+        this.speed = config.speed;
+        this.damage = config.damage;
+        this.life = config.vida;
+        this.attackDistance = config.attackDistance;
+        this.points = config.puntos;
+        this.maxDropProbability = config.ammoDrop;
 
+        this.direction = new Phaser.Math.Vector2();
         this.objetive = player;
 
         this.isAttacking = false;
@@ -69,11 +69,12 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     receiveDamage(damage){
 
-        if(!this.explosiveState && !this.invencible && this.alive){
+        if(!this.invencible && this.alive && !this.inKnockBack){
           
             this.life -= damage;
 
             console.log(this.life + " " + this.damage)
+            console.log(this.points)
             if(this.life <= 0){
 
                 if(this.objetiveState){
@@ -84,8 +85,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
                 this.alive = false;
                 this.body.setVelocity(0, 0);
-                this.body.destroy();
                 this.scene.sendPoints(this.points);
+                
                 this.player.gainPersonalityExp(2);
         
                 var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
@@ -95,11 +96,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 if(dropMunition == 1){
                     this.spawnMunition();
                 }
-
-                console.log(this.key);
-                console.log(this.enemy);
     
                 this.enemy.play('enemydeath', true);
+                this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
 
                   // Asegúrate de contabilizar la eliminación solo una vez
@@ -168,6 +167,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
     // tienes que pasarle un Phaser.Math.Vector2D normalizado
     knockBack(direction)
     {
+        direction.normalize();
         if (!this.inKnockBack)
         {
             let knockBackSpeed = 1000

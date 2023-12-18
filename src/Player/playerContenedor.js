@@ -52,7 +52,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             CENTINELA: 2,
             PACIFISTA: 3,}
     
-        this.personalityExp = [0, 0, 0, 1200];
+        this.personalityExp = [0, 1200, 0, 800];
     
         this.currentPersonality = this.Personalities.EXPLORADOR;
 
@@ -117,13 +117,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
         
         var tiempoCooldown = new Map([
-            ['fist', 6], ['bate', 10], ['espada', 8],
+            ['fist', 0.6], ['bate', 1], ['espada', 0.8],
             ['pistola', 2], ['metralleta', 0.2], ['franco', 13],
             ['muro', 8], ['mina', 12], ['c4', 15],
-            ['paralizador', 4], ['empuje', 4], ['varita', 20]
+            ['paralizador', 4], ['empuje', 0.4], ['varita', 20]
         ]);
         var damageArmas = new Map([
-            ['fist', 1], ['bate', 1], ['espada', 1],
+            ['fist', 1], ['bate', 1], ['espada', 50],
             ['pistola', 5], ['metralleta', 2], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);

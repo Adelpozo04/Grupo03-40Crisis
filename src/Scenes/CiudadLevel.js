@@ -1,25 +1,20 @@
 import LevelBase from './levelBase.js'
 import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
-import Robot from '../Enemies/robot.js'
-import EnemigoBasico from '../Enemies/enemigoBasico.js';
-import lutano from '../Enemies/lutano.js';
-import Mono from '../Enemies/mono.js';
-import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
-import Bala from '../Armas/armaDisparos/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
 import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
 
+
 export default class CiudadLevel extends LevelBase{
 
     constructor(){
         super('CiudadLevel'); 
         this.potenciadorSpawneado = false;
-        this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
+        this.spawningPotenciador = false;
         //this.hatID = hatID; 
         this.roundManager = null;
     }
@@ -40,6 +35,12 @@ export default class CiudadLevel extends LevelBase{
     create(data){
         super.create();
 
+
+        //Cargado de la musica
+        this.backgroundMusic = this.sound.add('ciudadMusic', {loop: true});
+
+        this.backgroundMusic.play();
+
         //Creacion del tilemap a partir de los datos cargados
         this.map = this.make.tilemap({ 
 			key: 'ciudadTilemap', 
@@ -57,26 +58,22 @@ export default class CiudadLevel extends LevelBase{
 
         this.collisionLayer = this.map.createLayer('Colisiones', myTile);
 
-        //Se le agregan las colisiones a la layer
+        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile).setDepth(3);
+
+        //Se le agregan las colisiones a las layers
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
         //Creacion de entidades
         this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
 
-        //Se indica que colliders chocan entre si
-        this.physics.add.collider(this.mike, this.collisionLayer);
-
-        //Se crea la camara
         this.camera = this.cameras.main.startFollow(this.mike);
-        
-        //Se crean layers por encima de las entidades
-        this.objectsUpLayer = this.map.createLayer('ObjetosPorEncima', myTile).setDepth(3);
 
         //Se ajusta el tamaño del mapa
         this.collisionLayer.setScale(1.35, 1.35);
         this.groundLayer.setScale(1.35, 1.35);
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
+
            
         this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike, this.grupoEnemigos);
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike, this.grupoEnemigos);
@@ -90,6 +87,9 @@ export default class CiudadLevel extends LevelBase{
         this.roundManager.startRound(); // Comienza la primera ronda
         this.numberEnemiesCheckers();
 
+        //Se indica que colliders chocan entre si
+        this.physics.add.collider(this.mike, this.collisionLayer);
+ 
         this.physics.add.collider(this.grupoBalas, this.collisionLayer, function(bala, layer){
             bala.destroy()
         }, null, this)
@@ -113,6 +113,15 @@ export default class CiudadLevel extends LevelBase{
 
         })
 
+        //balas robot con el player
+        this.physics.add.collider(this.grupoBalasRobot, this.mike, function(bala,player){
+            player.receiveDamage(bala.getDamage())
+            bala.destroy();
+        })
+        this.physics.add.collider(this.grupoBalasRobot, this.collisionLayer, function(bala, entorno){
+            bala.destroy();
+        })
+
         // municion con player
         this.physics.add.collider(this.grupoMunicionBalas, this.mike, function(ammo, player){
 
@@ -126,9 +135,15 @@ export default class CiudadLevel extends LevelBase{
         
         this.spawnPotenciador();    
 
+        //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
         this.myUI.setScrollFactor(0);
+    }
+
+    getPotenciador()
+    {
+        return this.potenciador;
     }
 
     spawnPotenciador() {
@@ -154,7 +169,8 @@ export default class CiudadLevel extends LevelBase{
         let spawnPointY = spawnPoint.y;
 
         this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
-        
+        this.potenciadorSpawneado = true;
+
         this.tweens.add({
             targets: this.potenciador,
             y: this.potenciador.y - 30,
@@ -218,7 +234,6 @@ export default class CiudadLevel extends LevelBase{
         });
     };
 
-
     numberEnemiesCheckers() {
         this.roundManager.enemiesLeft--;
 
@@ -260,17 +275,13 @@ export default class CiudadLevel extends LevelBase{
 
     
 
-
-    
-
     update(dt, t){
-        if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
         { 
-            this.potenciadorSpawneado = true;
-            this.potenciadorRecogido = false;
+            this.spawningPotenciador = true;
             this.time.delayedCall(5000, () => {
                 this.spawnPotenciador();
-                
+                this.potenciadorSpawneado = true;
             })
         }
 
