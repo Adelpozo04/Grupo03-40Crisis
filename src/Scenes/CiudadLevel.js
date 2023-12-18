@@ -20,6 +20,7 @@ export default class CiudadLevel extends LevelBase{
         this.potenciadorSpawneado = false;
         this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
         //this.hatID = hatID; 
+        this.points = 0;
     }
     
     init(data){
@@ -184,8 +185,8 @@ export default class CiudadLevel extends LevelBase{
     }
 
     sendPoints(points){
+        this.points += points;
         this.myUI.gainPoints(points);
-        this.events.emit('cambiarXP', 0, points);
     }
 
     generateText(x, y, message, size){
@@ -227,7 +228,11 @@ export default class CiudadLevel extends LevelBase{
         });
     };
 
-    
+    die(){
+        this.scene.wake('SelectorNivel', this.points);
+        this.registry.events.emit('cambiarXP', 0);
+        this.scene.stop(this.scene.key);
+    }
 
     update(dt, t){
         if(!this.potenciadorSpawneado && this.potenciadorRecogido)

@@ -337,6 +337,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     {
         this.movement();
         this.personalityInput();
+        console.log(this.life);
+        if(this.life <= 0){
+            this.scene.die();
+        }
     }
 
     //Movimiento y fisicas
