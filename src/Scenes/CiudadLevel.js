@@ -1,26 +1,24 @@
 import LevelBase from './levelBase.js'
 import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
-import Robot from '../Enemies/robot.js'
-import EnemigoBasico from '../Enemies/enemigoBasico.js';
-import lutano from '../Enemies/lutano.js';
-import Mono from '../Enemies/mono.js';
-import cepo from '../Enemies/cepo.js';
 import UIManager from '../UI/uiManager.js';
-import Bala from '../Armas/armaDisparos/balas.js'
 import EnemigoSpawner from '../enemySpawner.js';
 import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
+import RoundManager from '../RoundManager.js';
+
 
 export default class CiudadLevel extends LevelBase{
 
     constructor(){
         super('CiudadLevel'); 
         this.potenciadorSpawneado = false;
-        this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
+        this.spawningPotenciador = false;
         //this.hatID = hatID; 
         this.points = 0;
+        this.roundManager = null;
+
     }
     
     init(data){
@@ -78,13 +76,18 @@ export default class CiudadLevel extends LevelBase{
         this.groundUpLayer.setScale(1.35, 1.35);
         this.objectsUpLayer.setScale(1.35, 1.35);
 
-        //Creacion de los spawners
-        this.enemySpawner1 = new EnemigoSpawner(this, 600, 400, this.mike, this.grupoEnemigos);
+           
+        this.enemySpawner1 = new EnemigoSpawner(this, 1750, 400, this.mike, this.grupoEnemigos);
         this.enemySpawner2 = new EnemigoSpawner(this, 200, 1320, this.mike, this.grupoEnemigos);
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike, this.grupoEnemigos);
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike, this.grupoEnemigos);
 
-        this.enemySpawners();
+
+
+        // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
+        this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
+        this.roundManager.startRound(); // Comienza la primera ronda
+        this.numberEnemiesCheckers();
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
@@ -137,8 +140,12 @@ export default class CiudadLevel extends LevelBase{
         //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
-
         this.myUI.setScrollFactor(0);
+    }
+
+    getPotenciador()
+    {
+        return this.potenciador;
     }
 
     spawnPotenciador() {
@@ -164,7 +171,8 @@ export default class CiudadLevel extends LevelBase{
         let spawnPointY = spawnPoint.y;
 
         this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
-        
+        this.potenciadorSpawneado = true;
+
         this.tweens.add({
             targets: this.potenciador,
             y: this.potenciador.y - 30,
@@ -211,15 +219,15 @@ export default class CiudadLevel extends LevelBase{
     }
 
 
-    enemySpawners() {
+    enemySpawners(enemyNumbers) {
         const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
 
         // Verifica la colisión entre la cámara y cada uno de los spawners
         allSpawners.forEach((spawner) => {
             const isColliding = Phaser.Geom.Intersects.RectangleToRectangle(this.camera.worldView, spawner.getBounds());
             if (!isColliding) {
-                // Si hay colisión, spawnear enemigos
-                spawner.spawnEnemies(5, 3000); // Ajusta el número y tiempo según lo que necesites
+                // Si no hay colisión, spawnear enemigos
+                spawner.spawnEnemies(enemyNumbers, 3000); // Ajusta el número y tiempo según lo que necesites
                 // Limpiar todos los enemigos generados después de cierto tiempo 
                 this.time.delayedCall(40000, () => {
                     spawner.clearEnemies();
@@ -234,16 +242,59 @@ export default class CiudadLevel extends LevelBase{
         this.scene.stop(this.scene.key);
     }
 
+    numberEnemiesCheckers() {
+        this.roundManager.enemiesLeft--;
+
+
+         // Verifica si se eliminaron todos los enemigos
+         const checkRoundEnd = () => {
+            
+            console.log(this.roundManager.totalEnemiesLeft);
+            console.log(this.roundManager.enemiesDefeated);
+            // Verifica si se eliminaron todos los enemigos
+            const allEnemiesEliminated = this.roundManager.enemiesDefeated === this.roundManager.totalEnemiesLeft;
+
+            if (allEnemiesEliminated) {
+            this.roundManager.totalEnemiesLeft = (this.roundManager.enemiesPerRound + this.roundManager.increasePerRound * this.roundManager.currentRound) * 4;
+
+             this.time.delayedCall(5000, () => {
+                console.log("paso de ronda");
+
+                this.roundManager.startRound(); // Comienza la siguiente ronda
+
+             })
+             
+            }
+
+        };
+
+        // Establece un evento que verifique si se ha completado la ronda cada cierto intervalo
+        this.time.addEvent({
+        delay: 1000, // Intervalo para verificar el final de la ronda
+        loop: true,
+        callback: checkRoundEnd,
+        callbackScope: this
+        });
+    };
+
+    decreaseEnemiesLeft() {
+        this.roundManager.enemiesDefeated++;
+    };
+
+    
+
+
     update(dt, t){
-        if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
         { 
-            this.potenciadorSpawneado = true;
-            this.potenciadorRecogido = false;
+            this.spawningPotenciador = true;
             this.time.delayedCall(5000, () => {
                 this.spawnPotenciador();
-                
+                this.potenciadorSpawneado = true;
             })
         }
+
+  
    }
 }
 
