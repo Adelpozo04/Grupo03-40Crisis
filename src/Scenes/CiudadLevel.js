@@ -156,12 +156,24 @@ export default class CiudadLevel extends LevelBase{
 
     eventManager()
     {
-        let x = Phaser.Math.RND.between(300, 3000)
-        let y = Phaser.Math.RND.between(300, 2250)
+        let choice = Phaser.Math.RND.between(0,1)
+
+        if (choice == 0)
+        {
+            let x = Phaser.Math.RND.between(300, 3000)
+            let y = Phaser.Math.RND.between(300, 2250)
+            new EffectArea(this, x, y, 'bocaIncendios', 15000)
+        }
+        else if (choice == 1)
+        {
+            let y = Phaser.Math.RND.between(300, 2250)
+            new DamageWave(this, 3000, y, 'coche')
+        }
+
+        
 
 
-        new DamageWave(this, 500, 500, 'coche')
-        //new EffectArea(this, x, y, 'bocaIncendios', 15000)
+        
     }
 
     getPotenciador()

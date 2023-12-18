@@ -29,6 +29,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.alive = true;
         this.invencible = false;
 
+        this.canGetHitByWave = true;
+
         this.scene.physics.add.existing(this);
         this.scene.add.existing(this);  
     }
@@ -68,7 +70,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     receiveDamage(damage){
 
-        if(!this.invencible && this.alive && !this.inKnockBack){
+        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
           
             this.life -= damage;
 
@@ -230,6 +232,16 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.scene.time.delayedCall(2000, () => {
                         this.speed = this.aux 
                         this.underSpeedEffect = false;
+                    });
+                }
+                break;
+            case 'coche':
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
                     });
                 }
                 break;

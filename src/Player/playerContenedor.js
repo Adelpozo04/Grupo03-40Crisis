@@ -61,6 +61,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.disparosAmmo = 30;
 
         this.inKnockback = false;
+        this.canGetHitByWave = true;
 
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
@@ -505,6 +506,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                         this.underSpeedEffect = false;
                     });
                 }
+                break;
+            case 'coche':
+                this.canGetHitByWave = false;
+                this.receiveDamage(5)
+                this.scene.time.delayedCall(300, () => {
+                    this.canGetHitByWave = true;
+                });
                 break;
             default:
                 break;
