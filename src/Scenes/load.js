@@ -72,12 +72,17 @@ export default class load extends Phaser.Scene{
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
 
+        //Eventos
+        this.load.image('bocaIncendios', './Assets/Sprites/Eventos/bocaIncendios.png')
+        this.load.image('coche', './Assets/Sprites/Eventos/coche.png')
+
         //Cargado de musica de fondo
         this.load.audio('selectorMusic', ['./Assets/Audio/Music/SelectorNiveles.wav']);
         this.load.audio('ciudadMusic', ['./Assets/Audio/Music/CiudadLevel.wav']);
         this.load.audio('playaMusic', ['./Assets/Audio/Music/PlayaLevel.wav']);
         this.load.audio('volcanMusic', ['./Assets/Audio/Music/VolcanLevel.wav']);
 
+        
         
     }
 

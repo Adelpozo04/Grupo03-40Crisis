@@ -7,6 +7,8 @@ import municionBalas from '../Armas/armaDisparos/municionBalas.js';
 import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
+import EffectArea from '../Scenes/Event/effectArea.js'
+import DamageWave from '../Scenes/Event/damageWave.js'
 
 
 export default class CiudadLevel extends LevelBase{
@@ -18,7 +20,6 @@ export default class CiudadLevel extends LevelBase{
         //this.hatID = hatID; 
         this.points = 0;
         this.roundManager = null;
-
     }
     
     init(data){
@@ -65,7 +66,7 @@ export default class CiudadLevel extends LevelBase{
         //Se le agregan las colisiones a las layers
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
-        //Creacion de entidades
+        //Creacion de entidades 
         this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
 
         this.camera = this.cameras.main.startFollow(this.mike);
@@ -137,10 +138,30 @@ export default class CiudadLevel extends LevelBase{
         
         this.spawnPotenciador();    
 
-        //Creacion de la UI
+        // en segundos
+        let tiempoEntreEventos = 3
+        // llama a crear un evento cada x tiempo
+        this.time.addEvent({
+            delay: tiempoEntreEventos * 1000,
+            loop: true,
+            callback: this.eventManager,
+            callbackScope: this
+        });
+
+      //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
         this.myUI.setScrollFactor(0);
+    }
+
+    eventManager()
+    {
+        let x = Phaser.Math.RND.between(300, 3000)
+        let y = Phaser.Math.RND.between(300, 2250)
+
+
+        new DamageWave(this, 500, 500, 'coche')
+        //new EffectArea(this, x, y, 'bocaIncendios', 15000)
     }
 
     getPotenciador()
