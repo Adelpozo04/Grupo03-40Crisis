@@ -30,12 +30,25 @@ export default class damageWave extends Phaser.GameObjects.Sprite {
 
     preUpdate()
     {
-        this.body.setVelocity(-this.speed, 0);
-        if (this.x < 0)
+        if (this.key == 'roca')
         {
-            this.play('enemydeath', true);
-            this.body.destroy()
-            this.on('animationcomplete', this.destroyMyself )
+            this.body.setVelocity(0, this.speed);
+            if (this.y > 2500)
+            {
+                this.play('enemydeath', true);
+                this.body.destroy()
+                this.on('animationcomplete', this.destroyMyself )
+            }
+        }
+        else
+        {
+            this.body.setVelocity(-this.speed, 0);
+            if (this.x < 0)
+            {
+                this.play('enemydeath', true);
+                this.body.destroy()
+                this.on('animationcomplete', this.destroyMyself )
+            }
         }
     }
 
