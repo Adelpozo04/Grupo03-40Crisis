@@ -136,9 +136,6 @@ export default class CiudadLevel extends LevelBase{
         //Creacion de la UI
         this.myUI = new UIManager(this, 'UIManager', this.mike);
 
-        const enemy = new Mono(this, 90, 90, 'mono', this.mike, this.generateEnemyConfig('mono'));
-        this.grupoEnemigos.add(enemy);
-
         this.myUI.setScrollFactor(0);
     }
 
