@@ -11,8 +11,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     constructor(scene, x, y, player, config){
         super(scene, x, y);
-        
-        this.scene.add.existing(this);
+
         this.player = player;
         this.speed = config.speed;
         this.damage = config.damage;
@@ -106,6 +105,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 console.log("alealeale");
                 this.scene.decreaseEnemiesLeft();
                 this.isDestroyed = true;
+            
              
                 }
             }
@@ -170,10 +170,10 @@ export default class enemigo extends Phaser.GameObjects.Container {
         direction.normalize();
         if (!this.inKnockBack)
         {
-            let knockBackSpeed = 1000
+            let knockBackSpeed = 600
             this.inKnockBack = true;
             this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
-            this.scene.time.delayedCall(100, () =>{ this.inKnockBack = false })
+            this.scene.time.delayedCall(300, () =>{ this.inKnockBack = false })
         }
     }
     
@@ -193,24 +193,46 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 }
                 break;
             case 'velocidad':
-                this.aux = this.speed;
-                this.speed = 250;
-                this.scene.time.delayedCall(6000, () => {
-                    this.speed = this.aux 
-                });
+                if (!this.underSpeedEffect)
+                {
+                    this.underSpeedEffect = true;
+                    this.aux = this.speed;
+                    this.speed = 280;
+                    this.scene.time.delayedCall(6000, () => {
+                        this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
+                        this.underSpeedEffect = false;
+                    });
+                }
                 break;
             case 'vivu':
-                this.aux = this.speed;
-                this.speed = 0;
-                this.scene.time.delayedCall(5000, () => {
-                    this.speed = this.aux;
-                });
+                if (!this.underSpeedEffect)
+                {
+                    this.underSpeedEffect = true;
+                    this.aux = this.speed;
+                    this.speed = 0;
+                    this.scene.time.delayedCall(5000, () => {
+                        this.speed = this.aux;
+                        this.underSpeedEffect = false;
+                    });
+                }
                 break;
             case 'invencible':
                 this.invulnerable = true;
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
                 });
+                break;
+            case 'bocaIncendios':
+                if (!this.underSpeedEffect)
+                {
+                    this.underSpeedEffect = true;
+                    this.aux = this.speed;
+                    this.speed = 40
+                    this.scene.time.delayedCall(2000, () => {
+                        this.speed = this.aux 
+                        this.underSpeedEffect = false;
+                    });
+                }
                 break;
             default:
                 break;

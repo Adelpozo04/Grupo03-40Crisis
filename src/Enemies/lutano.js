@@ -13,26 +13,27 @@ constructor(scene, x, y, key, player, config){
 
     this.elapsedTime = 0;
 
-    this.scene.time.addEvent({
-
+    this.spawnCepoEvent = this.scene.time.addEvent({ // Guardar el evento en una variable
         delay: this.spawnTime * 1000,
         loop: true,
         callback: this.spawnCepo,
         callbackScope: this
-
     });
     
 }
 
 spawnCepo(){
 
-    console.log("cepeame esta");
-
-    this.cepo = new cepo(this.scene, this.x, this.y, "cepo", this.player);
-
-    this.scene.add.existing(this.cepo);
+    if (this.alive) { // Verificar si el lutano está vivo antes de spawnear un cepo
+            console.log("cepeame esta");
+            this.cepo = new cepo(this.scene, this.x, this.y, "cepo", this.player);
+            this.scene.add.existing(this.cepo);
+    }
 
 }
+
+
+
 
 update(){
 
