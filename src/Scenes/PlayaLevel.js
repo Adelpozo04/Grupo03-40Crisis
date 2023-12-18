@@ -144,7 +144,7 @@ export default class PlayaLevel extends LevelBase{
         this.spawnPotenciador();    
 
         // en segundos
-        let tiempoEntreEventos = 9
+        let tiempoEntreEventos = 5
         // llama a crear un evento cada x tiempo
         this.time.addEvent({
             delay: tiempoEntreEventos * 1000,
@@ -163,18 +163,9 @@ export default class PlayaLevel extends LevelBase{
     {
         let choice = Phaser.Math.RND.between(0,1)
 
-        if (choice == 0)
-        {
-            
-            let x = Phaser.Math.RND.between(300, 3000)
-            let y = Phaser.Math.RND.between(300, 2250)
-            new EffectArea(this, x, y, 'humo', 15000, 0.25)
-        }
-        else if (choice == 1)
-        {
-            let y = Phaser.Math.RND.between(300, 2250)
-            new DamageWave(this, 3000, y, 'coche', 0.15)
-        }
+        let y = Phaser.Math.RND.between(300, 2250)
+        var wave = new DamageWave(this, 3000, y, 'wave', 1)
+        wave.sprite.flipX(true);
     }
 
     getPotenciador()

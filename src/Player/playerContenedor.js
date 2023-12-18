@@ -137,9 +137,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
 
         this.armas = new Map([
-            ['fist', new armaMelee(this.scene, tiempoCooldown.get('fist'), damageArmas.get('fist'),'fist', this)],
-            ['bate', new armaMelee(this.scene, tiempoCooldown.get('bate'), damageArmas.get('bate'),'bate', this)],
-            ['espada', new armaMelee(this.scene, tiempoCooldown.get('espada'), damageArmas.get('espada'),'espada', this)],
+            ['fist', new armaMelee(this.scene, tiempoCooldown.get('fist'), damageArmas.get('fist'),knockBackArmas.get('fist'),'fist', this)],
+            ['bate', new armaMelee(this.scene, tiempoCooldown.get('bate'), damageArmas.get('bate'),knockBackArmas.get('bate'),'bate', this)],
+            ['espada', new armaMelee(this.scene, tiempoCooldown.get('espada'), damageArmas.get('espada'),knockBackArmas.get('espada'),'espada', this)],
             ['pistola', new armaDisparos(this.scene, tiempoCooldown.get('pistola'), damageArmas.get('pistola'),'pistola', this)],
             ['metralleta', new armaDisparos(this.scene, tiempoCooldown.get('metralleta'), damageArmas.get('metralleta'),'metralleta', this)],
             ['franco', new armaDisparos(this.scene, tiempoCooldown.get('franco'), damageArmas.get('franco'),'franco', this)],
@@ -147,7 +147,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['muro', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('muro'), 'muro', this)],
             ['c4', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('c4'), 'c4', this)],
             ['paralizador', new armaObjetosSpawneado(this.scene, tiempoCooldown.get('paralizador'), 'paralizador', this)],
-            ['empuje', new armaMelee(this.scene, tiempoCooldown.get('empuje'), damageArmas.get('empuje'), 'empuje', this)],
+            ['empuje', new armaMelee(this.scene, tiempoCooldown.get('empuje'), damageArmas.get('empuje'), knockBackArmas.get('empuje'), 'empuje', this)],
             ['varita', new armaDisparos(this.scene, tiempoCooldown.get('varita'), damageArmas.get('varita'), 'varita', this)]
         ])
 
