@@ -41,12 +41,11 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     selectEnemyType(randomProbability) {
         // Define los rangos de probabilidad para cada tipo de enemigo
         const enemyTypes = [
-            { type: 'zombie', probability: 0.5 }, //0,35
+            { type: 'zombie', probability: 0.4 }, //0,35
             { type: 'skeleton', probability: 0.25 },
             { type: 'burger', probability: 0.15 },
             { type: 'lutano', probability: 0.1 },
-            { type: 'mono', probability: 0 },
-            { type: 'robot', probability: 0}
+            { type: 'robot', probability: 0.1 }
         ];
 
         let cumulativeProbability = 0;
@@ -69,12 +68,8 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
 
-                if (enemyType === 'mono') {
-                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
-                    this.scene.grupoEnemigos.add(enemy);
-                    enemiesSpawned++;
-                }
-                else if(enemyType === 'lutano'){
+              
+                if(enemyType === 'lutano'){
 
                     const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
