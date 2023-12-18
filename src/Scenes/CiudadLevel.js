@@ -8,6 +8,7 @@ import explosive from '../Armas/armaSpawneadora/explosive.js';
 import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
 import EffectArea from '../Scenes/Event/effectArea.js'
+import DamageWave from '../Scenes/Event/damageWave.js'
 
 
 export default class CiudadLevel extends LevelBase{
@@ -65,7 +66,7 @@ export default class CiudadLevel extends LevelBase{
         //Se le agregan las colisiones a las layers
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
-        //Creacion de entidades
+        //Creacion de entidades 
         this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
 
         this.camera = this.cameras.main.startFollow(this.mike);
@@ -155,10 +156,12 @@ export default class CiudadLevel extends LevelBase{
 
     eventManager()
     {
-        let x = Phaser.Math.RND.between(300, 500)
-        let y = Phaser.Math.RND.between(300, 500)
+        let x = Phaser.Math.RND.between(300, 3000)
+        let y = Phaser.Math.RND.between(300, 2250)
 
-        new EffectArea(this, 500, 500, 'bocaIncendios', 5000)
+
+        new DamageWave(this, 500, 500, 'coche')
+        //new EffectArea(this, x, y, 'bocaIncendios', 15000)
     }
 
     getPotenciador()

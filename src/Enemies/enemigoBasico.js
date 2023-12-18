@@ -21,6 +21,7 @@ constructor(scene, x, y, key, player, config)
     
     this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
     this.add(this.enemy);
+    this.enemy.setDepth(2)
     this.setScale(config.scale);
     this.attackFlag = true;
     this.alive = true;

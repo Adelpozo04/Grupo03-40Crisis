@@ -1,6 +1,7 @@
-export default class effectArea extends Phaser.GameObjects.Sprite {
+export default class damageWave extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, key, tiempoActivo){
+    constructor(scene,x,y,key)
+    {
         super(scene, x, y, key)
         this.key = key;
         scene.add.existing(this);
@@ -10,19 +11,28 @@ export default class effectArea extends Phaser.GameObjects.Sprite {
         this.setScale(2.5)  
         scene.add.sprite(this);  
 
-        scene.physics.add.overlap(this, this.scene.mike, ()=>{
+        this.speed = 50;
+
+        scene.physics.add.collider(this, this.scene.mike, ()=>{
+            //this.scene.mike.knockBack()
             this.scene.mike.applyEffect(this.key)
         })
 
-        scene.physics.add.overlap(this, this.scene.grupoEnemigos,(effArea, enemigo)=>{
+        scene.physics.add.collider(this, this.scene.grupoEnemigos,(effArea, enemigo)=>{
+            enemigo
             enemigo.applyEffect(this.key)
         })
+    }
 
-        scene.time.delayedCall(tiempoActivo, ()=>{
+    preUpdate()
+    {
+        this.body.setVelocity(-this.speed, 0);
+        if (this.x < 0)
+        {
             this.play('enemydeath', true);
             this.body.destroy()
             this.on('animationcomplete', this.destroyMyself )
-        });
+        }
     }
 
     destroyMyself()

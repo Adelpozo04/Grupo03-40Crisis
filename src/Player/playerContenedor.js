@@ -60,9 +60,12 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.disparosAmmo = 30;
 
+        this.inKnockback = false;
+
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
+        this.player.setDepth(2)
 
         if(hatId != -1){
             this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
@@ -332,12 +335,22 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.disparosAmmo;
     }
 
+    knockBack(direction)
+    {
+        direction.normalize();
+        if (!this.inKnockBack)
+        {
+            let knockBackSpeed = 600
+            this.inKnockBack = true;
+            this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
+            this.scene.time.delayedCall(300, () =>{ this.inKnockBack = false })
+        }
+    }
 
     preUpdate(t, dt)
     {
         this.movement();
         this.personalityInput();
-        console.log(this.life);
         if(this.life <= 0){
             this.scene.die();
         }
@@ -346,88 +359,91 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     //Movimiento y fisicas
     movement()
     {
-        if(this.dirX == 0 || this.dirX == -1){
+        if (!this.inKnockBack)
+        {
+            if(this.dirX == 0 || this.dirX == -1){
 
-            if(this.aKey.isDown){
-                if(this.dirX == 0){
-                    this.dirX = -1;
-
-                    if(this.lookDer){
-                        this.player.setFlip(true, false);
-
-                        if(this.myHat != null){
-                            this.myHat.x = this.myHat.x + this.player.x / 2;
-                            this.myHat.setFlip(true, false); 
+                if(this.aKey.isDown){
+                    if(this.dirX == 0){
+                        this.dirX = -1;
+    
+                        if(this.lookDer){
+                            this.player.setFlip(true, false);
+    
+                            if(this.myHat != null){
+                                this.myHat.x = this.myHat.x + this.player.x / 2;
+                                this.myHat.setFlip(true, false); 
+                            }
+                            
+                            this.lookDer = !this.lookDer;
                         }
                         
-                        this.lookDer = !this.lookDer;
                     }
                     
                 }
-                
+                else if(this.aKey.isUp){
+                    this.dirX = 0;
+                }
             }
-            else if(this.aKey.isUp){
-                this.dirX = 0;
-            }
-        }
-        
-        if(this.dirX == 0 || this.dirX == 1){
-            if(this.dKey.isDown){
-                if(this.dirX == 0){
-                    this.dirX = 1;
-                    if(!this.lookDer){
-                        this.player.setFlip(false, false);
-                        
-                        if(this.myHat != null){
-                            this.myHat.x = this.myHat.x - this.player.x / 2;
-                            this.myHat.setFlip(false, false);
+            
+            if(this.dirX == 0 || this.dirX == 1){
+                if(this.dKey.isDown){
+                    if(this.dirX == 0){
+                        this.dirX = 1;
+                        if(!this.lookDer){
+                            this.player.setFlip(false, false);
+                            
+                            if(this.myHat != null){
+                                this.myHat.x = this.myHat.x - this.player.x / 2;
+                                this.myHat.setFlip(false, false);
+                            }
+                            
+                            this.lookDer = !this.lookDer;
                         }
                         
-                        this.lookDer = !this.lookDer;
+                    }   
+                }
+                else if(this.dKey.isUp){
+                    this.dirX = 0;
+                }
+            }
+            
+            if(this.dirY == 0 || this.dirY == -1){
+                if(this.wKey.isDown){
+                    if(this.dirY == 0){
+                        this.dirY = -1;
                     }
+                      
+                }
+                else if(this.wKey.isUp){
                     
-                }   
-            }
-            else if(this.dKey.isUp){
-                this.dirX = 0;
-            }
-        }
-        
-        if(this.dirY == 0 || this.dirY == -1){
-            if(this.wKey.isDown){
-                if(this.dirY == 0){
-                    this.dirY = -1;
+                    this.dirY = 0;
                 }
-                  
             }
-            else if(this.wKey.isUp){
-                
-                this.dirY = 0;
-            }
-        }
-
-        if(this.dirY == 0 || this.dirY == 1){
-            if(this.sKey.isDown){
-                if(this.dirY == 0){
-                    this.dirY = 1;
+    
+            if(this.dirY == 0 || this.dirY == 1){
+                if(this.sKey.isDown){
+                    if(this.dirY == 0){
+                        this.dirY = 1;
+                    }
+                     
                 }
-                 
+                else if(this.sKey.isUp){
+                    this.dirY = 0;
+                }
             }
-            else if(this.sKey.isUp){
-                this.dirY = 0;
+    
+            if(this.dirX != 0 || this.dirY != 0){
+                this.player.play('walk' + this.key, true);
+    
+                this.body.setVelocity(this.speed * this.dirX, this.speed * this.dirY);
+                this.body.velocity.normalize().scale(this.speed);
+    
             }
-        }
-
-        if(this.dirX != 0 || this.dirY != 0){
-            this.player.play('walk' + this.key, true);
-
-            this.body.setVelocity(this.speed * this.dirX, this.speed * this.dirY);
-            this.body.velocity.normalize().scale(this.speed);
-
-        }
-        else{
-            this.body.setVelocity(0, 0);
-            this.player.play('iddle' + this.key, true);
+            else{
+                this.body.setVelocity(0, 0);
+                this.player.play('iddle' + this.key, true);
+            }
         }
     }
 
@@ -449,18 +465,28 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 }
                 break;
             case 'velocidad':
-                this.aux = this.speed;
-                this.speed = 280;
-                this.scene.time.delayedCall(6000, () => {
-                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
-                });
+                if (!this.underSpeedEffect)
+                {
+                    this.underSpeedEffect = true;
+                    this.aux = this.speed;
+                    this.speed = 280;
+                    this.scene.time.delayedCall(6000, () => {
+                        this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
+                        this.underSpeedEffect = false;
+                    });
+                }
                 break;
             case 'vivu':
-                this.aux = this.speed;
-                this.speed = 0;
-                this.scene.time.delayedCall(5000, () => {
-                    this.speed = this.aux;
-                });
+                if (!this.underSpeedEffect)
+                {
+                    this.underSpeedEffect = true;
+                    this.aux = this.speed;
+                    this.speed = 0;
+                    this.scene.time.delayedCall(5000, () => {
+                        this.speed = this.aux;
+                        this.underSpeedEffect = false;
+                    });
+                }
                 break;
             case 'invencible':
                 this.invulnerable = true;
@@ -469,11 +495,16 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 });
                 break;
             case 'bocaIncendios':
-                this.aux = this.speed;
-                this.speed = 50;
-                this.scene.time.delayedCall(6000, () => {
-                    this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
-                });
+                if (!this.underSpeedEffect)
+                {
+                    this.underSpeedEffect = true;
+                    this.aux = this.speed;
+                    this.speed = 60
+                    this.scene.time.delayedCall(2000, () => {
+                        this.speed = this.aux 
+                        this.underSpeedEffect = false;
+                    });
+                }
                 break;
             default:
                 break;

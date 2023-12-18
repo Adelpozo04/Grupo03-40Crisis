@@ -74,6 +74,7 @@ export default class load extends Phaser.Scene{
 
         //Eventos
         this.load.image('bocaIncendios', './Assets/Sprites/Eventos/bocaIncendios.png')
+        this.load.image('coche', './Assets/Sprites/Eventos/coche.png')
 
         //Cargado de musica de fondo
         this.load.audio('selectorMusic', ['./Assets/Audio/Music/SelectorNiveles.wav']);
