@@ -103,6 +103,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 if (!this.isDestroyed) {
                 this.scene.decreaseEnemiesLeft();
                 this.isDestroyed = true;
+            
              
                 }
             }

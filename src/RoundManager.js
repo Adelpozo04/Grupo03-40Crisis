@@ -11,7 +11,7 @@ export default class RoundManager extends Phaser.GameObjects.Container {
         super(scene);
         this.spawners = spawners;
         this.enemiesPerRound = initialEnemiesPerRound;
-        this.currentRound = 10;
+        this.currentRound = 0;
         this.enemiesDefeated = 0;
         this.increasePerRound = 2; // Ajusta según la dificultad deseada
         this.totalEnemiesLeft = (this.enemiesPerRound + this.increasePerRound * this.currentRound) * 4;

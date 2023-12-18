@@ -40,7 +40,7 @@ export default class CiudadLevel extends LevelBase{
 
 
         //Cargado de la musica
-        this.backgroundMusic = this.sound.add('ciudadMusic', {loop: true});
+        this.backgroundMusic = this.sound.add('ciudadMusic', {loop: true, volume: 0.2});
 
         this.backgroundMusic.play();
 
@@ -266,7 +266,8 @@ export default class CiudadLevel extends LevelBase{
     };
 
     die(){
-        this.scene.wake('SelectorNivel', this.points);
+        console.log(this.points);
+        this.scene.resume('SelectorNivel', {data: this.points});
         this.registry.events.emit('cambiarXP', 0);
         this.scene.stop(this.scene.key);
     }
@@ -299,7 +300,7 @@ export default class CiudadLevel extends LevelBase{
 
         // Establece un evento que verifique si se ha completado la ronda cada cierto intervalo
         this.time.addEvent({
-        delay: 1000, // Intervalo para verificar el final de la ronda
+        delay: 1000, 
         loop: true,
         callback: checkRoundEnd,
         callbackScope: this

@@ -25,6 +25,7 @@ export default class armaMelee extends Arma{
 
         this.Attacking = false;
         this.newAngle = 0
+        
         this.scene.input.on('pointerdown', (pointer) =>
         {
             if (!this.Attacking && this.active)
@@ -37,7 +38,9 @@ export default class armaMelee extends Arma{
             callbackScope: this,
             loop: true
     
-            })
+        });
+
+        this.effectHit = this.scene.sound.add('meleeEffect', {loop: false});
     }
 
     calculateElapsedTime(){
@@ -55,6 +58,8 @@ export default class armaMelee extends Arma{
     swingingAnimation()
     {
         this.newAngle = super.getAngle();
+
+        console.log("swing");
 
         this.scene.tweens.add({
             targets: this,
@@ -89,6 +94,7 @@ export default class armaMelee extends Arma{
     tryAttack()
     {
         this.Attacking = true;
+
         // llamada para para cooldown del ataque
         this.scene.time.delayedCall(this.enfriamientoTime * 1000, this.startAttack, [], this);
         this.elapsedTime = 0;

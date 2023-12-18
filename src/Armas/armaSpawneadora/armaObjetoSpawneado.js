@@ -41,7 +41,9 @@ export default class armaObjetosSpawneado extends Arma{
             callbackScope: this,
             loop: true
     
-            })
+            });
+
+        
         
     }
 
