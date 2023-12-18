@@ -1,15 +1,14 @@
 export default class damageWave extends Phaser.GameObjects.Sprite {
 
-    constructor(scene,x,y,key)
+    constructor(scene,x,y,key, scale)
     {
         super(scene, x, y, key)
         this.key = key;
         scene.add.existing(this);
         this.scene.physics.add.existing(this);
 
-        this.setDepth(1)
-        this.setScale(0.15)  
-        scene.add.sprite(this);  
+        this.setDepth(0)
+        this.setScale(scale) 
 
         this.speed = 50;
 

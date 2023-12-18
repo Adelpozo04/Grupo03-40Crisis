@@ -74,8 +74,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
           
             this.life -= damage;
 
-            console.log(this.life + " " + this.damage)
-            console.log(this.points)
             if(this.life <= 0){
 
                 if(this.objetiveState){
@@ -91,8 +89,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.player.gainPersonalityExp(2);
         
                 var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
-        
-                console.log(dropMunition);
+    
         
                 if(dropMunition == 1){
                     this.spawnMunition();
@@ -104,16 +101,42 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
                   // Asegúrate de contabilizar la eliminación solo una vez
                 if (!this.isDestroyed) {
-                console.log("alealeale");
                 this.scene.decreaseEnemiesLeft();
                 this.isDestroyed = true;
              
                 }
             }
         }
-
     }   
 
+    recieveDamageNotGetPoints(damage)
+    {
+        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
+          
+            this.life -= damage;
+            if(this.life <= 0){
+
+                if(this.objetiveState){
+
+                    this.attacker.changeObjetive(this.player);
+                }
+
+                this.alive = false;
+                this.body.setVelocity(0, 0);
+    
+                this.enemy.play('enemydeath', true);
+                this.body.destroy();
+                this.enemy.on('animationcomplete', this.destroyMyself )
+
+                  // Asegúrate de contabilizar la eliminación solo una vez
+                if (!this.isDestroyed) {
+                this.scene.decreaseEnemiesLeft();
+                this.isDestroyed = true;
+             
+                }
+            }
+        }
+    }
 
     attack()
     {
@@ -166,12 +189,12 @@ export default class enemigo extends Phaser.GameObjects.Container {
     }
 
     // tienes que pasarle un Phaser.Math.Vector2D normalizado
-    knockBack(direction)
+    // 600 = al que estaba antes
+    knockBack(direction, knockBackSpeed)
     {
         direction.normalize();
         if (!this.inKnockBack)
         {
-            let knockBackSpeed = 600
             this.inKnockBack = true;
             this.body.setVelocity(knockBackSpeed * direction.x, knockBackSpeed * direction.y)
             this.scene.time.delayedCall(300, () =>{ this.inKnockBack = false })
@@ -239,7 +262,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 if (this.canGetHitByWave)
                 {
                     this.canGetHitByWave = false;
-                    this.receiveDamage(5)
+                    this.recieveDamageNotGetPoints(5)
                     this.scene.time.delayedCall(300, () => {
                         this.canGetHitByWave = true;
                     });

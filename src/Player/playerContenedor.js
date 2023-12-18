@@ -66,7 +66,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         //Creacion sprites
         this.player = scene.add.sprite(16, 32, key);
         this.add(this.player);
-        this.player.setDepth(2)
+        this.player.setDepth(3)
 
         if(hatId != -1){
             this.myHat = scene.add.sprite(this.player.x -4, this.player.y -10, 'hat', hatId);
@@ -131,6 +131,9 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['pistola', 5], ['metralleta', 2], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);
+        var knockBackArmas = new Map([
+            ['fist', 500], ['bate', 500], ['espada', 500], ['empuje', 1000]
+        ])
 
 
         this.armas = new Map([
@@ -350,6 +353,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     preUpdate(t, dt)
     {
+        this.player.setDepth(3)
         this.movement();
         this.personalityInput();
         if(this.life <= 0){
@@ -452,8 +456,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         if(!this.invencible)
         {
             this.life = this.life - damage;
-        }
-       
+        }  
     }
 
     //Potenciadores
@@ -495,7 +498,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.invulnerable = false;
                 });
                 break;
-            case 'bocaIncendios':
+            case 'humo':
                 if (!this.underSpeedEffect)
                 {
                     this.underSpeedEffect = true;

@@ -1,14 +1,14 @@
 export default class effectArea extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, key, tiempoActivo){
+    constructor(scene, x, y, key, tiempoActivo, scale){
         super(scene, x, y, key)
         this.key = key;
-        scene.add.existing(this);
+        this.setDepth(0)
+        scene.add.existing(this)
         this.scene.physics.add.existing(this);
 
-        this.setDepth(1)
-        this.setScale(2.5)  
-        scene.add.sprite(this);  
+        
+        this.setScale(scale)
 
         scene.physics.add.overlap(this, this.scene.mike, ()=>{
             this.scene.mike.applyEffect(this.key)
