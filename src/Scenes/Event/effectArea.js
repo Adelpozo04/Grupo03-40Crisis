@@ -3,6 +3,7 @@ export default class effectArea extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key, tiempoActivo, scale){
         super(scene, x, y, key)
         this.key = key;
+
         this.setDepth(0)
         scene.add.existing(this)
         this.scene.physics.add.existing(this);

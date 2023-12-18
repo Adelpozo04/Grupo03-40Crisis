@@ -11,6 +11,7 @@ import EffectArea from '../Scenes/Event/effectArea.js'
 import DamageWave from '../Scenes/Event/damageWave.js'
 
 
+
 export default class CiudadLevel extends LevelBase{
 
     constructor(){
@@ -267,9 +268,12 @@ export default class CiudadLevel extends LevelBase{
 
     die(){
         console.log(this.points);
+        /*
         this.scene.resume('SelectorNivel', {data: this.points});
         this.registry.events.emit('cambiarXP', 0);
         this.scene.stop(this.scene.key);
+        */
+        this.scene.start('gameOver');
     }
 
     numberEnemiesCheckers() {
