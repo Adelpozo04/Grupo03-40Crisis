@@ -21,7 +21,7 @@ constructor(scene, x, y, key, player, config)
     
     this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
     this.add(this.enemy);
-    this.enemy.setDepth(2)
+    this.enemy.setDepth(3)
     this.setScale(config.scale);
     this.attackFlag = true;
     this.alive = true;
@@ -74,7 +74,6 @@ lostExplosiveState(){
 preUpdate(){
     // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
     // y direction.x / y son las variables de direccion
-
     if(this.alive){
         super.basicMovement(this.attackFlag);
 

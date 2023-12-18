@@ -4,10 +4,11 @@ export default class armaMelee extends Arma{
     * @param {scene} scene - escena a colocar
     * @param {number} tiempoCooldown - tiempo entre ataques
     * @param {number} damageArma - daño del arma
+    * @param {number} knockBackSpeed - cantidad de knockback
     * @param {key} key - key
     * @param {player} player - referencia a player
     */
-    constructor(scene, tiempoCooldown, damageArma, key, player)
+    constructor(scene, tiempoCooldown, damageArma, knockBackSpeed, key, player)
     {
         super(scene,0,0,key,player);
         this.key = key;
@@ -18,15 +19,16 @@ export default class armaMelee extends Arma{
         this.damageArma = damageArma
 
         this.colliderActive = false;
-
         this.elapsedTime = tiempoCooldown;
+
+        this.knockBackSpeed = knockBackSpeed
 
         this.Attacking = false;
         this.newAngle = 0
         
         this.scene.input.on('pointerdown', (pointer) =>
         {
-            if (!this.Attacking)
+            if (!this.Attacking && this.active)
                 this.tryAttack()
         })
 
@@ -125,7 +127,7 @@ export default class armaMelee extends Arma{
                 enemy.receiveDamage(this.damageArma)
                 let direction = new Phaser.Math.Vector2(enemy.x - this.player.x, enemy.y - this.player.y)
                 direction.normalize()
-                enemy.knockBack(direction);
+                enemy.knockBack(direction, this.knockBackSpeed);
             })
             
             this.scene.time.delayedCall(20, () => { zone.destroy(); })
