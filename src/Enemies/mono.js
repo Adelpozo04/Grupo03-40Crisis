@@ -40,8 +40,7 @@ changeDirection(){
 }
 
 preUpdate(){
-
-    console.log(this.scene.potenciador == null)
+    
     if (this.alive)
     {
         this.enemy.play('walk' + this.key, true);

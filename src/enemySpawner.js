@@ -103,7 +103,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
 
 
     spawnMono() {
-        const enemy = new Mono(this.scene, this.spawnX, this.spawnY, 'mono');
+        const enemy = new Mono(this.scene, this.spawnX, this.spawnY, 'mono', this.player, this.scene.generateEnemyConfig('mono'));
         this.scene.grupoEnemigos.add(enemy);
     }
 
