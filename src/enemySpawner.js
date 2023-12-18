@@ -16,12 +16,12 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     * @param {grupoEnemigos} grupoEnemigos - grupoEnemigos del level
     */ 
 
-    constructor(scene, x, y, player) {
+    constructor(scene, x, y, player, grupoEnemigos) {
         super(scene, x, y);
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        //this.grupoEnemigos = grupoEnemigos
+        this.grupoEnemigos = grupoEnemigos
         this.spawnX = x;
         this.spawnY = y;
         
@@ -38,19 +38,15 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     }
 
 
-    getEnemyGroup(){
-        return this.grupoEnemigos;
-    }
-   
     selectEnemyType(randomProbability) {
         // Define los rangos de probabilidad para cada tipo de enemigo
         const enemyTypes = [
-            { type: 'zombie', probability: 0.35 },
+            { type: 'zombie', probability: 0.5 }, //0,35
             { type: 'skeleton', probability: 0.25 },
             { type: 'burger', probability: 0.15 },
             { type: 'lutano', probability: 0.1 },
-            { type: 'mono', probability: 0.05 },
-            { type: 'robot', probability: 0.1}
+            { type: 'mono', probability: 0 },
+            { type: 'robot', probability: 0}
         ];
 
         let cumulativeProbability = 0;
@@ -72,12 +68,14 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
            if (enemiesSpawned < numberOfEnemies) {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
+
                 if (enemyType === 'mono') {
                     const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
                 }
                 else if(enemyType === 'lutano'){
+
                     const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
@@ -102,6 +100,17 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
             repeat: numberOfEnemies - 1
         });
     }
+
+
+    spawnMono() {
+        const enemy = new Mono(this.scene, this.spawnX, this.spawnY, 'mono');
+        this.scene.grupoEnemigos.add(enemy);
+    }
+
+    spawnCaracol() {
+        const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, 'caracol', this.player, this.scene.generateEnemyConfig('caracol'));
+        this.scene.grupoEnemigos.add(enemy);
+    }
     
 
     //Para de spawnear enemigos
@@ -113,5 +122,10 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
 
     clearEnemies() {
         this.grupoEnemigos.clear(true, true); // Limpia el grupo de enemigos
+    }
+
+    areEnemiesCleared() {
+        // Verifica si no hay enemigos restantes en el grupo
+        return this.grupoEnemigos.getLength() === 0;
     }
 }

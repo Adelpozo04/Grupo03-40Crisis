@@ -310,7 +310,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     changeWeapon(newWeaponName)
     {
         this.arma.deactivate()
-        console.log(newWeaponName);
+        //console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
     }

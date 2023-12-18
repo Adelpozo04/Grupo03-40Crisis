@@ -67,6 +67,8 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
 
     preUpdate(t, dt){
 
+        //console.log((this.player.getWeapon().getCurrentCooldown() * 1) / this.player.getWeapon().getCooldownTime())
+
         this.slotSel.alpha = 1 - (this.player.getWeapon().getCurrentCooldown() * 1) / this.player.getWeapon().getCooldownTime();
 
     }
