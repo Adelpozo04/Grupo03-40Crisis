@@ -29,7 +29,7 @@ export default class Level extends Phaser.Scene{
             ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10], ['robot', 300], ['mono', 0]
         ]);
         this.vidaEnemigos = new Map([
-            ['zombie', 10], ['skeleton', 5], ['burger', 30], ['lutano', 15], ['caracol', 999999], ['robot', 20], ['mono', 10]
+            ['zombie', 10], ['skeleton', 5], ['burger', 30], ['lutano', 15], ['caracol', 999999], ['robot', 20], ['mono', 15]
         ]);
         this.scaleEnemigos = new Map([
             ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5], ['robot', 0.25], ['mono', 1.25]
@@ -44,10 +44,10 @@ export default class Level extends Phaser.Scene{
             ['zombie', 26], ['skeleton', 24], ['burger', 30], ['lutano', 30], ['caracol', 26],  ['robot', 180], ['mono', 24]
         ]);
         this.posXColliderEnemigos = new Map([
-            ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12], ['caracol', 9], ['robot', 50], ['mono', 12]
+            ['zombie', 9], ['skeleton', 8], ['burger', 14], ['lutano', 12], ['caracol', 9], ['robot', 50], ['mono', -12]
         ]);
         this.posYColliderEnemigos = new Map([
-            ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10], ['robot',90], ['mono', 12]
+            ['zombie', 10], ['skeleton', 14], ['burger', 2], ['lutano', 14], ['caracol', 10], ['robot',90], ['mono', -12]
         ]);
 
         //1 = 100%, 3 = 33%, 10 = 1% ...

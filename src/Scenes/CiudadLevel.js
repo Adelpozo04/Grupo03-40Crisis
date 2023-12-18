@@ -18,7 +18,7 @@ export default class CiudadLevel extends LevelBase{
     constructor(){
         super('CiudadLevel'); 
         this.potenciadorSpawneado = false;
-        this.potenciadorRecogido = false;  // Inicialmente se permite generar el primer potenciador
+        this.spawningPotenciador = false;
         //this.hatID = hatID; 
     }
     
@@ -170,7 +170,8 @@ export default class CiudadLevel extends LevelBase{
         let spawnPointY = spawnPoint.y;
 
         this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
-        
+        this.potenciadorSpawneado = true;
+
         this.tweens.add({
             targets: this.potenciador,
             y: this.potenciador.y - 30,
@@ -234,16 +235,13 @@ export default class CiudadLevel extends LevelBase{
         });
     };
 
-    
-
     update(dt, t){
-        if(!this.potenciadorSpawneado && this.potenciadorRecogido)
+        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
         { 
-            this.potenciadorSpawneado = true;
-            this.potenciadorRecogido = false;
+            this.spawningPotenciador = true;
             this.time.delayedCall(5000, () => {
                 this.spawnPotenciador();
-                
+                this.potenciadorSpawneado = true;
             })
         }
    }
