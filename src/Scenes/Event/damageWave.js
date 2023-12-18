@@ -23,7 +23,7 @@ export default class damageWave extends Phaser.GameObjects.Sprite {
 
             let direction = new Phaser.Math.Vector2(enemigo.x - this.x, enemigo.y - this.y)
             direction.normalize();
-            enemigo.knockBack(direction)
+            enemigo.knockBack(direction, 600)
             enemigo.applyEffect(this.key)
         })
     }
