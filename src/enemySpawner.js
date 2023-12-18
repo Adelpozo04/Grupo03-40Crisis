@@ -69,12 +69,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
            if (enemiesSpawned < numberOfEnemies) {
                 const randomProbability = Phaser.Math.RND.frac();
                 const enemyType = this.selectEnemyType(randomProbability);
-                if (enemyType === 'mono') {
-                    const enemy = new Mono(this.scene, this.spawnX, this.spawnY, enemyType);
-                    this.scene.grupoEnemigos.add(enemy);
-                    enemiesSpawned++;
-                }
-                else if(enemyType === 'lutano'){
+                if(enemyType === 'lutano'){
                     const enemy = new Lutano(this.scene, this.spawnX, this.spawnY, enemyType, this.player, this.scene.generateEnemyConfig(enemyType));
                     this.scene.grupoEnemigos.add(enemy);
                     enemiesSpawned++;
@@ -99,6 +94,17 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
             callbackScope: this,
             repeat: numberOfEnemies - 1
         });
+    }
+
+
+    spawnMono() {
+        const enemy = new Mono(this.scene, this.spawnX, this.spawnY, 'mono');
+        this.scene.grupoEnemigos.add(enemy);
+    }
+
+    spawnCaracol() {
+        const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, 'caracol', this.player, this.scene.generateEnemyConfig('caracol'));
+        this.scene.grupoEnemigos.add(enemy);
     }
     
 

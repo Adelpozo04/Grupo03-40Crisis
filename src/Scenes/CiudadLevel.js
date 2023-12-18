@@ -83,7 +83,6 @@ export default class CiudadLevel extends LevelBase{
         this.enemySpawner3 = new EnemigoSpawner(this, 1750, 2400, this.mike, this.grupoEnemigos);
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike, this.grupoEnemigos);
 
-        //this.enemySpawners();
 
 
         // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
