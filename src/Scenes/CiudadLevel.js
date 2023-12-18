@@ -40,7 +40,7 @@ export default class CiudadLevel extends LevelBase{
 
 
         //Cargado de la musica
-        this.backgroundMusic = this.sound.add('ciudadMusic', {loop: true});
+        this.backgroundMusic = this.sound.add('ciudadMusic', {loop: true, volume: 0.2});
 
         this.backgroundMusic.play();
 

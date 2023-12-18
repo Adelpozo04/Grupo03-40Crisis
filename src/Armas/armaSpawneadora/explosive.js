@@ -55,6 +55,8 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         })
 
+        this.effectExplotion = this.scene.sound.add('explosionEffect', {loop: false, volume: 0.3});
+
     }
 
     destroyMyself(){
@@ -94,9 +96,10 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         console.log("NASHE" + this.scene.grupoEnemigos.children.size)
         this.scene.physics.add.collider(this, this.scene.grupoEnemigos, function(explosive, enemy){
 
+            this.effectExplotion.play();
             explosive.detonar();
 
-        });
+        }, null, this);
 
         if(this.elapsedTime >= this.explotionDuration && this.exploting == true){
             this.destroyMyself();

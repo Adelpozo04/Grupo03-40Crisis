@@ -82,6 +82,31 @@ export default class load extends Phaser.Scene{
         this.load.audio('playaMusic', ['./Assets/Audio/Music/PlayaLevel.wav']);
         this.load.audio('volcanMusic', ['./Assets/Audio/Music/VolcanLevel.wav']);
 
+        //Efectos de sonido
+
+        //Jugador
+        this.load.audio('walkEffect', ['./Assets/Audio/Effects/Player/caminar.wav']);
+        this.load.audio('botiquinEffect', ['./Assets/Audio/Effects/Player/botiquin.wav']);
+        this.load.audio('serGolpeadoEffect', ['./Assets/Audio/Effects/Player/serGolpeado.wav']);
+        this.load.audio('speedUpEffect', ['./Assets/Audio/Effects/Player/speed.wav']);
+        this.load.audio('dormirEffect', ['./Assets/Audio/Effects/Player/vivu.wav']);
+
+        //Armas
+        this.load.audio('disparoEffect', ['./Assets/Audio/Effects/Armas/disparo.wav']);
+        this.load.audio('explosionEffect', ['./Assets/Audio/Effects/Armas/explosion.wav']);
+        this.load.audio('meleeEffect', ['./Assets/Audio/Effects/Armas/melee.wav']);
+
+        //Enemy
+        this.load.audio('arañarEffect', ['./Assets/Audio/Effects/Enemy/arañar.wav']);
+        this.load.audio('morderEffect', ['./Assets/Audio/Effects/Enemy/morder.wav']);
+        this.load.audio('morirEffect', ['./Assets/Audio/Effects/Enemy/morir.wav']);
+
+        //UI
+        this.load.audio('confirmarEffect', ['./Assets/Audio/Effects/UI/confirmar.wav']);
+        this.load.audio('moverOpcionesEffect', ['./Assets/Audio/Effects/UI/moverOpcion.wav']);
+        this.load.audio('pausaEffect', ['./Assets/Audio/Effects/UI/pausa.wav']);
+        this.load.audio('despausaEffect', ['./Assets/Audio/Effects/UI/despausa.wav']);
+
         
         
     }

@@ -52,7 +52,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             CENTINELA: 2,
             PACIFISTA: 3,}
     
-        this.personalityExp = [0, 1200, 0, 800];
+        this.personalityExp = [800, 800, 800, 800];
     
         this.currentPersonality = this.Personalities.EXPLORADOR;
 
@@ -146,6 +146,11 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['empuje', new armaMelee(this.scene, tiempoCooldown.get('empuje'), damageArmas.get('empuje'), 'empuje', this)],
             ['varita', new armaDisparos(this.scene, tiempoCooldown.get('varita'), damageArmas.get('varita'), 'varita', this)]
         ])
+
+        this.effectHeal = this.scene.sound.add('speedUpEffect', {loop: false});
+        this.effectSpeed = this.scene.sound.add('speedUpEffect', {loop: false});
+        this.effectVivu = this.scene.sound.add('dormirEffect', {loop: false});
+        this.effectSerGolpeado = this.scene.sound.add('serGolpeadoEffect', {loop: false});
 
         this.arma = this.armas.get('fist');
 
@@ -450,6 +455,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     receiveDamage(damage){
         if(!this.invencible)
         {
+            this.effectSerGolpeado.play();
             this.life = this.life - damage;
         }
        
@@ -460,16 +466,22 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         switch (keyPotenciador) {
             case 'botiquin':
                 this.life += this.maxLife / 2;
+
+                this.effectHeal.play();
+                
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
                 break;
             case 'velocidad':
+
                 if (!this.underSpeedEffect)
                 {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 280;
+                    this.effectSpeed.play();
+                  
                     this.scene.time.delayedCall(6000, () => {
                         this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                         this.underSpeedEffect = false;
@@ -482,11 +494,16 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 0;
+                  
+                    this.player.play('iddle' + this.key, true);
+                    this.effectVivu.play();
+                  
                     this.scene.time.delayedCall(5000, () => {
                         this.speed = this.aux;
                         this.underSpeedEffect = false;
                     });
                 }
+
                 break;
             case 'invencible':
                 this.invulnerable = true;
