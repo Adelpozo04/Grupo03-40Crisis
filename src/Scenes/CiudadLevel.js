@@ -270,7 +270,7 @@ export default class CiudadLevel extends LevelBase{
 
         // Establece un evento que verifique si se ha completado la ronda cada cierto intervalo
         this.time.addEvent({
-        delay: 1000, // Intervalo para verificar el final de la ronda
+        delay: 1000, 
         loop: true,
         callback: checkRoundEnd,
         callbackScope: this
