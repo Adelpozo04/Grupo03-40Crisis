@@ -25,7 +25,7 @@ export default class RoundManager extends Phaser.GameObjects.Container {
         // Llama a los spawners para que generen la cantidad de enemigos de esta ronda
        
         
-        if ( this.currentRound > 9 && this.currentRound % 10 == 0) {
+        if ( this.currentRound == 10) {
             console.log('caracol');
             this.scene.enemySpawners(this.enemiesPerRound + this.increasePerRound * this.currentRound);
             this.scene.enemySpawner1.spawnCaracol();
