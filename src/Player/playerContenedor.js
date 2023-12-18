@@ -123,7 +123,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['paralizador', 4], ['empuje', 0.4], ['varita', 20]
         ]);
         var damageArmas = new Map([
-            ['fist', 1], ['bate', 1], ['espada', 1],
+            ['fist', 1], ['bate', 1], ['espada', 50],
             ['pistola', 5], ['metralleta', 2], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);

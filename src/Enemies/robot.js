@@ -9,23 +9,24 @@ export default class Robot extends Enemigo {
      */ 
     constructor(scene, x, y, key, player, config)
     {
-        super(scene, x, y, player, config.speed, config.attackDistance, config.damage, config.vida, config.points);
+        super(scene, x, y, player, config);
         this.key = key;
         this.posXCentered = config.posXCollider;
         this.posYCentered = config.posYCollider;
         scene.add.existing(this);
 
-        this.robot = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
-        this.add(this.robot);
+        this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
+        this.add(this.enemy);
         this.setScale(config.scale); //cuidao que esto igual da problemas
-    
+
         this.body.setSize(config.anchoCollider,config.altoCollider);
-        this.cooldownDisparos = 750;
+        this.cooldownDisparos = 1000;
         this.attackFlag = true;
     }
 
     attack() 
     {  
+        this.attackFlag = false;
         this.body.setVelocity(0,0)
         var bala = this.scene.grupoBalasRobot.get(this.body.x + 16, this.body.y + 32, 'balaRobot', this.damageArma);
         var angle = Phaser.Math.Angle.Between(this.body.x + 16, this.body.y + 32, this.player.getCenterPoint().x, this.player.getCenterPoint().y)
@@ -38,15 +39,13 @@ export default class Robot extends Enemigo {
     // hace la animación y si se termina llamamos a attack en el super
     tryAttack()
     {
-        this.robot.play('attackRobot', true);
-        this.robot.on('animationcomplete', function(){
-            this.attack();
-            this.scene.time.delayedCall(this.cooldownDisparos, ()=> {this.attackFlag = true});
-            this.robot.off('animationcomplete');
-        }, this)
+        this.attack();
+        this.scene.time.delayedCall(this.cooldownDisparos, ()=> {this.attackFlag = true});
     }
 
     preUpdate(){
+        if (this.alive)
+        {
         // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
         // y direction.x / y son las variables de direccion
         super.basicMovement(this.attackFlag);
@@ -58,20 +57,22 @@ export default class Robot extends Enemigo {
             this.tryAttack();
         } else if (!super.isInAttackRange())
         {
-            this.robot.play('walkrobot', true);
+            this.enemy.play('walkrobot', true);
             this.attackFlag = true;
-            this.robot.off('animationcomplete');
+            this.enemy.off('animationcomplete');
         }
 
 
         //flip del sprite en función de la pos del player
         if (this.x < super.getPlayer().x)
         {
-            this.robot.setFlip(false, false);
+            this.enemy.setFlip(false, false);
         }
         else if (this.x > super.getPlayer().y)
         {
-            this.robot.setFlip(true, false);
+            this.enemy.setFlip(true, false);
         }
+        }
+        
     }
 }
