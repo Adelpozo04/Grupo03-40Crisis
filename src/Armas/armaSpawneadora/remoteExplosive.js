@@ -54,6 +54,8 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         })
 
+        this.effectExplotion = this.scene.sound.add('explosionEffect', {loop: false, volume: 0.3});
+
     }
 
     destroyMyself(){
@@ -74,6 +76,8 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
         this.scene.input.clear(this);
 
         this.exploting = true;
+
+        this.effectExplotion.play();
 
         this.play('explosionAnimation');
         this.zone = this.scene.add.zone(this.x, this.y, this.explosiveArea, this.explosiveArea);
