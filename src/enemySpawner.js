@@ -41,12 +41,12 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     selectEnemyType(randomProbability) {
         // Define los rangos de probabilidad para cada tipo de enemigo
         const enemyTypes = [
-            { type: 'zombie', probability: 0.35 },
+            { type: 'zombie', probability: 0.5 }, //0,35
             { type: 'skeleton', probability: 0.25 },
             { type: 'burger', probability: 0.15 },
             { type: 'lutano', probability: 0.1 },
             { type: 'mono', probability: 0 },
-            { type: 'robot', probability: 0.1}
+            { type: 'robot', probability: 0}
         ];
 
         let cumulativeProbability = 0;

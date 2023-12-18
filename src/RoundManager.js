@@ -20,14 +20,12 @@ export default class RoundManager extends Phaser.GameObjects.Container {
 
     startRound() {
         this.enemiesDefeated = 0;
-        this.currentRound++;
-        // Llama a los spawners para que generen la cantidad de enemigos de esta ronda
-       // this.spawners.forEach((spawner) => {
-         //   spawner.spawnEnemies(this.enemiesPerRound, 3000); // Ajusta los parámetros según tus necesidades
-        this.scene.enemySpawners(this.enemiesPerRound + this.increasePerRound * this.currentRound);
-    
         
-       // });
+        // Llama a los spawners para que generen la cantidad de enemigos de esta ronda
+
+        console.log(this.enemiesPerRound + this.increasePerRound * this.currentRound);
+        this.scene.enemySpawners(this.enemiesPerRound + this.increasePerRound * this.currentRound);
+        this.currentRound++;
     
        
     }
