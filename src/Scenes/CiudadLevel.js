@@ -255,6 +255,7 @@ export default class CiudadLevel extends LevelBase{
 
     sendPoints(points){
         this.points += points;
+        console.log(points, this.points);
         this.myUI.gainPoints(points);
     }
 
