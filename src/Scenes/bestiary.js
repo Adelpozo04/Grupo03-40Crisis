@@ -66,19 +66,17 @@ create(){
 
     this.infoImage = this.add.image(0, 0, this.info[this.indice]).setScale(1, 1).setOrigin(-0.33, 0);
 
-    const shape = new Phaser.Geom.Circle(48, 48, 48);
-
     this.der = this.add.image(1100, 350, 'flechaPasar')
-    this.der.setInteractive(shape, this.changeIndice(true));
+    this.der.setInteractive();
     this.der.on('pointerdown', (event) => { this.changeIndice(true); })
 
     this.izq = this.add.image(100, 350, 'flechaPasar').setFlip(true, false)
-    this.izq.setInteractive(shape, this.changeIndice(false));
+    this.izq.setInteractive();
     this.izq.on('pointerdown', (event) => { this.changeIndice(false); })
 
     this.out = this.add.image(50, 50, 'salir');
-    //this.out.setInteractive(shape, this.scene.start('SelectorNivel'));
-    //this.out.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })
+    this.out.setInteractive();
+    this.out.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })
 
 }
 
@@ -100,8 +98,6 @@ changeIndice(der){
     console.log(this.indice);
 
     this.infoImage.setTexture(this.info[this.indice]);
-
-    return true;
 }
 
 
