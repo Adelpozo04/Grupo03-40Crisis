@@ -8,14 +8,23 @@
 .body1{
 	background-image: url("Images/Fondos_web/FondoCiudadWeb.png");
   background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .body2{
 	background: url("Images/Fondos_web/FondoVolcanWeb.png");
   background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .body3{
 	background: url("Images/Fondos_web/FondoPlayaWeb.png");
   background-size: contain;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .capa{
 	position: absolute;
@@ -252,7 +261,8 @@ div#sobre-nosotros-text {
 
 /* Footer */
 footer {
-  position: absolute bottom;
+  margin-top: auto;
+  position: bottom;
   bottom: 0;
   left: 0;
   width: 100%;
