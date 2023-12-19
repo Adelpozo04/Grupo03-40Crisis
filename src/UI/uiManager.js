@@ -65,7 +65,7 @@ updateRounds(currentRound) {
     this.RoundLabel.text = 'Round: ' +  currentRound;
     currentRound++;
     this.scene.tweens.add({
-        targets: this.ScoreLabel,
+        targets: this.RoundLabel,
         scale: 1.5,
         duration: 500,
         ease: 'Sine.easeInOut',
