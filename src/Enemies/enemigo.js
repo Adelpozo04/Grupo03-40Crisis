@@ -29,6 +29,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.alive = true;
         this.invencible = false;
 
+        this.explosiveState = false;
+        this.objetiveState = false;
+
         this.canGetHitByWave = true;
 
         this.scene.physics.add.existing(this);
@@ -68,9 +71,32 @@ export default class enemigo extends Phaser.GameObjects.Container {
     
     }
 
+    gainExplosiveState(explosionTime){
+
+        console.log("gano explosion estado");
+    
+        this.explosiveState = true;
+    
+        this.event = this.scene.time.addEvent({
+            delay: 1000 * explosionTime,
+            callback: this.lostExplosiveState,
+            callbackScope: this,
+            loop: false
+    
+            })
+    
+    }
+    
+    
+    
+    lostExplosiveState(){
+        console.log("volvio a la normalidad")
+        this.explosiveState = false;
+    }
+
     receiveDamage(damage){
 
-        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
+        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave) && !this.explosiveState){
           
             this.life -= damage;
 
@@ -88,13 +114,15 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 
                 this.player.gainPersonalityExp(2);
         
-                var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+                var dropMunition = Phaser.Math.Between(1, 100);
     
         
-                if(dropMunition == 1){
+                if(dropMunition > this.maxDropProbability){
                     this.spawnMunition();
                 }
-    
+
+                this.enemy.setOrigin(this.key == 'robot' ? 1.8 : 0.5, this.key == 'robot' ? 2.8 : 0.5)
+                this.setScale(2)
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -125,6 +153,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.alive = false;
                 this.body.setVelocity(0, 0);
     
+                
+                this.setScale(2)
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -223,9 +253,19 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 280;
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(6000, () => {
                         this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                         this.underSpeedEffect = false;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -235,27 +275,57 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 0;
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(5000, () => {
                         this.speed = this.aux;
                         this.underSpeedEffect = false;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
             case 'invencible':
                 this.invulnerable = true;
+                this.tweenPotenciador = this.scene.tweens.add({
+                    targets: this.enemy,
+                    alpha: 0,
+                    duration: 340,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true,
+                    repeat: -1
+                });
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
+                    this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                 });
                 break;
-            case 'bocaIncendios':
+            case 'humo':
                 if (!this.underSpeedEffect)
                 {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 40
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(2000, () => {
                         this.speed = this.aux 
                         this.underSpeedEffect = false;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -264,8 +334,38 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 {
                     this.canGetHitByWave = false;
                     this.recieveDamageNotGetPoints(5)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(300, () => {
                         this.canGetHitByWave = true;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
+                    });
+                }
+                break;
+            case 'lavaRock':
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.recieveDamageNotGetPoints(1)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -276,5 +376,10 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     getCenterPoint(){
         return {x: this.x + 16, y: this.y + 16};
+    }
+
+    preUpdate()
+    {
+        this.enemy.setFlip(this.body.velocity.x < 0, false)
     }
 }

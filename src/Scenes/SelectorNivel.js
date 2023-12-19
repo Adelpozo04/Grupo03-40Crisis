@@ -14,24 +14,40 @@ export default class SelectorNivel extends Phaser.Scene {
         for(var i = 0; i < 21; ++i){
             this.hatUnlocked[i] = false;
         }
+        this.setExperience();
+        this.getUnlocked();
     }
 
     init(data){
-        console.log(data);
+        if (data.datos ==! null) this.globalPoints[data.level] += data.datos;
+        this.globalPoints[this.currentPage]++;
+        this.globalPoints[this.currentPage]--;
+        console.log(this.globalPoints[this.currentPage]);
     }
 
     preload(){
+
         console.log(this.xpGained);
-        console.log();
+
+        this.load.image('bestiaryButton', './Assets/Sprites/UI/Bestiary/button.png');
+
+        console.log(this.globalPoints);
+        console.log(this.hatUnlocked);
+        /*window.addEventListener("beforeunload", event => {
+            console.log("lo hiso");
+		});
+
+		addEventListener("load", event => {
+            console.log("lo hiso");
+		});*/
+
     }
 
     loadFont(name, url) {
 		let self = this;
 	    let newFont = new FontFace(name, `url(${url})`);
 	    newFont.load()
-	    // Función que se llamará cuando las fuentes estén cargadas
-	    // en este caso, load devuelve lo que llamamos una promesa
-	    // más info en: https://developer.mozilla.org/en-US/docs/Web/API/FontFace/load
+	
 	    .then(function (loaded) { 
 	        document.fonts.add(loaded);
 	        self.continueCreate();
@@ -41,18 +57,12 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
-
         this.effectConfirm = this.sound.add('confirmarEffect', {loop: false});
         this.effectMoveOptions = this.sound.add('moverOpcionesEffect', {loop: false});
-
-        console.log(this);
 
         this.events.on('resume', (xp) => {
             console.log(xp);
         });
-
-        // Experiencia de cada nivel
-        this.setExperience();
 
         // Carga de los niveles
         this.setMaps();
@@ -64,6 +74,11 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina inicial
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
+
+        this.recompensas();
+
+        console.log(this.hatUnlocked[this.hatID]);
+        console.log(this.hatID);
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         }
@@ -105,7 +120,7 @@ export default class SelectorNivel extends Phaser.Scene {
         button.on("pointerdown", () => {
             this.backgroundMusic.destroy();
             this.effectConfirm.play();
-           this.loadScene(); // Se carga el nivel en caso de click
+            this.loadScene(); // Se carga el nivel en caso de click
         });
     }
 
@@ -121,12 +136,6 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina nueva
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
-        if(this.hatUnlocked[this.hatID]){
-            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
-        }
-        else{
-            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
-        }
 
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
@@ -176,10 +185,31 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[1] = 0; // Playa
         this.globalPoints[2] = 0; // Volcan
 
+        
+		this.globalPoints[0] = window.localStorage.getItem('ciudadpoints');
+        this.globalPoints[1] = window.localStorage.getItem('playapoints');
+        this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
+
         // Evento para poder subir experiencia segun el nivel jugado
-        this.registry.events.on('cambiarXP', (nivel) => {
+        /*this.registry.events.on('cambiarXP', (nivel) => {
             this.ganarExperiencia(nivel);
-        });
+        });*/
+    }
+
+    getUnlocked(){
+        for(var i = 0 ; i < 21 ; ++i){
+            console.log(window.localStorage.getItem('sombrero' + i));
+            this.hatUnlocked[i] = window.localStorage.getItem('sombrero' + i);
+            if (this.hatUnlocked[i] == "true") this.hatUnlocked[i] = true;
+            else if(this.hatUnlocked[i] == "false") this.hatUnlocked[i] = false;
+            console.log(this.hatUnlocked[i]);
+        }
+    }
+
+    setUnlocked(){
+        for(var i = 0 ; i < 21 ; ++i){
+            window.localStorage.setItem('sombrero' + i, this.hatUnlocked[i]);
+        }
     }
 
     // Cambio de sombrero
@@ -191,11 +221,14 @@ export default class SelectorNivel extends Phaser.Scene {
         if((this.hatID + dir) < 0) this.hatID = 21;
         this.hatID = (this.hatID + dir) % 21;
 
+        this.recompensas();
+
+        console.log(this.hatID, this.hatUnlocked[this.hatID]);
         // Nuevo sombrero
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         }
-        else{
+        else {
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         }
 
@@ -207,21 +240,18 @@ export default class SelectorNivel extends Phaser.Scene {
 
         console.log(this.mapas[this.currentPage], this.hatID)
 
-        if(this.hatUnlocked[this.hatID]){
-            //this.scene.sleep(this.scene);
-            //this.scene.start(this.mapas[this.currentPage], this.hatID);
-            this.scene.switch('SelectorNivel', this.mapas[this.currentPage]);
-            
-            console.log('a');
-        }
-        else{
-            console.log(this.scene.key);
-            this.scene.pause(this.scene.key);
-            this.scene.launch(this.mapas[this.currentPage], -1);
+        window.localStorage.setItem('ciudadpoints', this.globalPoints[0]);
+        window.localStorage.setItem('playapoints', this.globalPoints[1]);
+        window.localStorage.setItem('volcanpoints', this.globalPoints[2]);
 
-            //this.scene.switch(this.mapas[this.currentPage]);
-            
-            console.log('b');
+        this.setUnlocked();
+        console.log(this.hatUnlocked[this.hatID]);
+
+        if(this.hatUnlocked[this.hatID]){
+            this.scene.start(this.mapas[this.currentPage], this.hatID);
+        }
+        else{       
+            this.scene.start(this.mapas[this.currentPage], -1);
         }
     }
 
@@ -276,12 +306,7 @@ export default class SelectorNivel extends Phaser.Scene {
         }
 
         // Actualizar la barra de progreso
-        this.actualizarBarraDeProgreso();
-    
-        // Verificar si se alcanzó la experiencia máxima
-        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
-            this.hatUnlocked[0] = true;
-        }
+        this.actualizarBarraDeProgreso();     
     }
     
     actualizarBarraDeProgreso() {
@@ -298,5 +323,19 @@ export default class SelectorNivel extends Phaser.Scene {
         // Borde
         this.barraProgreso.lineStyle(2, 0x000000);
         this.barraProgreso.strokeRect(600 - 150, 575, 300, 20);
+    }
+
+    recompensas(){
+        console.log(this.globalPoints[this.currentPage]);
+        // Verificar si se alcanzó la experiencia máxima
+        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
+            this.hatUnlocked[2] = true;
+        }
+        else if (this.globalPoints[this.currentPage] >= (this.experienciaMaxima * 2) / 3){
+            this.hatUnlocked[1] = true;
+        }
+        else if (this.globalPoints[this.currentPage] >= (this.experienciaMaxima / 3)){
+            this.hatUnlocked[0] = true;
+        }
     }
 }

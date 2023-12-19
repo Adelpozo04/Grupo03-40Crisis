@@ -16,7 +16,6 @@ export default class CiudadLevel extends LevelBase{
 
     constructor(){
         super('CiudadLevel'); 
-        this.potenciadorSpawneado = false;
         this.spawningPotenciador = false;
         //this.hatID = hatID; 
         this.points = 0;
@@ -36,6 +35,8 @@ export default class CiudadLevel extends LevelBase{
 
         //Se carga el png con los tiles que usa el Json
         this.load.image('patronesCiudadTilemap', './Assets/Sprites/Tilesets/Ciudad/tilemapCiudadExtruded.png');
+
+        this.load.image('FondoPlay', './Assets/Sprites/UI/PlayGame/tilemapCiudadExtruded.png')
     }
     
     create(data){
@@ -230,10 +231,10 @@ export default class CiudadLevel extends LevelBase{
         let aux = Phaser.Math.RND.between(0, 3);
         let potenciadorType = Object.values(potenciadorTypes)[aux];
         const spawnPoints = [
-            { x: 600, y: 600 },
-            { x: 600, y: 700 },
-            { x: 700, y: 600 },
-            { x: 700, y: 700 },
+            { x: 486, y: 386 },
+            { x: 800, y: 1700 },
+            { x: 2500, y: 734 },
+            { x: 2589, y: 1587 },
             //Añadir luego las coordenadas correctas
         ];
         
@@ -254,7 +255,18 @@ export default class CiudadLevel extends LevelBase{
             delay: 10
         })
     }
-
+    reespawnearPotenciador()
+    {
+        if (!this.spawningPotenciador)
+        {
+            this.spawningPotenciador = true;
+            this.time.delayedCall(9000, () => {
+                this.spawnPotenciador();
+                this.spawningPotenciador = false;
+            })
+        }
+        
+    }    
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
     }
@@ -314,7 +326,9 @@ export default class CiudadLevel extends LevelBase{
         this.registry.events.emit('cambiarXP', 0);
         this.scene.stop(this.scene.key);
         */
-        this.scene.start('gameOver');
+
+        this.scene.start('gameOver', {datos: this.points, level: 0});
+
     }
 
     numberEnemiesCheckers() {
@@ -367,14 +381,7 @@ export default class CiudadLevel extends LevelBase{
     } */
 
     update(dt, t){
-        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
-        { 
-            this.spawningPotenciador = true;
-            this.time.delayedCall(5000, () => {
-                this.spawnPotenciador();
-                this.potenciadorSpawneado = true;
-            })
-        }
+
 
         /*if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
             if (!this.isGamePaused) {
@@ -415,5 +422,6 @@ export default class CiudadLevel extends LevelBase{
      
       
     }
+
 }
 

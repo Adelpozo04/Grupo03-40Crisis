@@ -25,8 +25,6 @@ constructor(scene, x, y, key, player, config)
     this.setScale(config.scale);
     this.attackFlag = true;
     this.alive = true;
-    this.explosiveState = false;
-    this.objetiveState = false;
     scene.physics.add.existing(this);
     scene.add.existing(this);
 
@@ -50,26 +48,7 @@ tryAttack()
     }, this)
 }
 
-gainExplosiveState(explosionTime){
 
-    this.explosiveState = true;
-
-    this.event = this.scene.time.addEvent({
-        delay: 1000 * explosionTime,
-        callback: this.lostExplosiveState,
-        callbackScope: this,
-        loop: false
-
-        })
-
-}
-
-
-
-lostExplosiveState(){
-    console.log("volvio a la normalidad")
-    this.explosiveState = false;
-}
 
 preUpdate(){
     // super accede a la clase ENEMIGO, donde basicMovement te mueve al player
@@ -91,15 +70,9 @@ preUpdate(){
                 this.enemy.play('walk' + this.key, true);
             }
         }
-        //flip del sprite en función de la pos del player
-        if (this.x < super.getPlayer().x)
-        {
-            this.enemy.setFlip(false, false);
-        }
-        else if (this.x > super.getPlayer().y)
-        {
-            this.enemy.setFlip(true, false);
-        }
+        //flip del sprite en función de la pos del objetivo
+        this.enemy.setFlip(this.body.velocity.x < 0, false)
+
     }
     
 }

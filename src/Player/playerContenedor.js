@@ -42,7 +42,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dirX = 0;
         this.dirY = 0;
 
-        this.changePerCooldown = 1;
+        this.changePerCooldown = 0.3;
 
         this.changePerBlock = false;
 
@@ -84,6 +84,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.qKey = this.scene.input.keyboard.addKey('Q');
         this.eKey = this.scene.input.keyboard.addKey('E');
 
+        this.OneKey = this.scene.input.keyboard.addKey('1');
+        this.TwoKey = this.scene.input.keyboard.addKey('2');
+        this.ThreeKey = this.scene.input.keyboard.addKey('3');
+
         this.scene.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) =>
         {
 
@@ -121,18 +125,18 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
         
         var tiempoCooldown = new Map([
-            ['fist', 0.6], ['bate', 1], ['espada', 0.8],
-            ['pistola', 2], ['metralleta', 0.2], ['franco', 13],
+            ['fist', 0.6], ['bate', 1], ['espada', 0.6],
+            ['pistola', 0.5], ['metralleta', 0.2], ['franco', 13],
             ['muro', 8], ['mina', 12], ['c4', 15],
-            ['paralizador', 4], ['empuje', 0.4], ['varita', 20]
+            ['paralizador', 4], ['empuje', 0.6], ['varita', 20]
         ]);
         var damageArmas = new Map([
-            ['fist', 1], ['bate', 1], ['espada', 50],
-            ['pistola', 5], ['metralleta', 2], ['franco', 30],
+            ['fist', 2], ['bate', 5], ['espada', 6],
+            ['pistola', 5], ['metralleta', 3], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);
         var knockBackArmas = new Map([
-            ['fist', 500], ['bate', 500], ['espada', 500], ['empuje', 1000]
+            ['fist', 300], ['bate', 600], ['espada', 100], ['empuje', 1000]
         ])
 
 
@@ -336,7 +340,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     reloadDisparosAmmo(){
-        this.disparosAmmo += 10;
+        this.disparosAmmo += 20;
         console.log(this.disparosAmmo);
     }
 
@@ -358,7 +362,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     preUpdate(t, dt)
     {
-        this.player.setDepth(3)
         this.movement();
         this.personalityInput();
 
@@ -466,8 +469,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 this.scene.die();
             }
         }
-       
-
+    
     }
 
     //Potenciadores
@@ -481,6 +483,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
+
+                this.tweenPotenciador = this.scene.tweens.add({
+                    targets: this.player,
+                    alpha: 0,
+                    duration: 340,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true
+                });
+                this.player.alpha = 1;
                 break;
             case 'velocidad':
 
@@ -491,9 +502,20 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.speed = 280;
                     this.effectSpeed.play();
                   
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+
                     this.scene.time.delayedCall(6000, () => {
                         this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                         this.underSpeedEffect = false;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -506,18 +528,39 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                   
                     this.player.play('iddle' + this.key, true);
                     this.effectVivu.play();
-                  
+
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+
                     this.scene.time.delayedCall(5000, () => {
                         this.speed = this.aux;
                         this.underSpeedEffect = false;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
 
                 break;
             case 'invencible':
                 this.invulnerable = true;
+                this.tweenPotenciador = this.scene.tweens.add({
+                    targets: this.player,
+                    alpha: 0,
+                    duration: 340,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true,
+                    repeat: -1
+                });
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
+                    this.player.alpha = 1;
+                    this.scene.tweens.remove(this.tweenPotenciador)
                 });
                 break;
             case 'humo':
@@ -526,18 +569,61 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 60
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(2000, () => {
                         this.speed = this.aux 
                         this.underSpeedEffect = false;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
             case 'coche':
-                this.canGetHitByWave = false;
-                this.receiveDamage(5)
-                this.scene.time.delayedCall(300, () => {
-                    this.canGetHitByWave = true;
-                });
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
+                    });
+                }
+                break;
+            case 'lavaRock':
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
+                    });
+                }
                 break;
             default:
                 break;

@@ -22,6 +22,7 @@ export default class Robot extends Enemigo {
         this.body.setSize(config.anchoCollider,config.altoCollider);
         this.cooldownDisparos = 1000;
         this.attackFlag = true;
+        this.inCooldown = false;
     }
 
     attack() 
@@ -40,7 +41,15 @@ export default class Robot extends Enemigo {
     tryAttack()
     {
         this.attack();
-        this.scene.time.delayedCall(this.cooldownDisparos, ()=> {this.attackFlag = true});
+        
+        if (!this.inCooldown)
+        {
+            this.inCooldown = true;
+            this.scene.time.delayedCall(this.cooldownDisparos, ()=> {
+                this.attackFlag = true
+                this.inCooldown = false;
+            });
+        }
     }
 
     preUpdate(){
@@ -58,8 +67,16 @@ export default class Robot extends Enemigo {
         } else if (!super.isInAttackRange())
         {
             this.enemy.play('walkrobot', true);
-            this.attackFlag = true;
-            this.enemy.off('animationcomplete');
+            if (!this.inCooldown)
+            {
+                this.inCooldown = true;
+                this.scene.time.delayedCall(this.cooldownDisparos, ()=> {
+                    this.attackFlag = true
+                    this.inCooldown = false;
+                });
+                this.enemy.off('animationcomplete');
+            }
+            
         }
 
 

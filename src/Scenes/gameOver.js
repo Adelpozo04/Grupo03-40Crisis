@@ -4,10 +4,15 @@ export default class gameOver extends Phaser.Scene{
 
     constructor(){
         super({key: 'gameOver'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
+        this.points = 0;
     }
     
     init(data){
+
         console.log(data);
+        this.points = data.datos;
+        this.level = data.level;
+
     }
     
     preload(){
@@ -31,7 +36,7 @@ export default class gameOver extends Phaser.Scene{
 	}
 
     create(){
-        this.add.image(0, 0, 'GameOverFondo').setScale(1, 1).setOrigin(0, 0)
+        this.add.image(0, 0, 'GameOverFondo').setScale(0.5, 0.5).setOrigin(0, 0)
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
         
@@ -43,10 +48,11 @@ export default class gameOver extends Phaser.Scene{
 
     continueCreate() {
 
-        this.titleLabel = this.generateText(this.cameras.main.centerX, 250, 'GAME OVER', 90);
-        this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'RETURN', 50);
+        this.titleLabel = this.generateText(this.cameras.main.centerX, 150, 'GAME OVER', 90);
+        this.ScoreLabel = this.generateText(this.cameras.main.centerX, 400, 'Score ' + this.points, 40);
+        this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30);
         this.playLabel.setInteractive();
-        this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })
+        this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel', {datos: this.points, level: this.level}); })
 
 	}
 

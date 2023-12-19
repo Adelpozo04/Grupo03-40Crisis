@@ -6,6 +6,8 @@ import SelectorNivel from "./Scenes/SelectorNivel.js"
 import load from "./Scenes/load.js"
 import gameOver from "./Scenes/gameOver.js"
 import Pausa from "./Scenes/Pausa.js"
+import bestiary from "./Scenes/bestiary.js"
+
 
 var config = {
     type: Phaser.AUTO,
