@@ -52,7 +52,7 @@ export default class PantallaInicial extends Phaser.Scene{
 	}
 
     /**
-     * genra y añade
+     * genera y añade
      * @param {number} x 
      * @param {number} y 
      * @param {String} message 

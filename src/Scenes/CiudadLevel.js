@@ -21,6 +21,8 @@ export default class CiudadLevel extends LevelBase{
         //this.hatID = hatID; 
         this.points = 0;
         this.roundManager = null;
+        this.isGamePaused = false; // Variable para controlar el estado de pausa
+        this.escapePressed = false; // Variable para controlar si la tecla Esc está presionada
     }
     
     init(data){
@@ -91,6 +93,13 @@ export default class CiudadLevel extends LevelBase{
         this.roundManager.startRound(); // Comienza la primera ronda
         this.numberEnemiesCheckers();
 
+        // Configurar la tecla de escape para pausar el juego
+        //this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        //this.escapeKey.on('down', this.togglePause, this);
+
+       // this.Pause();
+      
+
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
  
@@ -155,6 +164,9 @@ export default class CiudadLevel extends LevelBase{
         this.myUI.setScrollFactor(0);
     }
 
+
+   
+
     eventManager()
     {
         let choice = Phaser.Math.RND.between(0,1)
@@ -170,6 +182,34 @@ export default class CiudadLevel extends LevelBase{
         {
             let y = Phaser.Math.RND.between(300, 2250)
             new DamageWave(this, 3000, y, 'coche', 0.15)
+        }
+    }
+
+    togglePause() {
+        if (this.isGamePaused) 
+        {
+            this.isGamePaused = false;
+            this.scene.resume('CiudadLevel');
+        } else 
+        {
+            this.isGamePaused = true;
+            this.scene.pause();
+        }
+    }
+
+    pauseGame() {
+        if (!this.isGamePaused) {
+            console.log('pause');
+            
+           
+        }
+    }
+
+    resumeGame() {
+        if (this.isGamePaused) {
+            console.log('hols');
+           
+           
         }
     }
 
@@ -317,6 +357,15 @@ export default class CiudadLevel extends LevelBase{
 
     
 
+    preupdate() {
+        this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        // Verificar si la tecla Esc está presionada
+        if ( this.escapeKey.on('down', this.togglePause, this)) {
+            console.log("funciona");
+               this.togglePause();
+           }
+    }
 
     update(dt, t){
         if(!this.potenciadorSpawneado && !this.spawningPotenciador)
@@ -328,7 +377,32 @@ export default class CiudadLevel extends LevelBase{
             })
         }
 
-  
-   }
+    }
+
+
+    Pause() {
+        const checkPause = () => {
+
+            this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+            // Verificar si la tecla Esc está presionada
+            if ( this.escapeKey.on('down', this.togglePause, this)) {
+                console.log("funciona");
+                   this.togglePause();
+               }
+           
+       }
+        // Establece un evento que verifique si se ha completado la ronda cada cierto intervalo
+            this.time.addEvent({
+           delay: 1000, 
+           loop: true,
+           callback: checkPause,
+           callbackScope: this
+           });
+   
+       // this.escapeKey.on('down', this.togglePause, this);
+     
+      
+    }
 }
 
