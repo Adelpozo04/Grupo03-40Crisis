@@ -6,16 +6,16 @@
 	box-sizing: border-box;
 }
 .body1{
-	background: url(Images/Fondos_web/FondoCiudadWeb.png);
-  background-repeat: repeat-y;
+	background-image: url("Images/Fondos_web/FondoCiudadWeb.png");
+  background-size: cover;
 }
 .body2{
-	background: url(Images/Fondos_web/FondoVolcanWeb.png);
-  background-repeat: repeat-y;
+	background: url("Images/Fondos_web/FondoVolcanWeb.png");
+  background-size: cover;
 }
 .body3{
-	background: url(Images/Fondos_web/FondoPlayaWeb.png);
-  background-repeat: repeat-y;
+	background: url("Images/Fondos_web/FondoPlayaWeb.png");
+  background-size: contain;
 }
 .capa{
 	position: absolute;

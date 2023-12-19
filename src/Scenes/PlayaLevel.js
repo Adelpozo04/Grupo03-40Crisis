@@ -41,7 +41,7 @@ export default class PlayaLevel extends LevelBase{
 
         this.points = 0;
 
-        this.backgroundMusic = this.sound.add('playaMusic', {loop: true});
+        this.backgroundMusic = this.sound.add('playaMusic', {loop: true, volume: 0.2});
 
         this.backgroundMusic.play();
 
@@ -275,12 +275,6 @@ export default class PlayaLevel extends LevelBase{
         });
     };
 
-    die(){
-        this.scene.wake('SelectorNivel', this.points);
-        this.registry.events.emit('cambiarXP', 0);
-        this.scene.stop(this.scene.key);
-    }
-
     numberEnemiesCheckers() {
         this.roundManager.enemiesLeft--;
 
@@ -321,7 +315,7 @@ export default class PlayaLevel extends LevelBase{
     };
 
     die(){
-        console.log(this.points);
+        this.backgroundMusic.destroy();
         this.scene.start('gameOver', {datos: this.points, level: 0});
     }
 

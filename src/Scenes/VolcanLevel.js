@@ -42,7 +42,7 @@ export default class VolcanLevel extends LevelBase{
         
         this.points = 0;
 
-        this.backgroundMusic = this.sound.add('volcanMusic', {loop: true});
+        this.backgroundMusic = this.sound.add('volcanMusic', {loop: true, volume: 0.2});
 
         this.backgroundMusic.play();
 
@@ -286,13 +286,6 @@ export default class VolcanLevel extends LevelBase{
         });
     };
 
-    die(){
-        console.log(this.points);
-        this.scene.resume('SelectorNivel', {data: this.points});
-        this.registry.events.emit('cambiarXP', 0);
-        this.scene.stop(this.scene.key);
-    }
-
     numberEnemiesCheckers() {
         this.roundManager.enemiesLeft--;
 
@@ -333,6 +326,7 @@ export default class VolcanLevel extends LevelBase{
     };
 
     die(){
+        this.backgroundMusic.destroy();
         console.log(this.points);
         this.scene.start('gameOver', {datos: this.points, level: 0});
     }

@@ -300,7 +300,7 @@ export default class CiudadLevel extends LevelBase{
     };
 
     die(){
-        console.log(this.points);
+        this.backgroundMusic.destroy();
         this.scene.start('gameOver', {datos: this.points, level: 0});
     }
 
