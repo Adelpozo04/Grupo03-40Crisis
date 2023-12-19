@@ -52,6 +52,7 @@ export default class gameOver extends Phaser.Scene{
         this.ScoreLabel = this.generateText(this.cameras.main.centerX, 400, 'Score ' + this.points, 40);
         this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30);
         this.playLabel.setInteractive();
+        console.log(this.points);
         this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel', {datos: this.points, level: this.level}); })
 
 	}

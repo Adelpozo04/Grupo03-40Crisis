@@ -1,6 +1,6 @@
 export default class damageWave extends Phaser.GameObjects.Sprite {
 
-    constructor(scene,x,y,key,scale)
+    constructor(scene,x,y,key, scale)
     {
         super(scene, x, y, key)
         this.key = key;
@@ -35,6 +35,7 @@ export default class damageWave extends Phaser.GameObjects.Sprite {
             this.body.setVelocity(0, this.speed);
             if (this.y > 2500)
             {
+                this.setScale(2) 
                 this.play('enemydeath', true);
                 this.body.destroy()
                 this.on('animationcomplete', this.destroyMyself )
@@ -45,6 +46,7 @@ export default class damageWave extends Phaser.GameObjects.Sprite {
             this.body.setVelocity(-this.speed, 0);
             if (this.x < 0)
             {
+                this.setScale(2) 
                 this.play('enemydeath', true);
                 this.body.destroy()
                 this.on('animationcomplete', this.destroyMyself )
