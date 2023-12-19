@@ -194,10 +194,10 @@ export default class VolcanLevel extends LevelBase{
         let aux = Phaser.Math.RND.between(0, 3);
         let potenciadorType = Object.values(potenciadorTypes)[aux];
         const spawnPoints = [
-            { x: 600, y: 600 },
-            { x: 600, y: 700 },
-            { x: 700, y: 600 },
-            { x: 700, y: 700 },
+            { x: 931, y: 1235 },
+            { x: 1350, y: 1902 },
+            { x: 2017, y: 827 },
+            { x: 2527, y: 1250 },
             //Añadir luego las coordenadas correctas
         ];
         
