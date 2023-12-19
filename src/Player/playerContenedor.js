@@ -533,11 +533,24 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 }
                 break;
             case 'coche':
-                this.canGetHitByWave = false;
-                this.receiveDamage(5)
-                this.scene.time.delayedCall(300, () => {
-                    this.canGetHitByWave = true;
-                });
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                    });
+                }
+                break;
+            case 'lavaRock':
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                    });
+                }
                 break;
             default:
                 break;
