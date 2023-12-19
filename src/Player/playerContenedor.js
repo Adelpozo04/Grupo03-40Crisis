@@ -37,7 +37,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.invencible = false;
 
-        this.maxExp = 1200;
+        this.maxExp = 600;
 
         this.dirX = 0;
         this.dirY = 0;
@@ -52,7 +52,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             CENTINELA: 2,
             PACIFISTA: 3,}
     
-        this.personalityExp = [800, 800, 800, 800];
+        this.personalityExp = [0, 0, 0, 0];
     
         this.currentPersonality = this.Personalities.EXPLORADOR;
 
