@@ -275,15 +275,14 @@ export default class VolcanLevel extends LevelBase{
 
         // Verifica la colisión entre la cámara y cada uno de los spawners
         allSpawners.forEach((spawner) => {
-            const isColliding = Phaser.Geom.Intersects.RectangleToRectangle(this.camera.worldView, spawner.getBounds());
-            if (!isColliding) {
+            
                 // Si no hay colisión, spawnear enemigos
                 spawner.spawnEnemies(enemyNumbers, 3000); // Ajusta el número y tiempo según lo que necesites
                 // Limpiar todos los enemigos generados después de cierto tiempo 
                 this.time.delayedCall(40000, () => {
                     spawner.clearEnemies();
                 });     
-            }
+            
         });
     };
 

@@ -70,7 +70,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.backgroundMusic.play();
 
         // Pagina inicial
-        let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+        this.fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
 
         this.recompensas();
@@ -95,7 +95,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Tweens del fondo
         this.tweens.add({
-            targets: fondo,
+            targets: this.fondo,
             x: 200,
             duration: 3500,
             ease: 'Sine.easeInOut',
@@ -103,7 +103,7 @@ export default class SelectorNivel extends Phaser.Scene {
             repeat: -1,
         });
         this.tweens.add({
-            targets: fondo,
+            targets: this.fondo,
             x: -200,
             duration: 3500,
             ease: 'Sine.easeInOut',
@@ -128,7 +128,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Cambio de pagina
     changePage(dir){
-
+        this.fondo.destroy();
         this.effectMoveOptions.play();
 
         // Comprobacion para ciclar en ambos sentidos
@@ -136,7 +136,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.currentPage = (this.currentPage + dir) % 3; // Cuenta para poder ciclar el array
 
         // Pagina nueva
-        let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
+        this.fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
         
         this.recompensas();
@@ -159,7 +159,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.barraXP();
 
         this.tweens.add({
-            targets: fondo,
+            targets: this.fondo,
             x: 200,
             duration: 3500,
             ease: 'Sine.easeInOut',
@@ -167,7 +167,7 @@ export default class SelectorNivel extends Phaser.Scene {
             repeat: -1,
         });
         this.tweens.add({
-            targets: fondo,
+            targets: this.fondo,
             x: -200,
             duration: 3500,
             ease: 'Sine.easeInOut',
