@@ -6,7 +6,7 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
         this.x = x
         this.y = y
 
-        this.Bar = this.scene.add.sprite(x, y, 'inventoryGreen').setScrollFactor(0).setDepth(5);
+        this.Bar = this.scene.add.sprite(x, y, 'inventoryYellow').setScrollFactor(0).setDepth(5);
 
         this.slotSel = this.scene.add.sprite(x - 54, y, 'slot').setScrollFactor(0).setDepth(5);
 
@@ -31,7 +31,7 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
     changeIcons(currentPersonality){
         
         if(currentPersonality == 0){
-            this.Bar.setTexture('inventoryYellow');
+            this.Bar.setTexture('inventoryPurple');
             this.Icon1.setTexture('muro');
             this.Icon2.setTexture('mina');
             this.Icon3.setTexture('c4');
@@ -43,13 +43,13 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
             this.Icon3.setTexture('franco');
         }
         else if(currentPersonality == 1){
-            this.Bar.setTexture('inventoryGreen');
+            this.Bar.setTexture('inventoryYellow');
             this.Icon1.setTexture('fist');
             this.Icon2.setTexture('bate');
             this.Icon3.setTexture('espada');
         }
         else if(currentPersonality == 3){
-            this.Bar.setTexture('inventoryPurple');
+            this.Bar.setTexture('inventoryGreen');
             this.Icon1.setTexture('paralizador');
             this.Icon2.setTexture('empuje');
             this.Icon3.setTexture('varita');
