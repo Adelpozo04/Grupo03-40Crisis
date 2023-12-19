@@ -20,6 +20,7 @@ export default class effectArea extends Phaser.GameObjects.Sprite {
         })
 
         scene.time.delayedCall(tiempoActivo, ()=>{
+            this.setScale(2) 
             this.play('enemydeath', true);
             this.body.destroy()
             this.on('animationcomplete', this.destroyMyself )

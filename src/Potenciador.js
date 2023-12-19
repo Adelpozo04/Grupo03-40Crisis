@@ -25,12 +25,12 @@ export default class Potenciador extends Phaser.GameObjects.Container {
 
         scene.physics.add.collider(this, this.player, ()=>{
             this.player.applyEffect(this.key)
-            this.scene.potenciadorSpawneado = false;
+            this.scene.reespawnearPotenciador()
             this.destroy();
         })
         scene.physics.add.collider(this, scene.grupoEnemigos, (pot, enemigo)=>{
             enemigo.applyEffect(this.key)
-            this.scene.potenciadorSpawneado = false;
+            this.scene.reespawnearPotenciador()
             this.destroy();
         })
     }
