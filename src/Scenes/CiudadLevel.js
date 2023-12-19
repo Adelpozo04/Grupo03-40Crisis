@@ -334,7 +334,7 @@ export default class CiudadLevel extends LevelBase{
 
              this.time.delayedCall(5000, () => {
                 console.log("paso de ronda");
-                this.myUI.updateRounds(this.roundManager.currentRound);
+                
                 this.roundManager.startRound(); // Comienza la siguiente ronda
 
              })
