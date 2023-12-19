@@ -267,7 +267,7 @@ export default class SelectorNivel extends Phaser.Scene {
     loadMainArrows(){
         /*
         let mainArrowRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
-        let mainArrowLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
+        let mainArrowLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5).setScale(-1, 1);;
 
         mainArrowRight.on("pointerdown", () => {
             this.changePage(1);
@@ -290,7 +290,7 @@ export default class SelectorNivel extends Phaser.Scene {
     loadHatArrows(h){
         /*
         let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive();
-        let hatArrowLeft = this.add.image(475, 75, 'flecha').setInteractive();
+        let hatArrowLeft = this.add.image(475, 75, 'flecha').setInteractive().setScale(-1, 1);
 
         hatArrowRight.on("pointerdown", () => {
             this.changeHat(h, 1);         
