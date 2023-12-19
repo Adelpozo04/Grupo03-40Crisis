@@ -127,7 +127,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         var tiempoCooldown = new Map([
             ['fist', 0.6], ['bate', 1], ['espada', 0.6],
             ['pistola', 0.5], ['metralleta', 0.2], ['franco', 13],
-            ['muro', 8], ['mina', 12], ['c4', 15],
+            ['muro', 5], ['mina', 12], ['c4', 15],
             ['paralizador', 4], ['empuje', 0.6], ['varita', 20]
         ]);
         var damageArmas = new Map([

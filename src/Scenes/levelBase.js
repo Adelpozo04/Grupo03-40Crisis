@@ -29,7 +29,7 @@ export default class Level extends Phaser.Scene{
             ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10], ['robot', 300], ['mono', 0]
         ]);
         this.vidaEnemigos = new Map([
-            ['zombie', 8], ['skeleton', 5], ['burger', 40], ['lutano', 15], ['caracol', 999999], ['robot', 20], ['mono', 15]
+            ['zombie', 8], ['skeleton', 5], ['burger', 50], ['lutano', 15], ['caracol', 999999], ['robot', 20], ['mono', 15]
         ]);
         this.scaleEnemigos = new Map([
             ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5], ['robot', 0.25], ['mono', 1.25]
@@ -52,7 +52,7 @@ export default class Level extends Phaser.Scene{
 
         // en porcentajes
         this.munitionDropMaxProbability = new Map([
-            ['zombie', 30], ['skeleton', 30], ['burger', 60], ['lutano', 30], ['caracol', 100], ['robot', 30], ['mono', 100]
+            ['zombie', 10], ['skeleton', 10], ['burger', 40], ['lutano', 20], ['caracol', 100], ['robot', 30], ['mono', 100]
         ]);
 
         

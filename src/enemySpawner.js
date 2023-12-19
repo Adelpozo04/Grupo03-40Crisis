@@ -44,8 +44,8 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
             { type: 'zombie', probability: 0.4 }, //0,35
             { type: 'skeleton', probability: 0.25 },
             { type: 'burger', probability: 0.15 },
-            { type: 'lutano', probability: 0.1 },
-            { type: 'robot', probability: 0.1 }
+            { type: 'lutano', probability: 0.15 },
+            { type: 'robot', probability: 0.05 }
         ];
 
         let cumulativeProbability = 0;
