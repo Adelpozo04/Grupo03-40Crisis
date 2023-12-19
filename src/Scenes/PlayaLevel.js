@@ -90,9 +90,15 @@ export default class PlayaLevel extends LevelBase{
 
 
 
+        //Creacion de la UI
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+   
         // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
         this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
         this.roundManager.startRound(); // Comienza la primera ronda
+        this.myUI.updateRounds(this.roundManager.currentRound);
         this.numberEnemiesCheckers();
 
         //Se indica que colliders chocan entre si
@@ -153,10 +159,7 @@ export default class PlayaLevel extends LevelBase{
             callbackScope: this
         });
 
-      //Creacion de la UI
-        this.myUI = new UIManager(this, 'UIManager', this.mike);
-
-        this.myUI.setScrollFactor(0);
+ 
     }
 
     eventManager()
@@ -206,6 +209,19 @@ export default class PlayaLevel extends LevelBase{
             delay: 10
         })
     }
+
+    reespawnearPotenciador()
+    {
+        if (!this.spawningPotenciador)
+        {
+            this.spawningPotenciador = true;
+            this.time.delayedCall(9000, () => {
+                this.spawnPotenciador();
+                this.spawningPotenciador = false;
+            })
+        }
+        
+    } 
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);

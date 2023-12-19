@@ -101,11 +101,6 @@ export default class CiudadLevel extends LevelBase{
         this.numberEnemiesCheckers();
 
      
-
-       // this.Pause();
-
-        // Se agrega la tecla 'ESC' al evento de entrada del teclado
-        //this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
       
 
         //Se indica que colliders chocan entre si
@@ -170,8 +165,6 @@ export default class CiudadLevel extends LevelBase{
     }
 
 
-   
-
     eventManager()
     {
         let choice = Phaser.Math.RND.between(0,1)
@@ -199,21 +192,6 @@ export default class CiudadLevel extends LevelBase{
             this.scene.pause();
         }
     }
-    pauseGame() {
-        if (!this.isGamePaused) {
-            console.log('pause');
-            
-           
-        }
-    }
-
-    resumeGame() {
-        if (this.isGamePaused) {
-            console.log('hols');
-           
-           
-        }
-    }
 
     getPotenciador()
     {
@@ -235,7 +213,7 @@ export default class CiudadLevel extends LevelBase{
             { x: 800, y: 1700 },
             { x: 2500, y: 734 },
             { x: 2589, y: 1587 },
-            //Añadir luego las coordenadas correctas
+        
         ];
         
         let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
@@ -370,30 +348,8 @@ export default class CiudadLevel extends LevelBase{
         this.roundManager.enemiesDefeated++;
     };
 
-    
-
-   /* preUpdate(time, delta) {
-        this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-
-        // Verificar si la tecla Esc está presionada
-         this.escapeKey.on('down', this.togglePause(), this);
-        
-    } */
 
     update(dt, t){
-
-
-        /*if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
-            if (!this.isGamePaused) {
-                this.isGamePaused = true;
-                this.scene.launch('Pausa'); // Lanza la escena de pausa
-                this.scene.pause();
-            } else {
-                this.isGamePaused = false;
-                this.scene.resume();
-            }
-        } */
-    
 
     }
 
