@@ -22,14 +22,18 @@ export default class armaDisparos extends Arma{
         this.canShoot = true;
         this.elapsedTime = tiempoCooldown;
 
+        this.clickDown = false;
         this.scene.input.on('pointerdown', (pointer) =>
         {
-            if (this.active)
-                this.tryAttack()
+            this.clickDown = true;
+        })
+        this.scene.input.on('pointerup', (pointer) =>
+        {
+            this.clickDown = false;
         })
 
         this.event = this.scene.time.addEvent({
-            delay: 1000,
+            delay: 100,
             callback: this.calculateElapsedTime,
             callbackScope: this,
             loop: true
@@ -41,7 +45,7 @@ export default class armaDisparos extends Arma{
     }
 
     calculateElapsedTime(){
-        this.elapsedTime += 1;
+        this.elapsedTime += 0.1;
     }
 
     tryAttack()
@@ -86,5 +90,9 @@ export default class armaDisparos extends Arma{
     preUpdate()
     {
         super.update(true);
+        if (this.active && this.clickDown)
+        {
+            this.tryAttack()
+        }
     }
 }
