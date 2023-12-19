@@ -240,7 +240,7 @@ export default class CiudadLevel extends LevelBase{
         if (!this.spawningPotenciador)
         {
             this.spawningPotenciador = true;
-            this.time.delayedCall(9000, () => {
+            this.time.delayedCall(5000, () => {
                 this.spawnPotenciador();
                 this.spawningPotenciador = false;
             })
