@@ -52,7 +52,7 @@ export default class Level extends Phaser.Scene{
 
         //1 = 100%, 3 = 33%, 10 = 1% ...
         this.munitionDropMaxProbability = new Map([
-            ['zombie', 10], ['skeleton', 1], ['burger', 5], ['lutano', 3], ['caracol', 1], ['robot', 3], ['mono', 3]
+            ['zombie', 10], ['skeleton', 7], ['burger', 5], ['lutano', 3], ['caracol', 1], ['robot', 3], ['mono', 1]
         ]);
 
         

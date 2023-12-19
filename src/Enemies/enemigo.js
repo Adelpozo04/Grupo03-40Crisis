@@ -29,6 +29,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.alive = true;
         this.invencible = false;
 
+        this.explosiveState = false;
+        this.objetiveState = false;
+
         this.canGetHitByWave = true;
 
         this.scene.physics.add.existing(this);
@@ -68,9 +71,32 @@ export default class enemigo extends Phaser.GameObjects.Container {
     
     }
 
+    gainExplosiveState(explosionTime){
+
+        console.log("gano explosion estado");
+    
+        this.explosiveState = true;
+    
+        this.event = this.scene.time.addEvent({
+            delay: 1000 * explosionTime,
+            callback: this.lostExplosiveState,
+            callbackScope: this,
+            loop: false
+    
+            })
+    
+    }
+    
+    
+    
+    lostExplosiveState(){
+        console.log("volvio a la normalidad")
+        this.explosiveState = false;
+    }
+
     receiveDamage(damage){
 
-        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
+        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave) && !this.explosiveState){
           
             this.life -= damage;
 

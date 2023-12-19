@@ -34,6 +34,8 @@ export default class CiudadLevel extends LevelBase{
 
         //Se carga el png con los tiles que usa el Json
         this.load.image('patronesCiudadTilemap', './Assets/Sprites/Tilesets/Ciudad/tilemapCiudadExtruded.png');
+
+        this.load.image('FondoPlay', './Assets/Sprites/UI/PlayGame/tilemapCiudadExtruded.png')
     }
     
     create(data){
@@ -273,7 +275,9 @@ export default class CiudadLevel extends LevelBase{
         this.registry.events.emit('cambiarXP', 0);
         this.scene.stop(this.scene.key);
         */
+
         this.scene.start('gameOver', {datos: this.points, level: 0});
+
     }
 
     numberEnemiesCheckers() {
