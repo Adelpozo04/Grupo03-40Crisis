@@ -15,12 +15,11 @@ export default class SelectorNivel extends Phaser.Scene {
             this.hatUnlocked[i] = false;
         }
         this.setExperience();
-        
-		this.globalPoints = window.localStorage.getItem('points');
     }
 
     init(data){
-        if (data == null) console.log(data);
+        if (data.datos != null) this.globalPoints[data.level] += data.datos;
+        console.log(data.datos);
     }
 
     preload(){
@@ -180,6 +179,11 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[1] = 0; // Playa
         this.globalPoints[2] = 0; // Volcan
 
+        
+		this.globalPoints[0] = window.localStorage.getItem('ciudadpoints');
+        this.globalPoints[1] = window.localStorage.getItem('playapoints');
+        this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
+
         // Evento para poder subir experiencia segun el nivel jugado
         /*this.registry.events.on('cambiarXP', (nivel) => {
             this.ganarExperiencia(nivel);
@@ -211,7 +215,9 @@ export default class SelectorNivel extends Phaser.Scene {
 
         console.log(this.mapas[this.currentPage], this.hatID)
 
-        window.localStorage.setItem('points', this.globalPoints);
+        window.localStorage.setItem('ciudadpoints', this.globalPoints[0]);
+        window.localStorage.setItem('playapoints', this.globalPoints[1]);
+        window.localStorage.setItem('volcanpoints', this.globalPoints[2]);
 
         if(this.hatUnlocked[this.hatID]){
             this.scene.start(this.mapas[this.currentPage], this.hatID);
