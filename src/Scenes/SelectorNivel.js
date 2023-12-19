@@ -14,15 +14,25 @@ export default class SelectorNivel extends Phaser.Scene {
         for(var i = 0; i < 21; ++i){
             this.hatUnlocked[i] = false;
         }
+        this.setExperience();
+        
+		this.globalPoints = window.localStorage.getItem('points');
     }
 
     init(data){
-        console.log(data);
+        if (data == null) console.log(data);
     }
 
     preload(){
-        console.log(this.xpGained);
-        console.log();
+        console.log(this.globalPoints);
+
+        /*window.addEventListener("beforeunload", event => {
+            console.log("lo hiso");
+		});
+
+		addEventListener("load", event => {
+            console.log("lo hiso");
+		});*/
     }
 
     loadFont(name, url) {
@@ -41,18 +51,12 @@ export default class SelectorNivel extends Phaser.Scene {
 	}
 
     create(){
-
         this.effectConfirm = this.sound.add('confirmarEffect', {loop: false});
         this.effectMoveOptions = this.sound.add('moverOpcionesEffect', {loop: false});
-
-        console.log(this);
 
         this.events.on('resume', (xp) => {
             console.log(xp);
         });
-
-        // Experiencia de cada nivel
-        this.setExperience();
 
         // Carga de los niveles
         this.setMaps();
@@ -177,9 +181,9 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[2] = 0; // Volcan
 
         // Evento para poder subir experiencia segun el nivel jugado
-        this.registry.events.on('cambiarXP', (nivel) => {
+        /*this.registry.events.on('cambiarXP', (nivel) => {
             this.ganarExperiencia(nivel);
-        });
+        });*/
     }
 
     // Cambio de sombrero
@@ -207,21 +211,13 @@ export default class SelectorNivel extends Phaser.Scene {
 
         console.log(this.mapas[this.currentPage], this.hatID)
 
-        if(this.hatUnlocked[this.hatID]){
-            //this.scene.sleep(this.scene);
-            //this.scene.start(this.mapas[this.currentPage], this.hatID);
-            this.scene.switch('SelectorNivel', this.mapas[this.currentPage]);
-            
-            console.log('a');
-        }
-        else{
-            console.log(this.scene.key);
-            this.scene.pause(this.scene.key);
-            this.scene.launch(this.mapas[this.currentPage], -1);
+        window.localStorage.setItem('points', this.globalPoints);
 
-            //this.scene.switch(this.mapas[this.currentPage]);
-            
-            console.log('b');
+        if(this.hatUnlocked[this.hatID]){
+            this.scene.start(this.mapas[this.currentPage], this.hatID);
+        }
+        else{       
+            this.scene.start(this.mapas[this.currentPage], -1);
         }
     }
 
