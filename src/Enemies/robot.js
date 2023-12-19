@@ -13,6 +13,8 @@ export default class Robot extends Enemigo {
         this.key = key;
         this.posXCentered = config.posXCollider;
         this.posYCentered = config.posYCollider;
+        this.damage = config.damage;
+
         scene.add.existing(this);
 
         this.enemy = new Phaser.GameObjects.Sprite(scene, this.posXCentered, this.posYCentered, key, 0);
@@ -29,7 +31,8 @@ export default class Robot extends Enemigo {
     {  
         this.attackFlag = false;
         this.body.setVelocity(0,0)
-        var bala = this.scene.grupoBalasRobot.get(this.body.x + 16, this.body.y + 32, 'balaRobot', this.damageArma);
+        console.log(this.damage);
+        var bala = this.scene.grupoBalasRobot.get(this.body.x + 16, this.body.y + 32, 'balaRobot', this.damage);
         var angle = Phaser.Math.Angle.Between(this.body.x + 16, this.body.y + 32, this.player.getCenterPoint().x, this.player.getCenterPoint().y)
         if (bala)
         {
