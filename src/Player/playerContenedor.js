@@ -42,7 +42,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dirX = 0;
         this.dirY = 0;
 
-        this.changePerCooldown = 1;
+        this.changePerCooldown = 0.3;
 
         this.changePerBlock = false;
 
@@ -131,7 +131,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             ['paralizador', 4], ['empuje', 0.6], ['varita', 20]
         ]);
         var damageArmas = new Map([
-            ['fist', 2], ['bate', 5], ['espada', 10],
+            ['fist', 2], ['bate', 5], ['espada', 6],
             ['pistola', 5], ['metralleta', 3], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);
