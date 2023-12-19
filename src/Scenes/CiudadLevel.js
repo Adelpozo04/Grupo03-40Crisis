@@ -69,7 +69,7 @@ export default class CiudadLevel extends LevelBase{
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
         //Creacion de entidades 
-        this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 1500);
+        this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
 
         this.camera = this.cameras.main.startFollow(this.mike);
 
