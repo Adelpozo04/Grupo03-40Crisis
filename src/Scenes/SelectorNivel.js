@@ -65,7 +65,7 @@ export default class SelectorNivel extends Phaser.Scene {
         // Carga de los niveles
         this.setMaps();
 
-        this.backgroundMusic = this.sound.add('selectorMusic', {loop: true});
+        this.backgroundMusic = this.sound.add('selectorMusic', {loop: true, volume: 0.2});
 
         this.backgroundMusic.play();
 

@@ -91,6 +91,7 @@ export default class load extends Phaser.Scene{
         this.load.audio('ciudadMusic', ['./Assets/Audio/Music/CiudadLevel.wav']);
         this.load.audio('playaMusic', ['./Assets/Audio/Music/PlayaLevel.wav']);
         this.load.audio('volcanMusic', ['./Assets/Audio/Music/VolcanLevel.wav']);
+        this.load.audio('gameOverMusic', ['./Assets/Audio/Music/GameOver.wav']);
 
         //Efectos de sonido
 
