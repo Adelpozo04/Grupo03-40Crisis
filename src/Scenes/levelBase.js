@@ -20,16 +20,16 @@ export default class Level extends Phaser.Scene{
 
         // ENEMIES DATA
         this.speedEnemigos = new Map([
-            ['zombie', 75], ['skeleton', 140], ['burger', 50], ['lutano', 75], ['caracol', 25], ['robot', 75], ['mono', 125]
+            ['zombie', 75], ['skeleton', 160], ['burger', 50], ['lutano', 85], ['caracol', 15], ['robot', 75], ['mono', 135]
         ]);
         this.damageEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 3], ['burger', 5], ['lutano', 2], ['caracol', 9999], ['robot', 5], ['mono', 0]
+            ['zombie', 1], ['skeleton', 4], ['burger', 25], ['lutano', 2], ['caracol', 9999], ['robot', 10], ['mono', 0]
         ]);
         this.attackDistEnemigos = new Map([
             ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10], ['robot', 300], ['mono', 0]
         ]);
         this.vidaEnemigos = new Map([
-            ['zombie', 10], ['skeleton', 5], ['burger', 30], ['lutano', 15], ['caracol', 999999], ['robot', 20], ['mono', 15]
+            ['zombie', 8], ['skeleton', 5], ['burger', 40], ['lutano', 15], ['caracol', 999999], ['robot', 20], ['mono', 15]
         ]);
         this.scaleEnemigos = new Map([
             ['zombie', 2], ['skeleton', 2], ['burger', 2], ['lutano', 2], ['caracol', 0.5], ['robot', 0.25], ['mono', 1.25]
