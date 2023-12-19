@@ -201,7 +201,7 @@ export default class SelectorNivel extends Phaser.Scene {
             console.log(window.localStorage.getItem('sombrero' + i));
             this.hatUnlocked[i] = window.localStorage.getItem('sombrero' + i);
             if (this.hatUnlocked[i] == "true") this.hatUnlocked[i] = true;
-            else if(this.hatUnlocked[i] == "false") this.hatUnlocked[i] = false;
+            else if(this.hatUnlocked[i] == "false" || this.hatUnlocked[i] == null) this.hatUnlocked[i] = false;
             console.log(this.hatUnlocked[i]);
         }
     }
