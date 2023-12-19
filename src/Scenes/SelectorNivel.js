@@ -89,7 +89,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.loadHatArrows(this.hat); // Flechas
         this.loadMainArrows();
         this.best = new button(this, 1100, 150, 'bestiaryButton',  0, 82, 128, 48);
-        this.best.on('pointerdown', (event) => { this.scene.start('bestiary'); })
+        this.best.on('pointerdown', (event) => { this.backgroundMusic.destroy(); this.scene.start('bestiary'); })
 
         this.barraXP(); // Pase de batalla
 
@@ -154,7 +154,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.loadHatArrows(this.hat);
 
         this.best = new button(this, 1100, 150, 'bestiaryButton',  0, 82, 128, 48);
-        this.best.on('pointerdown', (event) => { this.scene.start('bestiary'); })
+        this.best.on('pointerdown', (event) => { this.backgroundMusic.destroy(); this.scene.start('bestiary'); })
 
         this.barraXP();
 

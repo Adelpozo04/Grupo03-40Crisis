@@ -12,6 +12,9 @@ export default class PantallaInicial extends Phaser.Scene{
     
     preload(){
         this.load.image('PlayaFondo', './Assets/Sprites/UI/PantallaInicial/FondoPlaya.png');
+        this.load.image('CiudadFondo', './Assets/Sprites/UI/PantallaInicial/FondoCiudad.png');
+        this.load.image('VolcanFondo', './Assets/Sprites/UI/PantallaInicial/FondoVolcan.png');
+
         console.log();
     }
 
@@ -19,9 +22,7 @@ export default class PantallaInicial extends Phaser.Scene{
 		let self = this;
 	    let newFont = new FontFace(name, `url(${url})`);
 	    newFont.load()
-	    // Función que se llamará cuando las fuentes estén cargadas
-	    // en este caso, load devuelve lo que llamamos una promesa
-	    // más info en: https://developer.mozilla.org/en-US/docs/Web/API/FontFace/load
+
 	    .then(function (loaded) { 
 	        document.fonts.add(loaded);
 	        self.continueCreate();
@@ -31,7 +32,19 @@ export default class PantallaInicial extends Phaser.Scene{
 	}
 
     create(){
-        this.add.image(0, 0, 'PlayaFondo').setScale(1, 1).setOrigin(0, 0)
+       
+        var backgroundImage = Phaser.Math.Between(1, 3);
+
+        if(backgroundImage == 1){
+            this.add.image(0, 0, 'PlayaFondo').setScale(1, 1).setOrigin(0, 0)
+        }
+        else if(backgroundImage == 2){
+            this.add.image(0, 0, 'CiudadFondo').setScale(1, 1).setOrigin(0, 0)
+        }
+        else if(backgroundImage == 3){
+            this.add.image(0, 0, 'VolcanFondo').setScale(1, 1).setOrigin(0, 0)
+        }
+        
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
         
@@ -39,7 +52,6 @@ export default class PantallaInicial extends Phaser.Scene{
         this.scaleEffect = false;
         this.letterColor = 0;
 
-        this.nextKey = this.input.keyboard.addKey('O');
     }
 
     continueCreate() {
