@@ -22,7 +22,6 @@ export default class load extends Phaser.Scene{
         this.load.spritesheet('caracol', './Assets/Sprites/Enemigos/Caracol/Caracol-Walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 32});
         this.load.spritesheet('caracolattack', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
         this.load.spritesheet('mono', './Assets/Sprites/Enemigos/Mono/Monkey-walk-SpriteSheet.png',{frameWidth: 48, frameHeight: 48});
-        //this.load.spritesheet('monopick', './Assets/Sprites/Enemigos/Caracol/Caracol-Attack-SpriteSheet.png',{frameWidth: 512, frameHeight: 768});
         this.load.spritesheet('deathEnemy', './Assets/Sprites/Enemigos/Enemies-death-SpriteSheet.png',{frameWidth: 32, frameHeight: 32});
         
         //Cargado de imagenes de objetos del juego
@@ -76,13 +75,16 @@ export default class load extends Phaser.Scene{
         this.load.spritesheet('hat', './Assets/Sprites/Jugador/Sombreros/Sombreros.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('nohat', './Assets/Sprites/Jugador/Sombreros/sombreros_bloqueados.png', {frameWidth: 256, frameHeight: 256});
 
+        //Cargado Bestiario
+        
+
         //Eventos
         this.load.image('bocaIncendios', './Assets/Sprites/Eventos/bocaIncendios.png')
         this.load.image('coche', './Assets/Sprites/Eventos/coche.png')
         this.load.image('wave','./Assets/Sprites/Eventos/wave.png')
         this.load.image('humo','./Assets/Sprites/Eventos/humo.png')
         this.load.image('lavaRock', './Assets/Sprites/Eventos/lavaRock.png')
-        this.load.image('lava', './Assets/Sprites/Eventos/lava.png')
+        this.load.image('lava', './Assets/Sprites/Eventos/lava.png');
 
         //Cargado de musica de fondo
         this.load.audio('selectorMusic', ['./Assets/Audio/Music/SelectorNiveles.wav']);
