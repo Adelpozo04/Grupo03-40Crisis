@@ -191,10 +191,10 @@ export default class CiudadLevel extends LevelBase{
         let aux = Phaser.Math.RND.between(0, 3);
         let potenciadorType = Object.values(potenciadorTypes)[aux];
         const spawnPoints = [
-            { x: 600, y: 600 },
-            { x: 600, y: 700 },
-            { x: 700, y: 600 },
-            { x: 700, y: 700 },
+            { x: 486, y: 386 },
+            { x: 800, y: 1700 },
+            { x: 2500, y: 734 },
+            { x: 2589, y: 1587 },
             //Añadir luego las coordenadas correctas
         ];
         
@@ -275,7 +275,9 @@ export default class CiudadLevel extends LevelBase{
         this.registry.events.emit('cambiarXP', 0);
         this.scene.stop(this.scene.key);
         */
-        this.scene.start('gameOver', {points: this.points});
+
+        this.scene.start('gameOver', {datos: this.points, level: 0});
+
     }
 
     numberEnemiesCheckers() {

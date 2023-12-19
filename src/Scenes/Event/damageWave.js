@@ -1,6 +1,6 @@
 export default class damageWave extends Phaser.GameObjects.Sprite {
 
-    constructor(scene,x,y,key, scale)
+    constructor(scene,x,y,key,scale)
     {
         super(scene, x, y, key)
         this.key = key;
@@ -15,7 +15,7 @@ export default class damageWave extends Phaser.GameObjects.Sprite {
         scene.physics.add.overlap(this, this.scene.mike, ()=>{
             let direction = new Phaser.Math.Vector2(this.scene.mike.x - this.x, this.scene.mike.y - this.y)
             direction.normalize();
-            this.scene.mike.knockBack(direction)
+            this.scene.mike.knockBack(direction, 600)
             this.scene.mike.applyEffect(this.key)
         })
 
@@ -30,12 +30,25 @@ export default class damageWave extends Phaser.GameObjects.Sprite {
 
     preUpdate()
     {
-        this.body.setVelocity(-this.speed, 0);
-        if (this.x < 0)
+        if (this.key == 'lavaRock')
         {
-            this.play('enemydeath', true);
-            this.body.destroy()
-            this.on('animationcomplete', this.destroyMyself )
+            this.body.setVelocity(0, this.speed);
+            if (this.y > 2500)
+            {
+                this.play('enemydeath', true);
+                this.body.destroy()
+                this.on('animationcomplete', this.destroyMyself )
+            }
+        }
+        else
+        {
+            this.body.setVelocity(-this.speed, 0);
+            if (this.x < 0)
+            {
+                this.play('enemydeath', true);
+                this.body.destroy()
+                this.on('animationcomplete', this.destroyMyself )
+            }
         }
     }
 

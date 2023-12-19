@@ -84,6 +84,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.qKey = this.scene.input.keyboard.addKey('Q');
         this.eKey = this.scene.input.keyboard.addKey('E');
 
+        this.OneKey = this.scene.input.keyboard.addKey('1');
+        this.TwoKey = this.scene.input.keyboard.addKey('2');
+        this.ThreeKey = this.scene.input.keyboard.addKey('3');
+
         this.scene.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) =>
         {
 
@@ -358,7 +362,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     preUpdate(t, dt)
     {
-        this.player.setDepth(3)
+        console.log("POSITION: " + this.x + " " + this.y)
         this.movement();
         this.personalityInput();
 
@@ -466,8 +470,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 this.scene.die();
             }
         }
-       
-
+    
     }
 
     //Potenciadores
@@ -481,6 +484,15 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                 if (this.life > this.maxLife) {
                     this.life = this.maxLife;
                 }
+
+                this.tweenPotenciador = this.scene.tweens.add({
+                    targets: this.player,
+                    alpha: 0,
+                    duration: 340,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true
+                });
+                this.player.alpha = 1;
                 break;
             case 'velocidad':
 
@@ -491,9 +503,20 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.speed = 280;
                     this.effectSpeed.play();
                   
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+
                     this.scene.time.delayedCall(6000, () => {
                         this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                         this.underSpeedEffect = false;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -506,18 +529,39 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                   
                     this.player.play('iddle' + this.key, true);
                     this.effectVivu.play();
-                  
+
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+
                     this.scene.time.delayedCall(5000, () => {
                         this.speed = this.aux;
                         this.underSpeedEffect = false;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
 
                 break;
             case 'invencible':
                 this.invulnerable = true;
+                this.tweenPotenciador = this.scene.tweens.add({
+                    targets: this.player,
+                    alpha: 0,
+                    duration: 340,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true,
+                    repeat: -1
+                });
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
+                    this.player.alpha = 1;
+                    this.scene.tweens.remove(this.tweenPotenciador)
                 });
                 break;
             case 'humo':
@@ -526,18 +570,61 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 60
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(2000, () => {
                         this.speed = this.aux 
                         this.underSpeedEffect = false;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
             case 'coche':
-                this.canGetHitByWave = false;
-                this.receiveDamage(5)
-                this.scene.time.delayedCall(300, () => {
-                    this.canGetHitByWave = true;
-                });
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
+                    });
+                }
+                break;
+            case 'lavaRock':
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.receiveDamage(5)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.player,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                        this.player.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
+                    });
+                }
                 break;
             default:
                 break;

@@ -8,8 +8,11 @@ export default class gameOver extends Phaser.Scene{
     }
     
     init(data){
-        console.log(data.points);
-        this.points = data.points;
+
+        console.log(data);
+        this.points = data.datos;
+        this.level = data.level;
+
     }
     
     preload(){
@@ -49,7 +52,7 @@ export default class gameOver extends Phaser.Scene{
         this.ScoreLabel = this.generateText(this.cameras.main.centerX, 400, 'Score ' + this.points, 40);
         this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30);
         this.playLabel.setInteractive();
-        this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })
+        this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel', {datos: this.points, level: this.level}); })
 
 	}
 
