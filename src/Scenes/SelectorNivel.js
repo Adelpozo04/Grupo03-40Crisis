@@ -23,15 +23,15 @@ export default class SelectorNivel extends Phaser.Scene {
     preload(){
         console.log(this.xpGained);
         console.log();
+
+        this.load.image('bestiaryButton', './Assets/Sprites/UI/Bestiary/button.png');
     }
 
     loadFont(name, url) {
 		let self = this;
 	    let newFont = new FontFace(name, `url(${url})`);
 	    newFont.load()
-	    // Función que se llamará cuando las fuentes estén cargadas
-	    // en este caso, load devuelve lo que llamamos una promesa
-	    // más info en: https://developer.mozilla.org/en-US/docs/Web/API/FontFace/load
+	
 	    .then(function (loaded) { 
 	        document.fonts.add(loaded);
 	        self.continueCreate();
