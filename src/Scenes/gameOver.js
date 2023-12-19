@@ -39,6 +39,10 @@ export default class gameOver extends Phaser.Scene{
         this.add.image(0, 0, 'GameOverFondo').setScale(0.5, 0.5).setOrigin(0, 0)
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
+
+        this.backgroundMusic = this.sound.add('gameOverMusic', {loop: true, volume: 0.2});
+
+        this.backgroundMusic.play();
         
         this.textCreated = false;
         this.scaleEffect = false;
@@ -53,7 +57,7 @@ export default class gameOver extends Phaser.Scene{
         this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30);
         this.playLabel.setInteractive();
         console.log(this.points);
-        this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel', {datos: this.points, level: this.level}); })
+        this.playLabel.on('pointerdown', (event) => { this.return(); })
 
 	}
 
@@ -91,6 +95,11 @@ export default class gameOver extends Phaser.Scene{
             repeat: -1
         });
         return ogText
+    }
+
+    return(){
+        this.backgroundMusic.destroy();
+        this.scene.start('SelectorNivel', {datos: this.points, level: this.level});
     }
     
     update(t, dt){
