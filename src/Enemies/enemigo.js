@@ -27,7 +27,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.canDamage = true;
         this.inKnockBack = false;
         this.alive = true;
-        this.invencible = false;
+        this.invulnerable = false;
 
         this.explosiveState = false;
         this.objetiveState = false;
@@ -96,7 +96,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     receiveDamage(damage){
 
-        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave) && !this.explosiveState){
+        if(!this.invulnerable && this.alive && !(this.inKnockBack && this.canGetHitByWave) && !this.explosiveState){
           
             this.life -= damage;
 
@@ -140,7 +140,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     recieveDamageNotGetPoints(damage)
     {
-        if(!this.invencible && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
+        if(!this.invulnerable && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
           
             this.life -= damage;
             if(this.life <= 0){
@@ -304,7 +304,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
                     this.enemy.alpha = 1;
-                        this.scene.tweens.remove(this.tweenPotenciador)
+                    this.scene.tweens.remove(this.tweenPotenciador)
                 });
                 break;
             case 'humo':

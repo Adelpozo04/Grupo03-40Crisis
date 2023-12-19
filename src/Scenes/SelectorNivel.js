@@ -31,14 +31,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
         console.log(this.globalPoints);
         console.log(this.hatUnlocked);
-        /*window.addEventListener("beforeunload", event => {
-            console.log("lo hiso");
-		});
-
-		addEventListener("load", event => {
-            console.log("lo hiso");
-		});*/
-
     }
 
     loadFont(name, url) {
@@ -265,19 +257,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para selccionar nivel
     loadMainArrows(){
-        /*
-        let mainArrowRight = this.add.image(1000, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5);
-        let mainArrowLeft = this.add.image(200, this.cameras.main.centerY, 'flecha').setInteractive().setOrigin(0.5, 0.5).setScale(-1, 1);;
-
-        mainArrowRight.on("pointerdown", () => {
-            this.changePage(1);
-        });
-
-        mainArrowLeft.on("pointerdown", () => {
-            this.changePage(-1);
-        });
-        */
-
         let der = new button(this, 1000, 400, 'flecha', 0, 58, 128, 80);
         der.on('pointerdown', (event) => { this.changePage(1); })
 
@@ -288,19 +267,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Flechas para seleccionar sombrero
     loadHatArrows(h){
-        /*
-        let hatArrowRight= this.add.image(725, 75, 'flecha').setInteractive();
-        let hatArrowLeft = this.add.image(475, 75, 'flecha').setInteractive().setScale(-1, 1);
-
-        hatArrowRight.on("pointerdown", () => {
-            this.changeHat(h, 1);         
-        });
-        
-        hatArrowLeft.on("pointerdown", () => {
-            this.changeHat(h, -1);
-        });
-        */
-
         let der = new button(this, 725, 150, 'flecha', 0, 90, 128, 80);
         der.on('pointerdown', (event) => { this.changeHat(h, 1); })
 
@@ -316,13 +282,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Actualización
         this.actualizarBarraDeProgreso();
-
-        // Puedes llamar a una función para ganar experiencia, por ejemplo, cuando se hace clic SOLO DEBUG
-        /*
-        this.input.on('pointerdown', () => {
-            this.ganarExperiencia(this.currentPage, 10);
-        });
-        */
     }
     
     actualizarBarraDeProgreso() {
