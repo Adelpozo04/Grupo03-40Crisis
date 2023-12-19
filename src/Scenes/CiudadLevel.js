@@ -16,7 +16,6 @@ export default class CiudadLevel extends LevelBase{
 
     constructor(){
         super('CiudadLevel'); 
-        this.potenciadorSpawneado = false;
         this.spawningPotenciador = false;
         //this.hatID = hatID; 
         this.points = 0;
@@ -215,7 +214,18 @@ export default class CiudadLevel extends LevelBase{
             delay: 10
         })
     }
-
+    reespawnearPotenciador()
+    {
+        if (!this.spawningPotenciador)
+        {
+            this.spawningPotenciador = true;
+            this.time.delayedCall(9000, () => {
+                this.spawnPotenciador();
+                this.spawningPotenciador = false;
+            })
+        }
+        
+    }    
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
     }
@@ -323,16 +333,7 @@ export default class CiudadLevel extends LevelBase{
 
 
     update(dt, t){
-        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
-        { 
-            this.spawningPotenciador = true;
-            this.time.delayedCall(5000, () => {
-                this.spawnPotenciador();
-                this.potenciadorSpawneado = true;
-            })
-        }
 
-  
    }
 }
 

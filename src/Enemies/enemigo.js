@@ -120,7 +120,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 if(dropMunition == 1){
                     this.spawnMunition();
                 }
-    
+
+                this.enemy.setOrigin(this.key == 'robot' ? 1.8 : 0.5, this.key == 'robot' ? 2.8 : 0.5)
+                this.setScale(2)
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -151,6 +153,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.alive = false;
                 this.body.setVelocity(0, 0);
     
+                
+                this.setScale(2)
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )

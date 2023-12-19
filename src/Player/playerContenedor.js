@@ -362,7 +362,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     preUpdate(t, dt)
     {
-        console.log("POSITION: " + this.x + " " + this.y)
         this.movement();
         this.personalityInput();
 
