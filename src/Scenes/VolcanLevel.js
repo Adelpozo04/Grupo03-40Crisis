@@ -317,7 +317,10 @@ export default class VolcanLevel extends LevelBase{
         this.roundManager.enemiesDefeated++;
     };
 
-    
+    die(){
+        console.log(this.points);
+        this.scene.start('gameOver', {datos: this.points, level: 0});
+    }
 
 
     update(dt, t){
@@ -329,8 +332,6 @@ export default class VolcanLevel extends LevelBase{
                 this.potenciadorSpawneado = true;
             })
         }
-
-  
-   }
+    }
 }
 
