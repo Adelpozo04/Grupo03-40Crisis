@@ -1,4 +1,6 @@
 
+import button from "../UI/button.js";
+
 export default class bestiary extends Phaser.Scene{
 
 constructor(){
@@ -52,6 +54,7 @@ preload(){
 
 
 create(){
+
     this.maxEntries = 23;
 
     this.indice = 0;
@@ -66,16 +69,14 @@ create(){
 
     this.infoImage = this.add.image(0, 0, this.info[this.indice]).setScale(1, 1).setOrigin(-0.33, 0);
 
-    this.der = this.add.image(1100, 350, 'flechaPasar')
-    this.der.setInteractive();
+    this.der = new button(this, 1100, 400, 'flechaPasar', 0, 64, 128, 80);
     this.der.on('pointerdown', (event) => { this.changeIndice(true); })
 
-    this.izq = this.add.image(100, 350, 'flechaPasar').setFlip(true, false)
-    this.izq.setInteractive();
+    this.izq = new button(this, 100, 400, 'flechaPasar', 0, 64, 128, 80);
+    this.izq.setFlip(true, false);
     this.izq.on('pointerdown', (event) => { this.changeIndice(false); })
 
-    this.out = this.add.image(50, 50, 'salir');
-    this.out.setInteractive();
+    this.out = new button(this, 50, 150, 'salir', 0, 82, 128, 48);
     this.out.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })
 
 }

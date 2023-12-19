@@ -22,7 +22,7 @@ var config = {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
     pixelArt:true,
-    scene : [bestiary, load, PantallaInicial, SelectorNivel, PlayaLevel, CiudadLevel, VolcanLevel, gameOver]
+    scene : [load, PantallaInicial, SelectorNivel, PlayaLevel, CiudadLevel, VolcanLevel, gameOver, bestiary]
     
 }
 
