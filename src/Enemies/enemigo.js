@@ -378,8 +378,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         return {x: this.x + 16, y: this.y + 16};
     }
 
-    preUpdate()
+    update()
     {
-        this.enemy.setFlip(this.body.velocity.x < 0, false)
+        this.enemy.setFlip(this.body.velocity.x <= 0, false)
     }
 }
