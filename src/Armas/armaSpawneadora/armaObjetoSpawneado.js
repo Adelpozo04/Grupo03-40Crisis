@@ -21,6 +21,8 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.enfriamientoTime = TiempoCooldown;
 
+        this.exp = 1;
+
         this.enfriamientoPasado = true;
 
         this.canShoot = true;
@@ -61,18 +63,21 @@ export default class armaObjetosSpawneado extends Arma{
             if(this.key == 'muro'){
                 
                 new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
-                
+                this.exp = 5;
             }
             else if(this.key == 'mina'){
                 
                 new explosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'mina', 0);
+                this.exp = 1;
             }
             else if(this.key == 'c4'){
                 
                 new remoteExplosive(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'c4');
+                this.exp = 1;
             }
             else if(this.key == 'paralizador'){
                 new paralizador(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'paralizador');
+                this.exp = 5;
             }
 
             if(this.key == this.player.getCurrentWeaponName()){
