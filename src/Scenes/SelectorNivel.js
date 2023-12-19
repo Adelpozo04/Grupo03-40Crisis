@@ -9,17 +9,18 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.currentPage = 0;
         this.hatID = 0;
-        this.experienciaMaxima = 100;
+        this.experienciaMaxima = 7000;
         this.hatUnlocked = [];
         for(var i = 0; i < 21; ++i){
             this.hatUnlocked[i] = false;
         }
         this.setExperience();
         this.getUnlocked();
+        this.globalPoints[1] += 7000;
     }
 
     init(data){
-        if (data.datos ==! null) this.globalPoints[data.level] += data.datos;
+        if (data.datos !== null) this.globalPoints[data.level] += data.datos;
         this.globalPoints[this.currentPage]++;
         this.globalPoints[this.currentPage]--;
         console.log(this.globalPoints[this.currentPage]);
@@ -77,7 +78,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.recompensas();
 
-        console.log(this.hatUnlocked[this.hatID]);
+        console.log(this.hatUnlocked[0]);
         console.log(this.hatID);
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
@@ -328,14 +329,15 @@ export default class SelectorNivel extends Phaser.Scene {
     recompensas(){
         console.log(this.globalPoints[this.currentPage]);
         // Verificar si se alcanzó la experiencia máxima
-        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
-            this.hatUnlocked[2] = true;
-        }
-        else if (this.globalPoints[this.currentPage] >= (this.experienciaMaxima * 2) / 3){
-            this.hatUnlocked[1] = true;
-        }
-        else if (this.globalPoints[this.currentPage] >= (this.experienciaMaxima / 3)){
-            this.hatUnlocked[0] = true;
+        for (var i = 1; i <= 3; ++i) {
+            var experienciaUmbral = this.experienciaMaxima;
+            for (var k = 6 * i + i - 1; k >= ((i - 1) * 7); --k) {
+                console.log(this.globalPoints[i - 1], (experienciaUmbral * k + 1) / 7);
+                if (this.globalPoints[i - 1] * i >= (experienciaUmbral * k + 1) / 7) {
+                    console.log('entro');
+                    this.hatUnlocked[k % (6 * i)] = true;
+                }
+            }
         }
     }
 }
