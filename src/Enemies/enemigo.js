@@ -114,10 +114,10 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 
                 this.player.gainPersonalityExp(2);
         
-                var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+                var dropMunition = Phaser.Math.Between(1, 100);
     
         
-                if(dropMunition == 1){
+                if(dropMunition > this.maxDropProbability){
                     this.spawnMunition();
                 }
 
@@ -376,5 +376,10 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     getCenterPoint(){
         return {x: this.x + 16, y: this.y + 16};
+    }
+
+    preUpdate()
+    {
+        this.enemy.setFlip(this.body.velocity.x < 0, false)
     }
 }

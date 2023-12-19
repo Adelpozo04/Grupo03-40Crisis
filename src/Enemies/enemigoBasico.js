@@ -70,15 +70,9 @@ preUpdate(){
                 this.enemy.play('walk' + this.key, true);
             }
         }
-        //flip del sprite en función de la pos del player
-        if (this.x < super.getPlayer().x)
-        {
-            this.enemy.setFlip(false, false);
-        }
-        else if (this.x > super.getPlayer().y)
-        {
-            this.enemy.setFlip(true, false);
-        }
+        //flip del sprite en función de la pos del objetivo
+        this.enemy.setFlip(this.body.velocity.x < 0, false)
+
     }
     
 }

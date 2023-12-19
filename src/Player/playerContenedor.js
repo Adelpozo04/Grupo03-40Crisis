@@ -42,7 +42,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.dirX = 0;
         this.dirY = 0;
 
-        this.changePerCooldown = 1;
+        this.changePerCooldown = 0.3;
 
         this.changePerBlock = false;
 
@@ -125,18 +125,18 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         });
         
         var tiempoCooldown = new Map([
-            ['fist', 0.6], ['bate', 1], ['espada', 0.8],
-            ['pistola', 2], ['metralleta', 0.2], ['franco', 13],
+            ['fist', 0.6], ['bate', 1], ['espada', 0.6],
+            ['pistola', 0.5], ['metralleta', 0.2], ['franco', 13],
             ['muro', 8], ['mina', 12], ['c4', 15],
-            ['paralizador', 4], ['empuje', 0.4], ['varita', 20]
+            ['paralizador', 4], ['empuje', 0.6], ['varita', 20]
         ]);
         var damageArmas = new Map([
-            ['fist', 1], ['bate', 1], ['espada', 50],
-            ['pistola', 5], ['metralleta', 2], ['franco', 30],
+            ['fist', 2], ['bate', 5], ['espada', 6],
+            ['pistola', 5], ['metralleta', 3], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);
         var knockBackArmas = new Map([
-            ['fist', 500], ['bate', 500], ['espada', 500], ['empuje', 1000]
+            ['fist', 300], ['bate', 600], ['espada', 100], ['empuje', 1000]
         ])
 
 
@@ -340,7 +340,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     }
 
     reloadDisparosAmmo(){
-        this.disparosAmmo += 10;
+        this.disparosAmmo += 20;
         console.log(this.disparosAmmo);
     }
 

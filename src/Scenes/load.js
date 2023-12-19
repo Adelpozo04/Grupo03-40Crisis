@@ -59,6 +59,10 @@ export default class load extends Phaser.Scene{
         //Cargado de imagenes de UI de juego
         this.load.spritesheet('heart', './Assets/Sprites/UI/PlayGame/UI_Heart_SpriteSheet.png',{frameWidth: 64, frameHeight: 64});
         this.load.image('inventory', './Assets/Sprites/UI/PlayGame/inventory.png');
+        this.load.image('inventoryYellow', './Assets/Sprites/UI/PlayGame/inventoryYellow.png');
+        this.load.image('inventoryBlue', './Assets/Sprites/UI/PlayGame/inventoryBlue.png');
+        this.load.image('inventoryPurple', './Assets/Sprites/UI/PlayGame/inventoryPurple.png');
+        this.load.image('inventoryGreen', './Assets/Sprites/UI/PlayGame/inventoryGreen.png');
         this.load.image('slot', './Assets/Sprites/UI/PlayGame/slotSel.png');
 
         //Cargado del Selector de niveles
