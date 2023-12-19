@@ -77,6 +77,8 @@ export default class load extends Phaser.Scene{
         this.load.image('coche', './Assets/Sprites/Eventos/coche.png')
         this.load.image('wave','./Assets/Sprites/Eventos/wave.png')
         this.load.image('humo','./Assets/Sprites/Eventos/humo.png')
+        this.load.image('lavaRock', './Assets/Sprites/Eventos/lavaRock.png')
+        this.load.image('lava', './Assets/Sprites/Eventos/lava.png')
 
         //Cargado de musica de fondo
         this.load.audio('selectorMusic', ['./Assets/Audio/Music/SelectorNiveles.wav']);

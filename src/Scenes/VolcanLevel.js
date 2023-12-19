@@ -68,7 +68,7 @@ export default class VolcanLevel extends LevelBase{
         this.collisionLayer.setCollisionByExclusion([-1], true);
 
         //Creacion de entidades 
-        this.mike = new playerContenedor(this, 300, 300, 'mike', data, -2000, -2000, 200, 150);
+        this.mike = new playerContenedor(this, 700, 700, 'mike', data, -2000, -2000, 200, 150);
 
         this.camera = this.cameras.main.startFollow(this.mike);
 
@@ -140,7 +140,7 @@ export default class VolcanLevel extends LevelBase{
         this.spawnPotenciador();    
 
         // en segundos
-        let tiempoEntreEventos = 9
+        let tiempoEntreEventos = 5
         // llama a crear un evento cada x tiempo
         this.time.addEvent({
             delay: tiempoEntreEventos * 1000,
@@ -158,18 +158,23 @@ export default class VolcanLevel extends LevelBase{
     eventManager()
     {
         let choice = Phaser.Math.RND.between(0,1)
-
         if (choice == 0)
         {
-            
             let x = Phaser.Math.RND.between(300, 3000)
             let y = Phaser.Math.RND.between(300, 2250)
+            
             new EffectArea(this, x, y, 'humo', 15000, 0.25)
         }
         else if (choice == 1)
         {
-            let y = Phaser.Math.RND.between(300, 2250)
-            new DamageWave(this, 3000, y, 'roca', 0.15)
+            let x = Phaser.Math.RND.between(300, 3000)
+            var roca = new DamageWave(this, x, 0, 'lavaRock', 1)
+            this.tweens.add({
+                targets: roca,
+                angle: 360,
+                duration: 3000,
+                repeat: -1
+            });
         }
     }
 
