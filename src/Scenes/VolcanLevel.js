@@ -86,10 +86,15 @@ export default class VolcanLevel extends LevelBase{
         this.enemySpawner4 = new EnemigoSpawner(this, 3000, 1320, this.mike, this.grupoEnemigos);
 
 
+        //Creacion de la UI
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
 
         // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
         this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
         this.roundManager.startRound(); // Comienza la primera ronda
+        this.myUI.updateRounds(this.roundManager.currentRound);
         this.numberEnemiesCheckers();
 
         //Se indica que colliders chocan entre si
@@ -150,10 +155,7 @@ export default class VolcanLevel extends LevelBase{
             callbackScope: this
         });
 
-      //Creacion de la UI
-        this.myUI = new UIManager(this, 'UIManager', this.mike);
-
-        this.myUI.setScrollFactor(0);
+ 
     }
 
     eventManager()
@@ -219,6 +221,19 @@ export default class VolcanLevel extends LevelBase{
             delay: 10
         })
     }
+
+    reespawnearPotenciador()
+    {
+        if (!this.spawningPotenciador)
+        {
+            this.spawningPotenciador = true;
+            this.time.delayedCall(9000, () => {
+                this.spawnPotenciador();
+                this.spawningPotenciador = false;
+            })
+        }
+        
+    } 
 
     addAmmoToGroup(newAmmo){
         this.grupoMunicionBalas.add(newAmmo);
@@ -325,14 +340,10 @@ export default class VolcanLevel extends LevelBase{
 
 
     update(dt, t){
-        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
-        { 
-            this.spawningPotenciador = true;
-            this.time.delayedCall(5000, () => {
-                this.spawnPotenciador();
-                this.potenciadorSpawneado = true;
-            })
-        }
+
+
+
     }
+
 }
 
