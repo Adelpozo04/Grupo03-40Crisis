@@ -114,13 +114,15 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 
                 this.player.gainPersonalityExp(2);
         
-                var dropMunition = Phaser.Math.Between(1, this.maxDropProbability);
+                var dropMunition = Phaser.Math.Between(1, 100);
     
         
-                if(dropMunition == 1){
+                if(dropMunition > this.maxDropProbability){
                     this.spawnMunition();
                 }
-    
+
+                this.enemy.setOrigin(this.key == 'robot' ? 1.8 : 0.5, this.key == 'robot' ? 2.8 : 0.5)
+                this.setScale(2)
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -151,6 +153,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.alive = false;
                 this.body.setVelocity(0, 0);
     
+                
+                this.setScale(2)
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -372,5 +376,10 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     getCenterPoint(){
         return {x: this.x + 16, y: this.y + 16};
+    }
+
+    preUpdate()
+    {
+        this.enemy.setFlip(this.body.velocity.x < 0, false)
     }
 }

@@ -28,6 +28,9 @@ constructor(scene, key, player){
     this.ScoreLabel = this.scene.generateText(0, 650, 'Score: ', 32);
     this.ScoreLabel.setScrollFactor(0).setDepth(5);
 
+    this.RoundLabel = this.scene.generateText(500, 650, 'Round: ', 32);
+    this.RoundLabel.setScrollFactor(0).setDepth(5);
+
     this.AmmoLabel = this.scene.generateText(1000, 575, 'Ammo: ', 24);
     this.AmmoLabel.setScrollFactor(0).setDepth(5);
 
@@ -55,6 +58,21 @@ gainPoints(points){
         yoyo: true, // Hace que la animación se repita en sentido inverso
         repeat: 0 // Repite infinitamente
     });
+}
+
+updateRounds(currentRound) {
+    //console.log(this.roundManager.currentRound);
+    this.RoundLabel.text = 'Round: ' +  currentRound;
+    currentRound++;
+    this.scene.tweens.add({
+        targets: this.RoundLabel,
+        scale: 1.5,
+        duration: 500,
+        ease: 'Sine.easeInOut',
+        yoyo: true, // Hace que la animación se repita en sentido inverso
+        repeat: 0 // Repite infinitamente
+    });
+
 }
 
 preUpdate(t, dt){

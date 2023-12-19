@@ -10,7 +10,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.currentPage = 0;
         this.hatID = 0;
-        this.experienciaMaxima = 100;
+        this.experienciaMaxima = 7000;
         this.hatUnlocked = [];
         for(var i = 0; i < 21; ++i){
             this.hatUnlocked[i] = false;
@@ -20,16 +20,13 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        if (data.datos ==! null) this.globalPoints[data.level] += data.datos;
+        if (data.datos !== null) this.globalPoints[data.level] += data.datos;
         this.globalPoints[this.currentPage]++;
         this.globalPoints[this.currentPage]--;
         console.log(this.globalPoints[this.currentPage]);
     }
 
     preload(){
-
-        console.log(this.xpGained);
-
         this.load.image('bestiaryButton', './Assets/Sprites/UI/Bestiary/button.png');
 
         console.log(this.globalPoints);
@@ -78,7 +75,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.recompensas();
 
-        console.log(this.hatUnlocked[this.hatID]);
+        console.log(this.hatUnlocked[0]);
         console.log(this.hatID);
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
@@ -141,6 +138,15 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina nueva
         let fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
+        
+        this.recompensas();
+
+        if(this.hatUnlocked[this.hatID]){
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
+        else{
+            this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        }
 
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
@@ -193,15 +199,9 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[1] = 0; // Playa
         this.globalPoints[2] = 0; // Volcan
 
-        
 		this.globalPoints[0] = window.localStorage.getItem('ciudadpoints');
         this.globalPoints[1] = window.localStorage.getItem('playapoints');
         this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
-
-        // Evento para poder subir experiencia segun el nivel jugado
-        /*this.registry.events.on('cambiarXP', (nivel) => {
-            this.ganarExperiencia(nivel);
-        });*/
     }
 
     getUnlocked(){
@@ -209,7 +209,7 @@ export default class SelectorNivel extends Phaser.Scene {
             console.log(window.localStorage.getItem('sombrero' + i));
             this.hatUnlocked[i] = window.localStorage.getItem('sombrero' + i);
             if (this.hatUnlocked[i] == "true") this.hatUnlocked[i] = true;
-            else if(this.hatUnlocked[i] == "false") this.hatUnlocked[i] = false;
+            else if(this.hatUnlocked[i] == "false" || this.hatUnlocked[i] == null) this.hatUnlocked[i] = false;
             console.log(this.hatUnlocked[i]);
         }
     }
@@ -324,16 +324,6 @@ export default class SelectorNivel extends Phaser.Scene {
         });
         */
     }
-
-    ganarExperiencia(nivel) {
-        console.log(this.xpGained);
-        if(this.globalPoints[this.currentPage] < this.experienciaMaxima) {
-            this.globalPoints[nivel] += this.xpGained; // Ganar 10 puntos de experiencia (puedes ajustar esto)
-        }
-
-        // Actualizar la barra de progreso
-        this.actualizarBarraDeProgreso();     
-    }
     
     actualizarBarraDeProgreso() {
         // Limpiar la barra de progreso
@@ -354,14 +344,13 @@ export default class SelectorNivel extends Phaser.Scene {
     recompensas(){
         console.log(this.globalPoints[this.currentPage]);
         // Verificar si se alcanzó la experiencia máxima
-        if (this.globalPoints[this.currentPage] >= this.experienciaMaxima) {
-            this.hatUnlocked[2] = true;
-        }
-        else if (this.globalPoints[this.currentPage] >= (this.experienciaMaxima * 2) / 3){
-            this.hatUnlocked[1] = true;
-        }
-        else if (this.globalPoints[this.currentPage] >= (this.experienciaMaxima / 3)){
-            this.hatUnlocked[0] = true;
+        for (var i = 1; i <= 3; ++i) {
+            var experienciaUmbral = this.experienciaMaxima;
+            for (var k = 6 * i + i - 1; k >= ((i - 1) * 7); --k) {
+                if (this.globalPoints[i - 1] * i >= (experienciaUmbral * (k + 1)) / 7) {
+                    this.hatUnlocked[k % (7 * i)] = true;
+                }
+            }
         }
     }
 }
