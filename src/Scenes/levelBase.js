@@ -23,7 +23,7 @@ export default class Level extends Phaser.Scene{
             ['zombie', 75], ['skeleton', 160], ['burger', 50], ['lutano', 85], ['caracol', 15], ['robot', 75], ['mono', 135]
         ]);
         this.damageEnemigos = new Map([
-            ['zombie', 1], ['skeleton', 4], ['burger', 50], ['lutano', 2], ['caracol', 9999], ['robot', 20], ['mono', 0]
+            ['zombie', 1], ['skeleton', 4], ['burger', 35], ['lutano', 2], ['caracol', 9999], ['robot', 10], ['mono', 0]
         ]);
         this.attackDistEnemigos = new Map([
             ['zombie', 30], ['skeleton', 30], ['burger', 30], ['lutano', 30], ['caracol', 10], ['robot', 300], ['mono', 0]
