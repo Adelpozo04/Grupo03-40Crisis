@@ -21,8 +21,8 @@ export default class CiudadLevel extends LevelBase{
         //this.hatID = hatID; 
         this.points = 0;
         this.roundManager = null;
-        this.isGamePaused = false; // Variable para controlar el estado de pausa
-        this.escapePressed = false; // Variable para controlar si la tecla Esc está presionada
+        this.isGamePaused = false; // Estado de pausa
+        this.escapeKey = null; // Variable para la tecla ESC
     }
     
     init(data){
@@ -74,6 +74,11 @@ export default class CiudadLevel extends LevelBase{
 
         this.camera = this.cameras.main.startFollow(this.mike);
 
+        //Creacion de la UI
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+
         //Se ajusta el tamaño del mapa
         this.collisionLayer.setScale(1.35, 1.35);
         this.groundLayer.setScale(1.35, 1.35);
@@ -91,13 +96,15 @@ export default class CiudadLevel extends LevelBase{
         // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
         this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
         this.roundManager.startRound(); // Comienza la primera ronda
+        this.myUI.updateRounds(this.roundManager.currentRound);
         this.numberEnemiesCheckers();
 
-        // Configurar la tecla de escape para pausar el juego
-        //this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        //this.escapeKey.on('down', this.togglePause, this);
+     
 
        // this.Pause();
+
+        // Se agrega la tecla 'ESC' al evento de entrada del teclado
+        //this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
       
 
         //Se indica que colliders chocan entre si
@@ -158,10 +165,7 @@ export default class CiudadLevel extends LevelBase{
             callbackScope: this
         });
 
-      //Creacion de la UI
-        this.myUI = new UIManager(this, 'UIManager', this.mike);
 
-        this.myUI.setScrollFactor(0);
     }
 
 
@@ -186,17 +190,14 @@ export default class CiudadLevel extends LevelBase{
     }
 
     togglePause() {
-        if (this.isGamePaused) 
-        {
+        if (this.isGamePaused) {
             this.isGamePaused = false;
             this.scene.resume('CiudadLevel');
-        } else 
-        {
+        } else {
             this.isGamePaused = true;
             this.scene.pause();
         }
     }
-
     pauseGame() {
         if (!this.isGamePaused) {
             console.log('pause');
@@ -333,7 +334,7 @@ export default class CiudadLevel extends LevelBase{
 
              this.time.delayedCall(5000, () => {
                 console.log("paso de ronda");
-
+                this.myUI.updateRounds(this.roundManager.currentRound);
                 this.roundManager.startRound(); // Comienza la siguiente ronda
 
              })
@@ -357,15 +358,13 @@ export default class CiudadLevel extends LevelBase{
 
     
 
-    preupdate() {
+   /* preUpdate(time, delta) {
         this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         // Verificar si la tecla Esc está presionada
-        if ( this.escapeKey.on('down', this.togglePause, this)) {
-            console.log("funciona");
-               this.togglePause();
-           }
-    }
+         this.escapeKey.on('down', this.togglePause(), this);
+        
+    } */
 
     update(dt, t){
         if(!this.potenciadorSpawneado && !this.spawningPotenciador)
@@ -376,6 +375,18 @@ export default class CiudadLevel extends LevelBase{
                 this.potenciadorSpawneado = true;
             })
         }
+
+        /*if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            if (!this.isGamePaused) {
+                this.isGamePaused = true;
+                this.scene.launch('Pausa'); // Lanza la escena de pausa
+                this.scene.pause();
+            } else {
+                this.isGamePaused = false;
+                this.scene.resume();
+            }
+        } */
+    
 
     }
 
