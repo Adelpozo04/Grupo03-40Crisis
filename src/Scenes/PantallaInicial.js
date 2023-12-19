@@ -13,13 +13,6 @@ export default class PantallaInicial extends Phaser.Scene{
     preload(){
         this.load.image('PlayaFondo', './Assets/Sprites/UI/PantallaInicial/FondoPlaya.png');
         console.log();
-        window.addEventListener("beforeunload", event => {
-            console.log("lo hiso");
-		});
-
-		addEventListener("load", event => {
-            console.log("lo hiso");
-		});
     }
 
     loadFont(name, url) {

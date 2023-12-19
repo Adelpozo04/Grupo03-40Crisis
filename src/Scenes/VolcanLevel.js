@@ -18,7 +18,6 @@ export default class VolcanLevel extends LevelBase{
         this.potenciadorSpawneado = false;
         this.spawningPotenciador = false;
         //this.hatID = hatID; 
-        this.points = 0;
         this.roundManager = null;
     }
     
@@ -40,6 +39,8 @@ export default class VolcanLevel extends LevelBase{
     create(data){
 
         super.create();
+        
+        this.points = 0;
 
         this.backgroundMusic = this.sound.add('volcanMusic', {loop: true});
 
@@ -332,13 +333,17 @@ export default class VolcanLevel extends LevelBase{
         this.roundManager.enemiesDefeated++;
     };
 
-    
+    die(){
+        console.log(this.points);
+        this.scene.start('gameOver', {datos: this.points, level: 0});
+    }
 
 
     update(dt, t){
 
 
-  
-   }
+
+    }
+
 }
 

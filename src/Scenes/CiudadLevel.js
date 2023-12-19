@@ -18,14 +18,13 @@ export default class CiudadLevel extends LevelBase{
         super('CiudadLevel'); 
         this.spawningPotenciador = false;
         //this.hatID = hatID; 
-        this.points = 0;
         this.roundManager = null;
         this.isGamePaused = false; // Estado de pausa
         this.escapeKey = null; // Variable para la tecla ESC
     }
     
     init(data){
-        
+        console.log(data);
     }
     
     preload(){
@@ -41,6 +40,9 @@ export default class CiudadLevel extends LevelBase{
     
     create(data){
         super.create();
+        
+        this.points = 0;
+        console.log(this.points);
 
 
         //Cargado de la musica
@@ -300,14 +302,7 @@ export default class CiudadLevel extends LevelBase{
 
     die(){
         console.log(this.points);
-        /*
-        this.scene.resume('SelectorNivel', {data: this.points});
-        this.registry.events.emit('cambiarXP', 0);
-        this.scene.stop(this.scene.key);
-        */
-
         this.scene.start('gameOver', {datos: this.points, level: 0});
-
     }
 
     numberEnemiesCheckers() {
