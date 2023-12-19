@@ -39,7 +39,11 @@ export default class RoundManager extends Phaser.GameObjects.Container {
             this.scene.enemySpawners(this.enemiesPerRound + this.increasePerRound * this.currentRound);
         }
 
+          // Aumenta la ronda actual
         this.currentRound++;
+    
+         // Actualiza el número de ronda en UIManager
+        this.scene.myUI.updateRounds(this.currentRound);
     
        
     }

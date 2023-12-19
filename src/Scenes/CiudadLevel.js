@@ -20,6 +20,8 @@ export default class CiudadLevel extends LevelBase{
         //this.hatID = hatID; 
         this.points = 0;
         this.roundManager = null;
+        this.isGamePaused = false; // Estado de pausa
+        this.escapeKey = null; // Variable para la tecla ESC
     }
     
     init(data){
@@ -73,6 +75,11 @@ export default class CiudadLevel extends LevelBase{
 
         this.camera = this.cameras.main.startFollow(this.mike);
 
+        //Creacion de la UI
+        this.myUI = new UIManager(this, 'UIManager', this.mike);
+
+        this.myUI.setScrollFactor(0);
+
         //Se ajusta el tamaño del mapa
         this.collisionLayer.setScale(1.35, 1.35);
         this.groundLayer.setScale(1.35, 1.35);
@@ -90,7 +97,16 @@ export default class CiudadLevel extends LevelBase{
         // Inicializa el RoundManager con los spawners y la cantidad inicial de enemigos por ronda
         this.roundManager = new RoundManager(this, [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4], 5);
         this.roundManager.startRound(); // Comienza la primera ronda
+        this.myUI.updateRounds(this.roundManager.currentRound);
         this.numberEnemiesCheckers();
+
+     
+
+       // this.Pause();
+
+        // Se agrega la tecla 'ESC' al evento de entrada del teclado
+        //this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+      
 
         //Se indica que colliders chocan entre si
         this.physics.add.collider(this.mike, this.collisionLayer);
@@ -150,11 +166,11 @@ export default class CiudadLevel extends LevelBase{
             callbackScope: this
         });
 
-      //Creacion de la UI
-        this.myUI = new UIManager(this, 'UIManager', this.mike);
 
-        this.myUI.setScrollFactor(0);
     }
+
+
+   
 
     eventManager()
     {
@@ -171,6 +187,31 @@ export default class CiudadLevel extends LevelBase{
         {
             let y = Phaser.Math.RND.between(300, 2250)
             new DamageWave(this, 3000, y, 'coche', 0.15)
+        }
+    }
+
+    togglePause() {
+        if (this.isGamePaused) {
+            this.isGamePaused = false;
+            this.scene.resume('CiudadLevel');
+        } else {
+            this.isGamePaused = true;
+            this.scene.pause();
+        }
+    }
+    pauseGame() {
+        if (!this.isGamePaused) {
+            console.log('pause');
+            
+           
+        }
+    }
+
+    resumeGame() {
+        if (this.isGamePaused) {
+            console.log('hols');
+           
+           
         }
     }
 
@@ -307,7 +348,7 @@ export default class CiudadLevel extends LevelBase{
 
              this.time.delayedCall(5000, () => {
                 console.log("paso de ronda");
-
+                
                 this.roundManager.startRound(); // Comienza la siguiente ronda
 
              })
@@ -331,9 +372,56 @@ export default class CiudadLevel extends LevelBase{
 
     
 
+   /* preUpdate(time, delta) {
+        this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        // Verificar si la tecla Esc está presionada
+         this.escapeKey.on('down', this.togglePause(), this);
+        
+    } */
 
     update(dt, t){
 
-   }
+
+        /*if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            if (!this.isGamePaused) {
+                this.isGamePaused = true;
+                this.scene.launch('Pausa'); // Lanza la escena de pausa
+                this.scene.pause();
+            } else {
+                this.isGamePaused = false;
+                this.scene.resume();
+            }
+        } */
+    
+
+    }
+
+
+    Pause() {
+        const checkPause = () => {
+
+            this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+            // Verificar si la tecla Esc está presionada
+            if ( this.escapeKey.on('down', this.togglePause, this)) {
+                console.log("funciona");
+                   this.togglePause();
+               }
+           
+       }
+        // Establece un evento que verifique si se ha completado la ronda cada cierto intervalo
+            this.time.addEvent({
+           delay: 1000, 
+           loop: true,
+           callback: checkPause,
+           callbackScope: this
+           });
+   
+       // this.escapeKey.on('down', this.togglePause, this);
+     
+      
+    }
+
 }
 
