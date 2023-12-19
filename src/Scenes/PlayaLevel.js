@@ -161,11 +161,9 @@ export default class PlayaLevel extends LevelBase{
 
     eventManager()
     {
-        let choice = Phaser.Math.RND.between(0,1)
-
         let y = Phaser.Math.RND.between(300, 2250)
         var wave = new DamageWave(this, 3000, y, 'wave', 1)
-        wave.sprite.flipX(true);
+        wave.setFlip(true, false);
     }
 
     getPotenciador()

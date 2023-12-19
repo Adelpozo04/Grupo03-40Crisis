@@ -247,7 +247,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.invulnerable = false;
                 });
                 break;
-            case 'bocaIncendios':
+            case 'humo':
                 if (!this.underSpeedEffect)
                 {
                     this.underSpeedEffect = true;
@@ -264,6 +264,16 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 {
                     this.canGetHitByWave = false;
                     this.recieveDamageNotGetPoints(5)
+                    this.scene.time.delayedCall(300, () => {
+                        this.canGetHitByWave = true;
+                    });
+                }
+                break;
+            case 'lavaRock':
+                if (this.canGetHitByWave)
+                {
+                    this.canGetHitByWave = false;
+                    this.recieveDamageNotGetPoints(1)
                     this.scene.time.delayedCall(300, () => {
                         this.canGetHitByWave = true;
                     });
