@@ -223,9 +223,19 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 280;
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(6000, () => {
                         this.speed = this.aux // Reducir la velocidad de nuevo después de 3 segundos
                         this.underSpeedEffect = false;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -235,16 +245,36 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 0;
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(5000, () => {
                         this.speed = this.aux;
                         this.underSpeedEffect = false;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
             case 'invencible':
                 this.invulnerable = true;
+                this.tweenPotenciador = this.scene.tweens.add({
+                    targets: this.enemy,
+                    alpha: 0,
+                    duration: 340,
+                    ease: 'Sine.easeInOut',
+                    yoyo: true,
+                    repeat: -1
+                });
                 this.scene.time.delayedCall(5000, () => {
                     this.invulnerable = false;
+                    this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                 });
                 break;
             case 'humo':
@@ -253,9 +283,19 @@ export default class enemigo extends Phaser.GameObjects.Container {
                     this.underSpeedEffect = true;
                     this.aux = this.speed;
                     this.speed = 40
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(2000, () => {
                         this.speed = this.aux 
                         this.underSpeedEffect = false;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -264,8 +304,18 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 {
                     this.canGetHitByWave = false;
                     this.recieveDamageNotGetPoints(5)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(300, () => {
                         this.canGetHitByWave = true;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;
@@ -274,8 +324,18 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 {
                     this.canGetHitByWave = false;
                     this.recieveDamageNotGetPoints(1)
+                    this.tweenPotenciador = this.scene.tweens.add({
+                        targets: this.enemy,
+                        alpha: 0,
+                        duration: 340,
+                        ease: 'Sine.easeInOut',
+                        yoyo: true,
+                        repeat: -1
+                    });
                     this.scene.time.delayedCall(300, () => {
                         this.canGetHitByWave = true;
+                        this.enemy.alpha = 1;
+                        this.scene.tweens.remove(this.tweenPotenciador)
                     });
                 }
                 break;

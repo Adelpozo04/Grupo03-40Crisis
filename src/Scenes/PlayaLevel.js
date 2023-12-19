@@ -182,10 +182,10 @@ export default class PlayaLevel extends LevelBase{
         let aux = Phaser.Math.RND.between(0, 3);
         let potenciadorType = Object.values(potenciadorTypes)[aux];
         const spawnPoints = [
-            { x: 600, y: 600 },
-            { x: 600, y: 700 },
-            { x: 700, y: 600 },
-            { x: 700, y: 700 },
+            { x: 660, y: 1010 },
+            { x: 1857, y: 1661 },
+            { x: 2181, y: 679 },
+            { x: 2630, y: 1705 },
             //Añadir luego las coordenadas correctas
         ];
         
