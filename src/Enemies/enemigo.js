@@ -230,8 +230,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.destroy();
     }
 
+    // empuja modificando la velocidad y prohibiendo moverse para hacer knockback
     // tienes que pasarle un Phaser.Math.Vector2D normalizado
-    // 600 = al que estaba antes
     knockBack(direction, knockBackSpeed)
     {
         direction.normalize();
@@ -243,6 +243,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }
     
+    // spawnea munición
     spawnMunition(){
     
         this.ammo = new municionBalas(this.scene, this.body.x + this.posXCentered, this.body.y + this.posYCentered, 'bulletAmmo');
@@ -250,6 +251,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.scene.add.existing(this.ammo);
     }
     
+    // aplicar efecto de potenciador y tween de parpadeo
     applyEffect(keyPotenciador){
         switch (keyPotenciador) {
             case 'botiquin':
@@ -391,6 +393,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     update()
     {
-        this.enemy.setFlip(this.body.velocity.x <= 0, false)
+        this.enemy.setFlip(this.x > this.objetive.x, false)
     }
 }
