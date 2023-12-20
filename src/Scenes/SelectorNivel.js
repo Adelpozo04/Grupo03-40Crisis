@@ -20,9 +20,11 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        data.datos++;
-        data.datos--;
+        parseInt(data.datos, 10);
+        parseInt(data.level, 10);
+        console.log(data.datos);
         if (data.datos !== null) this.globalPoints[data.level] += data.datos; // Lee los puntos y el nivel del q vienes del gameover
+        console.log(this.globalPoints[0]);
     }
 
     preload(){
@@ -159,8 +161,8 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[2] = 0; // Volcan
 
 		if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[0] = window.localStorage.getItem('ciudadpoints');
-        if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[1] = window.localStorage.getItem('playapoints');
-        if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
+        if(window.localStorage.getItem('playapoints') != null) this.globalPoints[1] = window.localStorage.getItem('playapoints');
+        if(window.localStorage.getItem('volcanpoints') != null) this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
     }
 
     getUnlocked(){
