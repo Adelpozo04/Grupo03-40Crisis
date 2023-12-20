@@ -205,6 +205,12 @@ export default class load extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('deathEnemy', {start: 0, end: 6}),
             frameRate: 10
         })
+        this.anims.create({
+            key: 'explosionAnimation',
+            frames: this.anims.generateFrameNumbers('explosion', {start:0, end:7}),
+            frameRate: 5,
+            repeat: 0
+        })
     }
 
     create()

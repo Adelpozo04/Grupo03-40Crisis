@@ -12,8 +12,6 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.scene.addExplosiveToGroup(this);
 
-        this.scene = scene;
-
         this.setScale(1.5, 1.5);
 
         //Fisicas
@@ -23,29 +21,22 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         this.body.setSize(5, 5);
 
         //Inicializacion de variables
-
-        this.x = x;
-
-        this.y = y;
-
-        this.tipo = nTipo;
-        
+  
+        //duracion del overlap de la explosion
         this.explotionDuration = 2;
 
+        //booleano que detecta si ya has implosionado una vez para destruirse pasado el elapsed
+        //evitando asi que se destruya antes de entrar en contacto
         this.exploting = false;
 
         this.damage = 20;
 
+        //area del overlap que genera la explosion
         this.explosiveArea = 100;
 
         this.elapsedTime = 0;
 
-        this.scene.anims.create({
-            key: 'explosionAnimation',
-            frames: this.anims.generateFrameNumbers('explosion', {start:0, end:7}),
-            frameRate: 5,
-            repeat: 0
-        })
+        //de nuevo timer para calcular delta time
 
         this.event = this.scene.time.addEvent({
         delay: 1000,
@@ -56,6 +47,13 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         })
 
         this.effectExplotion = this.scene.sound.add('explosionEffect', {loop: false, volume: 0.3});
+
+        this.scene.physics.add.collider(this, this.scene.grupoEnemigos, function(explosive, enemy){
+
+            this.effectExplotion.play();
+            explosive.detonar();
+
+        }, null, this);
 
     }
 
@@ -72,6 +70,8 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
     }
 
+    //metodo que detona el explosivo creando una zona que le hace un daño especifico a los enemigos
+    //esta implementado para que todas las explosiones hagan el mismo daño
     detonar(){
         this.body.destroy();
 
@@ -93,13 +93,6 @@ export default class explosive extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-        console.log("NASHE" + this.scene.grupoEnemigos.children.size)
-        this.scene.physics.add.collider(this, this.scene.grupoEnemigos, function(explosive, enemy){
-
-            this.effectExplotion.play();
-            explosive.detonar();
-
-        }, null, this);
 
         if(this.elapsedTime >= this.explotionDuration && this.exploting == true){
             this.destroyMyself();
