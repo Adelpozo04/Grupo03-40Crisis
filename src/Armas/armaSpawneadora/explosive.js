@@ -48,6 +48,7 @@ export default class explosive extends Phaser.GameObjects.Sprite{
 
         this.effectExplotion = this.scene.sound.add('explosionEffect', {loop: false, volume: 0.3});
 
+        //colision entyre los enemigos y la mina para que se detone
         this.scene.physics.add.collider(this, this.scene.grupoEnemigos, function(explosive, enemy){
 
             this.effectExplotion.play();
@@ -78,10 +79,13 @@ export default class explosive extends Phaser.GameObjects.Sprite{
         this.exploting = true;
 
         this.play('explosionAnimation');
+
+        //creacion de la zona
         this.zone = this.scene.add.zone(this.x, this.y, this.explosiveArea, this.explosiveArea);
         this.scene.physics.world.enable(this.zone);
         this.zone.body.setCircle(this.explosiveArea / 2);
 
+        //añadir collider a la zona
         this.scene.physics.add.overlap(this.zone, this.scene.grupoEnemigos, function(zone, enemy){
 
             enemy.receiveDamage(10);
