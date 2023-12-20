@@ -63,6 +63,7 @@ draw(){
 
 preUpdate(t, dt){
 
+    //accede a la vida del jugador en todo momento para actualizarla
     this.value = this.player.getLife();
 
     this.draw();

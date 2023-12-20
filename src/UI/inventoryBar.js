@@ -6,10 +6,13 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
         this.x = x
         this.y = y
 
+        //creacion de la barra de slots
         this.Bar = this.scene.add.sprite(x, y, 'inventoryYellow').setScrollFactor(0).setDepth(5);
 
+        //slot amarillo que marca lo seleccionado
         this.slotSel = this.scene.add.sprite(x - 54, y, 'slot').setScrollFactor(0).setDepth(5);
 
+        //iconos de los slots
         this.Icon1 = this.scene.add.sprite(x - 64, y, 'fist').setScrollFactor(0).setAngle(-45).setDepth(5);
 
         this.Icon2 = this.scene.add.sprite(x, y, 'bate').setScrollFactor(0).setAngle(-45).setDepth(5);
@@ -30,6 +33,7 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
 
     changeIcons(currentPersonality){
         
+        //dada una personalidad cambia los iconos y el color de la barra de slots
         if(currentPersonality == 0){
             this.Bar.setTexture('inventoryPurple');
             this.Icon1.setTexture('muro');
@@ -57,6 +61,7 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
 
     }
 
+    //cambia el slot amarillo de sitio segun la arma escogida
     changeSelection(currentWeapon){
 
         if(currentWeapon == 0){
@@ -71,6 +76,7 @@ export default class inventoryBar extends Phaser.GameObjects.Container{
 
     }
 
+    //Pilla el cooldown actual y lo compara con el total para cambiar la transparencia del slot seleccionado
     preUpdate(t, dt){
 
         this.slotSel.alpha = 1 - (this.player.getWeapon().getCurrentCooldown() * 1) / this.player.getWeapon().getCooldownTime();

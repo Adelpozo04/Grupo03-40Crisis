@@ -29,6 +29,7 @@ constructor(scene, x, y, key, player, config){
         callbackScope: this
     });
 
+    //pone un velocity random al ser creado por primera vez
     Phaser.Math.RandomXY(this.body.velocity, this.speed);
     this.enemy.play('walk' + this.key, true);
 }
@@ -36,6 +37,7 @@ constructor(scene, x, y, key, player, config){
 // cambiamos la dirección, si hay spawner vamos a por el, sino dirección random
 changeDirection(){
 
+    //si detecta que un potenciador se ha spawneado se dirige a por el, en caso contrario se mueve a otra direccion random
     if(this.scene.potenciadorSpawneado)
     {
         let direction = new Phaser.Math.Vector2(this.scene.potenciador.x - this.x, this.scene.potenciador.y - this.y)
