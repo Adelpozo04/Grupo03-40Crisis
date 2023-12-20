@@ -161,7 +161,7 @@ export default class CiudadLevel extends LevelBase{
 
     }
 
-
+    //Event manager (coches y nubes)
     eventManager()
     {
         let choice = Phaser.Math.RND.between(0,1)
@@ -186,6 +186,7 @@ export default class CiudadLevel extends LevelBase{
         return this.potenciador;
     }
 
+    //Generar potenciador random en uno de los generadores que hay
     spawnPotenciador() {
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
@@ -221,6 +222,8 @@ export default class CiudadLevel extends LevelBase{
             delay: 10
         })
     }
+
+    //Metodo para reespawner potenciador
     reespawnearPotenciador()
     {
         if (!this.spawningPotenciador)
@@ -259,16 +262,18 @@ export default class CiudadLevel extends LevelBase{
         return this.grupoEnemigos;
     }
     
+     //Cambiar el inventario (persoanlidad)
     changeInventory(currentPersonality){
         this.myUI.changeInventory(currentPersonality);
         this.myUI.changeInventorySelect(0);
     }
 
+    //Cambiar seleccion de arma
     changeInvenSelection(currentWea){
         this.myUI.changeInventorySelect(currentWea);
     }
 
-
+    //genera los enemigos de cada spawner que haya en el mapa, pasandole el numero de enmigos que genera cada spawn
     enemySpawners(enemyNumbers) {
         const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
 
@@ -285,6 +290,8 @@ export default class CiudadLevel extends LevelBase{
         });
     };
 
+
+    //Game Over
     die(){
         this.backgroundMusic.destroy();
         this.scene.start('gameOver', {datos: this.points, level: 0});
@@ -294,7 +301,7 @@ export default class CiudadLevel extends LevelBase{
         this.roundManager.enemiesLeft--;
 
 
-         // Verifica si se eliminaron todos los enemigos
+         // Verifica si la ronda ha terminado
          const checkRoundEnd = () => {
             
             console.log(this.roundManager.totalEnemiesLeft);

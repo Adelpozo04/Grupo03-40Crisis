@@ -154,6 +154,8 @@ export default class VolcanLevel extends LevelBase{
  
     }
 
+
+    //Event manager (rocas y nube)
     eventManager()
     {
         let choice = Phaser.Math.RND.between(0,1)
@@ -327,6 +329,7 @@ export default class VolcanLevel extends LevelBase{
     };
 
 
+    //Game Over
     die(){
         this.backgroundMusic.destroy();
         console.log(this.points);

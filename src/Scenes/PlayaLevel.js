@@ -158,6 +158,7 @@ export default class PlayaLevel extends LevelBase{
  
     }
 
+    //Event manager (olas)
     eventManager()
     {
         let y = Phaser.Math.RND.between(300, 2250)
@@ -316,6 +317,7 @@ export default class PlayaLevel extends LevelBase{
         this.roundManager.enemiesDefeated++;
     };
 
+    //Game Over
     die(){
         this.backgroundMusic.destroy();
         this.scene.start('gameOver', {datos: this.points, level: 0});
