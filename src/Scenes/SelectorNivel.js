@@ -22,11 +22,10 @@ export default class SelectorNivel extends Phaser.Scene {
     init(data){
         let number = 3;
         console.log(number + data.datos);
-        parseInt(data.datos, 10);
-        parseInt(data.level, 10);
-        number = data.datos;
+
+        number = Number(data.datos);
         console.log(data.datos);
-        if (data.datos !== null && data.datos != 0) this.globalPoints[data.level] += number; // Lee los puntos y el nivel del q vienes del gameover
+        if (data.datos !== null && data.datos != 0) this.globalPoints[data.level] += Number(number); // Lee los puntos y el nivel del q vienes del gameover
         console.log(this.globalPoints[0]);
     }
 
@@ -163,9 +162,9 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[1] = 0; // Playa
         this.globalPoints[2] = 0; // Volcan
 
-		if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[0] = window.localStorage.getItem('ciudadpoints');
-        if(window.localStorage.getItem('playapoints') != null) this.globalPoints[1] = window.localStorage.getItem('playapoints');
-        if(window.localStorage.getItem('volcanpoints') != null) this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
+		if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[0] = Number(window.localStorage.getItem('ciudadpoints'));
+        if(window.localStorage.getItem('playapoints') != null) this.globalPoints[1] = Number(window.localStorage.getItem('playapoints'));
+        if(window.localStorage.getItem('volcanpoints') != null) this.globalPoints[2] = Number(window.localStorage.getItem('volcanpoints'));
 
         console.log(window.localStorage.getItem('ciudadpoints'), window.localStorage.getItem('playapoints'), window.localStorage.getItem('volcanpoints'));
     }
@@ -204,6 +203,7 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     setExperience(){
+
         window.localStorage.setItem('ciudadpoints', this.globalPoints[0]); // Guardado de puntos
         window.localStorage.setItem('playapoints', this.globalPoints[1]);
         window.localStorage.setItem('volcanpoints', this.globalPoints[2]);  
