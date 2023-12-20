@@ -12,11 +12,10 @@ export default class paralizador extends Phaser.GameObjects.Sprite{
 
         this.body.setSize(8, 8);
 
-        this.atractionArea = 75;
 
         this.player = player
 
-
+        //hace un overlap con su body para que el primer enemigo que lo pise se le aplique el efecto de vivu
         this.overlapObject = this.scene.physics.add.overlap(this.scene.grupoEnemigos, this, function(enemy, zone){
             enemy.applyEffect('vivu');
             this.scene.physics.world.disable(this);

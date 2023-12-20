@@ -28,8 +28,10 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
         this.grupoEnemigos = this.scene.grupoEnemigos;
 
+        //evita que te salga una ventanita al dar click derecho
         this.scene.input.mouse.disableContextMenu();
 
+        //funcion que se llama al hacer un click y, en caso de ser derecho manda a detonar la bomba respectiva,
         let callback = (pointer) =>
         {
             if(pointer.rightButtonDown()){
@@ -37,15 +39,10 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
                 this.scene.input.off('pointerdown', callback, this)
             }
         }
+
         this.scene.input.on('pointerdown', callback, this);
 
-        this.scene.anims.create({
-            key: 'explosionAnimation',
-            frames: this.anims.generateFrameNumbers('explosion', {start:0, end:7}),
-            frameRate: 5,
-            repeat: 0
-        })
-
+        //calculo del elapsed time mediante un timer
         this.event = this.scene.time.addEvent({
         delay: 1000,
         callback: this.calculateElapsedTime,
@@ -71,6 +68,7 @@ export default class remoteExplosive extends Phaser.GameObjects.Sprite{
 
     }
 
+    //misma logica de detonacion que la mina, solo cambia la activacion
     detonar(){
 
         this.scene.input.clear(this);
