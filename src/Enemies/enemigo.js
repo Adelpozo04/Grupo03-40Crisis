@@ -117,7 +117,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 var dropMunition = Phaser.Math.Between(1, 100);
     
         
-                if(dropMunition > this.maxDropProbability){
+                if(dropMunition < this.maxDropProbability){
                     this.spawnMunition();
                 }
 

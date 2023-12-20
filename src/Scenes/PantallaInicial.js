@@ -32,7 +32,7 @@ export default class PantallaInicial extends Phaser.Scene{
 	}
 
     create(){
-       
+        // Imagenes de fondo
         var backgroundImage = Phaser.Math.Between(1, 3);
 
         if(backgroundImage == 1){
@@ -45,6 +45,7 @@ export default class PantallaInicial extends Phaser.Scene{
             this.add.image(0, 0, 'VolcanFondo').setScale(1, 1).setOrigin(0, 0)
         }
         
+        // Textos
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
         
@@ -55,14 +56,13 @@ export default class PantallaInicial extends Phaser.Scene{
     }
 
     continueCreate() {
-
         this.titleLabel = this.generateText(this.cameras.main.centerX, 250, '40 CRISIS', 90);
-        this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'PLAY', 50);
+        this.playLabel = this.generateText(this.cameras.main.centerX, 600, 'PLAY', 50); // Boton de inicio
         this.playLabel.setInteractive();
         this.playLabel.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })
-
 	}
 
+    // Metodo para crear el texto
     /**
      * genera y añade
      * @param {number} x 
@@ -100,9 +100,8 @@ export default class PantallaInicial extends Phaser.Scene{
     }
     
     update(t, dt){
-        
         if(this.textCreated){
-            //efecto multicolor
+            // Efecto multicolor del texto
             const top = this.hsv[this.letterColor].color;
             const bottom = this.hsv[359 - this.letterColor].color;
             this.playLabel.setTint(top, top, bottom, bottom);

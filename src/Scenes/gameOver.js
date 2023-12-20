@@ -36,31 +36,32 @@ export default class gameOver extends Phaser.Scene{
 	}
 
     create(){
+        // Imagenes de fondo
         this.add.image(0, 0, 'GameOverFondo').setScale(0.5, 0.5).setOrigin(0, 0)
+
+        // Texto Game Over, Score y Return (continueCreate)
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.loadFont("TitleFont", "./Assets/Fonts/RUBBBB__.TTF");
 
+        // Musica
         this.backgroundMusic = this.sound.add('gameOverMusic', {loop: true, volume: 0.2});
-
         this.backgroundMusic.play();
         
         this.textCreated = false;
         this.scaleEffect = false;
         this.letterColor = 0;
-
     }
 
     continueCreate() {
-
         this.titleLabel = this.generateText(this.cameras.main.centerX, 150, 'GAME OVER', 90);
         this.ScoreLabel = this.generateText(this.cameras.main.centerX, 400, 'Score ' + this.points, 40);
-        this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30);
+        this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30); // Boton
         this.playLabel.setInteractive();
         console.log(this.points);
         this.playLabel.on('pointerdown', (event) => { this.return(); })
-
 	}
 
+    // Metodo para crear el texto
     /**
      * genra y añade
      * @param {number} x 
@@ -100,11 +101,5 @@ export default class gameOver extends Phaser.Scene{
     return(){
         this.backgroundMusic.destroy();
         this.scene.start('SelectorNivel', {datos: this.points, level: this.level});
-    }
-    
-    update(t, dt){
-        
-
-        
     }
 }
