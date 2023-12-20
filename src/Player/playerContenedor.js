@@ -468,7 +468,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     //Se llama cuando el jugador es golpeado
     receiveDamage(damage){
-        if(!this.invencible)
+        if(!this.invulnerable)
         {
             this.effectSerGolpeado.play();
             this.life = this.life - damage;
