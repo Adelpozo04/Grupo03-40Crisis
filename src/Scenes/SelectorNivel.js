@@ -22,9 +22,9 @@ export default class SelectorNivel extends Phaser.Scene {
     init(data){
         console.log(data.level);
         console.log(data.datos);
+        data.datos++;
+        data.datos--;
         if (data.datos !== null) this.globalPoints[data.level] += data.datos; // Lee los puntos y el nivel del q vienes del gameover
-        this.globalPoints[data.level]++; // Para convertir el dato cargado a entero
-        this.globalPoints[data.level]--;
         console.log(this.globalPoints[data.level]);
     }
 
