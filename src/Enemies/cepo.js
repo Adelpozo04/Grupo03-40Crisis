@@ -7,8 +7,10 @@ constructor(scene, x, y, key, player){
 
     this.player = player;
 
+    //tiempo que tarda en eliminarse el cepo de pantalla
     this.paraliceTime = 5;
 
+    //sprite del cepo
     this.cepo = new Phaser.GameObjects.Sprite(scene, 0, 0, key, 0);
 
     this.setScale(0.2, 0.2);
@@ -21,12 +23,19 @@ constructor(scene, x, y, key, player){
 
     this.body.setSize(32, 32);
 
+    //la colision le aplica el efecto de vivu al jugador
+    this.scene.physics.add.collider(this.player, this, (player, cepo)=>{
+
+        player.applyEffect("vivu");
+        this.scene.physics.world.disable(this);
+        cepo.destroyAfterTime();
+
+    })
+
 
 }
 
 destroyAfterTime(){
-
-    this.cepo.play('attackcepo', true);
 
     this.scene.time.addEvent({
 
@@ -42,19 +51,6 @@ destroyMyself(){
     this.destroy();
 }
 
-preUpdate(t, dt){
-
-    this.cepo.preUpdate(t, dt);
-
-    this.scene.physics.collide(this.player, this, ()=>{
-
-        this.player.applyEffect("vivu");
-        this.scene.physics.world.disable(this);
-        this.destroyAfterTime();
-
-    })
-
-}
 
 
 

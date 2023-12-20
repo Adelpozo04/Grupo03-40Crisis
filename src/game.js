@@ -5,7 +5,6 @@ import VolcanLevel from "./Scenes/VolcanLevel.js"
 import SelectorNivel from "./Scenes/SelectorNivel.js"
 import load from "./Scenes/load.js"
 import gameOver from "./Scenes/gameOver.js"
-import Pausa from "./Scenes/Pausa.js"
 import bestiary from "./Scenes/bestiary.js"
 
 
@@ -24,7 +23,7 @@ var config = {
 	},
     pixelArt:true,
 
-    scene : [load, PantallaInicial, SelectorNivel, PlayaLevel, CiudadLevel, VolcanLevel, gameOver, Pausa, bestiary]
+    scene : [load, PantallaInicial, SelectorNivel, PlayaLevel, CiudadLevel, VolcanLevel, gameOver, bestiary]
 
     
 }

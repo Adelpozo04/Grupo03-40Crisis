@@ -26,6 +26,7 @@ export default class armaMelee extends Arma{
         this.Attacking = false;
         this.newAngle = 0
         
+        // manejo de input del ratón
         this.scene.input.on('pointerdown', (pointer) =>
         {
             if (!this.Attacking && this.active)
@@ -55,11 +56,11 @@ export default class armaMelee extends Arma{
         this.Attacking = false; 
     }
 
+    // animación del swing del arma con tweens que modifican el angulo
     swingingAnimation()
     {
         this.newAngle = super.getAngle();
 
-        console.log("swing");
 
         this.scene.tweens.add({
             targets: this,
@@ -103,7 +104,10 @@ export default class armaMelee extends Arma{
 
     preUpdate()
     {
+        // seguir al cursor si no atacamos
         super.update(!this.Attacking);
+        // si está atacando seguir al player desde la misma posición desde
+        // que clicamos y dejar que funcione el efecto de swing
         if (this.Attacking)
         {
             let playerPos = this.player.getCenterPoint();
@@ -111,11 +115,13 @@ export default class armaMelee extends Arma{
             let newX = playerPos.x + radio * Math.cos(this.newAngle);
             let newY = playerPos.y + 10 + radio * Math.sin(this.newAngle);
             
+            //movemos 
             this.setPosition(newX, newY)
             this.setRotation(this.newAngle)
         }
 
-        // comprobar colisiones creando una zona circular que se destruye si no ha hecho overlap
+        // durante la animación de swing ir creando overlaps para comprobar si hay enemigos
+        // si hay se les aplica knockback y el daño del arma
         if (this.colliderActive)
         {
             var radioAtaque = 20

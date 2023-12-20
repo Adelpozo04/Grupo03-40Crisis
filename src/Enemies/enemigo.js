@@ -6,7 +6,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
      * @param {number} x - posicion x
      * @param {number} y - posicion y
      * @param {playerContenedor} player - referencia al player
-     * @param {config} config - config
+     * @param {config} config - config de los parametros de los enemigos
      */
 
     constructor(scene, x, y, player, config){
@@ -38,6 +38,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.scene.add.existing(this);  
     }
     
+    //devuelve si el jugador esta en su rango de ataque
     isInAttackRange(){
         return this.isAttacking;
     }
@@ -48,10 +49,13 @@ export default class enemigo extends Phaser.GameObjects.Container {
         return { x: this.direction.x, y: this.direction.y };
     }
 
+    //cambia el objetivo de los enemigos para que ataquen a otras cosas
     changeObjetive(objetive){
         this.objetive = objetive;
     }
 
+    //gana el estado de objetivo, lo que genera un overlap a su alrededor que al ser tocado por un enemigo
+    //cambia el objetivo de este para ser el propio enemigo
     gainObjetiveState(){
 
         this.objetiveState = true;
@@ -71,9 +75,9 @@ export default class enemigo extends Phaser.GameObjects.Container {
     
     }
 
+    //gana el estado de explosion lo que provoca que los enemigos con este estado ganen una leve invencibilidad para que la explosion
+    //solo le afecte en una ocasion
     gainExplosiveState(explosionTime){
-
-        console.log("gano explosion estado");
     
         this.explosiveState = true;
     
@@ -87,21 +91,22 @@ export default class enemigo extends Phaser.GameObjects.Container {
     
     }
     
-    
-    
+    //le quita el estado de explosion
     lostExplosiveState(){
-        console.log("volvio a la normalidad")
         this.explosiveState = false;
     }
 
+    //se le aplica un daño especifico al enemigo
     receiveDamage(damage){
 
+        //siempre y cuando no sea invencible, este vivo (no en la animacion de muerte), en estado de explosion o sufriendo un knockback
         if(!this.invulnerable && this.alive && !(this.inKnockBack && this.canGetHitByWave) && !this.explosiveState){
           
             this.life -= damage;
 
             if(this.life <= 0){
 
+                //se cambia el objetivo del enemigo que nos estaba atacando al player si tenemos el estado de objetivo
                 if(this.objetiveState){
 
                     this.attacker.changeObjetive(this.player);
@@ -112,17 +117,21 @@ export default class enemigo extends Phaser.GameObjects.Container {
                 this.body.setVelocity(0, 0);
                 this.scene.sendPoints(this.points);
                 
+                //se añade personalidad exp al jugador al matar al enemigo
                 this.player.gainPersonalityExp(2);
         
+                //se hace el calculo para soltar municion
                 var dropMunition = Phaser.Math.Between(1, 100);
     
-        
+                // el max drop probability es un stat de los enemigos
                 if(dropMunition < this.maxDropProbability){
                     this.spawnMunition();
                 }
 
+                //se adapta el humo del robot para que salga como el del resto
                 this.enemy.setOrigin(this.key == 'robot' ? 1.8 : 0.5, this.key == 'robot' ? 2.8 : 0.5)
                 this.setScale(2)
+
                 this.enemy.play('enemydeath', true);
                 this.body.destroy();
                 this.enemy.on('animationcomplete', this.destroyMyself )
@@ -138,6 +147,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }   
 
+    //misma logica que el damage pero sin sumar puntos al jugador ya que es una muerte por evento
     recieveDamageNotGetPoints(damage)
     {
         if(!this.invulnerable && this.alive && !(this.inKnockBack && this.canGetHitByWave)){
@@ -169,6 +179,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }
 
+    //se envia el daño 
     attack()
     {
         this.objetive.receiveDamage(this.damage);
@@ -219,8 +230,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.destroy();
     }
 
+    // empuja modificando la velocidad y prohibiendo moverse para hacer knockback
     // tienes que pasarle un Phaser.Math.Vector2D normalizado
-    // 600 = al que estaba antes
     knockBack(direction, knockBackSpeed)
     {
         direction.normalize();
@@ -232,6 +243,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }
     
+    // spawnea munición
     spawnMunition(){
     
         this.ammo = new municionBalas(this.scene, this.body.x + this.posXCentered, this.body.y + this.posYCentered, 'bulletAmmo');
@@ -239,6 +251,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.scene.add.existing(this.ammo);
     }
     
+    // aplicar efecto de potenciador y tween de parpadeo
     applyEffect(keyPotenciador){
         switch (keyPotenciador) {
             case 'botiquin':
@@ -380,6 +393,6 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
     update()
     {
-        this.enemy.setFlip(this.body.velocity.x <= 0, false)
+        this.enemy.setFlip(this.x > this.objetive.x, false)
     }
 }
