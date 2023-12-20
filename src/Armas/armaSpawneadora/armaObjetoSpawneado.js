@@ -21,14 +21,14 @@ export default class armaObjetosSpawneado extends Arma{
 
         this.enfriamientoTime = TiempoCooldown;
 
+        //variable la cual recoge una cantidad de xperiencia distinta ganada según el objeto que se spawne.
         this.exp = 1;
 
         this.enfriamientoPasado = true;
 
-        this.canShoot = true;
-
         this.elapsedTime = TiempoCooldown;
 
+        //se comprueba que el arma esta activa(la tiene el jugador) y que se a pulsado el click izquierdo para intentar el ataque
         this.scene.input.on('pointerdown', (pointer) =>
         {
             if (this.active && pointer.leftButtonDown()){
@@ -37,6 +37,7 @@ export default class armaObjetosSpawneado extends Arma{
             
         })
 
+        //de nuevo se calcula el elapsed time pero esta vez con un segundo
         this.event = this.scene.time.addEvent({
             delay: 1000,
             callback: this.calculateElapsedTime,
@@ -56,10 +57,11 @@ export default class armaObjetosSpawneado extends Arma{
     tryAttack()
     {
 
-        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime)
+        //se ataca si el tiempo de cooldown se a pasado
+        if (this.elapsedTime >= this.enfriamientoTime)
         {
 
-
+            //segun la key que se quiera instanciar se spawnea un elemento u otro
             if(this.key == 'muro'){
                 
                 new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
@@ -80,6 +82,7 @@ export default class armaObjetosSpawneado extends Arma{
                 this.exp = 5;
             }
 
+            //se suma la experiencia al jugador según el objeto que haya spawneado
             if(this.key == this.player.getCurrentWeaponName()){
                 this.player.gainPersonalityExp(this.exp);           
             }

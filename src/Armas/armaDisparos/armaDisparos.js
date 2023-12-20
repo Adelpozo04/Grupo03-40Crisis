@@ -56,10 +56,11 @@ export default class armaDisparos extends Arma{
     tryAttack()
     {
 
-        //Para realizar el ataque se debe cumplir
+        //Para realizar el ataque se debe cumplir que el tiempo de coolsown sea mayor y tener municion
         if (this.elapsedTime >= this.enfriamientoTime && this.player.disparosAmmo > 0)
         {
 
+            //Si el arma es la varita las balas spawneadas son magicas, al no tener más arams de ese estilo no hemos hecho ninguna clase
             if(this.key == 'varita'){
 
                 var balaMag = new BalaMagica(this.scene, this.x, this.y, 'balaMagica', this.damageArma);
@@ -71,6 +72,7 @@ export default class armaDisparos extends Arma{
 
                 this.effectShoot.play();
 
+                //se crea una bala dentro del grupo de balas y se le aplica la velocidad y angulo
                 var bala = this.scene.grupoBalas.get(this.x, this.y, 'bala', this.damageArma);
                 if (bala)
                 {

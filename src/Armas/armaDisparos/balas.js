@@ -14,6 +14,7 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this);
         this.setScale(3);
 
+        //las balas tienen una velocidad fija
         this.speed = 350;
         this.damage = damage;
         this.key = key;
@@ -21,6 +22,7 @@ export default class Bala extends Phaser.Physics.Arcade.Sprite {
         
     }
 
+    //se le pasa la direccion a la que debe moverse la bala
     disparar(directionX, directionY)
     {
         this.setVelocity(this.speed * directionX, this.speed * directionY);

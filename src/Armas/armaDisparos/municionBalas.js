@@ -14,6 +14,7 @@ constructor(scene, x, y, key){
 
     this.scene.physics.add.existing(this);
 
+    //se hace un timer para que la municion se destruya si no se coge en un tiempo específico
     scene.time.addEvent({
         delay: this.ammoDuration * 1000,
         callback: this.destroyMyself,
