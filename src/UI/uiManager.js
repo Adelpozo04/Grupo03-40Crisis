@@ -1,10 +1,11 @@
 import HealthBar from "./healthBar.js";
 import inventoryBar from "./inventoryBar.js";
 import personalityWheel from "./personalityWheel.js";
-import playerContenedor from "../Player/playerContenedor.js";
 
 export default class UIManager extends Phaser.GameObjects.Container{
 
+
+//Constructor de la clase UImanager
 constructor(scene, key, player){
 
     super(scene, 0, 0);
@@ -44,6 +45,8 @@ changeInventorySelect(currentWea){
     this.inventoryBar.changeSelection(currentWea);
 }
 
+
+//update de los puntos en la pantalla
 gainPoints(points){
 
     this.totalPoints += points;
@@ -60,8 +63,9 @@ gainPoints(points){
     });
 }
 
+//update del numero de la ronda 
 updateRounds(currentRound) {
-    //console.log(this.roundManager.currentRound);
+    
     this.RoundLabel.text = 'Round: ' +  currentRound;
     currentRound++;
     this.scene.tweens.add({
@@ -95,9 +99,6 @@ preUpdate(t, dt){
 
 
 }
-
-
-
 
 
 }

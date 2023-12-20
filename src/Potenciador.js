@@ -1,6 +1,5 @@
 import playerContenedor from './Player/playerContenedor.js';
-import Enemigo from "./Enemies/enemigo.js";
-import EnemigoBasico from './Enemies/enemigoBasico.js';
+
 
 export default class Potenciador extends Phaser.GameObjects.Container {
     /**
@@ -12,6 +11,7 @@ export default class Potenciador extends Phaser.GameObjects.Container {
     * @param {string} key - sprite
     */
 
+    //Constructor del potenciador 
     constructor(scene, x, y, key, player){
         super(scene, x, y);
         this.key = key;
@@ -23,13 +23,16 @@ export default class Potenciador extends Phaser.GameObjects.Container {
         this.add(this.sprite);
         this.setScale(0.15); 
 
+        //Comprueba la colision del player con el potenciador
         scene.physics.add.collider(this, this.player, ()=>{
-            this.player.applyEffect(this.key)
+            this.player.applyEffect(this.key) //Si colisionan aplica el efecto al player
             this.scene.reespawnearPotenciador()
             this.destroy();
         })
+
+         //Comprueba la colision de un enemigo con el potenciador
         scene.physics.add.collider(this, scene.grupoEnemigos, (pot, enemigo)=>{
-            enemigo.applyEffect(this.key)
+            enemigo.applyEffect(this.key)  //Si colisionan aplica el efecto al enemigo
             this.scene.reespawnearPotenciador()
             this.destroy();
         })

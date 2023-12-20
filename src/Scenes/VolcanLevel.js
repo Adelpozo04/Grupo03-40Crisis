@@ -270,6 +270,7 @@ export default class VolcanLevel extends LevelBase{
     }
 
 
+    //genera los enemigos de cada spawner que haya en el mapa, pasandole el numero de enmigos que genera cada spawn
     enemySpawners(enemyNumbers) {
         const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
 
@@ -290,7 +291,7 @@ export default class VolcanLevel extends LevelBase{
         this.roundManager.enemiesLeft--;
 
 
-         // Verifica si se eliminaron todos los enemigos
+         // Verifica si la ronda ha terminado
          const checkRoundEnd = () => {
             
             console.log(this.roundManager.totalEnemiesLeft);
@@ -321,9 +322,11 @@ export default class VolcanLevel extends LevelBase{
         });
     };
 
-    decreaseEnemiesLeft() {
+    //Incrementa el numero de enemigos eliminados
+    increaseEnemiesDefeated() {
         this.roundManager.enemiesDefeated++;
     };
+
 
     die(){
         this.backgroundMusic.destroy();
