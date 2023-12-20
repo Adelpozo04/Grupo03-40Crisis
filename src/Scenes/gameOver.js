@@ -10,6 +10,7 @@ export default class gameOver extends Phaser.Scene{
     init(data){
 
         this.points = data.datos;
+        console.log(this.points);
         this.level = data.level;
 
     }
