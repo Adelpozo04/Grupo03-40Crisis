@@ -158,6 +158,7 @@ export default class PlayaLevel extends LevelBase{
  
     }
 
+    //Event manager (olas)
     eventManager()
     {
         let y = Phaser.Math.RND.between(300, 2250)
@@ -283,8 +284,6 @@ export default class PlayaLevel extends LevelBase{
          // Verifica si la ronda ha terminado
          const checkRoundEnd = () => {
             
-            console.log(this.roundManager.totalEnemiesLeft);
-            console.log(this.roundManager.enemiesDefeated);
             // Verifica si se eliminaron todos los enemigos
             const allEnemiesEliminated = this.roundManager.enemiesDefeated === this.roundManager.totalEnemiesLeft;
 
@@ -292,7 +291,6 @@ export default class PlayaLevel extends LevelBase{
             this.roundManager.totalEnemiesLeft = (this.roundManager.enemiesPerRound + this.roundManager.increasePerRound * this.roundManager.currentRound) * 4;
 
              this.time.delayedCall(5000, () => {
-                console.log("paso de ronda");
 
                 this.roundManager.startRound(); // Comienza la siguiente ronda
 
@@ -316,6 +314,7 @@ export default class PlayaLevel extends LevelBase{
         this.roundManager.enemiesDefeated++;
     };
 
+    //Game Over
     die(){
         this.backgroundMusic.destroy();
         this.scene.start('gameOver', {datos: this.points, level: 0});

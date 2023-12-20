@@ -23,14 +23,11 @@ export default class SelectorNivel extends Phaser.Scene {
         if (data.datos !== null) this.globalPoints[data.level] += data.datos; // Lee los puntos y el nivel del q vienes del gameover
         this.globalPoints[this.currentPage]++; // Para convertir el dato cargado a entero
         this.globalPoints[this.currentPage]--;
-        console.log(this.globalPoints[this.currentPage]);
     }
 
     preload(){
         this.load.image('bestiaryButton', './Assets/Sprites/UI/Bestiary/button.png');
 
-        console.log(this.globalPoints);
-        console.log(this.hatUnlocked);
     }
 
     loadFont(name, url) {
@@ -51,7 +48,6 @@ export default class SelectorNivel extends Phaser.Scene {
         this.effectMoveOptions = this.sound.add('moverOpcionesEffect', {loop: false});
 
         this.events.on('resume', (xp) => {
-            console.log(xp);
         });
 
         // Carga de los niveles
@@ -68,9 +64,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
         // Comprobador de recompensas
         this.recompensas();
-
-        console.log(this.hatUnlocked[0]);
-        console.log(this.hatID);
         // Imagen de sombrero
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
@@ -204,11 +197,10 @@ export default class SelectorNivel extends Phaser.Scene {
     getUnlocked(){
         // Para cada sombrero
         for(var i = 0 ; i < 21 ; ++i){
-            console.log(window.localStorage.getItem('sombrero' + i));
             this.hatUnlocked[i] = window.localStorage.getItem('sombrero' + i); // Se carga de memoria local
             if (this.hatUnlocked[i] == "true") this.hatUnlocked[i] = true;
             else if(this.hatUnlocked[i] == "false" || this.hatUnlocked[i] == null) this.hatUnlocked[i] = false;
-            console.log(this.hatUnlocked[i]);
+
         }
     }
 
@@ -229,7 +221,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.recompensas();
 
-        console.log(this.hatID, this.hatUnlocked[this.hatID]);
         // Nuevo sombrero
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
@@ -244,14 +235,11 @@ export default class SelectorNivel extends Phaser.Scene {
     // Carga de nueva escena
     loadScene(){
 
-        console.log(this.mapas[this.currentPage], this.hatID)
-
         window.localStorage.setItem('ciudadpoints', this.globalPoints[0]); // Guardado de puntos
         window.localStorage.setItem('playapoints', this.globalPoints[1]);
         window.localStorage.setItem('volcanpoints', this.globalPoints[2]);
 
         this.setUnlocked(); // Guardado de sombreros
-        console.log(this.hatUnlocked[this.hatID]);
 
         // Start de la nueva escena (nivel)
         if(this.hatUnlocked[this.hatID]){
@@ -308,7 +296,6 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     recompensas(){
-        console.log(this.globalPoints[this.currentPage]);
         // Verificar si se alcanzó la experiencia máxima
         for (var i = 1; i <= 3; ++i) {
             var experienciaUmbral = this.experienciaMaxima;

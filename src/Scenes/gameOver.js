@@ -9,7 +9,6 @@ export default class gameOver extends Phaser.Scene{
     
     init(data){
 
-        console.log(data);
         this.points = data.datos;
         this.level = data.level;
 
@@ -17,7 +16,6 @@ export default class gameOver extends Phaser.Scene{
     
     preload(){
         this.load.image('GameOverFondo', './Assets/Sprites/UI/GameOver/GameOver.png');
-        console.log();
     }
 
     loadFont(name, url) {
@@ -57,7 +55,6 @@ export default class gameOver extends Phaser.Scene{
         this.ScoreLabel = this.generateText(this.cameras.main.centerX, 400, 'Score ' + this.points, 40);
         this.playLabel = this.generateText(this.cameras.main.centerX, 650, 'RETURN', 30); // Boton
         this.playLabel.setInteractive();
-        console.log(this.points);
         this.playLabel.on('pointerdown', (event) => { this.return(); })
 	}
 

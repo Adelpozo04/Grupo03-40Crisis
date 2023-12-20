@@ -32,6 +32,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         this.explosiveState = false;
         this.objetiveState = false;
 
+        // para que no pueda ser golpeado 2 veces por el coche/ola
         this.canGetHitByWave = true;
 
         this.scene.physics.add.existing(this);

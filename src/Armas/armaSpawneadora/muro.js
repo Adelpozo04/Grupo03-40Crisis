@@ -34,8 +34,6 @@ export default class muro extends Phaser.GameObjects.Sprite{
     receiveDamage(damage){
         if(!this.death){
             this.life -= damage;
-
-            console.log(this.life);
     
             if(this.life <= 0){
                 this.die();
