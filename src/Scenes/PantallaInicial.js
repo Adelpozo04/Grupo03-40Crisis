@@ -6,18 +6,18 @@ export default class PantallaInicial extends Phaser.Scene{
         super({key: 'PantallaInicial'}); //Reciben un Json con la propiedad key con el identificador de la escena para cambiar de una a otra facil
     }
     
-    init(data){
-        console.log(data);
+    init(){
+
     }
     
     preload(){
         this.load.image('PlayaFondo', './Assets/Sprites/UI/PantallaInicial/FondoPlaya.png');
         this.load.image('CiudadFondo', './Assets/Sprites/UI/PantallaInicial/FondoCiudad.png');
         this.load.image('VolcanFondo', './Assets/Sprites/UI/PantallaInicial/FondoVolcan.png');
-
-        console.log();
     }
 
+
+    //carga una fuente externa
     loadFont(name, url) {
 		let self = this;
 	    let newFont = new FontFace(name, `url(${url})`);
@@ -71,6 +71,8 @@ export default class PantallaInicial extends Phaser.Scene{
      * @param {number} size 
      * @return {G--}
      */
+
+    //genera texta
     generateText(x, y, message, size){
 		let ogText = this.add.text(x, y, message, 
             { fontFamily: 'TitleFont', fontSize: size, color: 'white' })
@@ -78,6 +80,7 @@ export default class PantallaInicial extends Phaser.Scene{
         ogText.setScale(1,1);
         this.textCreated = true;
         ogText.angle = -5;
+        
         // efecto texto
         
         this.tweens.add({
