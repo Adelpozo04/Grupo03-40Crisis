@@ -1,7 +1,14 @@
 import enemigo from "./enemigo.js";
 
 export default class Mono extends enemigo{
-
+/**
+     * @param {scene} scene - escena a colocar
+     * @param {number} x - posicion x
+     * @param {number} y - posicion y
+     * @param {key} key - sprite
+     * @param {player} player - referencia al player
+     * @param {config} config - enemy config
+     */ 
 constructor(scene, x, y, key, player, config){
     super(scene, x, y, player, config);
     this.key = key;
@@ -14,6 +21,7 @@ constructor(scene, x, y, key, player, config){
     this.body.setSize(config.anchoCollider, config.altoCollider);
     this.body.setOffset(config.posXCollider, config.posYCollider);
 
+    // evento que llama a cambiar la dirección cada 1.5 seg
     this.scene.time.addEvent({
         delay: 1500,
         loop: true,
@@ -22,8 +30,10 @@ constructor(scene, x, y, key, player, config){
     });
 
     Phaser.Math.RandomXY(this.body.velocity, this.speed);
+    this.enemy.play('walk' + this.key, true);
 }
 
+// cambiamos la dirección, si hay spawner vamos a por el, sino dirección random
 changeDirection(){
 
     if(this.scene.potenciadorSpawneado)
@@ -37,22 +47,5 @@ changeDirection(){
     {
         Phaser.Math.RandomXY(this.body.velocity, this.speed);
     }
-}
-
-preUpdate(){
-    
-    if (this.alive)
-    {
-        this.enemy.play('walk' + this.key, true);
-
-        if (this.body.velocity.x >= 0)
-        {
-            this.enemy.setFlip(false, false);
-        }
-        else if (this.body.velocity.x < 0)
-        {
-            this.enemy.setFlip(true, false);
-        }
-    }   
 }
 }

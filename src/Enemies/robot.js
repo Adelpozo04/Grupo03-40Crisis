@@ -32,6 +32,7 @@ export default class Robot extends Enemigo {
         this.attackFlag = false;
         this.body.setVelocity(0,0)
         console.log(this.damage);
+        // sacamos bala del grupoBalasRobot
         var bala = this.scene.grupoBalasRobot.get(this.body.x + 16, this.body.y + 32, 'balaRobot', this.damage);
         var angle = Phaser.Math.Angle.Between(this.body.x + 16, this.body.y + 32, this.player.getCenterPoint().x, this.player.getCenterPoint().y)
         if (bala)
@@ -81,18 +82,6 @@ export default class Robot extends Enemigo {
             }
             
         }
-
-
-        //flip del sprite en función de la pos del player
-        if (this.x < super.getPlayer().x)
-        {
-            this.enemy.setFlip(false, false);
         }
-        else if (this.x > super.getPlayer().y)
-        {
-            this.enemy.setFlip(true, false);
-        }
-        }
-        
     }
 }
