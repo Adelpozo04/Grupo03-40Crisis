@@ -329,7 +329,7 @@ export default class VolcanLevel extends LevelBase{
     //Game Over
     die(){
         this.backgroundMusic.destroy();
-        this.scene.start('gameOver', {datos: this.points, level: 0});
+        this.scene.start('gameOver', {datos: this.points, level: 2});
     }
 
 
