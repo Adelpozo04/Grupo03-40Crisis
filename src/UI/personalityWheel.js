@@ -58,10 +58,7 @@ export default class personalityWheel extends Phaser.GameObjects.Sprite{
             endAngle += 30;
 
         }
-        
 
-        
-    
         scene.add.existing(this);
     
     }
@@ -88,8 +85,6 @@ export default class personalityWheel extends Phaser.GameObjects.Sprite{
         this.exploradorGradosFin = this.GradosIni.get('explorador') + (this.player.getPersonalityExp(1) * 90) / this.player.getMaxExp(); 
 
         this.pacifistaGradosFin = this.GradosIni.get('pacifista') + (this.player.getPersonalityExp(3) * 90) / this.player.getMaxExp();
-
-        //console.log(this.player.getPersonalityExp(0), this.player.getPersonalityExp(1), this.player.getPersonalityExp(2), this.player.getPersonalityExp(3));
 
         this.draw();
     }

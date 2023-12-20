@@ -32,6 +32,8 @@ constructor(scene, x, y, key, player, config)
 }
 
 // comprobamos si estamos en rango de ataque y atacamos
+// el this.key caracol es para que si se hace el ataque del caracol
+// que es una gran explosion que mueras 100%
 attack() { if (super.isInAttackRange() || this.key == 'caracol') {super.attack()} }
 
 // hace la animación y si se termina llamamos a attack en el super

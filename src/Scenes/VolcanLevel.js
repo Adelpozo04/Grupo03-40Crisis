@@ -3,9 +3,6 @@ import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
 import UIManager from '../UI/uiManager.js';
 import EnemigoSpawner from '../enemySpawner.js';
-import municionBalas from '../Armas/armaDisparos/municionBalas.js';
-import explosive from '../Armas/armaSpawneadora/explosive.js';
-import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
 import EffectArea from '../Scenes/Event/effectArea.js'
 import DamageWave from '../Scenes/Event/damageWave.js'
@@ -17,7 +14,6 @@ export default class VolcanLevel extends LevelBase{
         super('VolcanLevel'); 
         this.potenciadorSpawneado = false;
         this.spawningPotenciador = false;
-        //this.hatID = hatID; 
         this.roundManager = null;
     }
     
@@ -186,6 +182,7 @@ export default class VolcanLevel extends LevelBase{
         return this.potenciador;
     }
 
+    //Generar potenciador random en uno de los generadores que hay
     spawnPotenciador() {
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
@@ -201,7 +198,6 @@ export default class VolcanLevel extends LevelBase{
             { x: 1350, y: 1902 },
             { x: 2017, y: 827 },
             { x: 2527, y: 1250 },
-            //Añadir luego las coordenadas correctas
         ];
         
         let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
@@ -222,6 +218,7 @@ export default class VolcanLevel extends LevelBase{
         })
     }
 
+    //Metodo para reespawner potenciador
     reespawnearPotenciador()
     {
         if (!this.spawningPotenciador)
@@ -260,11 +257,13 @@ export default class VolcanLevel extends LevelBase{
         return this.grupoEnemigos;
     }
     
+    //Cambiar el inventario (persoanlidad)
     changeInventory(currentPersonality){
         this.myUI.changeInventory(currentPersonality);
         this.myUI.changeInventorySelect(0);
     }
 
+    //Cambiar seleccion de arma
     changeInvenSelection(currentWea){
         this.myUI.changeInventorySelect(currentWea);
     }
