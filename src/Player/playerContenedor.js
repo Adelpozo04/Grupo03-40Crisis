@@ -61,6 +61,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.disparosAmmo = 30;
 
         this.inKnockback = false;
+        // para que no pueda ser golpeado 2 veces por el coche/ola
         this.canGetHitByWave = true;
 
         //Creacion sprites
@@ -208,7 +209,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.currentWeapon = 0;
         let name = this.weaponNameByPersonality();
-        console.log(name);
         this.changeWeapon(name);
 
     }

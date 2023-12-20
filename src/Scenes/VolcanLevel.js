@@ -295,8 +295,6 @@ export default class VolcanLevel extends LevelBase{
          // Verifica si la ronda ha terminado
          const checkRoundEnd = () => {
             
-            console.log(this.roundManager.totalEnemiesLeft);
-            console.log(this.roundManager.enemiesDefeated);
             // Verifica si se eliminaron todos los enemigos
             const allEnemiesEliminated = this.roundManager.enemiesDefeated === this.roundManager.totalEnemiesLeft;
 
@@ -304,7 +302,6 @@ export default class VolcanLevel extends LevelBase{
             this.roundManager.totalEnemiesLeft = (this.roundManager.enemiesPerRound + this.roundManager.increasePerRound * this.roundManager.currentRound) * 4;
 
              this.time.delayedCall(5000, () => {
-                console.log("paso de ronda");
 
                 this.roundManager.startRound(); // Comienza la siguiente ronda
 
@@ -332,7 +329,6 @@ export default class VolcanLevel extends LevelBase{
     //Game Over
     die(){
         this.backgroundMusic.destroy();
-        console.log(this.points);
         this.scene.start('gameOver', {datos: this.points, level: 0});
     }
 
