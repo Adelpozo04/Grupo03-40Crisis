@@ -20,22 +20,13 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        console.log(data.level);
-        console.log(data.datos);
         data.datos++;
         data.datos--;
         if (data.datos !== null) this.globalPoints[data.level] += data.datos; // Lee los puntos y el nivel del q vienes del gameover
-        console.log(this.globalPoints[data.level]);
     }
 
     preload(){
         this.load.image('bestiaryButton', './Assets/Sprites/UI/Bestiary/button.png');
-        
-        console.log(this.globalPoints[0]);
-        
-        console.log(this.globalPoints[1]);
-        
-        console.log(this.globalPoints[2]);
     }
 
     loadFont(name, url) {
@@ -259,7 +250,6 @@ export default class SelectorNivel extends Phaser.Scene {
         // Limpiar la barra de progreso
         this.barraProgreso.clear();
 
-        console.log(this.currentPage);
         // Calcular la longitud de la barra de progreso en función de la experiencia actual y máxima
         this.longitudBarra[this.currentPage] = (this.globalPoints[this.currentPage] / this.experienciaMaxima) * 300;
     
