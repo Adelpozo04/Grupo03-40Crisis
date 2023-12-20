@@ -139,10 +139,8 @@ export default class enemigo extends Phaser.GameObjects.Container {
 
                   // Asegúrate de contabilizar la eliminación solo una vez
                 if (!this.isDestroyed) {
-                this.scene.decreaseEnemiesLeft();
-                this.isDestroyed = true;
-            
-             
+                    this.scene.increaseEnemiesDefeated();
+                    this.isDestroyed = true;
                 }
             }
         }
