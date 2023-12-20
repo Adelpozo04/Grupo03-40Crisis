@@ -179,15 +179,18 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
     }
 
-    //se envia el daño 
+    //se envia el daño del stat del enemigo al objetivo
     attack()
     {
         this.objetive.receiveDamage(this.damage);
     }
 
+    //se mueve al enemigo por fisicas en direcion al player
     basicMovement(canMove)
     {
+        //solo se mueve si no es un objetivo
         if(!this.objetiveState){
+            //aunque se llame player position es la posicion del objetivo que puede ser player/muro/enemigo
             var playerPosition = this.objetive.getCenterPoint();
         
             this.direction = new Phaser.Math.Vector2(
@@ -219,6 +222,7 @@ export default class enemigo extends Phaser.GameObjects.Container {
         }
         
         
+        //zona que tiene si es un objetivo
         if(this.zone != undefined){
             this.zone.x = this.body.x + 16;
             this.zone.y = this.body.y + 16;
