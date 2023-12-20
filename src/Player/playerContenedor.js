@@ -61,6 +61,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.disparosAmmo = 30;
 
         this.inKnockback = false;
+        // para que no pueda ser golpeado 2 veces por el coche/ola
         this.canGetHitByWave = true;
 
         //Creacion sprites
@@ -200,7 +201,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         this.currentWeapon = 0;
         let name = this.weaponNameByPersonality();
-        console.log(name);
         this.changeWeapon(name);
 
     }
@@ -309,8 +309,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         }
 
-        console.log(this.currentWeapon, this.getPersonalityExp(this.currentPersonality))
-
         if(this.currentWeapon == 1 && this.getPersonalityExp(this.currentPersonality) < this.maxExp / 3){
             this.currentWeapon = 0;
         }
@@ -326,7 +324,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     changeWeapon(newWeaponName)
     {
         this.arma.deactivate()
-        //console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
     }
@@ -341,7 +338,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     reloadDisparosAmmo(){
         this.disparosAmmo += 20;
-        console.log(this.disparosAmmo);
     }
 
     getAmmo(){

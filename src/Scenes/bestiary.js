@@ -10,7 +10,6 @@ constructor(){
 }
 
 init(data){
-    console.log(data);
 }
 
 preload(){
@@ -85,7 +84,6 @@ create(){
 
 changeIndice(der){
 
-    console.log("se mete")
 
     if(der){
         this.indice = (this.indice + 1) % this.maxEntries;
@@ -98,7 +96,6 @@ changeIndice(der){
         }
     }
 
-    console.log(this.indice);
 
     this.infoImage.setTexture(this.info[this.indice]);
 }

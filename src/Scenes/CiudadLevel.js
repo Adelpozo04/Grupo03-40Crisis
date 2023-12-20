@@ -19,7 +19,6 @@ export default class CiudadLevel extends LevelBase{
     }
     
     init(data){
-        console.log(data);
     }
     
     preload(){
@@ -37,7 +36,6 @@ export default class CiudadLevel extends LevelBase{
         super.create();
         
         this.points = 0;
-        console.log(this.points);
 
 
         //Cargado de la musica
@@ -246,7 +244,6 @@ export default class CiudadLevel extends LevelBase{
 
     sendPoints(points){
         this.points += points;
-        console.log(points, this.points);
         this.myUI.gainPoints(points);
     }
 
@@ -304,8 +301,6 @@ export default class CiudadLevel extends LevelBase{
          // Verifica si la ronda ha terminado
          const checkRoundEnd = () => {
             
-            console.log(this.roundManager.totalEnemiesLeft);
-            console.log(this.roundManager.enemiesDefeated);
             // Verifica si se eliminaron todos los enemigos
             const allEnemiesEliminated = this.roundManager.enemiesDefeated === this.roundManager.totalEnemiesLeft;
 
@@ -313,7 +308,6 @@ export default class CiudadLevel extends LevelBase{
             this.roundManager.totalEnemiesLeft = (this.roundManager.enemiesPerRound + this.roundManager.increasePerRound * this.roundManager.currentRound) * 4;
 
              this.time.delayedCall(5000, () => {
-                console.log("paso de ronda");
                 
                 this.roundManager.startRound(); // Comienza la siguiente ronda
 
