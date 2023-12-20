@@ -4,8 +4,8 @@ import BalaMagica from "./balasMagicas.js";
 export default class armaDisparos extends Arma{
     /**
     * @param {scene} scene - escena a colocar
-    * @param {number} tiempoCooldown - posicion x
-    * @param {number} damageArma - posicion y
+    * @param {number} tiempoCooldown - tiempo para volver a atacar
+    * @param {number} damageArma - daño del arma
     * @param {key} key - key
     * @param {player} player - referencia a player
     */
@@ -19,19 +19,22 @@ export default class armaDisparos extends Arma{
         this.enfriamientoTime = tiempoCooldown;
         this.damageArma = damageArma;
 
-        this.canShoot = true;
         this.elapsedTime = tiempoCooldown;
 
+        //detecta si tienes el boton pulsado para hacer varias rafagas de ataque
         this.clickDown = false;
+
         this.scene.input.on('pointerdown', (pointer) =>
         {
             this.clickDown = true;
         })
+        
         this.scene.input.on('pointerup', (pointer) =>
         {
             this.clickDown = false;
         })
 
+        //timer que permite calcular el elapsed time que ha pasado al sumarle el tiempo de delay a una variable
         this.event = this.scene.time.addEvent({
             delay: 100,
             callback: this.calculateElapsedTime,
@@ -44,18 +47,18 @@ export default class armaDisparos extends Arma{
         
     }
 
+    //suma el tiempo de delay a la variable
     calculateElapsedTime(){
         this.elapsedTime += 0.1;
     }
 
+    //Intenta hacer un ataque
     tryAttack()
     {
 
-        console.log('disparo', this.key);
-
-        if (this.canShoot && this.elapsedTime >= this.enfriamientoTime && this.player.disparosAmmo > 0)
+        //Para realizar el ataque se debe cumplir
+        if (this.elapsedTime >= this.enfriamientoTime && this.player.disparosAmmo > 0)
         {
-            console.log(this.key, this.key == 'varita');
 
             if(this.key == 'varita'){
 
@@ -82,7 +85,6 @@ export default class armaDisparos extends Arma{
             if(this.key == this.player.getCurrentWeaponName()){
                 this.player.gainPersonalityExp(1);
             }
-
             
         }   
     }

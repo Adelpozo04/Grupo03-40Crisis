@@ -69,12 +69,14 @@ create(){
 
     this.infoImage = this.add.image(0, 0, this.info[this.indice]).setScale(1, 1).setOrigin(-0.33, 0);
 
+    this.effectMoveOptions = this.sound.add('moverOpcionesEffect', {loop: false});
+
     this.der = new button(this, 1100, 400, 'flechaPasar', 0, 64, 128, 80);
-    this.der.on('pointerdown', (event) => { this.changeIndice(true); })
+    this.der.on('pointerdown', (event) => { this.effectMoveOptions.play(); this.changeIndice(true); })
 
     this.izq = new button(this, 100, 400, 'flechaPasar', 0, 64, 128, 80);
     this.izq.setFlip(true, false);
-    this.izq.on('pointerdown', (event) => { this.changeIndice(false); })
+    this.izq.on('pointerdown', (event) => { this.effectMoveOptions.play(); this.changeIndice(false); })
 
     this.out = new button(this, 50, 150, 'salir', 0, 82, 128, 48);
     this.out.on('pointerdown', (event) => { this.scene.start('SelectorNivel'); })

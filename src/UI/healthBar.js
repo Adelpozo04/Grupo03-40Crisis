@@ -12,7 +12,9 @@ constructor( scene, x, y, player, width, heigth){
     this.w = width;
     this.h = heigth;
 
-    this.Heart = this.scene.add.sprite(24, 48, 'heart').setScrollFactor(0).setDepth(5);
+    this.Heart = this.scene.add.sprite(24, 48, 'heart').setScrollFactor(0);
+
+    this.Heart.setDepth(5);
 
     this.player = player;
 
