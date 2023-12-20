@@ -26,6 +26,7 @@ export default class armaMelee extends Arma{
         this.Attacking = false;
         this.newAngle = 0
         
+        // manejo de input del ratón
         this.scene.input.on('pointerdown', (pointer) =>
         {
             if (!this.Attacking && this.active)
@@ -55,11 +56,11 @@ export default class armaMelee extends Arma{
         this.Attacking = false; 
     }
 
+    // animación del swing del arma y spawneo de los overlap para añadir ataque y knockback
     swingingAnimation()
     {
         this.newAngle = super.getAngle();
 
-        console.log("swing");
 
         this.scene.tweens.add({
             targets: this,
