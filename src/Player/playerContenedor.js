@@ -88,6 +88,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.TwoKey = this.scene.input.keyboard.addKey('2');
         this.ThreeKey = this.scene.input.keyboard.addKey('3');
 
+        //Cambiar de arma con la rueda del ratón
         this.scene.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) =>
         {
 
@@ -124,22 +125,28 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
             repeat: -1
         });
         
+        //CD de las armas
         var tiempoCooldown = new Map([
             ['fist', 0.6], ['bate', 1], ['espada', 0.6],
             ['pistola', 0.5], ['metralleta', 0.2], ['franco', 13],
             ['muro', 5], ['mina', 12], ['c4', 15],
             ['paralizador', 4], ['empuje', 0.6], ['varita', 20]
         ]);
+
+        //DMG de las armas
         var damageArmas = new Map([
             ['fist', 4], ['bate', 7], ['espada', 9],
             ['pistola', 5], ['metralleta', 4], ['franco', 30],
             ['empuje', 0], ['varita', 0]
         ]);
+
+        //Knockback de las armas
         var knockBackArmas = new Map([
             ['fist', 300], ['bate', 600], ['espada', 100], ['empuje', 1000]
         ])
 
 
+        //Creacion de las armas
         this.armas = new Map([
             ['fist', new armaMelee(this.scene, tiempoCooldown.get('fist'), damageArmas.get('fist'),knockBackArmas.get('fist'),'fist', this)],
             ['bate', new armaMelee(this.scene, tiempoCooldown.get('bate'), damageArmas.get('bate'),knockBackArmas.get('bate'),'bate', this)],
@@ -171,6 +178,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.changePerBlock = false;
     }
 
+    //Cambio de personalidad
     changePersonality(right){
 
         this.changePerBlock = true;
@@ -205,6 +213,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     }
 
+    //Cambio de personlaidad al pulsar E (cambio tipo de armas)
     personalityInput(){
         if(!this.changePerBlock){
             if(this.eKey.isDown){
@@ -229,6 +238,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         return this.maxExp;
     }
 
+    //Gestor de exp de las personalidades
     gainPersonalityExp(exp){
 
         if(this.personalityExp[this.currentPersonality] < this.maxExp){
@@ -293,7 +303,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         return weaponName;
     }
-
+    //Cambio de arma (metodo aux)
     changeWeaponAux(up){
         
         if(up){
@@ -309,8 +319,6 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
         }
 
-        console.log(this.currentWeapon, this.getPersonalityExp(this.currentPersonality))
-
         if(this.currentWeapon == 1 && this.getPersonalityExp(this.currentPersonality) < this.maxExp / 3){
             this.currentWeapon = 0;
         }
@@ -323,10 +331,10 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         this.changeWeapon(this.weaponNameByPersonality());
     }
 
+    //Cambio de arma
     changeWeapon(newWeaponName)
     {
         this.arma.deactivate()
-        //console.log(newWeaponName);
         this.arma = this.armas.get(newWeaponName)
         this.arma.activate()
     }
@@ -341,13 +349,13 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     reloadDisparosAmmo(){
         this.disparosAmmo += 20;
-        console.log(this.disparosAmmo);
     }
 
     getAmmo(){
         return this.disparosAmmo;
     }
 
+    //Knockback de las armas
     knockBack(direction)
     {
         direction.normalize();
@@ -367,7 +375,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
 
     }
 
-    //Movimiento y fisicas
+    //Movimiento (input) y fisicas
     movement()
     {
         if (!this.inKnockBack)
@@ -458,6 +466,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
         }
     }
 
+    //Se llama cuando el jugador es golpeado
     receiveDamage(damage){
         if(!this.invencible)
         {
@@ -472,7 +481,7 @@ export default class playerContenedor extends Phaser.GameObjects.Container {
     
     }
 
-    //Potenciadores
+    //Aplica los efectos de los potenciadores (incluye efectos de eventos del mapa)
     applyEffect(keyPotenciador){
         switch (keyPotenciador) {
             case 'botiquin':

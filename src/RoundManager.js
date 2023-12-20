@@ -6,7 +6,7 @@ export default class RoundManager extends Phaser.GameObjects.Container {
     * @param {EnemigoSpawner} spawners - referencia a los spawners
     * @param {number} enemiesPerRound - enemigos por ronda (cada spawner)
     */
-   
+
     //Constructor del round manager 
 
     constructor(scene, spawners, initialEnemiesPerRound) {
@@ -43,10 +43,10 @@ export default class RoundManager extends Phaser.GameObjects.Container {
             this.scene.enemySpawners(this.enemiesPerRound + this.increasePerRound * this.currentRound);
         }
 
-          // Aumenta la ronda actual
+        // Aumenta la ronda actual
         this.currentRound++;
     
-         // Actualiza el número de ronda en UIManager
+        // Actualiza el número de ronda en UIManager
         this.scene.myUI.updateRounds(this.currentRound);
     
        
