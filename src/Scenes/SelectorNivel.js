@@ -161,8 +161,8 @@ export default class SelectorNivel extends Phaser.Scene {
         this.globalPoints[2] = 0; // Volcan
 
 		if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[0] = window.localStorage.getItem('ciudadpoints');
-        if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[1] = window.localStorage.getItem('playapoints');
-        if(window.localStorage.getItem('ciudadpoints') != null) this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
+        if(window.localStorage.getItem('playapoints') != null) this.globalPoints[1] = window.localStorage.getItem('playapoints');
+        if(window.localStorage.getItem('volcanpoints') != null) this.globalPoints[2] = window.localStorage.getItem('volcanpoints');
     }
 
     getUnlocked(){
