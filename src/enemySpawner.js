@@ -116,6 +116,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         }
     }
 
+    // Limpia el grupo de enemigos
     clearEnemies() {
         this.grupoEnemigos.clear(true, true); // Limpia el grupo de enemigos
     }

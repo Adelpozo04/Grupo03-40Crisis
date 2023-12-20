@@ -3,11 +3,7 @@ import playerContenedor from '../Player/playerContenedor.js';
 import Potenciador from '../Potenciador.js';
 import UIManager from '../UI/uiManager.js';
 import EnemigoSpawner from '../enemySpawner.js';
-import municionBalas from '../Armas/armaDisparos/municionBalas.js';
-import explosive from '../Armas/armaSpawneadora/explosive.js';
-import Enemigo from "../Enemies/enemigo.js";
 import RoundManager from '../RoundManager.js';
-import EffectArea from '../Scenes/Event/effectArea.js'
 import DamageWave from '../Scenes/Event/damageWave.js'
 
 
@@ -17,7 +13,6 @@ export default class PlayaLevel extends LevelBase{
         super('PlayaLevel'); 
         this.potenciadorSpawneado = false;
         this.spawningPotenciador = false;
-        //this.hatID = hatID; 
         this.roundManager = null;
     }
     
@@ -175,6 +170,7 @@ export default class PlayaLevel extends LevelBase{
         return this.potenciador;
     }
 
+    //Generar potenciador random en uno de los generadores que hay
     spawnPotenciador() {
         const potenciadorTypes = {
             BOTIQUIN: 'botiquin', 
@@ -190,7 +186,6 @@ export default class PlayaLevel extends LevelBase{
             { x: 1857, y: 1661 },
             { x: 2181, y: 679 },
             { x: 2630, y: 1705 },
-            //Añadir luego las coordenadas correctas
         ];
         
         let spawnPoint = Phaser.Math.RND.pick(spawnPoints);
@@ -200,6 +195,7 @@ export default class PlayaLevel extends LevelBase{
         this.potenciador = new Potenciador(this, spawnPointX, spawnPointY, potenciadorType, this.mike);
         this.potenciadorSpawneado = true;
 
+        //animacion del potenciador
         this.tweens.add({
             targets: this.potenciador,
             y: this.potenciador.y - 30,
@@ -211,6 +207,8 @@ export default class PlayaLevel extends LevelBase{
         })
     }
 
+    
+    //Metodo para reespawner potenciador
     reespawnearPotenciador()
     {
         if (!this.spawningPotenciador)
@@ -249,16 +247,19 @@ export default class PlayaLevel extends LevelBase{
         return this.grupoEnemigos;
     }
     
+    //Cambiar el inventario (persoanlidad)
     changeInventory(currentPersonality){
         this.myUI.changeInventory(currentPersonality);
         this.myUI.changeInventorySelect(0);
     }
 
+    //Cambiar seleccion de arma
     changeInvenSelection(currentWea){
         this.myUI.changeInventorySelect(currentWea);
     }
 
 
+    //genera los enemigos de cada spawner que haya en el mapa, pasandole el numero de enmigos que genera cada spawn
     enemySpawners(enemyNumbers) {
         const allSpawners = [this.enemySpawner1, this.enemySpawner2, this.enemySpawner3, this.enemySpawner4];
 
@@ -279,7 +280,7 @@ export default class PlayaLevel extends LevelBase{
         this.roundManager.enemiesLeft--;
 
 
-         // Verifica si se eliminaron todos los enemigos
+         // Verifica si la ronda ha terminado
          const checkRoundEnd = () => {
             
             console.log(this.roundManager.totalEnemiesLeft);
@@ -310,7 +311,8 @@ export default class PlayaLevel extends LevelBase{
         });
     };
 
-    decreaseEnemiesLeft() {
+     //Incrementa el numero de enemigos eliminados
+    increaseEnemiesDefeated() {
         this.roundManager.enemiesDefeated++;
     };
 
@@ -321,15 +323,6 @@ export default class PlayaLevel extends LevelBase{
 
 
     update(dt, t){
-        if(!this.potenciadorSpawneado && !this.spawningPotenciador)
-        { 
-            this.spawningPotenciador = true;
-            this.time.delayedCall(5000, () => {
-                this.spawnPotenciador();
-                this.potenciadorSpawneado = true;
-            })
-        }
-
   
    }
 }
