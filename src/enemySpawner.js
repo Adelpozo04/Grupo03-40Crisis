@@ -1,5 +1,4 @@
 import EnemigoBasico from './Enemies/enemigoBasico.js';
-import Enemigo from './Enemies/enemigo.js';
 import Lutano from './Enemies/lutano.js';
 import Mono from './Enemies/mono.js';
 import Robot from './Enemies/robot.js';
@@ -16,6 +15,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
     * @param {grupoEnemigos} grupoEnemigos - grupoEnemigos del level
     */ 
 
+     //Constructor del spawner de enemigos
     constructor(scene, x, y, player, grupoEnemigos) {
         super(scene, x, y);
         this.scene = scene;
@@ -32,16 +32,13 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         this.grupoEnemigos = this.scene.add.group();
     }
 
-    getScene()
-    {
-        return this.scene;
-    }
 
-
+    //Devuelve de forma random un tipo de enemigo
     selectEnemyType(randomProbability) {
+
         // Define los rangos de probabilidad para cada tipo de enemigo
         const enemyTypes = [
-            { type: 'zombie', probability: 0.4 }, //0,35
+            { type: 'zombie', probability: 0.4 }, 
             { type: 'skeleton', probability: 0.25 },
             { type: 'burger', probability: 0.15 },
             { type: 'lutano', probability: 0.15 },
@@ -49,6 +46,7 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         ];
 
         let cumulativeProbability = 0;
+
 
         for (let i = 0; i < enemyTypes.length; i++) {
             cumulativeProbability += enemyTypes[i].probability;
@@ -59,6 +57,8 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         }
     }
     
+
+    //Spawnea a los enemigos pasandole el numero de enemigos que tiene que generar y el tiempo entre enemigos que genera
     spawnEnemies(numberOfEnemies, timeBetweenSpawn) {
         let enemiesSpawned = 0;
         this.spawnTimer = this.scene.time.addEvent({
@@ -96,12 +96,13 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         });
     }
 
-
+    //Genera un mono
     spawnMono() {
         const enemy = new Mono(this.scene, this.spawnX, this.spawnY, 'mono', this.player, this.scene.generateEnemyConfig('mono'));
         this.scene.grupoEnemigos.add(enemy);
     }
 
+    //Genera un caracol
     spawnCaracol() {
         const enemy = new EnemigoBasico(this.scene, this.spawnX, this.spawnY, 'caracol', this.player, this.scene.generateEnemyConfig('caracol'));
         this.scene.grupoEnemigos.add(enemy);
@@ -119,8 +120,4 @@ export default class EnemigoSpawner extends Phaser.GameObjects.Sprite {
         this.grupoEnemigos.clear(true, true); // Limpia el grupo de enemigos
     }
 
-    areEnemiesCleared() {
-        // Verifica si no hay enemigos restantes en el grupo
-        return this.grupoEnemigos.getLength() === 0;
-    }
 }
