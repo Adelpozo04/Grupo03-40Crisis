@@ -20,8 +20,8 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     init(data){
-        if (data.datos !== null) this.globalPoints[data.level] += data.datos;
-        this.globalPoints[this.currentPage]++;
+        if (data.datos !== null) this.globalPoints[data.level] += data.datos; // Lee los puntos y el nivel del q vienes del gameover
+        this.globalPoints[this.currentPage]++; // Para convertir el dato cargado a entero
         this.globalPoints[this.currentPage]--;
         console.log(this.globalPoints[this.currentPage]);
     }
@@ -57,6 +57,7 @@ export default class SelectorNivel extends Phaser.Scene {
         // Carga de los niveles
         this.setMaps();
 
+        // Musica
         this.backgroundMusic = this.sound.add('selectorMusic', {loop: true, volume: 0.2});
 
         this.backgroundMusic.play();
@@ -65,14 +66,17 @@ export default class SelectorNivel extends Phaser.Scene {
         this.fondo = this.add.image(0, 0, this.fondos[this.currentPage]).setScale(1, 1).setOrigin(0, 0);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, this.mapas[this.currentPage]).setScale(0.2, 0.2).setOrigin(0.5, 0.5);
 
+        // Comprobador de recompensas
         this.recompensas();
 
         console.log(this.hatUnlocked[0]);
         console.log(this.hatID);
+        // Imagen de sombrero
         if(this.hatUnlocked[this.hatID]){
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'hat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         }
         else{
+            // Si no esta desbloqueado sale negro
             this.hat = this.add.image(this.cameras.main.centerX, 75, 'nohat', this.hatID).setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         }
 
@@ -80,7 +84,8 @@ export default class SelectorNivel extends Phaser.Scene {
 
         this.loadHatArrows(this.hat); // Flechas
         this.loadMainArrows();
-        this.best = new button(this, 1100, 150, 'bestiaryButton',  0, 82, 128, 48);
+
+        this.best = new button(this, 1100, 150, 'bestiaryButton',  0, 82, 128, 48); // Bestiario
         this.best.on('pointerdown', (event) => { this.backgroundMusic.destroy(); this.scene.start('bestiary'); })
 
         this.barraXP(); // Pase de batalla
@@ -197,9 +202,10 @@ export default class SelectorNivel extends Phaser.Scene {
     }
 
     getUnlocked(){
+        // Para cada sombrero
         for(var i = 0 ; i < 21 ; ++i){
             console.log(window.localStorage.getItem('sombrero' + i));
-            this.hatUnlocked[i] = window.localStorage.getItem('sombrero' + i);
+            this.hatUnlocked[i] = window.localStorage.getItem('sombrero' + i); // Se carga de memoria local
             if (this.hatUnlocked[i] == "true") this.hatUnlocked[i] = true;
             else if(this.hatUnlocked[i] == "false" || this.hatUnlocked[i] == null) this.hatUnlocked[i] = false;
             console.log(this.hatUnlocked[i]);
@@ -235,18 +241,19 @@ export default class SelectorNivel extends Phaser.Scene {
         this.loadHatArrows(this.hat);
     }
 
-    // Carga de escena
+    // Carga de nueva escena
     loadScene(){
 
         console.log(this.mapas[this.currentPage], this.hatID)
 
-        window.localStorage.setItem('ciudadpoints', this.globalPoints[0]);
+        window.localStorage.setItem('ciudadpoints', this.globalPoints[0]); // Guardado de puntos
         window.localStorage.setItem('playapoints', this.globalPoints[1]);
         window.localStorage.setItem('volcanpoints', this.globalPoints[2]);
 
-        this.setUnlocked();
+        this.setUnlocked(); // Guardado de sombreros
         console.log(this.hatUnlocked[this.hatID]);
 
+        // Start de la nueva escena (nivel)
         if(this.hatUnlocked[this.hatID]){
             this.scene.start(this.mapas[this.currentPage], this.hatID);
         }
@@ -305,8 +312,11 @@ export default class SelectorNivel extends Phaser.Scene {
         // Verificar si se alcanzó la experiencia máxima
         for (var i = 1; i <= 3; ++i) {
             var experienciaUmbral = this.experienciaMaxima;
+            // Para i = 1, k va de 6 a 0 (los 7 primeros sombreros para el nivel 1)
+            // Para i = 2, k va de 13 a 7 (los 7 segundos sombreros para el nivel 2)
+            // Para i = 3, k va de 20 a 14 (los 7 ultimos sombreros para el nivel 3)
             for (var k = 6 * i + i - 1; k >= ((i - 1) * 7); --k) {
-                if (this.globalPoints[i - 1] * i >= (experienciaUmbral * (k + 1)) / 7) {
+                if (this.globalPoints[i - 1] * i >= (experienciaUmbral * (k + 1)) / 7) { // Por cada 1000 puntos por nivel un sombrero de ese nivel
                     this.hatUnlocked[k % (7 * i)] = true;
                 }
             }
