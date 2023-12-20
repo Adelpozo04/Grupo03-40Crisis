@@ -81,7 +81,7 @@ export default class armaObjetosSpawneado extends Arma{
             }
 
             if(this.key == this.player.getCurrentWeaponName()){
-                this.player.gainPersonalityExp(1);           
+                this.player.gainPersonalityExp(this.exp);           
             }
 
             this.elapsedTime = 0;
