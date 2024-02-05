@@ -108,6 +108,8 @@ export default class SelectorNivel extends Phaser.Scene {
             yoyo: true,
             repeat: -1,
         });
+
+        this.setExperience();
     }
 
     // Boton de inicio
@@ -211,7 +213,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Carga de nueva escena
     loadScene(){
-        this.setExperience();
+        
 
         this.setUnlocked(); // Guardado de sombreros
 
@@ -262,7 +264,17 @@ export default class SelectorNivel extends Phaser.Scene {
     
         // Dibujar la barra de progreso actualizada
         this.barraProgreso.fillStyle(0xE6E6FA);
-        this.barraProgreso.fillRect(600 - 150, 575, this.longitudBarra[this.currentPage], 20);
+
+        console.log(this.longitudBarra[this.currentPage]);
+
+        if(this.longitudBarra[this.currentPage] < 300){
+            this.barraProgreso.fillRect(600 - 150, 575, this.longitudBarra[this.currentPage], 20);
+        }
+        else{
+
+            this.barraProgreso.fillRect(600 - 150, 575, 300, 20);
+        }
+        
 
         // Borde
         this.barraProgreso.lineStyle(2, 0x000000);
