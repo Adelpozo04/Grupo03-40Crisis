@@ -122,7 +122,11 @@ export default class SelectorNivel extends Phaser.Scene {
             this.effectConfirm.play();
             this.loadScene(); // Se carga el nivel en caso de click
         });
+
+        this.scoreLevel = this.add.text(this.cameras.main.centerX - 160, 585, 'Score: 0', 
+            { fontFamily: 'TitleFont', fontSize: 30, color: 'white' }).setOrigin(0.5,0.5);
         
+        this.scoreLevel.text = "Score: " + this.globalPoints[this.currentPage];
         
     }
 
@@ -137,6 +141,7 @@ export default class SelectorNivel extends Phaser.Scene {
         // Pagina nueva
         this.fondo.setTexture(this.fondos[this.currentPage]);
         this.mapaActual.setTexture(this.mapas[this.currentPage]);
+        this.scoreLevel.text = "Score: " + this.globalPoints[this.currentPage];
 
         this.actualizarBarraDeProgreso();
     }
@@ -268,17 +273,17 @@ export default class SelectorNivel extends Phaser.Scene {
         console.log(this.longitudBarra[this.currentPage]);
 
         if(this.longitudBarra[this.currentPage] < 300){
-            this.barraProgreso.fillRect(600 - 150, 575, this.longitudBarra[this.currentPage], 20);
+            this.barraProgreso.fillRect(600 - 35, 575, this.longitudBarra[this.currentPage], 20);
         }
         else{
 
-            this.barraProgreso.fillRect(600 - 150, 575, 300, 20);
+            this.barraProgreso.fillRect(600 - 35, 575, 300, 20);
         }
         
 
         // Borde
         this.barraProgreso.lineStyle(2, 0x000000);
-        this.barraProgreso.strokeRect(600 - 150, 575, 300, 20);
+        this.barraProgreso.strokeRect(600 - 35, 575, 300, 20);
     }
 
     recompensas(){
