@@ -65,7 +65,14 @@ export default class armaObjetosSpawneado extends Arma{
             if(this.key == 'muro'){
                 
                 new muro(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'muro', this.player);
-                this.exp = 5;
+
+                if(this.player.getPersonalityExp(0) < 200){
+                    this.exp = 15;
+                }
+                else{
+                    this.exp = 5;
+                }
+                
             }
             else if(this.key == 'mina'){
                 
@@ -79,7 +86,13 @@ export default class armaObjetosSpawneado extends Arma{
             }
             else if(this.key == 'paralizador'){
                 new paralizador(this.scene, this.player.getCenterPoint().x, this.player.getCenterPoint().y, 'paralizador');
-                this.exp = 5;
+
+                if(this.player.getPersonalityExp(3) < 20){
+                    this.exp = 15;
+                }
+                else{
+                    this.exp = 5;
+                }
             }
 
             //se suma la experiencia al jugador según el objeto que haya spawneado
