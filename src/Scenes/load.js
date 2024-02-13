@@ -8,6 +8,14 @@ export default class load extends Phaser.Scene{
     }
 
     preload(){
+
+        this.introSound = this.sound.add('introSound', {loop: false, volume: 1});
+
+        let { width, height } = this.sys.game.canvas;
+        this.logo = this.add.sprite(width / 2, height / 2, 'logo');
+
+        this.introSound.play();
+
         //Cargado de spritessheets de entidades del juego
         this.load.spritesheet('mike', './Assets/Sprites/Jugador/Mike/Mike-Walk-SpriteSheett.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('zombie', './Assets/Sprites/Enemigos/Zombie/Zombie_walk-SpriteSheet.png', {frameWidth: 32, frameHeight: 32});
